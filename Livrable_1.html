@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IFT2255 | Rapport DM1</title>
+    <link rel="shortcut icon" href="./../favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <style>
+        html,
+        body {
+            position: relative;
+            height: 100%;
+            font: normal 10px 'Segoe UI', 'Droid Sans', Ubuntu, 'Lucida Grande', Arial, Helvetica, sans-serif;
+            scroll-behavior: smooth;
+            background: #f5f5f5;
+            overflow-x: hidden;
+        }
+
+        h1, h2 { margin: 0; }
+
+        h1 { font-size: 4em; font-weight: normal; }
+
+        h2 { font-size: 3em; }
+
+        h3 { font-size: 2.2em; font-weight: normal; }
+
+        h4 { font-size: 1.8em }
+
+        h5 { font-size: 1.6em; }
+
+        h6 { font-size: 1.5em; margin-top: 0; }
+
+        p, li, td, th { font-size: 1.5em; }
+
+        td p, td li, th li,
+        li li, li p, li td, li th { font-size: 1em; }
+
+        table, th, td { border: 1px solid #555; border-collapse: collapse; }
+
+        th { text-align: center; }
+
+        .btn {
+            font-family: 'Segoe UI', 'Droid Sans', Ubuntu, 'Lucida Grande', Arial, sans-serif;
+            text-decoration: none; text-align: center;
+            border: none;
+            background: none;
+            outline-width: 0;
+        }
+
+        .font-ui { font-family: 'Segoe UI', 'Droid Sans', Ubuntu, 'Lucida Grande', Arial, sans-serif; }
+
+
+        /* Organization
+        ---------------------------------------------------------------------------- */
+
+        .left { float: left; }
+
+        .right { float: right; }
+
+        .clear-fix { clear: both; display: block; }
+            .clear-fix:after {
+                content: ".";
+                clear: both;
+                display: block;
+                height: 0;
+                visibility: hidden;
+            }
+
+        .row { display: table-row; }
+
+        .cell { display: table-cell; }
+
+        /* Reset */
+
+        .bare-list { margin: 0; padding: 0; list-style: none; }
+
+        .bare-link { text-decoration: none; color: inherit; }
+
+        .bare-table { border: none; table-layout: fixed; }
+
+        .bare-table td,
+        .bare-table th { 
+            border: none;
+        }
+
+        .bare-table th {
+            vertical-align: top;
+            text-align: left;
+        }
+
+
+        .inline-link { text-decoration: underline; }
+
+        .output { text-decoration: none; font-style: normal; }
+
+        /* State
+        ---------------------------------------------------------------------------- */
+
+        .hidden { display: none; }
+
+        .fit-content { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .helper {
+            position: absolute;
+            top: 100%; left: 0;
+            min-width: 60px;
+            padding: 3px 6px 4px;
+            border-radius: 1px;
+            font-size: 1.3rem; font-weight: 500; font-style: normal;
+            color: #555;
+            background-color: #e5e4e2;
+            box-shadow: 0 1px 2px -1px #999;
+            opacity: 0;
+            transition: .2s;
+            transform: scale(0); transition-property: opacity, transform;
+            z-index: 20;
+        }
+
+        .ico-helper {
+            display: inline-block;  text-align: center;
+            font-size: 1.2rem; font-weight: bold;
+            height: 18px; width: 18px;
+            color: #fff;
+            border-radius: 50%;
+            background-color: #6667AB;
+            font-style: normal;
+        }
+
+        .has-helper {
+            position: relative;
+        }
+
+            .has-helper:hover > .helper {
+                opacity: 1;   
+                transform: scale(1) translateY(2px);
+            }
+            .ico-helper:focus + .helper {
+                opacity: 1;   
+                transform: scale(1) translateY(2px);
+            }
+
+        .has-def {
+            position: relative;
+            display: inline-block;
+        }
+
+        .def-term {
+            position: relative;
+            display: flex; align-items: center;
+            color: #6667AB;
+            padding-left: 2px; padding-right: 2px;
+            border-bottom: 3px solid currentColor;
+            cursor: default;
+            font-style: normal; font-weight: 500;
+        }
+            .def-term:after {
+                content: "?";
+                text-align: center;
+                font-weight: bold;
+                margin-left: 3px;
+                height: 18px; width: 18px;
+                font-size: 1.2rem; 
+                border-radius: 50%;
+                background-color: #6667AB;
+                color: #fff;
+            }
+
+
+        .def {
+            position: absolute;
+            top: 100%; left: 0;
+            min-width: 300px;
+            padding: 3px 6px 4px;
+            border-radius: 1px;
+            font-size: 1.3rem; font-weight: 500; font-style: normal;
+            color: #fff;
+            background-color: #232425;
+            box-shadow: 0 1px 2px -1px #999;
+            opacity: 0;
+            transform: scale(0); 
+            transition: .2s; transition-property: opacity, transform;
+            z-index: 20;
+        }
+
+            .has-def:hover > .def {
+                opacity: 1;   
+                transform: scale(1) translateY(2px);
+            }
+
+        .report-header {
+            padding-top: 24px; padding-bottom: 24px;
+            background-color: #fff;
+        }
+
+        .title-section {
+            display: flex; align-items: flex-start; justify-content: space-between;
+            padding-left: 5vw;
+            padding-right: 5vw;
+        }
+
+        .report-title {
+            color: royalblue;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+
+        .report-summary {
+            max-width: 800px;
+            font-size: 1.4em;
+            color: #555;
+        }
+        
+        .report-resources {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+            .report-resource {
+                margin-left: 12px;
+            }
+
+            .report-resource-link {
+                padding: 8px 12px;
+                font-weight: bold;
+                color: #fff;
+                border-radius: 2px;
+                text-decoration: none;
+                background-color: #232425;
+            }
+                .report-resource-link:hover {
+                    background-color: #1b1f23;
+                }
+
+        .section-title {
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            font-size: 2.4em; font-weight: 300;
+        }
+
+        .subsection-title {
+            margin-bottom: 3px;
+            font-size: 2em; font-weight: bold;
+            color: #555;
+        }
+
+        .team-section {
+            padding-left: 5vw;
+            padding-right: 5vw;
+        }
+
+            .team-title {
+                font-weight: 500;
+                margin-bottom: 12px;
+                color: #1C3A94;
+            }
+
+            .members {
+                display: flex; flex-direction: row;
+            }
+
+            .member {
+                display: flex; flex-direction: column;
+            }
+                .member:not(:last-child) {
+                    margin-right: 12px;
+                }
+
+                .member-pic {
+                    display: block;
+                    width: 120px;
+                    height: 120px;
+                    border-radius: 50%;
+                }
+
+                .member-role {
+                    font-size: 0.9em; font-weight: 500;
+                    color: #555;
+                }
+
+        .report-body {
+            display: flex;
+        }
+
+        .report-aside {
+            padding-top: 24px; padding-right: 12px; padding-left: 5vw;
+            min-width: 300px;
+            background-color: #6667AB;
+        }
+            .report-aside .section-title {
+                color: #fff;
+            }
+
+        .report-main {
+            padding-top: 24px; padding-left: 2%; padding-right: 5vw;
+        }
+
+        .main-section {
+            margin-bottom: 24px;
+        }
+
+        .nav {
+            color: #E87429;
+        }
+
+            .nav-item-title {
+                font-size: 1.1em;
+                margin: 0;
+            }
+
+            .nav-item-title__link {
+                display: block;
+                color: #fff;
+                font-weight: 500;
+                padding: 6px;
+                text-decoration: none;
+            }
+
+            .nav-item-details {
+                color: #f5f5f5;
+                padding-left: 6px;
+                line-height: 1.5;
+            }
+
+        .glossary-term {
+            font-weight: bold;
+            background: #222;
+            padding: 3px 6px;
+            display: inline-block;
+            border-radius: 2px;
+            color: #fff;
+        }
+
+        .glossary-def {
+            margin-top: -6px; margin-left: 6px; margin-bottom: 6px;
+            padding: 12px 6px 4px;
+            background-color: #e5e4e2;
+            border-radius: 4px;
+        }
+
+        .personas {
+            display: flex;
+        }
+
+            .persona {
+                position: relative;
+                display: flex; flex-direction: column;
+                margin-right: 12px;
+                max-width: 360px;
+                padding: 6px 12px;
+                border-radius: 2px;
+                box-shadow: 0 1px 2px -1px #999;
+                background-color: #fff;
+                z-index: 2;
+            }
+
+            .persona-stat {
+                display: flex;
+                justify-content: flex-end;
+            }
+
+            .persona-type {
+                display: flex; align-items: center; justify-content: center;
+                height: 40px; width: 40px; 
+                font-size: 1.3rem; font-weight: bold; 
+                border-radius: 50%;
+            }
+
+            .persona-type--pp {
+                background-color: #FF6F61;
+            }
+
+            .persona-type--eco {
+                background-color: #88B04B;
+            }
+
+            .persona-market {
+                display: flex; align-items: center; justify-content: center;
+                margin-left: 6px;
+                height: 40px; width: 40px; 
+                color: #444;
+                font-size: 1.3rem; font-weight: bold; 
+                border-radius: 50%;
+                background-color: #d5d5d5;
+            }
+
+            .persona-color {
+                display: flex; align-items: center; justify-content: center;
+                background-color: #FF6F61;
+                height: 42px; width: 42px; font-weight: bold;
+                justify-self: center; align-self: center;
+                font-size: 1.3rem;
+                border-radius: 50%;
+            }
+
+            .persona-identity {
+                display: flex; 
+            }
+            
+            .persona-name {
+                font-size: 1.2em; font-weight: 300;
+                flex-grow: 2;
+            }
+
+            .persona-demography-line {
+                display: flex;
+            }
+
+            .persona-background {
+                padding: 6px;
+                color: #555;
+            }
+
+            .persona-title {
+                margin-top: 6px; margin-bottom: 3px;
+                color: #222;
+                font-size: 1.1em; font-weight: 500;
+            }
+
+        .use-case {
+            display: flex; flex-wrap: wrap;
+        }
+
+        .use-case-diagram {
+            display: block;
+            height: 100%;
+            width: auto;
+            min-height: 800px;
+            min-width: 600px;
+            border-radius: 4px;
+            background-color: #d5d5d5;
+        }
+
+        .use-case-notes {
+            margin-left: 12px;
+        }
+
+        .scenario {
+            display: flex;
+            margin-bottom: 12px;
+            background-color: #fff;
+            border-radius: 3px;
+            box-shadow: 0 1px 2px #a9a9a9;
+        }
+
+        .scenario-meta {
+            padding: 12px;
+            max-width: 40%;
+            background-color: #e5e4e2;
+        }
+
+        .scenario-main {
+            flex-grow: 2;
+            padding: 12px;
+            margin-left: 12px;
+        }
+
+        .scenario-main-title {
+            margin: 0;
+            color: royalblue;
+        }
+
+        .scenario-alt-title {
+            margin: 0;
+            color: #FF6F61;
+        }
+        
+        .cu-actors {
+            display: flex;
+        }
+
+        .cu-actor {
+            margin-right: 6px;
+            padding: 4px 6px;
+            color: #fff; font-weight: 500;
+            background-color: #6667AB;
+            border-radius: 1px;
+        }
+
+        .cu-name {
+            margin: 0;
+            font-weight: 500;
+        }
+
+        .cu-goal {
+            margin: 0;
+            font-size: 1.6em;
+        }
+
+        .cu-part--notes {
+            margin-top: 12px;
+        }
+
+        .cu-part-title {
+            margin: 0;
+            margin-top: 6px;
+        }
+
+        .cu-conditions {
+            font-weight: 500;
+        }
+
+        .cu-notes {
+            color: #555;
+            margin: 0;
+            font-size: 1.4em;
+        }
+
+        .scenario-main-steps {
+            margin: 0; padding-left: 16px;        
+        }
+
+        .scenario-alt {
+            margin-top: 6px;
+        }
+
+        .scenario-alt p { margin: 0; }
+
+        .scenario-alt-steps { counter-reset: topLevel; }
+            .scenario-alt-steps:not(:last-child) { margin-bottom: 6px; }
+            .scenario-alt-step { counter-increment: topLevel; font-weight: 500; }
+            .scenario-alt-step:before { content: attr(value) counter(topLevel, lower-alpha) '. '; }
+            .scenario-alt-steps ol { font-weight: 400; counter-reset: secondLevel; }
+                .scenario-alt-steps ol li { counter-increment: secondLevel; margin-left: 12px; }
+                    .scenario-alt-steps ol li:before { content: attr(value) counter(topLevel, lower-alpha) '.' counter(secondLevel, decimal) '. '}
+
+        .glossary {
+            font-size: 1.4em;
+        }
+
+        .preview-img {
+            display: block;
+            width: 600px;
+            height: auto;
+        }
+
+        .report-footer {
+            padding: 24px 5vw 24px;
+            color: #fff;
+            background-color: #292723;
+        }
+
+            .report-footer p {
+                margin: 0; margin-bottom: 6px;
+            }
+
+        .activity-diagram {
+            display: block;
+            min-height: 600px;
+            min-width: 600px;
+            height: 100%;
+            width: auto;
+            background-color: #d5d5d5;
+        }
+
+        .dash:before { 
+            content: '-'; 
+            margin-left: 4px;
+            margin-right: 8px; 
+            font-weight: bold;
+            color: currentColor;
+        } 
+
+        .check:before {
+            margin-left: 2px;
+            margin-right: 4px; 
+            font-weight: bold;
+            content: '🗸'; 
+            color: currentColor;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="report-header">
+        <div class="title-section">
+            <div>
+                <h1 class="report-title">Rapport du livrable X</h1>
+                <p class="report-summary">
+                    <em>Court résumé du rapport</em> &ndash; Ce livrable se concentre sur... 
+                    lorem ipsum, dolor sit amet consectetur adipisicing elit. Quia distinctio tempora quam nulla quod enim. 
+                    Odit eius dolores repellendus incidunt doloribus delectus at ex sunt error, iste dicta, maiores blanditiis.
+                </p>
+            </div>
+
+            <ul class="bare-list report-resources">
+                <li class="report-resource">
+                    <a class="report-resource-link" href="#" target="_blank">
+                        Répertoire GitHub
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="team-section">
+            <h2 class="team-title">Équipe #19</h2>
+            <ul class="bare-list members">
+                <li class="member">
+                    <img class="member-pic" src="" alt="" >
+                    <div class="member-identification">
+                        <span class="member-name">Antoine Tessier</span>
+                        <span class="member-id">20288121</span>
+                    </div> 
+                    <span>Discord: @toto0o_</span>
+                    <a href="mailto:prenom.nom@umontreal.ca">antoine.tessier@umontreal.ca</a>
+                    <span class="member-role">Chargé du diagrame des cas d'utilisation, des scénarios et du GUI du prototype</span>
+                </li>
+                <li class="member">
+                    <img class="member-pic" src="" alt="" >
+                    <div class="member-identification">
+                        <span class="member-name">Lola MONTENEGRO</span>
+                        <span class="member-id">1034870</span>
+                    </div> 
+                    <span>Discord: @lolie</span>
+                    <a href="mailto:prenom.nom@umontreal.ca">prenom.nom@umontreal.ca</a>
+                    <span class="member-role">Chargé de...</span>
+                </li>
+                <li class="member">
+                    <img class="member-pic" src="" alt="" >
+                    <div class="member-identification">
+                        <span class="member-name">Tien NGUYEN</span>
+                        <span class="member-id">2046973</span>
+                    </div> 
+                    <span>Discord: @tien</span>
+                    <a href="mailto:prenom.nom@umontreal.ca">prenom.nom@umontreal.ca</a>
+                    <span class="member-role">Chargé de...</span>
+                </li>
+            </ul>
+        </div>
+    </header>
+    <main class="report-body">
+        <aside class="report-aside">
+            <nav>
+                <h2 class="section-title">Contenu</h2>
+                <ul class="bare-list nav">
+                    <li class="nav-item">
+                        <h3 class="nav-item-title"><a class="nav-item-title__link" href="#plan">Cadre du projet</a></h3>
+                        <ul class="bare-list nav-item-details">
+                            <li class="dash">Introduction</li>
+                            <li class="dash">Échéancier</li>
+                            <li class="dash">Hypothèses</li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <h3 class="nav-item-title"><a class="nav-item-title__link" href="#requirements">Exigences</a></h3>
+                        <ul class="bare-list nav-item-details">
+                            <li class="dash">Glossaire</li>
+                            <li class="dash">Persona</li>
+                            <li class="dash">Cas d'utilisation</li>
+                            <li class="dash">Diagramme d'activités</li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <h3 class="nav-item-title"><a class="nav-item-title__link" href="#analysis">Analyse</a></h3>
+                        <ul class="bare-list nav-item-details">
+                            <li class="dash">Risques</li>
+                            <li class="dash">Besoins non fonctionnels</li>
+                            <li class="dash">Besoins matériels</li>
+                            <li class="dash">Stockage</li>
+                            <li class="dash">Intégration</li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <h3 class="nav-item-title"><a class="nav-item-title__link" href="#prototype">Prototype</a> </h3>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+        <div class="report-main">
+            <section class="main-section">
+                <h2 id="plan" class="section-title">Cadre du projet</h2>
+                <h3 class="subsection-title">Introduction</h3>
+                <p>
+                    <em>
+                        Description brève du projet.
+                    </em>
+                </p>
+                <h3 class="subsection-title">Échéancier</h3>
+                <p>
+                    <em>Présentation de l'échéancier et la distribution des taches (au moins pour le devoir 1)</em>
+                </p>
+
+                <h3 class="subsection-title">Hypothèses (optionnel)</h3>
+                <p>
+                    <em>Présentation des hypothèses faites dans l'élaboration des exigences et l'analyse</em>
+                </p>
+            </section>
+
+            <section class="main-section">
+                <h2 id="requirements" class="section-title">Exigences</h2>
+                <p>
+                    Après de nombreuses rencontres avec le client et une familiarisation avec les activités de recyclage et compostage, 
+                    nous avons préparé un glossaire rassemblant les termes et expressions clés caractérisant l'environnement.
+                </p>
+
+                <h3 class="subsection-title">Glossaire</h3>
+                <dl class="glossary">
+                    <dt class="glossary-term">Terme 1</dt>
+                    <dd class="glossary-def">Definition Debitis vel incidunt quaerat vitae iure, amet voluptatem commodi neque perferendis, asperiores facilis fugit! Dicta possimus aperiam officiis recusandae ipsum magni dignissimos?</dd>
+                    <dt class="glossary-term">Terme 2</dt>
+                    <dd class="glossary-def">Definition Culpa assumenda pariatur doloremque accusamus obcaecati reiciendis saepe sapiente, nihil adipisci quo architecto amet veniam vero delectus ullam dolorem unde quidem? Debitis.</dd>
+                    <dt class="glossary-term">Terme 3</dt>
+                    <dd class="glossary-def">Definition Alias sequi officia tempore maiores placeat omnis eum quo totam quia fuga? Officia repellendus odio ducimus dolores error dolorem hic a beatae.</dd>
+                </dl>
+
+                <h3 class="subsection-title">Persona (optionnel)</h3>
+
+                <ul class="bare-list personas">
+                    <li class="persona">
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+                            <span class="persona-name">Bob &ndash; <em>Comptable</em></span>
+                            <div class="persona-stat">
+                                <span class="persona-type persona-type--pp" title="Pratico-pratique">PP</span>
+                                <span class="persona-market">40%</span>
+                            </div>
+                        </div>
+                        <span class="persona-info">Homme célibataire de 42 ans vivant au Canada</span>
+                        <div class="persona-goal">
+                            <h4 class="persona-title">Buts</h4>
+                            <ul class="bare-list">
+                                <li class="check">But principal</li>
+                                <li class="check">But secondaire</li>
+                                <li class="check">Avantages</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="persona">
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+                            <span class="persona-name">Eva &ndash; <em>Pharmacienne</em></span>
+                            <div class="persona-stat">
+                                <span class="persona-type persona-type--eco" title="Ecolo">ECO</span>
+                                <span class="persona-market">20%</span>
+                            </div>
+                        </div>
+                        <span class="persona-info">Femme mariée de 34 ans vivant au Canada</span>
+                        <div class="persona-goal">
+                            <h4 class="persona-title">Buts</h4>
+                            <ul class="bare-list">
+                                <li class="check">But principal</li>
+                                <li class="check">But secondaire</li>
+                                <li class="check">Avantages</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+             
+                <h3 class="subsection-title">Cas d'utilisation</h3>
+                <div class="use-case">
+                    <img class="use-case-diagram" src="images/use_case_diagram.svg" alt="Diagramme de cas d'utilisation">
+                    <p class="use-case-notes">
+                        <em>
+                            Notes à propos du diagramme <br>
+                            - choix des acteurs : les deux acteurs principaux sont les résidents et les intervenants <br>
+                            - choix des relations
+                        </em>
+                    </p>
+                </div>
+
+                <h3 class="subsection-title">Scénarios</h3>
+
+                <div class="scenario" id="cu-1">
+                    <div class="scenario-meta">
+                        <h4 class="cu-name">
+                            <strong>CU:</strong> S'inscrire comme résident
+                        </h4>
+                        <p class="cu-goal">
+                            <strong>Objectif:</strong> Un intervenant désire créer un compte pour avoir accès au logiciel en tant qu'intervenant
+                        </p>
+                        
+                        <hr>
+
+                        <div class="cu-part">
+                            <h5 class="cu-part-title">Acteurs</h5>
+                            <ul class="bare-list cu-actors">
+                                <li class="cu-actor">Résident (Principal)</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="cu-part">
+                            <h5 class="cu-part-title">Préconditions</h5>
+                            <ul class="bare-list cu-conditions">
+                                <li class="dash">Le résident réside à Montréal</li>
+                                <li class="dash"> Le résident n'est pas déjà inscris avec son adresse électronique</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="cu-part">
+                            <h5 class="cu-part-title">Postconditions</h5>
+                            <ul class="bare-list cu-conditions">
+                                <li class="dash">Le système à enregistré les informations suivantes : le nom et le prénom, la date de naissance, l'adresse électronique (unique), le numéro de téléphone, l'adresse de résidence, un mot de passe </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="scenario-main">
+                        <h5 class="scenario-main-title">Scénario principal</h5>
+                        <ol class="scenario-main-steps">
+                            <li class="scenario-main-step">Le résident accède à l'option de création de compte pour résidents</li>
+                            <li class="scenario-main-step">Le système demande au résident d'entrer ses informations</li>
+                            <li class="scenario-main-step">Le résidents entre ses informations</li>
+                            <li class="scenario-main-step">Le système valide les informations</li>
+                            <li class="scenario-main-step">Le système valide la créatio du compte</li>
+                            <li class="scenario-main-step">Le réisdent accède au logiciel</li>
+                        </ol>
+
+                        <div class="scenario-alt">
+                            <h5 class="scenario-alt-title">Scénarios alternatifs</h5>
+                            <ol class="bare-list scenario-alt-steps">
+                                <li class="scenario-alt-step" value="4">
+                                    L'adresse de résidence n'est pas valide
+                                    <ol class="bare-list">
+                                        <li value="4">Le système affiche que l'adresse n'est pas valide</li>
+                                        <li value="4">Le scénario reprend à l'étape 3</li>
+                                    </ol>
+                                </li>
+                                <li class="scenario-alt-step" value="4">
+                                    L'adresse électronique est déjà associé à un compte
+                                    <ol class="bare-list">
+                                        <li value="4">Le système propose au résident de se connecter s'il possède déjà un compte</li>
+                                        <li value="4">Le scénario se termine.</li>
+                                    </ol>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scenario" id="cu-2">
+                    <div class="scenario-meta">
+                        <h4 class="cu-name">
+                            <strong>CU:</strong> S'inscrire comme intervenant
+                        </h4>
+                        <p class="cu-goal">
+                            <strong>Objectif:</strong> Un intervenant désire créer un compte pour avoir accès au logiciel en tant qu'intervenant
+                        </p>
+                        
+                        <hr>
+
+                        <div class="cu-part">
+                            <h5 class="cu-part-title">Acteurs</h5>
+                            <ul class="bare-list cu-actors">
+                                <li class="cu-actor">Intervenant (Principal)</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="cu-part">
+                            <h5 class="cu-part-title">Préconditions</h5>
+                            <ul class="bare-list cu-conditions">
+                                <li class="dash">L'intervenant possède un identifiant de la ville</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="cu-part">
+                            <h5 class="cu-part-title">Postconditions</h5>
+                            <ul class="bare-list cu-conditions">
+                                <li class="dash">Le système à enregistrer les informations suivantes : le nom et le prénom, le type (public, privé, individu), l'identifiant de la ville, un mot de passe</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="scenario-main">
+                        <h5 class="scenario-main-title">Scénario principal</h5>
+                        <ol class="scenario-main-steps">
+                            <li class="scenario-main-step">L'intervenant accède à l'option de création de compte pour les intervenants</li>
+                            <li class="scenario-main-step">Le système demande d'entrer à l'intervenant d'entrer ses informations</li>
+                            <li class="scenario-main-step">L'intervenant entre ses informations</li>
+                            <li class="scenario-main-step">Le système valide les informations</li>
+                            <li class="scenario-main-step">Le systme valide la création du compte</li>
+                            <li class="scenario-main-step">L'intervenant accède au logiciel</li>
+                        </ol>
+
+                        <div class="scenario-alt">
+                            <h5 class="scenario-alt-title">Scénarios alternatifs</h5>
+                            <ol class="bare-list scenario-alt-steps">
+                                <li class="scenario-alt-step" value="4">
+                                    L'identifiant de la ville est invalide
+                                    <ol class="bare-list">
+                                        <li value="4">Le système demande à l'intervenant d'entrer un identifiant valide</li>
+                                        <li value="4">Le scénario reprend à l'étape 3</li>
+                                    </ol>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scenario" id="cu-3">
+                    <div class="scenario-meta">
+                        <h4 class="cu-name">
+                            <strong>CU:</strong> Consulter des travaux en cours ou à venir
+                        </h4>
+                        <p class="cu-goal">
+                            <strong>Objectif:</strong> Un utilisateur désire consulter la liste des travaux en cours ou à venir
+                        </p>
+                        
+                        <hr>
+
+                        <div class="cu-part">
+                            <h5 class="cu-part-title">Acteurs</h5>
+                            <ul class="bare-list cu-actors">
+                                <li class="cu-actor">Utilisateur (Principal)</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="cu-part">
+                            <h5 class="cu-part-title">Préconditions</h5>
+                            <ul class="bare-list cu-conditions">
+                                <li class="dash">L'utilisateur est inscrit dans le système</li>
+                            </ul>
+                        </div>
+
+                        <div class="cu-part cu-part--notes">
+                            <h5 class="cu-part-title">Notes</h5>
+                            <p class="cu-notes">L'hypothèse est de combiner la consulation et la recherche de travaux; ainsi, dans le <a href=#cu-4>scénario recherche de travaux en cours ou à venir</a>, l'utilisateur accède à la même option, mais utilise la barre au lieu de défiler la liste</p>
+                        </div>
+                        
+                        
+                    </div>
+                    <div class="scenario-main">
+                        <h5 class="scenario-main-title">Scénario principal</h5>
+                        <ol class="scenario-main-steps">
+                            <li class="scenario-main-step">L'utilisateur accède à l'option de consultation de travaux en cours ou à venir</li>
+                            <li class="scenario-main-step">Le système affiche la liste des travaux en cours ou à venir</li>
+                            <li class="scenario-main-step">L'utilisateur sélectionne le projet qu'il désire consulter</li>
+                            <li class="scenario-main-step">Le système affiche les informations du projet</li>
+                            <li class="scenario-main-step">L'utilisateur consulte les informations et quitte</li>
+                            <li class="scenario-main-setp">Le scénario reprend à l'étape 2</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="scenario" id="cu-4">
+                    <div class="scenario-meta">
+                        <h4 class="cu-name">
+                            <strong>CU:</strong> Rechercher des travaux
+                        </h4>
+                        <p class="cu-goal">
+                            <strong>Objectif:</strong> Un utilisateur désire chercher des travaux en cours ou à venir 
+                        </p>
+                        
+                        <hr>
+
+                        <div class="cu-part">
+                            <h5 class="cu-part-title">Acteurs</h5>
+                            <ul class="bare-list cu-actors">
+                                <li class="cu-actor">Utilisateur (Principal)</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="cu-part">
+                            <h5 class="cu-part-title">Préconditions</h5>
+                            <ul class="bare-list cu-conditions">
+                                <li class="dash">L'utilisateur est inscrit dans le système</li>
+                            </ul>
+                        </div>
+                        
+                    </div>
+                    <div class="scenario-main">
+                        <h5 class="scenario-main-title">Scénario principal</h5>
+                        <ol class="scenario-main-steps">
+                            <li class="scenario-main-step">L'utilisateur accède à l'option de consultation de travaux en cours ou à venir</li>
+                            <li class="scenario-main-step">L'utilisateur entre des mots-clés de recherche tel une adresse ou un nom de projet et lance la recherche</li>
+                            <li class="scenario-main-step">Le système fait une recherche dans la base de donnée selon les mots-clés entrés</li>
+                            <li class="scenario-main-setp">Le systeme affiche les résultats</li>
+                        </ol>
+
+                        <div class="scenario-alt">
+                            <h5 class="scenario-alt-title">Scénarios alternatifs</h5>
+                            <ol class="bare-list scenario-alt-steps">
+                                <li class="scenario-alt-step" value="4">
+                                    La recherche ne retourne rien
+                                    <ol class="bare-list">
+                                        <li value="4">Le systeme affiche qu'aucun projet ne correspond à la recherche lancée</li>
+                                        <li value="4">Le scénario se termine</li>
+                                    </ol>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scenario" id="cu-5">
+                    <div class="scenario-meta">
+                        <h4 class="cu-name">
+                            <strong>CU:</strong> Personnaliser les notifications
+                        </h4>
+                        <p class="cu-goal">
+                            <strong>Objectif:</strong> Un utilisateur désire personnaliser ses notifications selon ses préférences
+                        </p>
+                        
+                        <hr>
+
+                        <div class="cu-part">
+                            <h5 class="cu-part-title">Acteurs</h5>
+                            <ul class="bare-list cu-actors">
+                                <li class="cu-actor">Utilisateur (Principal)</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="cu-part">
+                            <h5 class="cu-part-title">Préconditions</h5>
+                            <ul class="bare-list cu-conditions">
+                                <li class="dash">L'utilisateur est inscrit dans le système</li>
+                            </ul>
+                        </div>
+
+                        <div class="cu-part">
+                            <h5 class="cu-part-title">Postconditions</h5>
+                            <ul class="bare-list cu-conditions">
+                                <li class="dash">Le système enregistre les informations suivantes : les préférences de notifications de l'utilisateur</li>
+                            </ul>
+                        </div>
+                        
+                    </div>
+                    <div class="scenario-main">
+                        <h5 class="scenario-main-title">Scénario principal</h5>
+                        <ol class="scenario-main-steps">
+                            <li class="scenario-main-step">L'utilisateur accède à l'option de réglage des notifications</li>
+                            <li class="scenario-main-step">Le systeme affiche les différents réglages</li>
+                            <li class="scenario-main-step">L'utilisateur choisis ses préférences</li>
+                            <li class="scenario-main-setp">Le systeme enregistre les préférences</li>
+                        </ol>
+                    </div>
+                </div>
+                  
+                <h3 class="subsection-title">Diagramme d'activités</h3>
+                <div class="activity">
+                    <h4>Titre du diagramme 1</h4>
+                    <img class="activity-diagram" src="images/activity_diagram.svg" alt="Diagramme d'activités">
+                </div>
+                <div class="activity">
+                    <h4>Titre du diagramme 2</h4>
+                    <img class="activity-diagram" src="images/activity_diagram.svg" alt="Diagramme d'activités">
+                </div>
+            </section>
+
+            <section class="main-section">
+                <h2 id="analysis" class="section-title">Analyse</h2>
+
+                <div>
+                    <h3 class="subsection-title">Risques</h3>
+                    <ol class="risks">
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ol>
+                </div>
+
+                <div>
+                    <h3 class="subsection-title">Besoins non-fonctionnelles</h3>
+                    <ol class="nf-requirements">
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ol>
+                </div>
+                
+                <div>
+                    <h3 class="subsection-title">Besoins matériels</h3>
+                    <p>
+                        <em>Description et justification des ressourcs nécessaires pour le projet...</em>
+                    </p>
+                </div>
+
+                <div>
+                    <h3 class="subsection-title">Solution de stockage</h3>
+                    <p>
+                        <em>Description de votre solution de stockage...</em>
+                    </p>
+                </div>
+
+                <div>
+                    <h3 class="subsection-title">Solution d'intégration</h3>
+
+                    <p>
+                        <em>Description de votre solution d'intégration...</em>
+                    </p>
+                </div>
+            </section>
+
+            <section class="main-section">
+                <h2 id="prototype" class="section-title">Prototype</h2>
+
+                <p>
+                    <em>
+                        Indiquez ici les informations nécessaires (commande d'exécution, comptes préconfigurées) pour exécuter et tester le prototype</em>.
+                </p>
+            </section>
+        </div>
+    </main>
+    <footer class="report-footer">
+        <p>
+            Devoir 1 &ndash; Analyse des exigences<br>
+            IFT2255 (Génie logiciel) <br>
+            Automne 2024
+        </p>
+        <p>
+            <em>
+                Ajoutez tous les liens additionnels nécessaires à la compréhension du rapport ici
+            </em>
+        </p>
+    </footer>
+</body>
+
+</html>
