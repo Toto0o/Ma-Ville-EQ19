@@ -4,9 +4,11 @@ import javax.swing.text.StyledEditorKit.BoldAction;
 
 public interface CredentialsVerifier {
 
-    public Boolean verifyCrednetials(String username, String password); /* Search database for Username and Password -> return true if match, return false otherwise */
+    public Boolean verifyCredentials(String username, String password); /* Search database for Username and Password -> return true if match, return false otherwise */
 
     public Boolean verifiyMatchingPasswords(String password1, String password2); /* Verify if password match for the 2 fields */
+
+    public Boolean verifyBirthdayFormat(String birthday); /* Verify if date of birth entered is in the good format */
 
     public Boolean verifyAdress(String adress); /* Verify if adress is valid (API MTL city) */
     

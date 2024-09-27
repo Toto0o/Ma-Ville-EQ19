@@ -11,10 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
-public class LoginScene {
-
-    private BorderPane root;
-    private Scene scene;
+public class LoginScene extends Scenes {
     private VBox vBox;
     private Button loginButton;
 
@@ -22,15 +19,13 @@ public class LoginScene {
     private TextField usernameField, passwordField;
     private Label error;
 
-    private SceneController sceneController;
-
     private CredentialsVerifier credentialsVerifier;
 
     public LoginScene(SceneController sceneController) {
-        this.sceneController = sceneController;
-        this.credentialsVerifier = new CredentialsVerifier();
-        this.root = new BorderPane();
-        this.scene = new Scene(this.root);
+        super(sceneController);
+        
+        /* this.credentialsVerifier = new CredentialsVerifier(); */
+        
         this.vBox = new VBox();
         
         this.loginButton = new Button("Log In");
@@ -50,7 +45,7 @@ public class LoginScene {
         this.vBox.getChildren().addAll(usernamText, usernameField, passwordText, passwordField, loginButton);
 
         this.loginButton.setOnMouseClicked((loginAction) -> {
-            if (this.credentialsVerifier.verify(this.usernameField.getText(), this.passwordField.getText())) {
+            if (this.credentialsVerifier.verifyCredentials(this.usernameField.getText(), this.passwordField.getText())) {
                 this.sceneController.newScene("menu");
             }
             else {

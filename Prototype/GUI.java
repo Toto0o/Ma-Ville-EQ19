@@ -15,8 +15,8 @@ public class GUI extends Application {
         GUI.launch(args);
     }
     
-    public void start(Stage primeryStage) throws Exception {
-        this.sceneController = new SceneController(primeryStage);
+    public void start(Stage primaryStage) throws Exception {
+        this.sceneController = new SceneController(primaryStage);
         this.sceneController.start();
     }
 }

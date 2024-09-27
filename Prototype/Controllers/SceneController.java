@@ -14,18 +14,21 @@ public class SceneController {
     private LaunchScene launchScene;
     private LoginScene loginScene;
     private MenuScene menuScene;
+    private RegisterScene registerScene;
 
     public SceneController(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
 
     public void start() {
+        /* Initial scene */
         newScene("launch"); /* Default is the launching scene */
         this.primaryStage.setTitle("Ma ville - Équipe 19");
         this.primaryStage.show();
     }
 
     public void newScene(String scene) {
+
 
         switch (scene) {
             case "launch" :
@@ -38,10 +41,18 @@ public class SceneController {
             
             case "menu" :
                 this.scene = newMenuScene();
-            
+                break;
+
+            case "register" :
+                this.scene = newRegisterScene();
+                break;
 
         };
-        primaryStage.setScene(this.scene);
+        
+        this.primaryStage.setScene(this.scene);
+        this.primaryStage.setMaximized(false);
+        this.primaryStage.setMaximized(true);
+        
     }
 
     private Scene newLaunchScene() {
@@ -61,6 +72,12 @@ public class SceneController {
         this.menuScene = new MenuScene(this);
         this.menuScene.setScene();
         return this.menuScene.getScene();
+    }
+
+    private Scene newRegisterScene() {
+        this.registerScene = new RegisterScene(this);
+        this.registerScene.setScene();
+        return this.registerScene.getScene();
     }
 
 }

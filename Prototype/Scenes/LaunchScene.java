@@ -14,10 +14,8 @@ import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 
 
-public class LaunchScene {
+public class LaunchScene extends Scenes {
     
-    private BorderPane root;
-    private Scene scene;
     private VBox vBox;
     private HBox buttonsBox;
 
@@ -25,12 +23,9 @@ public class LaunchScene {
 
     private Button loginButton, registerButton;
 
-    private SceneController sceneController;
-
     public LaunchScene(SceneController sceneController) {
-        this.sceneController = sceneController;
-        this.root = new BorderPane();
-        this.scene = new Scene(root);
+        super(sceneController);
+
         this.vBox = new VBox();
         this.buttonsBox = new HBox();
         this.loginButton = new Button("Log In");
