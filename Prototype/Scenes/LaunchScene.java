@@ -1,7 +1,6 @@
 package Scenes;
 
 import Controllers.SceneController;
-
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
