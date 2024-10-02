@@ -25,7 +25,7 @@ public class SceneController {
     }
 
     public void start() {
-        newScene("launch"); /* Default is the launching scene */
+        newScene("menu"); /* Default is the launching scene */
         this.primaryStage.setTitle("Ma ville - Équipe 19");
         this.primaryStage.show();
     }

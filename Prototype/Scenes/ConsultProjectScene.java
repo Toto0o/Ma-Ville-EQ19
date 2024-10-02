@@ -1,27 +1,42 @@
 package Scenes;
 
 import Controllers.SceneController;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-/*
- * Faire des container pour chaque projet. Le container aura :
- *  - un titre
- *  - des éléments de description (genre type, nom de intervenant, duré/dates)
- *  - un bouton amenant vers une page de description détaillé du projet
- */
-
- /*
-  * Ajouter une barre de recherche pour chercher un projet spécifique
-  */
 
 public class ConsultProjectScene extends Scenes {
+
+    private HBox menuBox;
+    private VBox projectBox;
+
+    private Button menuButton;
 
     public ConsultProjectScene(SceneController sceneController) {
         super(sceneController);
 
+        this.menuBox = new HBox();
+        this.projectBox = new VBox();
+
+        this.menuButton = new Button("Menu");
+
     }
 
     public void setScene() {
+
+        this.root.setTop(this.menuBox);
+        this.menuBox.getChildren().add(this.menuButton);
+
+        this.root.setCenter(this.projectBox);
+
+
+        this.menuButton.setOnMouseClicked((menuAction) -> {
+            this.sceneController.newScene("menu");
+        });
+
 
     }
 
