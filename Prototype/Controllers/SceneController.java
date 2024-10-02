@@ -13,15 +13,18 @@ public class SceneController {
     /* Scenes */
     private LaunchScene launchScene;
     private LoginScene loginScene;
-    private MenuScene menuScene;
+    private ResidentMenuScene menuScene;
     private RegisterScene registerScene;
+    private ConsultProjectScene consultProjectScene;
+    private SettingsScene settingsScene;
+    private RequestScene requestScene;
+    private ProblemScene problemScene;
 
     public SceneController(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
 
     public void start() {
-        /* Initial scene */
         newScene("launch"); /* Default is the launching scene */
         this.primaryStage.setTitle("Ma ville - Équipe 19");
         this.primaryStage.show();
@@ -40,13 +43,28 @@ public class SceneController {
                 break;
             
             case "menu" :
-                this.scene = newMenuScene();
+                this.scene = newResidentMenuScene();
                 break;
 
             case "register" :
                 this.scene = newRegisterScene();
                 break;
+            
+            case "consult" :
+                this.scene = newConsultProjectScene();
+                break;
+            
+            case "settings" :
+                this.scene = newSettingsScene();
+                break;
 
+            case "request" :
+                this.scene = newRequestScene();
+                break;
+
+            case "problem" :
+                this.scene = newProblemScene();
+                break;
         };
         
         this.primaryStage.setScene(this.scene);
@@ -68,8 +86,8 @@ public class SceneController {
         return this.loginScene.getScene();
     }
 
-    private Scene newMenuScene() {
-        this.menuScene = new MenuScene(this);
+    private Scene newResidentMenuScene() {
+        this.menuScene = new ResidentMenuScene(this);
         this.menuScene.setScene();
         return this.menuScene.getScene();
     }
@@ -78,6 +96,30 @@ public class SceneController {
         this.registerScene = new RegisterScene(this);
         this.registerScene.setScene();
         return this.registerScene.getScene();
+    }
+
+    private Scene newConsultProjectScene() {
+        this.consultProjectScene = new ConsultProjectScene(this);
+        this.consultProjectScene.setScene();
+        return this.consultProjectScene.getScene();
+    }
+
+    private Scene newSettingsScene() {
+        this.settingsScene = new SettingsScene(this);
+        this.settingsScene.setScene();
+        return this.settingsScene.getScene();
+    }
+
+    private Scene newRequestScene() {
+        this.requestScene = new RequestScene(this);
+        this.requestScene.setScene();
+        return this.requestScene.getScene();
+    }
+
+    private Scene newProblemScene() {
+        this.problemScene = new ProblemScene(this);
+        this.problemScene.setScene();
+        return this.problemScene.getScene();
     }
 
 }
