@@ -1199,11 +1199,10 @@
                 <div class="scenario" id="cu-5">
                     <div class="scenario-meta">
                         <h4 class="cu-name">
-                            <strong>CU:</strong> Personnaliser les notifications
+                            <strong>CU:</strong> Personnaliser son profil
                         </h4>
                         <p class="cu-goal">
-                            <strong>Objectif:</strong> Un utilisateur désire personnaliser ses notifications selon ses
-                            préférences
+                            <strong>Objectif:</strong> Un utilisateur désire personnaliser son profil
                         </p>
 
                         <hr>
@@ -1225,21 +1224,24 @@
                         <div class="cu-part">
                             <h5 class="cu-part-title">Postconditions</h5>
                             <ul class="bare-list cu-conditions">
-                                <li class="dash">Le système enregistre les informations suivantes : les préférences de
-                                    notifications de
-                                    l'utilisateur</li>
+                                <li class="dash">Le système enregistre les informations suivantes : les préférences de l'utilisateur</li>
                             </ul>
                         </div>
 
+                        <div class="cu-part cu-part--notes">
+                            <h5 class="cu-part-title">Notes</h5>
+                            <p class="cu-notes">L'hypothèse est de pouvoir mdofifier ou personnaliser les fonctionnalités suivantes : les notifications, le profil (nom d'utilisateur, mot de passe, email, etc.), les préférences d'heures</p>
+                        </div>
                     </div>
                     <div class="scenario-main">
                         <h5 class="scenario-main-title">Scénario principal</h5>
                         <ol class="scenario-main-steps">
-                            <li class="scenario-main-step">L'utilisateur accède à l'option de réglage des notifications
-                            </li>
-                            <li class="scenario-main-step">Le systeme affiche les différents réglages</li>
-                            <li class="scenario-main-step">L'utilisateur choisis ses préférences</li>
-                            <li class="scenario-main-setp">Le systeme enregistre les préférences</li>
+                            <li class="scenario-main-step">L'utilisateur accède à l'option de personnalisatio du profil</li>
+                            <li class="scenario-main-step">Le systeme affiche les différents réglages et personnalisation possible</li>
+                            <li class="scenario-main-step">L'utilisateur choisis une option</li>
+                            <li class="scenario-main-setp">Le systeme affiche les différentes possibilités de personnalisation et de réglages relié à cet option</li>
+                            <li class="scenario-main-step">L'utilisateur choisis ses réglages et préférences</li>
+                            <li class="scenario-main-step">Le systeme enregistre les réglages et préférences choisies</li>
                         </ol>
                     </div>
                 </div>
@@ -1247,64 +1249,12 @@
                 <div class="scenario" id="cu-6">
                     <div class="scenario-meta">
                         <h4 class="cu-name">
-                            <strong>CU:</strong> Permettre une planification participative : choisir ses préférences
-                            d'horaire
-                        </h4>
-                        <p class="cu-goal">
-                            <strong>Objectif:</strong> Un résident désire fournir une plage horaire ou il préfère avoir
-                            des travaux dans
-                            son quartier.
-                        </p>
-
-                        <hr>
-
-                        <div class="cu-part">
-                            <h5 class="cu-part-title">Acteurs</h5>
-                            <ul class="bare-list cu-actors">
-                                <li class="cu-actor">Résident (Principal)</li>
-                            </ul>
-                        </div>
-
-                        <div class="cu-part">
-                            <h5 class="cu-part-title">Préconditions</h5>
-                            <ul class="bare-list cu-conditions">
-                                <li class="dash">Le résident est inscrit dans le système</li>
-                            </ul>
-                        </div>
-
-                        <div class="cu-part">
-                            <h5 class="cu-part-title">Postconditions</h5>
-                            <ul class="bare-list cu-conditions">
-                                <li class="dash">Le système enregistre les informations suivantes : les préférences
-                                    d'horaire du
-                                    résident</li>
-                            </ul>
-                        </div>
-
-                    </div>
-                    <div class="scenario-main">
-                        <h5 class="scenario-main-title">Scénario principal</h5>
-                        <ol class="scenario-main-steps">
-                            <li class="scenario-main-step">Le résident accède à l'option de planification participative
-                            </li>
-                            <li class="scenario-main-step">Le résident accède à l'option de préférences des plages
-                                horaires</li>
-                            <li class="scenario-main-step">Le système demande d'entrer ses préférences</li>
-                            <li class="scenario-main-setp">Le systeme enregistre les préférences</li>
-                        </ol>
-                    </div>
-                </div>
-
-                <div class="scenario" id="cu-7">
-                    <div class="scenario-meta">
-                        <h4 class="cu-name">
-                            <strong>CU:</strong> Permettre une planification participative : consulter les préférences
+                            <strong>CU:</strong> Consulter les préférences
                             des autres
                             résidents du quartier
                         </h4>
                         <p class="cu-goal">
-                            <strong>Objectif:</strong> Un résident désire consulter les préférences des autres résidents
-                            du quartier.
+                            <strong>Objectif:</strong> Un résident désire consulter les préférences des autres résidents du quartier.
                         </p>
 
                         <hr>
@@ -1327,27 +1277,18 @@
                     <div class="scenario-main">
                         <h5 class="scenario-main-title">Scénario principal</h5>
                         <ol class="scenario-main-steps">
-                            <li class="scenario-main-step">Le résident accède à l'option de planification participative
-                            </li>
-                            <li class="scenario-main-step">Le résident accède à l'option de consulation des préférences
-                                des autres
-                                résidents</li>
-                            <li class="scenario-main-step">Le système recherche dans la base de donnée les préférences
-                                des autres
-                                résidents du quartier</li>
-                            <li class="scenario-main-setp">Le systeme affiche les préférences des autres résidents du
-                                quartier</li>
+                            <li class="scenario-main-step">Le résident accède à l'option de consulation des préférences des autres résidents</li>
+                            <li class="scenario-main-step">Le système recherche dans la base de donnée les préférences des autres résidents du quartier</li>
+                            <li class="scenario-main-setp">Le systeme affiche les préférences des autres résidents du quartier</li>
                         </ol>
                         <div class="scenario-alt">
                             <h5 class="scenario-alt-title">Scénarios alternatifs</h5>
                             <ol class="bare-list scenario-alt-steps">
-                                <li class="scenario-alt-step" value="4">
+                                <li class="scenario-alt-step" value="2">
                                     La recherche ne retourne rien
                                     <ol class="bare-list">
-                                        <li value="4">Le systeme affiche qu'il n'y pas de préférences de plages horaire
-                                            en enregistré
-                                            par les autres résidents de son quartier</li>
-                                        <li value="4">Le scénario se termine</li>
+                                        <li value="2">Le systeme affiche qu'il n'y pas de préférences de plages horaire enregistré par les autres résidents de son quartier</li>
+                                        <li value="2">Le scénario se termine</li>
                                     </ol>
                                 </li>
                             </ol>
@@ -1355,15 +1296,13 @@
                     </div>
                 </div>
 
-                <div class="scenario" id="cu-8">
+                <div class="scenario" id="cu-7">
                     <div class="scenario-meta">
                         <h4 class="cu-name">
-                            <strong>CU:</strong> Permettre une planification participative : laisser un avis
+                            <strong>CU:</strong> Laisser un avis
                         </h4>
                         <p class="cu-goal">
-                            <strong>Objectif:</strong> Le résident désire laisser un avis sur les travaux ou
-                            l'intervenant d'un projet
-                            terminé.
+                            <strong>Objectif:</strong> Le résident désire laisser un avis sur les travaux ou l'intervenant d'un projet terminé.
                         </p>
 
                         <hr>
@@ -1378,16 +1317,14 @@
                         <div class="cu-part">
                             <h5 class="cu-part-title">Préconditions</h5>
                             <ul class="bare-list cu-conditions">
-                                <li class="dash">L'utilisateur est inscrit dans le système. Le résident est abonné à un
-                                    projet</li>
+                                <li class="dash">L'utilisateur est inscrit dans le système. Le résident est abonné à un projet</li>
                             </ul>
                         </div>
 
                         <div class="cu-part">
                             <h5 class="cu-part-title">Postconditions</h5>
                             <ul class="bare-list cu-conditions">
-                                <li class="dash">Le système à enregistré les informations suivante : l'avis du résident
-                                    sur un projet
+                                <li class="dash">Le système à enregistré les informations suivante : l'avis du résident sur un projet
                                 </li>
                             </ul>
                         </div>
@@ -1396,36 +1333,17 @@
                     <div class="scenario-main">
                         <h5 class="scenario-main-title">Scénario principal</h5>
                         <ol class="scenario-main-steps">
-                            <li class="scenario-main-step">Le résident accède à l'option de planification participative
+                            <li class="scenario-main-step">Le résident accède à la page du projet
                             </li>
                             <li class="scenario-main-step">Le résident accède à l'option de laisser un avis</li>
-                            <li class="scenario-main-step">Le système recherche dans la base de donnée les projets
-                                auquel le résident
-                                est abooné</li>
-                            <li class="scenario-main-setp">Le systeme affiche les projets auquel le résident est abonné
-                            </li>
-                            <li class="scenario-main-step">Le résident sélectionne un projet</li>
                             <li class="scenario-main-step">Le systeme demande d'entrer l'avis</li>
                             <li class="scenario-main-step">Le résident entre son avis</li>
                             <li class="scenario-main-step">Le systeme enregistre l'avis</li>
                         </ol>
-                        <div class="scenario-alt">
-                            <h5 class="scenario-alt-title">Scénarion alternatifs</h5>
-                            <ol class="bare-list scenario-alt-steps">
-                                <li class="scenario-alt-step" value="3">
-                                    Le résident n'est abonné à aucun projet
-                                </li>
-                                <ol class="bare-list">
-                                    <li value="3">Le systeme affiche que le résident n'est abonné à aucun projet</li>
-                                    <li value="3">Le système propose au résident de chercher un projet</li>
-                                    <li value="3">Le scénario se termine</li>
-                                </ol>
-                            </ol>
-                        </div>
                     </div>
                 </div>
 
-                <div class="scenario" id="cu-9">
+                <div class="scenario" id="cu-8">
                     <div class="scenario-meta">
                         <h4 class="cu-name">
                             <strong>CU:</strong> Soumettre une requête de travail
@@ -1493,7 +1411,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="scenario" id="cu-10">
+                <div class="scenario" id="cu-9">
                     <div class="scenario-meta">
                         <h4 class="cu-name">
                             <strong>CU:</strong> Signaler un problème
@@ -1507,23 +1425,21 @@
                         <div class="cu-part">
                             <h5 class="cu-part-title">Acteurs</h5>
                             <ul class="bare-list cu-actors">
-                                <li class="cu-actor">Utilisateur (Principal)</li>
+                                <li class="cu-actor">Utilisateur (Principal), Intervenant (Secondaire)</li>
                             </ul>
                         </div>
 
                         <div class="cu-part">
                             <h5 class="cu-part-title">Préconditions</h5>
                             <ul class="bare-list cu-conditions">
-                                <li class="dash">L'utilisateur est inscrit dans le système. Le résident est abonné à un
-                                    projet</li>
+                                <li class="dash">L'utilisateur est inscrit dans le système.</li>
                             </ul>
                         </div>
 
                         <div class="cu-part">
                             <h5 class="cu-part-title">Postconditions</h5>
                             <ul class="bare-list cu-conditions">
-                                <li class="dash">Le système à enregistré les informations suivante : l'avis du résident
-                                    sur un projet
+                                <li class="dash">Le système à enregistré les informations suivante : le titre du problème, son type et la description détaillée.
                                 </li>
                             </ul>
                         </div>
@@ -1532,34 +1448,14 @@
                     <div class="scenario-main">
                         <h5 class="scenario-main-title">Scénario principal</h5>
                         <ol class="scenario-main-steps">
-                            <li class="scenario-main-step">Le résident accède à l'option de planification participative
-                            </li>
-                            <li class="scenario-main-step">Le résident accède à l'option de laisser un avis</li>
-                            <li class="scenario-main-step">Le système recherche dans la base de donnée les projets
-                                auquel le résident
-                                est abooné</li>
-                            <li class="scenario-main-setp">Le systeme affiche les projets auquel le résident est abonné
-                            </li>
-                            <li class="scenario-main-step">Le résident sélectionne un projet</li>
-                            <li class="scenario-main-step">Le systeme demande d'entrer l'avis</li>
-                            <li class="scenario-main-step">Le résident entre son avis</li>
-                            <li class="scenario-main-step">Le systeme enregistre l'avis</li>
+                            <li class="scenario-main-step">Le résident accède à l'option de signaler un problème</li>
+                            <li class="scenario-main-step">Le systeme affiche les informations à remplir</li>
+                            <li class="scenario-main-setp">Le résidents entre les informations</li>
+                            <li class="scenario-main-step">Le systeme envoie les informations à un intervenant</li>
                         </ol>
-                        <div class="scenario-alt">
-                            <h5 class="scenario-alt-title">Scénarion alternatifs</h5>
-                            <ol class="bare-list scenario-alt-steps">
-                                <li class="scenario-alt-step" value="3">
-                                    Le résident n'est abonné à aucun projet
-                                </li>
-                                <ol class="bare-list">
-                                    <li value="3">Le systeme affiche que le résident n'est abonné à aucun projet</li>
-                                    <li value="3">Le système propose au résident de chercher un projet</li>
-                                    <li value="3">Le scénario se termine</li>
-                                </ol>
-                            </ol>
-                        </div>
                     </div>
                 </div>
+                
                 <h3 class="subsection-title">Diagramme d'activités</h3>
                 <div class="activity">
                     <h4>Titre du diagramme 1</h4>
