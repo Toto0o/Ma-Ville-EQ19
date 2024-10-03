@@ -1455,6 +1455,185 @@
                         </ol>
                     </div>
                 </div>
+
+                <div class="scenario" id="cu-10">
+                    <div class="scenario-meta">
+                        <h4 class="cu-name">
+                            <strong>CU:</strong> Consulter la liste des requêtes
+                        </h4>
+                        <p class="cu-goal">
+                            <strong>Objectif:</strong> Un intervenant désire consulter la liste des requêtes de travaux
+                        </p>
+
+                        <hr>
+
+                        <div class="cu-part">
+                            <h5 class="cu-part-title">Acteurs</h5>
+                            <ul class="bare-list cu-actors">
+                                <li class="cu-actor">Intervenant (Principal)</li>
+                            </ul>
+                        </div>
+
+                        <div class="cu-part">
+                            <h5 class="cu-part-title">Préconditions</h5>
+                            <ul class="bare-list cu-conditions">
+                                <li class="dash">L'intervenant est inscrit dans le système</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="scenario-main">
+                        <h5 class="scenario-main-title">Scénario principal</h5>
+                        <ol class="scenario-main-steps">
+                            <li class="scenario-main-step">L'intervenant accède à l'option de consultation des requêtes</li>
+                            <li class="scenario-main-step">Le système affiche les différentes requêtes</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="scenario" id="cu-11">
+                    <div class="scenario-meta">
+                        <h4 class="cu-name">
+                            <strong>CU:</strong> Soumettre sa condidature à un projet
+                        </h4>
+                        <p class="cu-goal">
+                            <strong>Objectif:</strong> Un intervenant désire soumettre sa condidature à un projet
+                        </p>
+
+                        <hr>
+
+                        <div class="cu-part">
+                            <h5 class="cu-part-title">Acteurs</h5>
+                            <ul class="bare-list cu-actors">
+                                <li class="cu-actor">Intervenant (Principal)</li>
+                            </ul>
+                        </div>
+
+                        <div class="cu-part">
+                            <h5 class="cu-part-title">Préconditions</h5>
+                            <ul class="bare-list cu-conditions">
+                                <li class="dash">L'intervenant est inscrit dans le système</li>
+                            </ul>
+                        </div>
+
+                        <div class="cu-part">
+                            <h5 class="cu-part-title">Postconditions</h5>
+                            <ul class="bare-list cu-conditions">
+                                <li class="dash">Le système à enregistrer les informations suivantes : la date de début et de fin du projet</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="scenario-main">
+                        <h5 class="scenario-main-title">Scénario principal</h5>
+                        <ol class="scenario-main-steps">
+                            <li class="scenario-main-step">L'intervenant accède à l'option de consultation des requêtes</li>
+                            <li class="scenario-main-step">Le système affiche les requêtes</li>
+                            <li class="scenario-main-step">L'intervenant choisis le projet auquel il désire soumettre sa candidature</li>
+                            <li class="scenario-main-step">Le système demande d'entrer la date de début et la date de fin</li>
+                            <li class="scenario-main-step">L'intervenant entre les dates demandées</li>
+                            <li class="scenario-main-step">Le système enregistre les dates</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="scenario" id="cu-12">
+                    <div class="scenario-meta">
+                        <h4 class="cu-name">
+                            <strong>CU:</strong> Soumettre un projet de travaux
+                        </h4>
+                        <p class="cu-goal">
+                            <strong>Objectif:</strong> Un intervenant désire soumettre un nouveau projet de travaux
+                        </p>
+
+                        <hr>
+
+                        <div class="cu-part">
+                            <h5 class="cu-part-title">Acteurs</h5>
+                            <ul class="bare-list cu-actors">
+                                <li class="cu-actor">Intervenant (Principal)</li>
+                            </ul>
+                        </div>
+
+                        <div class="cu-part">
+                            <h5 class="cu-part-title">Préconditions</h5>
+                            <ul class="bare-list cu-conditions">
+                                <li class="dash">L'intervenant est iscrit dans le système</li>
+                            </ul>
+                        </div>
+
+                        <div class="cu-part">
+                            <h5 class="cu-part-title">Postconditions</h5>
+                            <ul class="bare-list cu-conditions">
+                                <li class="dash">Le système à enregistrer les informations suivantes : le titre du projet, la description du projet, le type de travaux, les quartiers affectés, les rues affectés, les dates de débuts et de fin, l'horaire des travaux</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="scenario-main">
+                        <h5 class="scenario-main-title">Scénario principal</h5>
+                        <ol class="scenario-main-steps">
+                            <li class="scenario-main-step">L'intervenant accède à l'option de soumission de nouveau projet de travaux</li>
+                            <li class="scenario-main-step">Le système demande d'entrer les informations relatives au projet</li>
+                            <li class="scenario-main-step">L'intervenant entre les informations</li>
+                            <li class="scenario-main-step">Le système valide les informations</li>
+                            <li class="scenario-main-setp">Le systeme valide qu'il n'y a pas de conflit avec les préférences des résidents relativement aux dates</li>
+                            <li class="scenario-main-step">Le système enregistre la soumission</li>
+                        </ol>
+
+                        <div class="scenario-alt">
+                            <h5 class="scenario-alt-title">Scénarios alternatifs</h5>
+                            <ol class="bare-list scenario-alt-steps">
+                                <li class="scenario-alt-step" value="5">
+                                    Il y a un conflit avec une ou des préférences des résidents
+                                    <ol class="bare-list">
+                                        <li value="5">Le système affiche qu'il y a des conflits avec les préférences des résidents</li>
+                                        <li value="5">Le système affiche les différents conflits</li>
+                                        <li value="5">Le scenario reprend à l'étape 6</li>
+                                    </ol>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="scenario" id="cu-13">
+                    <div class="scenario-meta">
+                        <h4 class="cu-name">
+                            <strong>CU:</strong> Mettre à jour les informations d'un chantier
+                        </h4>
+                        <p class="cu-goal">
+                            <strong>Objectif:</strong> Un intervenant désire mettre à jour les informations d'un chantier
+                        </p>
+
+                        <hr>
+
+                        <div class="cu-part">
+                            <h5 class="cu-part-title">Acteurs</h5>
+                            <ul class="bare-list cu-actors">
+                                <li class="cu-actor">Intervenant (Principal)</li>
+                            </ul>
+                        </div>
+
+                        <div class="cu-part">
+                            <h5 class="cu-part-title">Préconditions</h5>
+                            <ul class="bare-list cu-conditions">
+                                <li class="dash">L'intervenant possède un identifiant de la ville. L'intervenant est associé au projet qu'il désire mettre à jour</li>
+                            </ul>
+                        </div>
+
+                        <div class="cu-part">
+                            <h5 class="cu-part-title">Postconditions</h5>
+                            <ul class="bare-list cu-conditions">
+                                <li class="dash">Le système à enregistrer les informations suivantes : la description du projet, la date de fin prévue et le satut du projet</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="scenario-main">
+                        <h5 class="scenario-main-title">Scénario principal</h5>
+                        <ol class="scenario-main-steps">
+                            <li class="scenario-main-step">L'intervenant accède à la page du projet</li>
+                            <li class="scenario-main-step">L'intervenant choisis l'option de mise à jour du projet</li>
+                            <li class="scenario-main-step">Le systeme affiche les informations que l'intervenant peut modifier</li>
+                            <li class="scenario-main-step">Le système enregistre les informations</li>
+                        </ol>
+                    </div>
+                </div>
                 
                 <h3 class="subsection-title">Diagramme d'activités</h3>
                 <div class="activity">
