@@ -1,8 +1,9 @@
-package Scenes;
+package Prototype.Scenes;
 
-import Controllers.SceneController;
+import Prototype.Controllers.SceneController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -59,7 +60,14 @@ public class RequestScene extends Scenes{
             this.dateField,
             this.sendRequest
         );
+        this.titleField.setMaxWidth(250);
+        this.descriptionField.setMaxWidth(250);
+        this.typeComboBox.setMaxWidth(250);
+        this.dateField.setMaxWidth(250);
+
+
         this.requestBox.setSpacing(20);
+        this.requestBox.setAlignment(Pos.CENTER);
 
         this.newRequest.setOnMouseClicked((requestAction) -> {
             this.root.setCenter(this.requestBox);

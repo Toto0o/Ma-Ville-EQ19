@@ -1,8 +1,8 @@
-package Controllers;
+package Prototype.Controllers;
 
 import javafx.stage.Stage;
 import javafx.scene.*;
-import Scenes.*;
+import Prototype.Scenes.*;
 
 
 public class SceneController {
@@ -19,13 +19,16 @@ public class SceneController {
     private SettingsScene settingsScene;
     private RequestScene requestScene;
     private ProblemScene problemScene;
+    private NotificationScene notificationScene;
+    private InfoSettingsScene infoSettingsScene;
+    private NotificationSettingsScene notificationSettingsScene;
 
     public SceneController(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
 
     public void start() {
-        newScene("menu"); /* Default is the launching scene */
+        newScene("launch"); /* Default is the launching scene */
         this.primaryStage.setTitle("Ma ville - Équipe 19");
         this.primaryStage.show();
     }
@@ -64,6 +67,18 @@ public class SceneController {
 
             case "problem" :
                 this.scene = newProblemScene();
+                break;
+
+            case "notifications" :
+                this.scene = newNotificationScene();
+                break;
+
+            case "infoSettings" :
+                this.scene = newInfoSettingsScene();
+                break;
+
+            case "notificationSettings" :
+                this.scene = newNotificationSettingsScene();
                 break;
         };
         
@@ -120,6 +135,24 @@ public class SceneController {
         this.problemScene = new ProblemScene(this);
         this.problemScene.setScene();
         return this.problemScene.getScene();
+    }
+
+    private Scene newNotificationScene() {
+        this.notificationScene = new NotificationScene(this);
+        this.notificationScene.setScene();
+        return this.notificationScene.getScene();
+    }
+
+    private Scene newInfoSettingsScene() {
+        this.infoSettingsScene = new InfoSettingsScene(this);
+        this.infoSettingsScene.setScene();
+        return this.infoSettingsScene.getScene();
+    }
+
+    private Scene newNotificationSettingsScene() {
+        this.notificationSettingsScene = new NotificationSettingsScene(this);
+        this.notificationSettingsScene.setScene();
+        return this.notificationSettingsScene.getScene();
     }
 
 }

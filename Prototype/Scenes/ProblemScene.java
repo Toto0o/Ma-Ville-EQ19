@@ -1,6 +1,6 @@
-package Scenes;
+package Prototype.Scenes;
 
-import Controllers.SceneController;
+import Prototype.Controllers.SceneController;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;

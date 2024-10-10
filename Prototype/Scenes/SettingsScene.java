@@ -1,6 +1,6 @@
-package Scenes;
+package Prototype.Scenes;
 
-import Controllers.SceneController;
+import Prototype.Controllers.SceneController;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -10,7 +10,7 @@ import javafx.scene.text.Text;
 
 public class SettingsScene extends Scenes {
 
-    private Button addHoursPreference, saveHoursPreferece, addNotificationPreference, saveNotificationPreference, menu, back;
+    private Button addHoursPreference, saveHoursPreferece, addNotificationPreference, saveNotificationPreference, infoSettings,menu, back;
 
     private HBox notificationBox;
     private VBox buttonBox, hoursBox;
@@ -27,6 +27,7 @@ public class SettingsScene extends Scenes {
         this.saveNotificationPreference = new Button("Enregistrer mes préférences");
         this.menu = new Button("Menu");
         this.back = new Button("Retour");
+        this.infoSettings = new Button("Modifier mes informations");
 
         this.buttonBox = new VBox();
         this.hoursBox = new VBox();
@@ -44,7 +45,7 @@ public class SettingsScene extends Scenes {
         this.root.setCenter(this.buttonBox);
         this.buttonBox.setAlignment(Pos.CENTER);
         this.buttonBox.setSpacing(30);
-        this.buttonBox.getChildren().addAll(this.addHoursPreference, this.addNotificationPreference);
+        this.buttonBox.getChildren().addAll(this.addHoursPreference, this.addNotificationPreference, this.infoSettings);
 
         this.hoursBox.getChildren().addAll(
             this.hourStartText,
@@ -79,8 +80,12 @@ public class SettingsScene extends Scenes {
 
         });
 
-        this.addNotificationPreference.setOnMouseClicked((noticationPreferenceAction) -> {
+        this.addNotificationPreference.setOnMouseClicked((notificationPreferenceAction) -> {
+            this.sceneController.newScene("notificationSettings");
+        });
 
+        this.infoSettings.setOnMouseClicked((infoSettingsAction) -> {
+            this.sceneController.newScene("infoSettings");
         });
 
 

@@ -1,3 +1,5 @@
+package Prototype;
+
 import javafx.util.Pair;
 
 public class Utilisateur {

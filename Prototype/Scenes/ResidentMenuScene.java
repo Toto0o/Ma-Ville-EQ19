@@ -1,6 +1,6 @@
-package Scenes;
+package Prototype.Scenes;
 
-import Controllers.SceneController;
+import Prototype.Controllers.SceneController;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
@@ -12,15 +12,17 @@ public class ResidentMenuScene extends Scenes {
 
     private VBox vBox;
     private HBox titleBox;
-    private Button consultButton, settingsButton, requestButton, problemButton;
+    private Button consultButton, settingsButton, requestButton, problemButton, logoutButton, notificationButton;
     private Text title;
 
     public ResidentMenuScene(SceneController sceneController) {
         super(sceneController);
         this.consultButton = new Button("Consulter des travaux en cours");
-        this.settingsButton = new Button("Préférences");
+        this.settingsButton = new Button("Personnaliser le profil");
         this.requestButton = new Button("Soumettre une requête de travail");
         this.problemButton = new Button("Siganler un problème");
+        this.notificationButton = new Button("Consulter les notifications");
+        this.logoutButton = new Button("Déconnexion");
 
         this.vBox = new VBox();
         this.titleBox = new HBox();
@@ -37,7 +39,9 @@ public class ResidentMenuScene extends Scenes {
             this.consultButton,
             this.settingsButton,
             this.requestButton,
-            this.problemButton
+            this.problemButton,
+            this.notificationButton,
+            this.logoutButton
         );
         this.vBox.setAlignment(Pos.CENTER);
         this.vBox.setSpacing(30);
@@ -56,6 +60,14 @@ public class ResidentMenuScene extends Scenes {
 
         this.problemButton.setOnMouseClicked((problemAction) -> {
             this.sceneController.newScene("problem");
+        });
+
+        this.notificationButton.setOnMouseClicked((notificationAction) -> {
+            this.sceneController.newScene("notifications");
+        });
+
+        this.logoutButton.setOnMouseClicked((logoutAction) -> {
+            this.sceneController.newScene("launch");
         });
     }
 

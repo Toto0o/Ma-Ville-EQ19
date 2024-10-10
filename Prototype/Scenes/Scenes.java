@@ -1,7 +1,7 @@
-package Scenes;
+package Prototype.Scenes;
 
 
-import Controllers.SceneController;
+import Prototype.Controllers.SceneController;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 

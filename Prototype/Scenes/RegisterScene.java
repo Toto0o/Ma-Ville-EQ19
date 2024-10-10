@@ -1,7 +1,8 @@
-package Scenes;
+package Prototype.Scenes;
 
-import Controllers.SceneController;
-import Interfaces.CredentialsVerifier;
+import Prototype.Controllers.SceneController;
+import Prototype.Interfaces.CredentialsVerifier;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
@@ -12,7 +13,7 @@ public class RegisterScene extends Scenes{
     private TextField nameField, lastNameField, birthdayField, addressField, emailField, phoneField, password1Field, password2Field;
     private Text nameText, lastNameText, birthdayText, addressText, emailText, phoneText, password1Text, password2Text;
 
-    private Button registerButton;
+    private Button registerButton, menu;
 
     private VBox vBox;
 
@@ -44,6 +45,7 @@ public class RegisterScene extends Scenes{
         this.vBox = new VBox();
 
         this.registerButton = new Button("Register");
+        this.menu = new Button("Retour");
 
         /* this.credentialsVerifier = new CredentialsVerifier(); */
 
@@ -53,9 +55,9 @@ public class RegisterScene extends Scenes{
     }
 
     public void setScene() {
-
+        this.root.setTop(this.menu);
         this.root.setCenter(this.vBox);
-        
+        this.vBox.setAlignment(Pos.CENTER);
         this.vBox.getChildren().addAll(
             this.nameText,
             this.nameField,
@@ -75,6 +77,15 @@ public class RegisterScene extends Scenes{
             this.password2Field,
             this.registerButton
             );
+            this.nameField.setMaxWidth(250);
+            this.lastNameField.setMaxWidth(250);
+            this.birthdayField.setMaxWidth(250);
+            this.addressField.setMaxWidth(250);
+            this.emailField.setMaxWidth(250);
+            this.phoneField.setMaxWidth(250);
+            this.password1Field.setMaxWidth(250);
+            this.password2Field.setMaxWidth(250);
+
 
             registerButton.setOnMouseClicked((registerAction) -> {
                 if (this.credentialsVerifier.verifyAdress(this.addressField.getText())) {
@@ -91,6 +102,10 @@ public class RegisterScene extends Scenes{
                     this.vBox.getChildren().add(this.errorAddress);
                     this.addressField.clear();
                 }
+            });
+
+            this.menu.setOnMouseClicked((retourAction) -> {
+                this.sceneController.newScene("launch");
             });
 
     }

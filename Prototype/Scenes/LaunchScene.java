@@ -1,6 +1,6 @@
-package Scenes;
+package Prototype.Scenes;
 
-import Controllers.SceneController;
+import Prototype.Controllers.SceneController;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -42,6 +42,7 @@ public class LaunchScene extends Scenes {
         vBox.setAlignment(Pos.CENTER);
 
         buttonsBox.getChildren().addAll(loginButton, registerButton);
+        buttonsBox.setAlignment(Pos.CENTER);
 
         loginButton.setOnMouseClicked((loginAction) -> {
             this.sceneController.newScene("login");

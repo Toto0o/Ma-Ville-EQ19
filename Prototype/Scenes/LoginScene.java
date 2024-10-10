@@ -1,13 +1,13 @@
-package Scenes;
+package Prototype.Scenes;
 
-import Controllers.SceneController;
-import Interfaces.CredentialsVerifier;
+import Prototype.Controllers.SceneController;
+import Prototype.Interfaces.CredentialsVerifier;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -41,17 +41,31 @@ public class LoginScene extends Scenes {
 
     public void setScene() {
         this.root.setCenter(this.vBox);
-
+        this.vBox.setAlignment(Pos.CENTER);
         this.vBox.getChildren().addAll(usernamText, usernameField, passwordText, passwordField, loginButton);
-
+        this.usernameField.setMaxWidth(250);
+        this.passwordField.setMaxWidth(250);
+        this.vBox.setSpacing(10);
         this.loginButton.setOnMouseClicked((loginAction) -> {
-            if (this.credentialsVerifier.verifyCredentials(this.usernameField.getText(), this.passwordField.getText())) {
+            if (this.usernameField.getText().equals("email@example.com") && this.passwordField.getText().equals("1234")) {
                 this.sceneController.newScene("menu");
             }
             else {
                 this.vBox.getChildren().add(error);
                 this.usernameField.clear();
                 this.passwordField.clear();
+            }
+        });
+        this.root.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER) {
+                if (this.usernameField.getText().equals("email@example.com") && this.passwordField.getText().equals("1234")) {
+                    this.sceneController.newScene("menu");
+                }
+                else {
+                    this.vBox.getChildren().add(error);
+                    this.usernameField.clear();
+                    this.passwordField.clear();
+                }
             }
         });
     }

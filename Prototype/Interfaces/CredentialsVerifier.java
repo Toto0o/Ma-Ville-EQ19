@@ -1,6 +1,4 @@
-package Interfaces;
-
-import javax.swing.text.StyledEditorKit.BoldAction;
+package Prototype.Interfaces;
 
 public interface CredentialsVerifier {
 
