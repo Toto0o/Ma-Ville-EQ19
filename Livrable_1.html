@@ -1638,10 +1638,10 @@ Le pourcentage après chaque abréviation (ex: VIL90%, MOB50%) indique :
                 <div class="scenario" id="cu-5">
                     <div class="scenario-meta">
                         <h4 class="cu-name">
-                            <strong>CU:</strong> Personnaliser son profil
+                            <strong>CU:</strong> Personnaliser son profil : modifier ses informations
                         </h4>
                         <p class="cu-goal">
-                            <strong>Objectif:</strong> Un utilisateur désire personnaliser son profil
+                            <strong>Objectif:</strong> Un utilisateur désire modifier ses informations
                         </p>
 
                         <hr>
@@ -1656,36 +1656,127 @@ Le pourcentage après chaque abréviation (ex: VIL90%, MOB50%) indique :
                         <div class="cu-part">
                             <h5 class="cu-part-title">Préconditions</h5>
                             <ul class="bare-list cu-conditions">
-                                <li class="dash">L'utilisateur est inscrit dans le système</li>
+                                <li class="dash">L'utilisateur est inscrit dans le système. Le résident est sur la page de personnalisation du profile et à choisis l'option de modification des informations</li>
                             </ul>
                         </div>
 
                         <div class="cu-part">
                             <h5 class="cu-part-title">Postconditions</h5>
                             <ul class="bare-list cu-conditions">
-                                <li class="dash">Le système enregistre les informations suivantes : les préférences de l'utilisateur</li>
+                                <li class="dash">Le système enregistre les informations modifiés tel : le nouveau nom d'utilisateur, le nouveau mot de passe, la nouvelle date de naissance, le nouveau email, le nouveau numéro de téléphonne, la nouvelle addresse.</address>  </li>
                             </ul>
                         </div>
 
                         <div class="cu-part cu-part--notes">
                             <h5 class="cu-part-title">Notes</h5>
-                            <p class="cu-notes">L'hypothèse est de pouvoir mdofifier ou personnaliser les fonctionnalités suivantes : les notifications, le profil (nom d'utilisateur, mot de passe, email, etc.), les préférences d'heures</p>
+                            <p class="cu-notes">Seules les informations modifiés seront enregistré par le système. S'il n'y a pas de modification pour une information, elle reste inchangé. S'il y a une modification dans l'adresse de résidence, le système doit vérifier la validité de l'addresse. Voir <a href= #cu-1>S'inscrire comme résident</a></a></p>
                         </div>
                     </div>
                     <div class="scenario-main">
                         <h5 class="scenario-main-title">Scénario principal</h5>
                         <ol class="scenario-main-steps">
-                            <li class="scenario-main-step">L'utilisateur accède à l'option de personnalisatio du profil</li>
-                            <li class="scenario-main-step">Le systeme affiche les différents réglages et personnalisation possible</li>
-                            <li class="scenario-main-step">L'utilisateur choisis une option</li>
-                            <li class="scenario-main-setp">Le systeme affiche les différentes possibilités de personnalisation et de réglages relié à cet option</li>
-                            <li class="scenario-main-step">L'utilisateur choisis ses réglages et préférences</li>
-                            <li class="scenario-main-step">Le systeme enregistre les réglages et préférences choisies</li>
+                            <li class="scenario-main-step">L'utilisateur accède à l'option de modification des informations</li>
+                            <li class="scenario-main-step">Le systeme affiche les champs d'information à remplir</li>
+                            <li class="scenario-main-step">L'utilisateur entre ses informations</li>
+                            <li class="scenario-main-setp">Le systeme valide les informations modifiés</li>
+                            <li class="scenario-main-step">Le systeme enregistre les modifications</li>
                         </ol>
                     </div>
                 </div>
 
                 <div class="scenario" id="cu-6">
+                    <div class="scenario-meta">
+                        <h4 class="cu-name">
+                            <strong>CU:</strong> Personnaliser son profil : personnaliser ses notifications
+                        </h4>
+                        <p class="cu-goal">
+                            <strong>Objectif:</strong> Un utilisateur désire personnaliser ses notifications
+                        </p>
+
+                        <hr>
+
+                        <div class="cu-part">
+                            <h5 class="cu-part-title">Acteurs</h5>
+                            <ul class="bare-list cu-actors">
+                                <li class="cu-actor">Utilisateur (Principal)</li>
+                            </ul>
+                        </div>
+
+                        <div class="cu-part">
+                            <h5 class="cu-part-title">Préconditions</h5>
+                            <ul class="bare-list cu-conditions">
+                                <li class="dash">L'utilisateur est inscrit dans le système. L'utilisateur est sur la page de personnalisation du profile et à choisis l'option de personnalisations des notifications</li>
+                            </ul>
+                        </div>
+
+                        <div class="cu-part">
+                            <h5 class="cu-part-title">Postconditions</h5>
+                            <ul class="bare-list cu-conditions">
+                                <li class="dash">Le système enregistre les options de personnalisations</address>  </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="scenario-main">
+                        <h5 class="scenario-main-title">Scénario principal</h5>
+                        <ol class="scenario-main-steps">
+                            <li class="scenario-main-step">L'utilisateur accède à l'option de personnalisation des notifications</li>
+                            <li class="scenario-main-step">Le systeme affiche les différentes options de personnalisations</li>
+                            <li class="scenario-main-step">L'utilisateur choisis ses préférences</li>
+                            <li class="scenario-main-setp">Le systeme enregistre les préférences</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="scenario" id="cu-7">
+                    <div class="scenario-meta">
+                        <h4 class="cu-name">
+                            <strong>CU:</strong> Consulter les notifications
+                        </h4>
+                        <p class="cu-goal">
+                            <strong>Objectif:</strong> Un utilisateur désire consulter ses notifications
+                        </p>
+
+                        <hr>
+
+                        <div class="cu-part">
+                            <h5 class="cu-part-title">Acteurs</h5>
+                            <ul class="bare-list cu-actors">
+                                <li class="cu-actor">Utilisateur (Principal)</li>
+                            </ul>
+                        </div>
+
+                        <div class="cu-part">
+                            <h5 class="cu-part-title">Préconditions</h5>
+                            <ul class="bare-list cu-conditions">
+                                <li class="dash">L'utilisateur est inscrit dans le système. L'utilisateur est sur la page de consultation des notifications</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="scenario-main">
+                        <h5 class="scenario-main-title">Scénario principal</h5>
+                        <ol class="scenario-main-steps">
+                            <li class="scenario-main-step">L'utilisateur accède à l'option de consultation des notifications</li>
+                            <li class="scenario-main-step">Le systeme recherche dans la base de données les notifications associés à l'utilisateur</li>
+                            <li class="scenario-main-step">Le système affiche les notifications de l'utilisateur</li>
+                            <li class="scenario-main-setp">L'utilisateur consulte les différentes notifications</li>
+                        </ol>
+                        <div class="scenario-alt">
+                            <h5 class="scenario-alt-title">Scénarios alternatifs</h5>
+                            <ol class="bare-list scenario-alt-steps">
+                                <li class="scenario-alt-step" value="2">
+                                    La recherche ne retourne pas de notifications
+                                    <ol class="bare-list">
+                                        <li value="2">Le système affiche qu'il n'y a aucune notification à consulter</li>
+                                        <li value="2">Le scenario se termine</li>
+                                    </ol>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="scenario" id="cu-8">
                     <div class="scenario-meta">
                         <h4 class="cu-name">
                             <strong>CU:</strong> Consulter les préférences
@@ -1735,7 +1826,7 @@ Le pourcentage après chaque abréviation (ex: VIL90%, MOB50%) indique :
                     </div>
                 </div>
 
-                <div class="scenario" id="cu-7">
+                <div class="scenario" id="cu-9">
                     <div class="scenario-meta">
                         <h4 class="cu-name">
                             <strong>CU:</strong> Laisser un avis
@@ -1782,7 +1873,7 @@ Le pourcentage après chaque abréviation (ex: VIL90%, MOB50%) indique :
                     </div>
                 </div>
 
-                <div class="scenario" id="cu-8">
+                <div class="scenario" id="cu-10">
                     <div class="scenario-meta">
                         <h4 class="cu-name">
                             <strong>CU:</strong> Soumettre une requête de travail
@@ -1850,7 +1941,7 @@ Le pourcentage après chaque abréviation (ex: VIL90%, MOB50%) indique :
                         </div>
                     </div>
                 </div>
-                <div class="scenario" id="cu-9">
+                <div class="scenario" id="cu-11">
                     <div class="scenario-meta">
                         <h4 class="cu-name">
                             <strong>CU:</strong> Signaler un problème
@@ -1895,7 +1986,7 @@ Le pourcentage après chaque abréviation (ex: VIL90%, MOB50%) indique :
                     </div>
                 </div>
 
-                <div class="scenario" id="cu-10">
+                <div class="scenario" id="cu-12">
                     <div class="scenario-meta">
                         <h4 class="cu-name">
                             <strong>CU:</strong> Consulter la liste des requêtes
@@ -1929,7 +2020,7 @@ Le pourcentage après chaque abréviation (ex: VIL90%, MOB50%) indique :
                     </div>
                 </div>
 
-                <div class="scenario" id="cu-11">
+                <div class="scenario" id="cu-13">
                     <div class="scenario-meta">
                         <h4 class="cu-name">
                             <strong>CU:</strong> Soumettre sa condidature à un projet
@@ -1973,7 +2064,7 @@ Le pourcentage après chaque abréviation (ex: VIL90%, MOB50%) indique :
                         </ol>
                     </div>
                 </div>
-                <div class="scenario" id="cu-12">
+                <div class="scenario" id="cu-14">
                     <div class="scenario-meta">
                         <h4 class="cu-name">
                             <strong>CU:</strong> Soumettre un projet de travaux
@@ -2031,7 +2122,7 @@ Le pourcentage après chaque abréviation (ex: VIL90%, MOB50%) indique :
                         </div>
                     </div>
                 </div>
-                <div class="scenario" id="cu-13">
+                <div class="scenario" id="cu-15">
                     <div class="scenario-meta">
                         <h4 class="cu-name">
                             <strong>CU:</strong> Mettre à jour les informations d'un chantier
