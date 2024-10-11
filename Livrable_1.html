@@ -996,6 +996,13 @@
                             <li>Les intervenants bénéficieront d'une meilleure compréhension des besoins et contraintes
                                 des résidents.</li>
                             <li>La transparence de l'information réduira le stress et la frustration des résidents.</li>
+                            <li>La portion de personnalisation des notifications ne comporte présentement aucun item. Il est prévu d'implémenter quelques personnalisation comme :
+                                <ul class=>
+                                    <li>Le type de notification (push, alertes, etc..)</li>
+                                    <li>Activer ou désactiver les notifications</li>
+                                    <li>Recevoir les notifications par email</li>
+                                    <li>Autres</li>
+                                </ul>
                         </em>
                     </p>
                 </section>
@@ -1004,9 +1011,7 @@
                 <section class="main-section">
                     <h2 id="requirements" class="section-title">Exigences</h2>
                     <p>
-                        Après de nombreuses rencontres avec le client et une familiarisation avec les activités de
-                        recyclage
-                        et compostage,
+                        Après communication avec le client et une familiarisation avec les type de travaux potentiels,
                         nous avons préparé un glossaire rassemblant les termes et expressions clés caractérisant
                         l'environnement.
                     </p>
@@ -1051,6 +1056,21 @@
                         <dt class="glossary-term">Travaux de services</dt>
                         <dd class="glossary-def">Interventions sur les réseaux de gaz, électricité ou
                             télécommunications.</dd>
+                        
+                        <dt class="glossary-term">Travaux de construction</dt>
+                        <dd class="glossary-def">Developpement d'un nouveau projet</dd>
+
+                        <dt class="glossary-term">Travaux de rénovation</dt>
+                        <dd class="glossary-def">Changement, modernisation ou restauration d'un ancien projet de travaux</dd>
+
+                        <dt class="glossary-term">Entretiens paysager</dt>
+                        <dd class="glossary-def">Entretiens des espaces natures</dd>
+
+                        <dt class="glossary-term">Travaux liés au transport en commun</dt>
+                        <dd class="glossary-def">Travaux sur les différents transports en commun. Travaux sur les lignes de métro ou sur les arrêts de bus</dd>
+
+                        <dt class="glossary-term">Travaux de signalisation et éclairage</dt>
+                        <dd class="glossary-def">Entretiens ou construction sur les feux de circulation, les pannaux routiers et les lampadaires.</dd>
                     </dl>
 
 
@@ -1417,7 +1437,7 @@
                             <p class="cu-goal">
                                 <strong>Objectif:</strong> Un intervenant désire créer un compte pour avoir accès au
                                 logiciel en tant
-                                qu'intervenant
+                                que résident
                             </p>
 
                             <hr>
@@ -1432,7 +1452,7 @@
                             <div class="cu-part">
                                 <h5 class="cu-part-title">Préconditions</h5>
                                 <ul class="bare-list cu-conditions">
-                                    <li class="dash">Le résident réside à Montréal</li>
+                                    <li class="dash">Le résident possède une adresse à Montréal</li>
                                     <li class="dash"> Le résident n'est pas déjà inscris avec son adresse électronique
                                     </li>
                                 </ul>
@@ -1441,7 +1461,7 @@
                             <div class="cu-part">
                                 <h5 class="cu-part-title">Postconditions</h5>
                                 <ul class="bare-list cu-conditions">
-                                    <li class="dash">Le système à enregistré les informations suivantes : le nom et le
+                                    <li class="dash">Le système  enregistré les informations suivantes : le nom et le
                                         prénom, la date de
                                         naissance, l'adresse électronique (unique), le numéro de téléphone, l'adresse de
                                         résidence, un mot
@@ -1530,7 +1550,7 @@
                                     pour
                                     les intervenants
                                 </li>
-                                <li class="scenario-main-step">Le système demande d'entrer à l'intervenant d'entrer ses
+                                <li class="scenario-main-step">Le système demande à l'intervenant d'entrer ses
                                     informations</li>
                                 <li class="scenario-main-step">L'intervenant entre ses informations</li>
                                 <li class="scenario-main-step">Le système valide les informations</li>
@@ -1561,7 +1581,7 @@
                                 <strong>CU:</strong> Consulter des travaux en cours ou à venir
                             </h4>
                             <p class="cu-goal">
-                                <strong>Objectif:</strong> Un utilisateur désire consulter la liste des travaux en cours
+                                <strong>Objectif:</strong> Un résident désire consulter la liste des travaux en cours
                                 ou
                                 à venir
                             </p>
@@ -1571,14 +1591,14 @@
                             <div class="cu-part">
                                 <h5 class="cu-part-title">Acteurs</h5>
                                 <ul class="bare-list cu-actors">
-                                    <li class="cu-actor">Utilisateur (Principal)</li>
+                                    <li class="cu-actor">Résident (Principal)</li>
                                 </ul>
                             </div>
 
                             <div class="cu-part">
                                 <h5 class="cu-part-title">Préconditions</h5>
                                 <ul class="bare-list cu-conditions">
-                                    <li class="dash">L'utilisateur est inscrit dans le système</li>
+                                    <li class="dash">Le résident est inscrit dans le système</li>
                                 </ul>
                             </div>
 
@@ -1587,8 +1607,8 @@
                                 <p class="cu-notes">L'hypothèse est de combiner la consulation et la recherche de
                                     travaux;
                                     ainsi, dans le <a href=#cu-4>scénario recherche de travaux en cours ou à venir</a>,
-                                    l'utilisateur accède à la même
-                                    option, mais utilise la barre au lieu de défiler la liste</p>
+                                    le résident accède à la même
+                                    option, mais utilise la barre de recherche au lieu de défiler la liste</p>
                             </div>
 
 
@@ -1596,18 +1616,18 @@
                         <div class="scenario-main">
                             <h5 class="scenario-main-title">Scénario principal</h5>
                             <ol class="scenario-main-steps">
-                                <li class="scenario-main-step">L'utilisateur accède à l'option de consultation de
+                                <li class="scenario-main-step">Le résident accède à l'option de consultation de
                                     travaux en
                                     cours ou à
                                     venir</li>
                                 <li class="scenario-main-step">Le système affiche la liste des travaux en cours ou à
                                     venir
                                 </li>
-                                <li class="scenario-main-step">L'utilisateur sélectionne le projet qu'il désire
+                                <li class="scenario-main-step">Le résident sélectionne le projet qu'il désire
                                     consulter
                                 </li>
                                 <li class="scenario-main-step">Le système affiche les informations du projet</li>
-                                <li class="scenario-main-step">L'utilisateur consulte les informations et quitte</li>
+                                <li class="scenario-main-step">Le résident consulte les informations et quitte</li>
                                 <li class="scenario-main-setp">Le scénario reprend à l'étape 2</li>
                             </ol>
                         </div>
@@ -1619,7 +1639,7 @@
                                 <strong>CU:</strong> Rechercher des travaux
                             </h4>
                             <p class="cu-goal">
-                                <strong>Objectif:</strong> Un utilisateur désire chercher des travaux en cours ou à
+                                <strong>Objectif:</strong> Un résident désire chercher des travaux en cours ou à
                                 venir
                             </p>
 
@@ -1628,14 +1648,14 @@
                             <div class="cu-part">
                                 <h5 class="cu-part-title">Acteurs</h5>
                                 <ul class="bare-list cu-actors">
-                                    <li class="cu-actor">Utilisateur (Principal)</li>
+                                    <li class="cu-actor">Résident (Principal)</li>
                                 </ul>
                             </div>
 
                             <div class="cu-part">
                                 <h5 class="cu-part-title">Préconditions</h5>
                                 <ul class="bare-list cu-conditions">
-                                    <li class="dash">L'utilisateur est inscrit dans le système</li>
+                                    <li class="dash">Le résident est inscrit dans le système</li>
                                 </ul>
                             </div>
 
@@ -1643,11 +1663,11 @@
                         <div class="scenario-main">
                             <h5 class="scenario-main-title">Scénario principal</h5>
                             <ol class="scenario-main-steps">
-                                <li class="scenario-main-step">L'utilisateur accède à l'option de consultation de
+                                <li class="scenario-main-step">Le résident accède à l'option de consultation de
                                     travaux en
                                     cours ou à
                                     venir</li>
-                                <li class="scenario-main-step">L'utilisateur entre des mots-clés de recherche tel une
+                                <li class="scenario-main-step">Le résident entre des mots-clés de recherche tel une
                                     adresse ou un nom de
                                     projet et lance la recherche</li>
                                 <li class="scenario-main-step">Le système fait une recherche dans la base de donnée
@@ -1680,7 +1700,7 @@
                                 <strong>CU:</strong> Personnaliser son profil : modifier ses informations
                             </h4>
                             <p class="cu-goal">
-                                <strong>Objectif:</strong> Un utilisateur désire modifier ses informations
+                                <strong>Objectif:</strong> Un résident désire modifier ses informations
                             </p>
 
                             <hr>
@@ -1688,14 +1708,14 @@
                             <div class="cu-part">
                                 <h5 class="cu-part-title">Acteurs</h5>
                                 <ul class="bare-list cu-actors">
-                                    <li class="cu-actor">Utilisateur (Principal)</li>
+                                    <li class="cu-actor">Résident (Principal)</li>
                                 </ul>
                             </div>
 
                             <div class="cu-part">
                                 <h5 class="cu-part-title">Préconditions</h5>
                                 <ul class="bare-list cu-conditions">
-                                    <li class="dash">L'utilisateur est inscrit dans le système. Le résident est sur la
+                                    <li class="dash">Le résident est inscrit dans le système. Le résident est sur la
                                         page de personnalisation du profile et à choisis l'option de modification des
                                         informations</li>
                                 </ul>
@@ -1706,7 +1726,7 @@
                                 <ul class="bare-list cu-conditions">
                                     <li class="dash">Le système enregistre les informations modifiés tel : le nouveau
                                         nom d'utilisateur, le nouveau mot de passe, la nouvelle date de naissance, le
-                                        nouveau email, le nouveau numéro de téléphonne, la nouvelle addresse.</address>
+                                        nouveau email, le nouveau numéro de téléphonne, la nouvelle adresse.</address>
                                     </li>
                                 </ul>
                             </div>
@@ -1716,17 +1736,17 @@
                                 <p class="cu-notes">Seules les informations modifiés seront enregistré par le système.
                                     S'il n'y a pas de modification pour une information, elle reste inchangé. S'il y a
                                     une modification dans l'adresse de résidence, le système doit vérifier la validité
-                                    de l'addresse. Voir <a href=#cu-1>S'inscrire comme résident</a></a></p>
+                                    de l'adresse. Voir <a href=#cu-1>S'inscrire comme résident</a></a></p>
                             </div>
                         </div>
                         <div class="scenario-main">
                             <h5 class="scenario-main-title">Scénario principal</h5>
                             <ol class="scenario-main-steps">
-                                <li class="scenario-main-step">L'utilisateur accède à l'option de modification des
+                                <li class="scenario-main-step">Le résident accède à l'option de modification des
                                     informations</li>
                                 <li class="scenario-main-step">Le systeme affiche les champs d'information à remplir
                                 </li>
-                                <li class="scenario-main-step">L'utilisateur entre ses informations</li>
+                                <li class="scenario-main-step">Le résident entre ses informations</li>
                                 <li class="scenario-main-setp">Le systeme valide les informations modifiés</li>
                                 <li class="scenario-main-step">Le systeme enregistre les modifications</li>
                             </ol>
@@ -1739,7 +1759,7 @@
                                 <strong>CU:</strong> Personnaliser son profil : personnaliser ses notifications
                             </h4>
                             <p class="cu-goal">
-                                <strong>Objectif:</strong> Un utilisateur désire personnaliser ses notifications
+                                <strong>Objectif:</strong> Un résident désire personnaliser ses notifications
                             </p>
 
                             <hr>
@@ -1747,14 +1767,14 @@
                             <div class="cu-part">
                                 <h5 class="cu-part-title">Acteurs</h5>
                                 <ul class="bare-list cu-actors">
-                                    <li class="cu-actor">Utilisateur (Principal)</li>
+                                    <li class="cu-actor">Résident (Principal)</li>
                                 </ul>
                             </div>
 
                             <div class="cu-part">
                                 <h5 class="cu-part-title">Préconditions</h5>
                                 <ul class="bare-list cu-conditions">
-                                    <li class="dash">L'utilisateur est inscrit dans le système. L'utilisateur est sur la
+                                    <li class="dash">Le résident est inscrit dans le système. Le résident est sur la
                                         page de personnalisation du profile et à choisis l'option de personnalisations
                                         des notifications</li>
                                 </ul>
@@ -1771,11 +1791,11 @@
                         <div class="scenario-main">
                             <h5 class="scenario-main-title">Scénario principal</h5>
                             <ol class="scenario-main-steps">
-                                <li class="scenario-main-step">L'utilisateur accède à l'option de personnalisation des
+                                <li class="scenario-main-step">Le résident accède à l'option de personnalisation des
                                     notifications</li>
                                 <li class="scenario-main-step">Le systeme affiche les différentes options de
                                     personnalisations</li>
-                                <li class="scenario-main-step">L'utilisateur choisis ses préférences</li>
+                                <li class="scenario-main-step">Le résident choisis ses préférences</li>
                                 <li class="scenario-main-setp">Le systeme enregistre les préférences</li>
                             </ol>
                         </div>
@@ -1786,7 +1806,7 @@
                                 <strong>CU:</strong> Consulter les notifications
                             </h4>
                             <p class="cu-goal">
-                                <strong>Objectif:</strong> Un utilisateur désire consulter ses notifications
+                                <strong>Objectif:</strong> Un résident désire consulter ses notifications
                             </p>
 
                             <hr>
@@ -1794,14 +1814,14 @@
                             <div class="cu-part">
                                 <h5 class="cu-part-title">Acteurs</h5>
                                 <ul class="bare-list cu-actors">
-                                    <li class="cu-actor">Utilisateur (Principal)</li>
+                                    <li class="cu-actor">Résident (Principal)</li>
                                 </ul>
                             </div>
 
                             <div class="cu-part">
                                 <h5 class="cu-part-title">Préconditions</h5>
                                 <ul class="bare-list cu-conditions">
-                                    <li class="dash">L'utilisateur est inscrit dans le système. L'utilisateur est sur la
+                                    <li class="dash">Le résident est inscrit dans le système. Le résident est sur la
                                         page de consultation des notifications</li>
                                 </ul>
                             </div>
@@ -1810,13 +1830,13 @@
                         <div class="scenario-main">
                             <h5 class="scenario-main-title">Scénario principal</h5>
                             <ol class="scenario-main-steps">
-                                <li class="scenario-main-step">L'utilisateur accède à l'option de consultation des
+                                <li class="scenario-main-step">Le résident accède à l'option de consultation des
                                     notifications</li>
                                 <li class="scenario-main-step">Le systeme recherche dans la base de données les
-                                    notifications associés à l'utilisateur</li>
-                                <li class="scenario-main-step">Le système affiche les notifications de l'utilisateur
+                                    notifications associés à Le résident</li>
+                                <li class="scenario-main-step">Le système affiche les notifications de Le résident
                                 </li>
-                                <li class="scenario-main-setp">L'utilisateur consulte les différentes notifications</li>
+                                <li class="scenario-main-setp">Le résident consulte les différentes notifications</li>
                             </ol>
                             <div class="scenario-alt">
                                 <h5 class="scenario-alt-title">Scénarios alternatifs</h5>
@@ -1905,14 +1925,14 @@
                             <div class="cu-part">
                                 <h5 class="cu-part-title">Acteurs</h5>
                                 <ul class="bare-list cu-actors">
-                                    <li class="cu-actor">Utilisateur (Principal)</li>
+                                    <li class="cu-actor">Résident (Principal)</li>
                                 </ul>
                             </div>
 
                             <div class="cu-part">
                                 <h5 class="cu-part-title">Préconditions</h5>
                                 <ul class="bare-list cu-conditions">
-                                    <li class="dash">L'utilisateur est inscrit dans le système. Le résident est abonné à
+                                    <li class="dash">Le résident est inscrit dans le système. Le résident est abonné à
                                         un projet</li>
                                 </ul>
                             </div>
@@ -1961,7 +1981,7 @@
                             <div class="cu-part">
                                 <h5 class="cu-part-title">Préconditions</h5>
                                 <ul class="bare-list cu-conditions">
-                                    <li class="dash">L'utilisateur est inscrit dans le système.</li>
+                                    <li class="dash">Le résident est inscrit dans le système.</li>
                                 </ul>
                             </div>
 
@@ -2025,14 +2045,14 @@
                             <div class="cu-part">
                                 <h5 class="cu-part-title">Acteurs</h5>
                                 <ul class="bare-list cu-actors">
-                                    <li class="cu-actor">Utilisateur (Principal), Intervenant (Secondaire)</li>
+                                    <li class="cu-actor">Résident (Principal), Intervenant (Secondaire)</li>
                                 </ul>
                             </div>
 
                             <div class="cu-part">
                                 <h5 class="cu-part-title">Préconditions</h5>
                                 <ul class="bare-list cu-conditions">
-                                    <li class="dash">L'utilisateur est inscrit dans le système.</li>
+                                    <li class="dash">Le résident est inscrit dans le système.</li>
                                 </ul>
                             </div>
 
@@ -2122,7 +2142,7 @@
                             <div class="cu-part">
                                 <h5 class="cu-part-title">Postconditions</h5>
                                 <ul class="bare-list cu-conditions">
-                                    <li class="dash">Le système à enregistrer les informations suivantes : la date de
+                                    <li class="dash">Le système a enregistrer les informations suivantes : la date de
                                         début et de fin du projet</li>
                                 </ul>
                             </div>
@@ -2361,14 +2381,12 @@
                     <p>
                         Le prototype de l'application MaVille sera développé sous la forme d'une interface graphique
                         (GUI)
-                        en Java. Cependant, à l'heure actuelle, ce prototype n'est pas encore prêt. Une fois qu'il sera
-                        finalisé, les utilisateurs pourront se connecter en utilisant les instructions suivantes :
+                        en Java. Le prototype ne contient que les éléments graphiques, donc il n'est pas encore possible d'envoyer une requête, de modifier son profile ou autre. Or, les utilisateurs pourront se connecter en utilisant les instructions suivantes :
                         <br><br>
-                        Pour tester le prototype, il suffira d'exécuter l'application Java fournie. Les utilisateurs
+                        Pour tester le prototype, il suffira d'exécuter l'application Java fournie, un utilisant la commande : <b>java -jar Ma-Ville.jar</b> Les utilisateurs
                         pourront se connecter avec les comptes préconfigurés suivants :
                         <br>
                         - Résident : email@example.com / Mot de passe : 1234<br>
-                        - Intervenant : intervenant@example.com / Mot de passe : 5678
                         <br><br>
                         Ces informations permettront aux utilisateurs de naviguer dans les différentes fonctionnalités
                         de
