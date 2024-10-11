@@ -2150,8 +2150,7 @@
                         <div class="scenario-main">
                             <h5 class="scenario-main-title">Scénario principal</h5>
                             <ol class="scenario-main-steps">
-                                <li class="scenario-main-step">L'intervenant accède à l'option de consultation des
-                                    requêtes</li>
+                                <li class="scenario-main-step">L'intervenant accède à l'option de soumission des candidatures</li>
                                 <li class="scenario-main-step">Le système affiche les requêtes</li>
                                 <li class="scenario-main-step">L'intervenant choisis le projet auquel il désire
                                     soumettre sa candidature</li>
@@ -2271,6 +2270,56 @@
                                     peut modifier</li>
                                 <li class="scenario-main-step">Le système enregistre les informations</li>
                             </ol>
+                        </div>
+                    </div>
+                    <div class="scenario" id="cu-16">
+                        <div class="scenario-meta">
+                            <h4 class="cu-name">
+                                <strong>CU:</strong> S'authentifier
+                            </h4>
+                            <p class="cu-goal">
+                                <strong>Objectif:</strong> Un intervenant ou un résident désire s'authentifier pour accéder à l'application
+                            </p>
+
+                            <hr>
+
+                            <div class="cu-part">
+                                <h5 class="cu-part-title">Acteurs</h5>
+                                <ul class="bare-list cu-actors">
+                                    <li class="cu-actor">Utilisateur (Principal)</li>
+                                </ul>
+                            </div>
+
+                            <div class="cu-part">
+                                <h5 class="cu-part-title">Préconditions</h5>
+                                <ul class="bare-list cu-conditions">
+                                    <li class="dash">L'utilisateur est inscris dans le système</li>
+                                </ul>
+                            </div>
+
+                        </div>
+                        <div class="scenario-main">
+                            <h5 class="scenario-main-title">Scénario principal</h5>
+                            <ol class="scenario-main-steps">
+                                <li class="scenario-main-step">L'utilisateur lance l'application</li>
+                                <li class="scenario-main-step">L'utilisateur accède à l'option se connecter</li>
+                                <li class="scenario-main-step">Le systeme demande à l'utilisateur d'entrer son nom d'utilisateur et son mot de passe</li>
+                                <li class="scenario-main-step">L'utilisateur entre ses informations</li>
+                                <li class="scenario-main-step">Le système valide les informations</li>
+                                <li class="scenario-main-step">Le systeme donne accès au menu à l'utilisateur</li>
+                            </ol>
+                            <div class="scenario-alt">
+                                <h5 class="scenario-alt-title">Scénarios alternatifs</h5>
+                                <ol class="bare-list scenario-alt-steps">
+                                    <li class="scenario-alt-step" value="5">
+                                        Les informations entrées ne correspondent pas
+                                        <ol class="bare-list">
+                                            <li value="5">Le système affiche qu'il y a une erreur dans le nom d'utilisateur ou le mot de passe</li>
+                                            <li value="5">Le scénario reprend à l'étape 3</li>
+                                        </ol>
+                                    </li>
+                                </ol>
+                            </div>
                         </div>
                     </div>
 
