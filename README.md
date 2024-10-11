@@ -10,3 +10,8 @@ Il contient aussi le dossier 'Prototype', qui conteint les fichiers java de l'ap
   - La classe main, qui sert à appeler la classe GUI, qui à son tour lance l'applicaiton
   - La classe SceneController, qui sert de controlleur de scenes pour naviguer à travers les différentes scenes
   - Les classes scenes, qui contiennent les différentes scenes (pages) de l'application
+
+Pour se connecter en tant que résident, utiliser :
+
+  - username : email@example.com
+  - password : 1234
