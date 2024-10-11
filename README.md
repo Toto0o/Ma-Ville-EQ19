@@ -3,6 +3,10 @@ Projet Ma Ville dans la cadre du cours IFT2255.
 
 Description du répertoire :
 
-  - La branche main contient le fichier .jar qui contient le prototype de l'application. Pour le lancer, il suffit d'effectuer la commande : java -jar Ma-Ville.jar
-  - La branche prototype contient les classes java du prototype (voir dans le README.md de la branche pour plus de détail sur le programme)
-  - La branche Rapports-des-livrables contient les rapports pour chacun des devoirs
+Le répertoire contient le fichier .jar pour lancer l'application. (Pour lancer : java -jar ).
+
+Il contient aussi le dossier 'Prototype', qui conteint les fichiers java de l'application. Celui-ci est divisé comme suis :
+
+  - La classe main, qui sert à appeler la classe GUI, qui à son tour lance l'applicaiton
+  - La classe SceneController, qui sert de controlleur de scenes pour naviguer à travers les différentes scenes
+  - Les classes scenes, qui contiennet les différentes scenes (pages) de l'application
