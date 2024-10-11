@@ -9,4 +9,4 @@ Il contient aussi le dossier 'Prototype', qui conteint les fichiers java de l'ap
 
   - La classe main, qui sert à appeler la classe GUI, qui à son tour lance l'applicaiton
   - La classe SceneController, qui sert de controlleur de scenes pour naviguer à travers les différentes scenes
-  - Les classes scenes, qui contiennet les différentes scenes (pages) de l'application
+  - Les classes scenes, qui contiennent les différentes scenes (pages) de l'application
