@@ -1,0 +1,18 @@
+{
+  "java.project.sourcePaths": ["."],
+  "java.project.referencedLibraries": [
+    "c:\\Program Files\\javafx-sdk-22\\lib\\javafx.base.jar",
+    "c:\\Program Files\\javafx-sdk-22\\lib\\javafx.controls.jar",
+    "c:\\Program Files\\javafx-sdk-22\\lib\\javafx.fxml.jar",
+    "c:\\Program Files\\javafx-sdk-22\\lib\\javafx.graphics.jar",
+    "c:\\Program Files\\javafx-sdk-22\\lib\\javafx.media.jar",
+    "c:\\Program Files\\javafx-sdk-22\\lib\\javafx.swing.jar",
+    "c:\\Program Files\\javafx-sdk-22\\lib\\javafx.web.jar",
+    "c:\\Program Files\\javafx-sdk-22\\lib\\javafx-swt.jar",
+    "Prototype\\lib\\firebase-admin-9.4.1.jar",
+    "Prototype\\lib\\google-auth-library-oauth2-http-1.19.0.jar"
+  ],
+  "files.readonlyInclude": {
+    "{**/.c4z/.extsrcs/*.PROTSYM.cbl,**/.c4z/.extsrcs/*.PROTSYM.listing}": true
+  }
+}
