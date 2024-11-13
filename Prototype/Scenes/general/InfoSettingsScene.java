@@ -1,12 +1,12 @@
-package Prototype.Scenes;
+package prototype.scenes.general;
 
-import Prototype.Controllers.SceneController;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import prototype.controllers.SceneController;
+import prototype.scenes.Scenes;
 
 
 public class InfoSettingsScene extends Scenes {

@@ -1,8 +1,8 @@
-package Prototype;
+package prototype;
 
-import Prototype.Controllers.SceneController;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import prototype.controllers.SceneController;
 
 public class GUI extends Application {
 

@@ -1,28 +1,26 @@
-package Prototype.Scenes;
+package prototype.scenes;
 
-
-import Prototype.Controllers.SceneController;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import prototype.controllers.SceneController;
 
 public abstract class Scenes {
-        
-    BorderPane root;
-    Scene scene;
 
-    SceneController sceneController;
+    protected BorderPane root;
+    protected Scene scene;
+
+    protected SceneController sceneController;
 
     public Scenes(SceneController sceneController) {
         this.sceneController = sceneController;
         this.root = new BorderPane();
         this.scene = new Scene(this.root);
-
-        
     }
 
-    public Scene getScene() { return this.scene; }
+    public Scene getScene() {
+        return this.scene;
+    }
 
     public abstract void setScene();
-
 
 }
