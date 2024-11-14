@@ -1,16 +1,17 @@
-package Prototype.Scenes;
+package prototype.Scenes;
 
-import Prototype.Controllers.SceneController;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import prototype.Controllers.SceneController;
 
 public class SettingsScene extends Scenes {
 
-    private Button addHoursPreference, saveHoursPreferece, addNotificationPreference, saveNotificationPreference, infoSettings,menu, back;
+    private Button addHoursPreference, saveHoursPreferece, addNotificationPreference, saveNotificationPreference,
+            infoSettings, menu, back;
 
     private HBox notificationBox;
     private VBox buttonBox, hoursBox;
@@ -48,21 +49,19 @@ public class SettingsScene extends Scenes {
         this.buttonBox.getChildren().addAll(this.addHoursPreference, this.addNotificationPreference, this.infoSettings);
 
         this.hoursBox.getChildren().addAll(
-            this.hourStartText,
-            this.hourStart,
-            this.hourEndText,
-            this.hourEnd,
-            this.saveHoursPreferece,
-            this.back
-        );
+                this.hourStartText,
+                this.hourStart,
+                this.hourEndText,
+                this.hourEnd,
+                this.saveHoursPreferece,
+                this.back);
         this.hourEnd.setMaxWidth(50);
         this.hourStart.setMaxWidth(50);
         this.hoursBox.setSpacing(15);
         this.hoursBox.setAlignment(Pos.TOP_CENTER);
 
         this.notificationBox.getChildren().addAll(
-            this.saveNotificationPreference
-        );
+                this.saveNotificationPreference);
 
         this.menu.setOnMouseClicked((menuAction) -> {
             this.sceneController.newScene("menu");
@@ -87,9 +86,6 @@ public class SettingsScene extends Scenes {
         this.infoSettings.setOnMouseClicked((infoSettingsAction) -> {
             this.sceneController.newScene("infoSettings");
         });
-
-
-
 
     }
 

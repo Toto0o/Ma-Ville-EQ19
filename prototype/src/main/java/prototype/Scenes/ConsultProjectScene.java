@@ -1,14 +1,12 @@
-package Prototype.Scenes;
+package prototype.Scenes;
 
-import Prototype.Controllers.SceneController;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
-
+import javafx.scene.text.Text;
+import prototype.Controllers.SceneController;
 
 public class ConsultProjectScene extends Scenes {
 
@@ -36,11 +34,9 @@ public class ConsultProjectScene extends Scenes {
         this.projectBox.setAlignment(Pos.CENTER);
         this.root.setCenter(this.projectBox);
 
-
         this.menuButton.setOnMouseClicked((menuAction) -> {
             this.sceneController.newScene("menu");
         });
-
 
     }
 

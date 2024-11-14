@@ -1,16 +1,15 @@
-package Prototype.Scenes;
+package prototype.Scenes;
 
-import Prototype.Controllers.SceneController;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import prototype.Controllers.SceneController;
 
-public class RequestScene extends Scenes{
+public class RequestScene extends Scenes {
 
     private Button menu, sendRequest, newRequest;
 
@@ -21,7 +20,6 @@ public class RequestScene extends Scenes{
 
     private ComboBox typeComboBox;
     private String[] types;
-
 
     public RequestScene(SceneController sceneController) {
         super(sceneController);
@@ -39,8 +37,7 @@ public class RequestScene extends Scenes{
         this.typeText = new Text("Choisissez le type de projet");
         this.dateText = new Text("Date espéré de début du projet");
 
-        
-        this.types = new String[] {"Travaux routier", "Travaux de gaz ou électricité", "Construction ou renovation"};
+        this.types = new String[] { "Travaux routier", "Travaux de gaz ou électricité", "Construction ou renovation" };
         this.typeComboBox = new ComboBox(FXCollections.observableArrayList(this.types));
     }
 
@@ -50,21 +47,19 @@ public class RequestScene extends Scenes{
         this.root.setCenter(this.newRequest);
 
         this.requestBox.getChildren().addAll(
-            this.titleText,
-            this.titleField,
-            this.descriptionText,
-            this.descriptionField,
-            this.typeText,
-            this.typeComboBox,
-            this.dateText,
-            this.dateField,
-            this.sendRequest
-        );
+                this.titleText,
+                this.titleField,
+                this.descriptionText,
+                this.descriptionField,
+                this.typeText,
+                this.typeComboBox,
+                this.dateText,
+                this.dateField,
+                this.sendRequest);
         this.titleField.setMaxWidth(250);
         this.descriptionField.setMaxWidth(250);
         this.typeComboBox.setMaxWidth(250);
         this.dateField.setMaxWidth(250);
-
 
         this.requestBox.setSpacing(20);
         this.requestBox.setAlignment(Pos.CENTER);
@@ -76,7 +71,6 @@ public class RequestScene extends Scenes{
         this.menu.setOnMouseClicked((menuAction) -> {
             this.sceneController.newScene("menu");
         });
-
 
     }
 

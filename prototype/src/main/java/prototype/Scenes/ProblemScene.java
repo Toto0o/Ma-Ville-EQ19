@@ -1,18 +1,17 @@
-package Prototype.Scenes;
+package prototype.Scenes;
 
-import Prototype.Controllers.SceneController;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import prototype.Controllers.SceneController;
 
 public class ProblemScene extends Scenes {
 
     private Button menu, sendProblem;
     private VBox problemBox;
     private TextField typeField, descriptionField;
-    private Text typeText, descriptionText; 
-
+    private Text typeText, descriptionText;
 
     public ProblemScene(SceneController sceneController) {
         super(sceneController);
@@ -30,17 +29,16 @@ public class ProblemScene extends Scenes {
         this.root.setCenter(this.problemBox);
 
         this.problemBox.getChildren().addAll(
-            this.typeText,
-            this.typeField,
-            this.descriptionText,
-            this.descriptionField,
-            this.sendProblem
-        );
+                this.typeText,
+                this.typeField,
+                this.descriptionText,
+                this.descriptionField,
+                this.sendProblem);
 
         this.menu.setOnMouseClicked((menuAction) -> {
             this.sceneController.newScene("menu");
         });
-        
+
     }
 
 }

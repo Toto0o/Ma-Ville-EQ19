@@ -1,13 +1,11 @@
-package Prototype.Scenes;
+package prototype.Scenes;
 
-import Prototype.Controllers.SceneController;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import jdk.incubator.vector.VectorOperators;
+import prototype.Controllers.SceneController;
 
 public class InfoSettingsScene extends Scenes {
 
@@ -50,8 +48,7 @@ public class InfoSettingsScene extends Scenes {
                 this.addresseText,
                 this.addresse,
                 this.save,
-                this.back
-        );
+                this.back);
         this.Vbox.setSpacing(10);
         this.Vbox.setAlignment(Pos.CENTER);
         this.root.setCenter(this.Vbox);

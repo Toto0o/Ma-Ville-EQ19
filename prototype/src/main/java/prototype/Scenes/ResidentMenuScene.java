@@ -1,12 +1,12 @@
-package Prototype.Scenes;
+package prototype.Scenes;
 
-import Prototype.Controllers.SceneController;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import prototype.Controllers.SceneController;
 
 public class ResidentMenuScene extends Scenes {
 
@@ -36,13 +36,12 @@ public class ResidentMenuScene extends Scenes {
         this.titleBox.getChildren().add(this.title);
         this.titleBox.setAlignment(Pos.CENTER);
         this.vBox.getChildren().addAll(
-            this.consultButton,
-            this.settingsButton,
-            this.requestButton,
-            this.problemButton,
-            this.notificationButton,
-            this.logoutButton
-        );
+                this.consultButton,
+                this.settingsButton,
+                this.requestButton,
+                this.problemButton,
+                this.notificationButton,
+                this.logoutButton);
         this.vBox.setAlignment(Pos.CENTER);
         this.vBox.setSpacing(30);
 

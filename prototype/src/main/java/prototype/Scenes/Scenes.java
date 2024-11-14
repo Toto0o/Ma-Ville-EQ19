@@ -1,12 +1,11 @@
-package Prototype.Scenes;
+package prototype.Scenes;
 
-
-import Prototype.Controllers.SceneController;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import prototype.Controllers.SceneController;
 
 public abstract class Scenes {
-        
+
     BorderPane root;
     Scene scene;
 
@@ -17,12 +16,12 @@ public abstract class Scenes {
         this.root = new BorderPane();
         this.scene = new Scene(this.root);
 
-        
     }
 
-    public Scene getScene() { return this.scene; }
+    public Scene getScene() {
+        return this.scene;
+    }
 
     public abstract void setScene();
-
 
 }

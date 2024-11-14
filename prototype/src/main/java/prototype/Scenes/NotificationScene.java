@@ -1,13 +1,13 @@
-package Prototype.Scenes;
+package prototype.Scenes;
 
-import Prototype.Controllers.SceneController;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import prototype.Controllers.SceneController;
 
-public class NotificationScene  extends Scenes{
+public class NotificationScene extends Scenes {
 
     private HBox Hbox;
     private Text text;
