@@ -26,7 +26,7 @@ public class Project {
         this.endDate = endDate;
         this.schedule = schedule;
         this.intervenant = intervenant;
-        this.status = "Prévu"; // Default status on creation
+        this.status = "Prévu"; 
     }
 
   
