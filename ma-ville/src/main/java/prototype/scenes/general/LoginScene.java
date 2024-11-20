@@ -15,8 +15,8 @@ public class LoginScene extends Scenes {
     private Button residentLoginButton, intervenantLoginButton;
     private CheckBox intervenant;
 
-    private Text usernamText, passwordText, cityIDText, error;
-    private TextField usernameField, passwordField, cityIDField;
+    private Text emailText, passwordText, cityIDText, error;
+    private TextField nameField, familynameField, emailField, passwordField, cityIDField;
 
     private CredentialsVerifier credentialsVerifier;
 
@@ -31,9 +31,9 @@ public class LoginScene extends Scenes {
         this.intervenantLoginButton = new Button("Login ");
 
         this.error = new Text("Username or Password are incorrect. Try again");
-        
-        this.usernameField = new TextField(null);
-        this.usernamText = new Text("Username");
+
+        this.emailField = new TextField(null);
+        this.emailText = new Text("Entrez votre email");
         
         this.passwordField = new TextField(null);
         this.passwordText = new Text("Password");
@@ -51,8 +51,8 @@ public class LoginScene extends Scenes {
         this.root.setCenter(this.vBox);
         this.vBox.setAlignment(Pos.CENTER);
         this.vBox.getChildren().addAll(
-            this.usernamText, 
-            this.usernameField, 
+            this.emailText,
+            this.emailField, 
             this.passwordText, 
             this.passwordField, 
             this.intervenant,
@@ -63,7 +63,7 @@ public class LoginScene extends Scenes {
         this.intervenantLoginButton.setVisible(false);
         this.intervenantLoginButton.setManaged(false);
 
-        this.usernameField.setMaxWidth(250);
+        this.emailField.setMaxWidth(250);
         this.passwordField.setMaxWidth(250);
         this.vBox.setSpacing(10);
 
@@ -77,25 +77,25 @@ public class LoginScene extends Scenes {
 
 
         this.residentLoginButton.setOnMouseClicked((loginAction) -> {
-            if (this.usernameField.getText().equals("email@example.com") && this.passwordField.getText().equals("1234")) {
+            if (this.emailField.getText().equals("email@example.com") && this.passwordField.getText().equals("1234")) {
                 this.sceneController.newScene("menu");
             }
             else {
                 this.vBox.getChildren().add(this.error);
-                this.usernameField.clear();
+                this.emailField.clear();
                 this.passwordField.clear();
             }
         });
 
         this.intervenantLoginButton.setOnMouseClicked((intervenantLoginAction) -> {
-            if (this.usernameField.getText().equals("email@example.com") && this.passwordField.getText().equals("1234")) {
+            if (this.emailField.getText().equals("email@example.com") && this.passwordField.getText().equals("1234")) {
                 this.sceneController.setIntervenant(true);
                 this.sceneController.newScene("menu");
                 
             }
             else {
                 this.vBox.getChildren().add(this.error);
-                this.usernameField.clear();
+                this.emailField.clear();
                 this.passwordField.clear();
             }
         });

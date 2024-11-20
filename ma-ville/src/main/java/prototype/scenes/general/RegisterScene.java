@@ -44,6 +44,8 @@ public class RegisterScene extends Scenes {
         this.password1Text = new Text("Enter a password");
         this.password2Text = new Text("Enter password again");
         this.cityIDText = new Text("Enter city ID number");
+        this.nameField = new TextField(null);
+        this.nameText = new Text("Prenom");
 
         this.vBox = new VBox();
 

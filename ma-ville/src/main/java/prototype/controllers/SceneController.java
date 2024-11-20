@@ -36,10 +36,12 @@ public class SceneController {
     private Boolean intervenant;
 
     private UserController userController;
+    private RequestController requestController;
 
-    public SceneController(Stage primaryStage, UserController userController) {
+    public SceneController(Stage primaryStage, UserController userController, RequestController requestController) {
         this.primaryStage = primaryStage;
         this.userController = userController;
+        this.requestController = requestController;
         this.intervenant = false;
     }
 
@@ -155,7 +157,7 @@ public class SceneController {
     }
 
     private Scene newRequestScene() {
-        this.requestScene = new RequestScene(this);
+        this.requestScene = new RequestScene(this, this.requestController);
         this.requestScene.setScene();
         return this.requestScene.getScene();
     }

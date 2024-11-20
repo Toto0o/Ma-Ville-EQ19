@@ -13,7 +13,7 @@ public class MenuScene extends Scenes {
 
     private VBox vBox;
     private HBox titleBox;
-    private Button consultButton, settingsButton, requestButton, problemButton, logoutButton, notificationButton;
+    private Button consultButton, settingsButton, requestButton, logoutButton, notificationButton;
     private Text title;
     private Button consultRequestButton;
     private Boolean intervenant;
@@ -23,7 +23,6 @@ public class MenuScene extends Scenes {
         this.consultButton = new Button("Consulter des travaux en cours");
         this.settingsButton = new Button("Personnaliser le profil");
         this.requestButton = new Button("Soumettre une requête de travail");
-        this.problemButton = new Button("Siganler un problème");
         this.notificationButton = new Button("Consulter les notifications");
         this.logoutButton = new Button("Déconnexion");
 
@@ -47,7 +46,6 @@ public class MenuScene extends Scenes {
             this.consultButton,
             this.settingsButton,
             this.requestButton,
-            this.problemButton,
             this.notificationButton,
             this.consultRequestButton,
             this.logoutButton
@@ -68,11 +66,12 @@ public class MenuScene extends Scenes {
 
         this.requestButton.setOnMouseClicked(event -> newSceneAction(event, "request"));
 
-        this.problemButton.setOnMouseClicked(event -> newSceneAction(event, "problem"));
-
         this.notificationButton.setOnMouseClicked(event -> newSceneAction(event, "notifications"));
 
-        this.logoutButton.setOnMouseClicked(event -> newSceneAction(event, "launch"));
+        this.logoutButton.setOnMouseClicked((event) -> {
+            this.sceneController.setIntervenant(false);
+            this.sceneController.newScene("launch");
+        } );
 
         this.consultRequestButton.setOnMouseClicked(event -> newSceneAction(event, "consult request"));
     }

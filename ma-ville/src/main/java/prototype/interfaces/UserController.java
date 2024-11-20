@@ -1,6 +1,7 @@
 package prototype.interfaces;
 
 import prototype.users.Address;
+import prototype.users.Utilisateur;
 
 public interface UserController {
 
@@ -33,5 +34,7 @@ public interface UserController {
     String[] getSavedProjects();
 
     void saveProject( String projectid );
+
+    Utilisateur getUser();
 
 }

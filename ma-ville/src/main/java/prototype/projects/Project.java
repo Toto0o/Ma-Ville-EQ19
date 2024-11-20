@@ -17,7 +17,7 @@ public class Project {
     private String status; // E.g., "Prévu", "En cours", "Terminé"
 
    
-    public Project(String title, Type type, String description, String quartier, String startDate, String endDate, String schedule, Intervenant intervenant) {
+    public Project(String title, Type type, String description, String quartier, String startDate, String endDate, Intervenant intervenant) {
         this.title = title;
         this.type = type;
         this.description = description;

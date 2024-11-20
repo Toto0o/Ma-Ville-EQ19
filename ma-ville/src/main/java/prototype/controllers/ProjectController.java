@@ -1,4 +1,4 @@
-/* package prototype.controllers;
+package prototype.controllers;
 
 import java.util.ArrayList;
 
@@ -13,13 +13,14 @@ public class ProjectController {
         loadProject();
     }
 
-    public Project getProject(Project project) {
+    public ArrayList<Project> getProject() {
+        return this.projects;
     }
 
-    public Project addProject(Project project);
-
-    private Project searchInDatabase() {};
+    public void addProject(Project project) {
+        this.projects.add(project);
+    }
 
     private void loadProject() {};
 
-} */
+}
