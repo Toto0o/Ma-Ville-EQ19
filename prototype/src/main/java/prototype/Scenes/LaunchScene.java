@@ -45,8 +45,9 @@ public class LaunchScene extends Scenes {
             this.sceneController.newScene("login");
         });
 
+        // Updated action for registerButton to navigate to roleSelection
         registerButton.setOnMouseClicked((signinAction) -> {
-            this.sceneController.newScene("register");
+            this.sceneController.newScene("roleSelection");
         });
     }
 }

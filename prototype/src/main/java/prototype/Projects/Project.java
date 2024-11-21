@@ -1,0 +1,8 @@
+package prototype.Projects;
+
+public class Project {
+
+    private String title;
+    private String type;
+
+}

@@ -1,7 +1,6 @@
 package prototype.service;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import com.google.auth.oauth2.GoogleCredentials;
@@ -12,39 +11,50 @@ import com.google.firebase.cloud.FirestoreClient;
 
 public class FirebaseInitialize {
 
-    public static Firestore firestore;
+    private static Firestore firestore;
 
-    public static void initialize() throws FileNotFoundException, IOException {
-        // Get the path from the environment variable
-        String serviceAccountPath = System.getenv("GOOGLE_APPLICATION_CREDENTIALS");
-
-        // Check if the environment variable is set
-        if (serviceAccountPath == null) {
-            throw new IllegalStateException("Environment variable GOOGLE_APPLICATION_CREDENTIALS is not set.");
+    /**
+     * Initializes Firebase and Firestore with the service account credentials.
+     */
+    public static void initialize() {
+        if (firestore != null) {
+            System.out.println("Firebase Firestore is already initialized.");
+            return; // Prevent re-initialization
         }
 
-        try (FileInputStream serviceAccount = new FileInputStream(serviceAccountPath)) {
+        try {
+            // Provide the absolute path to the service account file
+            String serviceAccountPath = "D:\\UNI\\CURRENT COURSES\\IFT 2255\\ProjetMaven\\serviceAccount.json";
 
-            // Initialize Firebase with the service account credentials
-            FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                    .build();
+            try (FileInputStream serviceAccount = new FileInputStream(serviceAccountPath)) {
+                FirebaseOptions options = new FirebaseOptions.Builder()
+                        .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                        .build();
 
-            // Initialize Firebase
-            FirebaseApp.initializeApp(options);
+                // Initialize FirebaseApp only if not already initialized
+                if (FirebaseApp.getApps().isEmpty()) {
+                    FirebaseApp.initializeApp(options);
+                }
 
-            // Initialize Firestore
-            firestore = FirestoreClient.getFirestore();
-
-            System.out.println("Firebase Firestore initialized successfully.");
-        } catch (Exception e) {
-            System.err.println("Firebase initialization failed: " + e.getMessage());
+                // Initialize Firestore
+                firestore = FirestoreClient.getFirestore();
+                System.out.println("Firebase Firestore initialized successfully.");
+            }
+        } catch (IOException e) {
+            System.err.println("Failed to initialize Firebase: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
-    // Method to access Firestore in other classes
+    /**
+     * Provides access to the Firestore instance.
+     *
+     * @return Firestore instance
+     */
     public static Firestore getFirestore() {
+        if (firestore == null) {
+            throw new IllegalStateException("Firestore has not been initialized. Call initialize() first.");
+        }
         return firestore;
     }
 }

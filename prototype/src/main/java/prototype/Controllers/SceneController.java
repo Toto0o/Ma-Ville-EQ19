@@ -2,16 +2,21 @@ package prototype.Controllers;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import prototype.Scenes.ConsultEntraveScene;
 import prototype.Scenes.ConsultProjectScene;
 import prototype.Scenes.InfoSettingsScene;
+import prototype.Scenes.IntervenantMenuScene;
+import prototype.Scenes.IntervenantRegistrationScene;
 import prototype.Scenes.LaunchScene;
 import prototype.Scenes.LoginScene;
 import prototype.Scenes.NotificationScene;
 import prototype.Scenes.NotificationSettingsScene;
 import prototype.Scenes.ProblemScene;
-import prototype.Scenes.RegisterScene;
 import prototype.Scenes.RequestScene;
 import prototype.Scenes.ResidentMenuScene;
+import prototype.Scenes.ResidentRegistrationScene;
+import prototype.Scenes.RoleSelectionScene;
+import prototype.Scenes.SearchProjectsScene;
 import prototype.Scenes.SettingsScene;
 
 public class SceneController {
@@ -19,86 +24,94 @@ public class SceneController {
     private Stage primaryStage;
     private Scene scene;
 
-    /* Scenes */
+    // Scene declarations
     private LaunchScene launchScene;
     private LoginScene loginScene;
-    private ResidentMenuScene menuScene;
-    private RegisterScene registerScene;
+    private ResidentMenuScene residentMenuScene;
+    private IntervenantMenuScene intervenantMenuScene;
     private ConsultProjectScene consultProjectScene;
+    private ConsultEntraveScene consultEntraveScene;
+    private SearchProjectsScene searchProjectsScene;
     private SettingsScene settingsScene;
     private RequestScene requestScene;
     private ProblemScene problemScene;
     private NotificationScene notificationScene;
     private InfoSettingsScene infoSettingsScene;
     private NotificationSettingsScene notificationSettingsScene;
+    private RoleSelectionScene roleSelectionScene;
+    private IntervenantRegistrationScene intervenantRegistrationScene;
+    private ResidentRegistrationScene residentRegistrationScene;
 
     public SceneController(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
 
     public void start() {
-        newScene("launch"); /* Default is the launching scene */
+        newScene("launch");
         this.primaryStage.setTitle("Ma ville - Équipe 19");
         this.primaryStage.show();
     }
 
-    public void newScene(String scene) {
-
-        switch (scene) {
+    public void newScene(String sceneName) {
+        switch (sceneName) {
             case "launch":
                 this.scene = newLaunchScene();
                 break;
-
             case "login":
                 this.scene = newLoginScene();
                 break;
-
-            case "menu":
+            case "residentMenu":
                 this.scene = newResidentMenuScene();
                 break;
-
-            case "register":
-                this.scene = newRegisterScene();
+            case "intervenantMenu":
+                this.scene = newIntervenantMenuScene();
                 break;
-
-            case "consult":
+            case "consultProjects":
                 this.scene = newConsultProjectScene();
                 break;
-
+            case "searchProjects":
+                this.scene = newSearchProjectsScene();
+                break;
+            case "consultEntraves":
+                this.scene = newConsultEntraveScene();
+                break;
             case "settings":
                 this.scene = newSettingsScene();
                 break;
-
             case "request":
                 this.scene = newRequestScene();
                 break;
-
             case "problem":
                 this.scene = newProblemScene();
                 break;
-
             case "notifications":
                 this.scene = newNotificationScene();
                 break;
-
             case "infoSettings":
                 this.scene = newInfoSettingsScene();
                 break;
-
             case "notificationSettings":
                 this.scene = newNotificationSettingsScene();
                 break;
+            case "roleSelection":
+                this.scene = newRoleSelectionScene();
+                break;
+            case "residentRegistration":
+                this.scene = newResidentRegistrationScene();
+                break;
+            case "intervenantRegistration":
+                this.scene = newIntervenantRegistrationScene();
+                break;
         }
-        ;
 
+        // Update the stage with the new scene
         this.primaryStage.setScene(this.scene);
-        this.primaryStage.setMaximized(false);
-        this.primaryStage.setMaximized(true);
-
+        this.primaryStage.setMaximized(false); // Optionally restore window state
+        this.primaryStage.setMaximized(true); // Maximize window for all scenes
     }
 
+    // Scene creation methods
     private Scene newLaunchScene() {
-        /* Set a new Launching Scene */
         this.launchScene = new LaunchScene(this);
         this.launchScene.setScene();
         return this.launchScene.getScene();
@@ -111,21 +124,33 @@ public class SceneController {
     }
 
     private Scene newResidentMenuScene() {
-        this.menuScene = new ResidentMenuScene(this);
-        this.menuScene.setScene();
-        return this.menuScene.getScene();
+        this.residentMenuScene = new ResidentMenuScene(this);
+        this.residentMenuScene.setScene();
+        return this.residentMenuScene.getScene();
     }
 
-    private Scene newRegisterScene() {
-        this.registerScene = new RegisterScene(this);
-        this.registerScene.setScene();
-        return this.registerScene.getScene();
+    private Scene newIntervenantMenuScene() {
+        this.intervenantMenuScene = new IntervenantMenuScene(this);
+        this.intervenantMenuScene.setScene();
+        return this.intervenantMenuScene.getScene();
     }
 
     private Scene newConsultProjectScene() {
         this.consultProjectScene = new ConsultProjectScene(this);
         this.consultProjectScene.setScene();
         return this.consultProjectScene.getScene();
+    }
+
+    private Scene newSearchProjectsScene() {
+        this.searchProjectsScene = new SearchProjectsScene(this);
+        this.searchProjectsScene.setScene();
+        return this.searchProjectsScene.getScene();
+    }
+
+    private Scene newConsultEntraveScene() {
+        this.consultEntraveScene = new ConsultEntraveScene(this);
+        this.consultEntraveScene.setScene();
+        return this.consultEntraveScene.getScene();
     }
 
     private Scene newSettingsScene() {
@@ -164,4 +189,21 @@ public class SceneController {
         return this.notificationSettingsScene.getScene();
     }
 
+    private Scene newRoleSelectionScene() {
+        this.roleSelectionScene = new RoleSelectionScene(this);
+        this.roleSelectionScene.setScene();
+        return this.roleSelectionScene.getScene();
+    }
+
+    private Scene newResidentRegistrationScene() {
+        this.residentRegistrationScene = new ResidentRegistrationScene(this);
+        this.residentRegistrationScene.setScene();
+        return this.residentRegistrationScene.getScene();
+    }
+
+    private Scene newIntervenantRegistrationScene() {
+        this.intervenantRegistrationScene = new IntervenantRegistrationScene(this);
+        this.intervenantRegistrationScene.setScene();
+        return this.intervenantRegistrationScene.getScene();
+    }
 }
