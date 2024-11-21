@@ -13,7 +13,7 @@ public class ResidentMenuScene extends Scenes {
     private VBox vBox;
     private HBox titleBox;
     private Button consultProjectsButton, consultEntravesButton, searchProjectsButton, settingsButton, requestButton,
-            problemButton, logoutButton, notificationButton;
+            logoutButton, notificationButton, preferencesPlagesButton;
     private Text title;
 
     public ResidentMenuScene(SceneController sceneController) {
@@ -25,8 +25,8 @@ public class ResidentMenuScene extends Scenes {
         this.searchProjectsButton = new Button("Rechercher des travaux");
         this.requestButton = new Button("Soumettre une requête de travail");
         this.notificationButton = new Button("Consulter les notifications");
+        this.preferencesPlagesButton = new Button("Choisir preferences plages horaires");
         this.settingsButton = new Button("Personnaliser le profil");
-        this.problemButton = new Button("Signaler un problème");
         this.logoutButton = new Button("Déconnexion");
 
         // Initialize layout elements
@@ -47,9 +47,9 @@ public class ResidentMenuScene extends Scenes {
                 this.consultProjectsButton,
                 this.searchProjectsButton,
                 this.consultEntravesButton,
-                this.settingsButton,
                 this.requestButton,
-                this.problemButton,
+                this.preferencesPlagesButton,
+                this.settingsButton,
                 this.notificationButton,
                 this.logoutButton);
 
@@ -60,6 +60,10 @@ public class ResidentMenuScene extends Scenes {
         this.consultProjectsButton.setOnMouseClicked((consultAction) -> {
             // Navigate to the scene where the user can consult ongoing projects
             this.sceneController.newScene("consultProjects");
+        });
+        this.preferencesPlagesButton.setOnMouseClicked((preferencesAction) -> {
+            // Navigate to the scene where the user can consult ongoing projects
+            this.sceneController.newScene("preferencesPlages");
         });
 
         this.consultEntravesButton.setOnMouseClicked((entravesAction) -> {
@@ -74,17 +78,12 @@ public class ResidentMenuScene extends Scenes {
 
         this.settingsButton.setOnMouseClicked((settingsAction) -> {
             // Navigate to the settings scene
-            this.sceneController.newScene("settings");
+            this.sceneController.newScene("residentSettings");
         });
 
         this.requestButton.setOnMouseClicked((requestAction) -> {
             // Navigate to the scene for submitting a work request
-            this.sceneController.newScene("request");
-        });
-
-        this.problemButton.setOnMouseClicked((problemAction) -> {
-            // Navigate to the scene for reporting a problem
-            this.sceneController.newScene("problem");
+            this.sceneController.newScene("residentRequest");
         });
 
         this.notificationButton.setOnMouseClicked((notificationAction) -> {

@@ -36,7 +36,7 @@ public class ProblemScene extends Scenes {
                 this.sendProblem);
 
         this.menu.setOnMouseClicked((menuAction) -> {
-            this.sceneController.newScene("menu");
+            this.sceneController.newScene("intervenantMenu");
         });
 
     }

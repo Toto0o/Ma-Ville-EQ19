@@ -4,20 +4,24 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import prototype.Scenes.ConsultEntraveScene;
 import prototype.Scenes.ConsultProjectScene;
+import prototype.Scenes.ConsultRequestsScene;
 import prototype.Scenes.InfoSettingsScene;
 import prototype.Scenes.IntervenantMenuScene;
 import prototype.Scenes.IntervenantRegistrationScene;
+import prototype.Scenes.IntervenantSettingsScene;
+import prototype.Scenes.IntervenantSubmitProjectScene;
 import prototype.Scenes.LaunchScene;
 import prototype.Scenes.LoginScene;
 import prototype.Scenes.NotificationScene;
 import prototype.Scenes.NotificationSettingsScene;
+import prototype.Scenes.PreferencesPlagesHorairesScene;
 import prototype.Scenes.ProblemScene;
-import prototype.Scenes.RequestScene;
 import prototype.Scenes.ResidentMenuScene;
 import prototype.Scenes.ResidentRegistrationScene;
+import prototype.Scenes.ResidentRequestScene;
+import prototype.Scenes.ResidentSettingsScene;
 import prototype.Scenes.RoleSelectionScene;
 import prototype.Scenes.SearchProjectsScene;
-import prototype.Scenes.SettingsScene;
 
 public class SceneController {
 
@@ -31,9 +35,12 @@ public class SceneController {
     private IntervenantMenuScene intervenantMenuScene;
     private ConsultProjectScene consultProjectScene;
     private ConsultEntraveScene consultEntraveScene;
+    private ConsultRequestsScene consultRequestsScene;
     private SearchProjectsScene searchProjectsScene;
-    private SettingsScene settingsScene;
-    private RequestScene requestScene;
+    private ResidentSettingsScene residentSettingsScene;
+    private IntervenantSettingsScene intervanantSettingsScene;
+    private ResidentRequestScene residentRequestScene;
+    private IntervenantSubmitProjectScene intervenantSubmitProjectScene;
     private ProblemScene problemScene;
     private NotificationScene notificationScene;
     private InfoSettingsScene infoSettingsScene;
@@ -41,6 +48,7 @@ public class SceneController {
     private RoleSelectionScene roleSelectionScene;
     private IntervenantRegistrationScene intervenantRegistrationScene;
     private ResidentRegistrationScene residentRegistrationScene;
+    private PreferencesPlagesHorairesScene preferencesPlagesHorairesScene;
 
     public SceneController(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -75,11 +83,20 @@ public class SceneController {
             case "consultEntraves":
                 this.scene = newConsultEntraveScene();
                 break;
-            case "settings":
-                this.scene = newSettingsScene();
+            case "consultRequests":
+                this.scene = newConsultRequestsScene();
                 break;
-            case "request":
-                this.scene = newRequestScene();
+            case "residentSettings":
+                this.scene = newResidentSettingsScene();
+                break;
+            case "intervenantSettings":
+                this.scene = newIntervenantSettingsScene();
+                break;
+            case "residentRequest":
+                this.scene = newResidentRequestScene();
+                break;
+            case "intervenantRequest":
+                this.scene = newIntervenantSubmitProjectScene();
                 break;
             case "problem":
                 this.scene = newProblemScene();
@@ -92,6 +109,9 @@ public class SceneController {
                 break;
             case "notificationSettings":
                 this.scene = newNotificationSettingsScene();
+                break;
+            case "preferencesPlages":
+                this.scene = newPreferencesPlagesScene();
                 break;
             case "roleSelection":
                 this.scene = newRoleSelectionScene();
@@ -141,6 +161,18 @@ public class SceneController {
         return this.consultProjectScene.getScene();
     }
 
+    private Scene newConsultRequestsScene() {
+        this.consultRequestsScene = new ConsultRequestsScene(this);
+        this.consultRequestsScene.setScene();
+        return this.consultRequestsScene.getScene();
+    }
+
+    private Scene newPreferencesPlagesScene() {
+        this.preferencesPlagesHorairesScene = new PreferencesPlagesHorairesScene(this);
+        this.preferencesPlagesHorairesScene.setScene();
+        return this.preferencesPlagesHorairesScene.getScene();
+    }
+
     private Scene newSearchProjectsScene() {
         this.searchProjectsScene = new SearchProjectsScene(this);
         this.searchProjectsScene.setScene();
@@ -153,16 +185,28 @@ public class SceneController {
         return this.consultEntraveScene.getScene();
     }
 
-    private Scene newSettingsScene() {
-        this.settingsScene = new SettingsScene(this);
-        this.settingsScene.setScene();
-        return this.settingsScene.getScene();
+    private Scene newResidentSettingsScene() {
+        this.residentSettingsScene = new ResidentSettingsScene(this);
+        this.residentSettingsScene.setScene();
+        return this.residentSettingsScene.getScene();
     }
 
-    private Scene newRequestScene() {
-        this.requestScene = new RequestScene(this);
-        this.requestScene.setScene();
-        return this.requestScene.getScene();
+    private Scene newIntervenantSettingsScene() {
+        this.intervanantSettingsScene = new IntervenantSettingsScene(this);
+        this.intervanantSettingsScene.setScene();
+        return this.intervanantSettingsScene.getScene();
+    }
+
+    private Scene newResidentRequestScene() {
+        this.residentRequestScene = new ResidentRequestScene(this);
+        this.residentRequestScene.setScene();
+        return this.residentRequestScene.getScene();
+    }
+
+    private Scene newIntervenantSubmitProjectScene() {
+        this.intervenantSubmitProjectScene = new IntervenantSubmitProjectScene(this);
+        this.intervenantSubmitProjectScene.setScene();
+        return this.intervenantSubmitProjectScene.getScene();
     }
 
     private Scene newProblemScene() {

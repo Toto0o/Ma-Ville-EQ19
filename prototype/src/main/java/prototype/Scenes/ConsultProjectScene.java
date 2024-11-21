@@ -19,6 +19,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Screen;
 import prototype.Controllers.SceneController;
 
 public class ConsultProjectScene extends Scenes {
@@ -36,7 +37,7 @@ public class ConsultProjectScene extends Scenes {
         super(sceneController);
 
         // Initialize buttons and ComboBoxes
-        this.backButton = new Button("Retour au menu");
+        this.backButton = new Button("Retour");
 
         // Initialize layout elements
         this.vBox = new VBox();
@@ -51,6 +52,7 @@ public class ConsultProjectScene extends Scenes {
     }
 
     public void setScene() {
+        // Set up the root layout and title font
         this.root.setCenter(vBox);
         this.title.setFont(new Font("Arial", 30));
         this.title.setStyle("-fx-font-weight: bold;");
@@ -62,6 +64,7 @@ public class ConsultProjectScene extends Scenes {
         filterBox.getChildren().addAll(new Text("Filtrer par quartier: "), boroughFilterCombo,
                 new Text("Filtrer par type de travaux: "), typeOfWorkFilterCombo);
 
+        // Set default values for ComboBoxes
         boroughFilterCombo.setValue("Aucun filtre");
         typeOfWorkFilterCombo.setValue("Aucun filtre");
 
@@ -74,6 +77,10 @@ public class ConsultProjectScene extends Scenes {
         this.vBox.getChildren().addAll(this.title, filterBox, this.projectListView, bottomBox, this.backButton);
         this.vBox.setAlignment(Pos.TOP_CENTER);
         this.vBox.setSpacing(20);
+
+        double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
+        double listViewHeight = screenHeight * 0.6;
+        this.projectListView.setPrefHeight(listViewHeight);
 
         // Set back button action
         this.backButton.setOnMouseClicked((event) -> {

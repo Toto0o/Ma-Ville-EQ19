@@ -1,5 +1,8 @@
-
 package prototype.Scenes;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 import com.google.api.core.ApiFuture;
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,6 +22,7 @@ public class ResidentRegistrationScene extends Scenes {
 
     private TextField nameField, lastNameField, birthdayField, addressField, emailField, phoneField, passwordField;
     private Button submitButton, backButton;
+    private Text errorMessage; // Text node to display error messages
 
     public ResidentRegistrationScene(SceneController sceneController) {
         super(sceneController);
@@ -39,6 +43,10 @@ public class ResidentRegistrationScene extends Scenes {
         this.submitButton = new Button("Submit");
         this.backButton = new Button("Back");
 
+        // Initialize error message Text (initially empty)
+        this.errorMessage = new Text();
+        this.errorMessage.setStyle("-fx-fill: red;"); // Red color for error message
+
         this.nameField.setMaxWidth(250);
         this.lastNameField.setMaxWidth(250);
         this.birthdayField.setMaxWidth(250);
@@ -58,7 +66,9 @@ public class ResidentRegistrationScene extends Scenes {
                 new Text("Phone"), phoneField,
                 new Text("Password"), passwordField,
                 submitButton,
-                backButton);
+                backButton,
+                errorMessage // Add the error message text to the layout
+        );
 
         this.root.setCenter(vBox);
 
@@ -76,6 +86,25 @@ public class ResidentRegistrationScene extends Scenes {
             String email = this.emailField.getText().trim();
             String phone = this.phoneField.getText().trim();
             String password = this.passwordField.getText().trim();
+
+            // Validate birthday: must be in the past and the user must be at least 16 years
+            // old
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate birthDate = LocalDate.parse(birthday, formatter);
+            LocalDate currentDate = LocalDate.now();
+
+            // Check if the birthday is in the future
+            if (birthDate.isAfter(currentDate)) {
+                errorMessage.setText("Birthday cannot be in the future.");
+                return; // Exit if the date is in the future
+            }
+
+            // Check if the user is at least 16 years old
+            long age = ChronoUnit.YEARS.between(birthDate, currentDate);
+            if (age < 16) {
+                errorMessage.setText("You must be at least 16 years old.");
+                return; // Exit if the user is under 16
+            }
 
             // Register user with Firebase Authentication
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -103,8 +132,9 @@ public class ResidentRegistrationScene extends Scenes {
             this.sceneController.newScene("login");
 
         } catch (Exception e) {
+            // Catch any other exceptions and display a generic error message
+            errorMessage.setText("An error occurred. Please try again.");
             e.printStackTrace();
         }
     }
-
 }

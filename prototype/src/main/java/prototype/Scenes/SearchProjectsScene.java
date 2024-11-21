@@ -38,7 +38,7 @@ public class SearchProjectsScene extends Scenes {
         super(sceneController);
 
         // Initialize buttons
-        this.backButton = new Button("Retour au menu");
+        this.backButton = new Button("Retour");
 
         // Initialize layout elements
         this.vBox = new VBox();

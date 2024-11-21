@@ -8,7 +8,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import prototype.Controllers.SceneController;
 
-public class SettingsScene extends Scenes {
+public class ResidentSettingsScene extends Scenes {
 
     private Button addHoursPreference, saveHoursPreferece, addNotificationPreference, saveNotificationPreference,
             infoSettings, menu, back;
@@ -19,7 +19,7 @@ public class SettingsScene extends Scenes {
     private TextField hourStart, hourEnd;
     private Text hourStartText, hourEndText;
 
-    public SettingsScene(SceneController sceneController) {
+    public ResidentSettingsScene(SceneController sceneController) {
         super(sceneController);
 
         this.addHoursPreference = new Button("Ajouter une préférence d'horaire");
@@ -64,7 +64,7 @@ public class SettingsScene extends Scenes {
                 this.saveNotificationPreference);
 
         this.menu.setOnMouseClicked((menuAction) -> {
-            this.sceneController.newScene("menu");
+            this.sceneController.newScene("residentMenu");
         });
 
         this.addHoursPreference.setOnMouseClicked((addHoursAction) -> {
