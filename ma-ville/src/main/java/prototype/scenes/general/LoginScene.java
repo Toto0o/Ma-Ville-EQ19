@@ -30,7 +30,7 @@ public class LoginScene extends Scenes {
         this.residentLoginButton = new Button("Login");
         this.intervenantLoginButton = new Button("Login ");
 
-        this.error = new Text("Username or Password are incorrect. Try again");
+        this.error = new Text();
 
         this.emailField = new TextField(null);
         this.emailText = new Text("Entrez votre email");
@@ -77,26 +77,30 @@ public class LoginScene extends Scenes {
 
 
         this.residentLoginButton.setOnMouseClicked((loginAction) -> {
-            if (this.emailField.getText().equals("email@example.com") && this.passwordField.getText().equals("1234")) {
-                this.sceneController.newScene("menu");
-            }
-            else {
+            try {
+                if (credentialsVerifier.verifyCredentials(this.emailField.getText(), this.passwordField.getText())) {
+                    this.sceneController.newScene("menu");
+                }
+            } catch (IllegalArgumentException e) {
+                this.error.setText(e.getMessage());
                 this.vBox.getChildren().add(this.error);
-                this.emailField.clear();
-                this.passwordField.clear();
+                /* this.emailField.clear();
+                this.passwordField.clear(); */
             }
         });
 
         this.intervenantLoginButton.setOnMouseClicked((intervenantLoginAction) -> {
-            if (this.emailField.getText().equals("email@example.com") && this.passwordField.getText().equals("1234")) {
-                this.sceneController.setIntervenant(true);
-                this.sceneController.newScene("menu");
+            try {
+                if (credentialsVerifier.verifyCredentials(this.emailField.getText(), this.passwordField.getText())) {
+                    this.sceneController.setIntervenant(true);
+                    this.sceneController.newScene("menu");
+                }
                 
-            }
-            else {
+            } catch (IllegalArgumentException e) {
+                this.error.setText(e.getMessage());
                 this.vBox.getChildren().add(this.error);
-                this.emailField.clear();
-                this.passwordField.clear();
+                /* this.emailField.clear();
+                this.passwordField.clear(); */
             }
         });
 
