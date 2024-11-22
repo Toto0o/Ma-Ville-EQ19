@@ -24,4 +24,4 @@ hs_err_pid*
 replay_pid*
 
 # serviceAccount
-prototype/src/main/java/prototype/serviceAccount.json
+serviceAccount.json

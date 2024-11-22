@@ -34,7 +34,7 @@ public class IntervenantSubmitProjectScene extends Scenes {
         this.requestBox = new VBox();
         this.menu = new Button("Retour");
         this.sendRequest = new Button("Soumettre projet");
-        this.newRequest = new Button("Ajouter une nouvelle requête de travaux");
+        this.newRequest = new Button("Ajouter un nouveau projet");
 
         this.titleField = new TextField();
         this.descriptionField = new TextField();

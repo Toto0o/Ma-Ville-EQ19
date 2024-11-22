@@ -28,9 +28,12 @@ public class Quartier {
             // Establish HTTP connection
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
+            conn.setRequestProperty("Accept-Charset", "UTF-8"); // Set UTF-8 charset for proper decoding
 
             // Read response
-            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8")); // Explicit
+                                                                                                               // UTF-8
+                                                                                                               // encoding
             StringBuilder response = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) {

@@ -189,7 +189,7 @@ public class ConsultRequestsScene extends Scenes {
                         + "Quartier: " + request.getQuartier();
 
                 Text requestText = new Text(displayText);
-                requestText.setStyle("-fx-padding: 10;"); // Padding for better readability
+                requestText.setStyle("-fx-font-family: 'Arial'; -fx-padding: 10;");
 
                 // Create a bordered HBox for each request
                 HBox requestBox = new HBox(10);
