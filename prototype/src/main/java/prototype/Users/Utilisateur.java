@@ -16,6 +16,7 @@ public class Utilisateur {
     private Pair<String, String> hoursPreference;
     private Boolean[] notificationPreference;
     private String[] savedProject;
+    private String userId;
 
     public Utilisateur(String name, String lastName, String birthday, String address, String email, String phone,
             String password) {

@@ -10,11 +10,13 @@ public class Project {
     private String endDate;
     private String horaireTravaux;
     private String status;
+    private String uid;
+    private String firebaseKey; // New field for storing the Firebase key
 
-    // Constructor
+    // Constructor (without firebaseKey)
     public Project(String title, String description, String type, String quartiersAffected,
             String roadsAffected, String startDate, String endDate,
-            String horaireTravaux, String status) {
+            String horaireTravaux, String status, String userId) {
         this.title = title;
         this.description = description;
         this.type = type;
@@ -24,9 +26,27 @@ public class Project {
         this.endDate = endDate;
         this.horaireTravaux = horaireTravaux;
         this.status = status;
+        this.uid = userId;
     }
 
-    // Getters and setters
+    // Getter and Setter for Firebase key
+    public String getFirebaseKey() {
+        return firebaseKey;
+    }
+
+    public void setFirebaseKey(String firebaseKey) {
+        this.firebaseKey = firebaseKey;
+    }
+
+    // Getters and setters for the other fields
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
     public String getTitle() {
         return title;
     }

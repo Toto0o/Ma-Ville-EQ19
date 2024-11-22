@@ -26,7 +26,7 @@ public class ConsultEntraveScene extends Scenes {
     private Text title;
     private ListView<VBox> entraveListView;
     private Text entraveCountText;
-    private TextField searchField; // Add a TextField for searching
+    private TextField searchField;
     private static final String API_URL = "https://donnees.montreal.ca/api/3/action/datastore_search?resource_id=a2bc8014-488c-495d-941b-e7ae1999d1bd";
 
     public ConsultEntraveScene(SceneController sceneController) {

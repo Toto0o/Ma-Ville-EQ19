@@ -16,6 +16,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import prototype.Controllers.SceneController;
+import prototype.Users.UserSession;
 
 public class LoginScene extends Scenes {
     private VBox vBox;
@@ -110,26 +111,17 @@ public class LoginScene extends Scenes {
                         // Extract user ID (localId) from the response
                         String responseBody = response.toString();
                         String userId = extractFieldFromJson(responseBody, "localId");
-                        System.out.println("userId:" + userId);
+
+                        // Save UID in UserSession
+                        UserSession.getInstance().setUserId(userId);
 
                         // Check user role in Firebase Realtime Database
                         checkUserRole(userId);
                     }
                 } else {
-                    try (BufferedReader reader = new BufferedReader(
-                            new InputStreamReader(authConnection.getErrorStream(), "UTF-8"))) {
-                        StringBuilder errorResponse = new StringBuilder();
-                        String line;
-                        while ((line = reader.readLine()) != null) {
-                            errorResponse.append(line);
-                        }
-
-                        Platform.runLater(() -> {
-                            statusLabel.setText("Login failed: " + errorResponse.toString());
-                            usernameField.clear();
-                            passwordField.clear();
-                        });
-                    }
+                    Platform.runLater(() -> {
+                        statusLabel.setText("Login failed.");
+                    });
                 }
             } catch (Exception e) {
                 Platform.runLater(() -> {

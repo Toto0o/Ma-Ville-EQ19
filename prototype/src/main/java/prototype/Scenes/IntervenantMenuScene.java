@@ -12,7 +12,7 @@ public class IntervenantMenuScene extends Scenes {
 
     private VBox vBox;
     private HBox titleBox;
-    private Button consultButton, settingsButton, requestButton, problemButton, logoutButton;
+    private Button consultButton, settingsButton, requestButton, modifyProjectsButton, logoutButton;
     private Text title;
 
     public IntervenantMenuScene(SceneController sceneController) {
@@ -20,7 +20,7 @@ public class IntervenantMenuScene extends Scenes {
         this.settingsButton = new Button("Personnaliser le profil");
         this.consultButton = new Button("Consulter les requêtes de travail");
         this.requestButton = new Button("Soumettre un nouveau projet");
-        this.problemButton = new Button("Modifier mes projets");
+        this.modifyProjectsButton = new Button("Modifier mes projets");
         this.logoutButton = new Button("Déconnexion");
 
         this.vBox = new VBox();
@@ -38,7 +38,7 @@ public class IntervenantMenuScene extends Scenes {
                 this.consultButton,
                 this.settingsButton,
                 this.requestButton,
-                this.problemButton,
+                this.modifyProjectsButton,
                 this.logoutButton);
         this.vBox.setAlignment(Pos.CENTER);
         this.vBox.setSpacing(30);
@@ -55,8 +55,8 @@ public class IntervenantMenuScene extends Scenes {
             this.sceneController.newScene("intervenantRequest");
         });
 
-        this.problemButton.setOnMouseClicked((problemAction) -> {
-            this.sceneController.newScene("problem");
+        this.modifyProjectsButton.setOnMouseClicked((intervenantProjectsAction) -> {
+            this.sceneController.newScene("intervenantProjects");
         });
 
         this.logoutButton.setOnMouseClicked((logoutAction) -> {

@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import prototype.Controllers.SceneController;
 import prototype.Projects.Project;
+import prototype.Users.UserSession;
 
 public class IntervenantSubmitProjectScene extends Scenes {
 
@@ -72,10 +73,12 @@ public class IntervenantSubmitProjectScene extends Scenes {
                     .getInstance("https://maville-18aa2-default-rtdb.firebaseio.com/");
             DatabaseReference requestFolderRef = database.getReference("projects").child(requestId);
 
+            String userUid = UserSession.getInstance().getUserId(); // Use the UID from UserSession
+
             // Create a Project object with collected data
             Project project = new Project(title, description, type, quartiersAffected, roadsAffected, startDate,
                     endDate, horaireTravaux,
-                    status);
+                    status, userUid);
             requestFolderRef.setValueAsync(project); // Save request data under "projects/RequestID" node
 
             System.out.println("Request saved to Firebase under ID: " + requestId);

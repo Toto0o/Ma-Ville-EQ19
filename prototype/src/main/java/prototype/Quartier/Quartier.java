@@ -5,17 +5,20 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 public class Quartier {
+    private String name;
     private static final String API_KEY = "AIzaSyALSJ8oH8Ko2r8gkik4dTKkzDlIEw1Zzf8";
 
-    /**
-     * Fetches the quartier (neighborhood) for a given address using the Google Maps
-     * API.
-     * 
-     * @param address The address to look up.
-     * @return The name of the neighborhood (quartier) or an error message.
-     */
-    public String getQuartierFromAddress(String address) {
+    // Constructor to directly accept an address
+    public Quartier(String address) {
+        this.name = getQuartierFromAddress(address); // Fetch the neighborhood using the address
+    }
+
+    // Method to get the neighborhood from the address using Google Maps API
+    private String getQuartierFromAddress(String address) {
         try {
             // Prepare the API URL
             String urlString = "https://maps.googleapis.com/maps/api/geocode/json?address=" +
@@ -35,22 +38,35 @@ public class Quartier {
             }
             reader.close();
 
-            // Parse JSON to extract the short_name for sublocality_level_1
-            String json = response.toString();
-            String key = "\"sublocality_level_1\"";
-            if (json.contains(key)) {
-                // Locate the sublocality_level_1 component
-                int keyIndex = json.indexOf(key);
-                int shortNameIndex = json.lastIndexOf("\"short_name\"", keyIndex);
-                int valueStart = json.indexOf("\"", shortNameIndex + 14) + 1; // Skip "short_name":
-                int valueEnd = json.indexOf("\"", valueStart);
-                return json.substring(valueStart, valueEnd);
+            // Parse JSON with Gson
+            JsonObject jsonResponse = JsonParser.parseString(response.toString()).getAsJsonObject();
+            if (jsonResponse.get("status").getAsString().equals("OK")) {
+                for (var result : jsonResponse.getAsJsonArray("results")) {
+                    var addressComponents = result.getAsJsonObject().getAsJsonArray("address_components");
+                    for (var component : addressComponents) {
+                        var types = component.getAsJsonObject().getAsJsonArray("types");
+                        if (types.toString().contains("sublocality_level_1")) {
+                            return component.getAsJsonObject().get("short_name").getAsString();
+                        }
+                    }
+                }
+                return "Neighborhood not found.";
             } else {
-                return "Neighborhood not found in the response.";
+                return "Error fetching neighborhood: " + jsonResponse.get("status").getAsString();
             }
         } catch (Exception e) {
             e.printStackTrace();
             return "Error fetching neighborhood.";
         }
+    }
+
+    // Getter for the neighborhood name
+    public String getName() {
+        return name;
+    }
+
+    // Setter for the neighborhood name (optional)
+    public void setName(String name) {
+        this.name = name;
     }
 }

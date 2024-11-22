@@ -7,6 +7,7 @@ import prototype.Scenes.ConsultProjectScene;
 import prototype.Scenes.ConsultRequestsScene;
 import prototype.Scenes.InfoSettingsScene;
 import prototype.Scenes.IntervenantMenuScene;
+import prototype.Scenes.IntervenantProjectsScene;
 import prototype.Scenes.IntervenantRegistrationScene;
 import prototype.Scenes.IntervenantSettingsScene;
 import prototype.Scenes.IntervenantSubmitProjectScene;
@@ -33,6 +34,7 @@ public class SceneController {
     private LoginScene loginScene;
     private ResidentMenuScene residentMenuScene;
     private IntervenantMenuScene intervenantMenuScene;
+    private IntervenantProjectsScene intervenantProjectsScene;
     private ConsultProjectScene consultProjectScene;
     private ConsultEntraveScene consultEntraveScene;
     private ConsultRequestsScene consultRequestsScene;
@@ -73,6 +75,9 @@ public class SceneController {
                 break;
             case "intervenantMenu":
                 this.scene = newIntervenantMenuScene();
+                break;
+            case "intervenantProjects":
+                this.scene = newIntervenantProjectsScene();
                 break;
             case "consultProjects":
                 this.scene = newConsultProjectScene();
@@ -207,6 +212,12 @@ public class SceneController {
         this.intervenantSubmitProjectScene = new IntervenantSubmitProjectScene(this);
         this.intervenantSubmitProjectScene.setScene();
         return this.intervenantSubmitProjectScene.getScene();
+    }
+
+    private Scene newIntervenantProjectsScene() {
+        this.intervenantProjectsScene = new IntervenantProjectsScene(this);
+        this.intervenantProjectsScene.setScene();
+        return this.intervenantProjectsScene.getScene();
     }
 
     private Scene newProblemScene() {
