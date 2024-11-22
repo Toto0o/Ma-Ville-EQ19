@@ -395,6 +395,7 @@ th {
 
 .main-section {
     margin-bottom: 24px;
+    max-width: 75%;
 }
 
 .nav {
@@ -565,12 +566,16 @@ th {
     padding: 12px;
     max-width: 40%;
     background-color: #e5e4e2;
+    word-wrap: break-word;
+    width : 600px;
 }
 
 .scenario-main {
     flex-grow: 2;
     padding: 12px;
     margin-left: 12px;
+    word-wrap: break-word;
+    width : 550px;
 }
 
 .scenario-main-title {
@@ -713,4 +718,18 @@ th {
     font-weight: bold;
     content: '🗸';
     color: currentColor;
+}
+
+.class-diagram {
+    display: block;
+    min-height: 600px;
+    min-width: 600px;
+    height: 100%;
+    width: auto;
+    background-color: #d5d5d5;
+
+}
+
+.class-diagram img {
+    max-width: 150%;
 }
