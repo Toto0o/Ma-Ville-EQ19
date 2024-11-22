@@ -1,17 +1,15 @@
-# Ma-Ville-EQ19
-Projet Ma Ville dans la cadre du cours IFT2255.
+# Ma-Ville-EQ19 -- Prototype
 
-Description du répertoire :
+Cette branche contient les fichiers java du prototype. Celui-ci est crée avec JavaFX. Un fichier .jar sera remis sur Studium afin de l'executer avec les modules correspondants.
 
-Le répertoire contient le fichier .jar pour lancer l'application. (Pour lancer : java -jar ).
+Le package est divisé comme suis :
+  - Main : lance l'application
+  - Controllers : contient le controlleur de scene
+  - Scenes : contient les différentes scenes (pages) du menu
 
-Il contient aussi le dossier 'Prototype', qui conteint les fichiers java de l'application. Celui-ci est divisé comme suis :
+Actuellement, toutes les fonctionnalités sont opérationnelles grâce à l'utilisation de Firebase et de la base de données Firebase. La seule fonctionnalité qui n'est pas encore fonctionnelle est la sélection des horaires préférés pour les résidents.
 
-  - La classe main, qui sert à appeler la classe GUI, qui à son tour lance l'applicaiton
-  - La classe SceneController, qui sert de controlleur de scenes pour naviguer à travers les différentes scenes
-  - Les classes scenes, qui contiennent les différentes scenes (pages) de l'application
+Il existe 3 comptes résidents avec les emails resident1@gmail.com, resident2@gmail.com et resident3@gmail.com, tous avec le mot de passe 123456.
+Il y a également 3 comptes intervenants avec les emails intervenant1@gmail.com, intervenant2@gmail.com et intervenant3@gmail.com, tous avec le mot de passe 123456.
 
-Pour se connecter en tant que résident, utiliser :
-
-  - username : email@example.com
-  - password : 1234
+Les test unitaire sont dans le fichier test sous prototype.
