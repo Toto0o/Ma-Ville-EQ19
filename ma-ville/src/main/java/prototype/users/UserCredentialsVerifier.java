@@ -1,36 +1,56 @@
 package prototype.users;
 
-import prototype.interfaces.CredentialsVerifier;
+import java.time.LocalDate;
+import java.time.Period;
 
-public class UserCredentialsVerifier implements CredentialsVerifier {
 
-    @Override
-    public Boolean verifyCredentials(String username, String password) {
+public class UserCredentialsVerifier {
+
+    
+    public void verifyResidentRegister(String password1, String password2, String birthday, String email, Address address) throws IllegalArgumentException {
         // Implement your logic to verify credentials, e.g., check against a database
-        return true; // Dummy return for example
+            this.verifiyMatchingPasswords(password1, password2);
+            this.verifyBirthday(birthday);
+            this.verifyEmail(email);
+            this.verifyAdress(address);
     }
 
-    @Override
-    public Boolean verifiyMatchingPasswords(String password1, String password2) {
-        return password1.equals(password2);
+    public void verifyIntervenantRegister(String password1, String password2, String cityId) throws Exception {
+        this.verifiyMatchingPasswords(password1, password2);
+        this.verifyIdentifier(cityId); 
+        
     }
 
-    @Override
-    public Boolean verifyBirthday(String birthday) {
+    
+    public void verifiyMatchingPasswords(String password1, String password2) throws IllegalArgumentException {
+        if (!password1.equals(password2)) {
+            throw new IllegalArgumentException("Passwords doesn't match");
+        }
+    }
+
+    
+    public void verifyBirthday(String birthday) throws IllegalArgumentException {
         // Implement birthday format validation (e.g., YYYY-MM-DD)
-        return birthday.matches("\\d{4}-\\d{2}-\\d{2}");
+        LocalDate today = LocalDate.now();
+        LocalDate ldbirthday = LocalDate.parse(birthday);
+        
+        if (Period.between(ldbirthday, today).getYears() < 16) {
+            throw new IllegalArgumentException("Not old enough to register");
+        }
     }
 
-    @Override
-    public Boolean verifyAdress(String adress) {
+    
+    public void verifyAdress(Address adress) throws IllegalArgumentException {
         // Implement address verification logic, e.g., using a web API or regex
-        return true; // Dummy return for example
     }
 
-    @Override
-    public Boolean verifyIdentifier(String identifier) {
+    
+    public void verifyIdentifier(String identifier) throws IllegalArgumentException{
         // Implement identifier verification
-        return true; // Dummy return for example
+    }
+
+    private void verifyEmail(String email) throws IllegalArgumentException {
+        //Verify if email is already in use!
     }
 
 
