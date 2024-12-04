@@ -19,8 +19,11 @@ public class ConsultRequestScene extends Scenes {
 
     @Override
     public void setScene() {
+        this.root.setTop(this.menuButton);
         this.root.setCenter(this.vBox);
         this.vBox.getChildren().add(this.title);
+
+        this.menuButton.setOnMouseDragOver(event -> newSceneAction(event, "menu"));
     }
 
 }

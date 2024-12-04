@@ -16,22 +16,24 @@ public class Project {
 
     private String status; // E.g., "Prévu", "En cours", "Terminé"
 
+    private int number;
+
    
-    public Project(String title, Type type, String description, String quartier, String startDate, String endDate, String schedule, Intervenant intervenant) {
+    public Project(String title, Type type, String description, String quartier, String startDate, String endDate, Intervenant intervenant, int number) {
         this.title = title;
         this.type = type;
         this.description = description;
         this.quartier = quartier;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.schedule = schedule;
         this.intervenant = intervenant;
         this.status = "Prévu"; 
+        this.number = number;
     }
 
   
     public String getTitle() {
-        return title;
+        return this.title;
     }
 
     public void setTitle(String title) {
@@ -39,7 +41,7 @@ public class Project {
     }
 
     public Type getType() {
-        return type;
+        return this.type;
     }
 
     public void setType(Type type) {
@@ -47,7 +49,7 @@ public class Project {
     }
 
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
     public void setDescription(String description) {
@@ -55,7 +57,7 @@ public class Project {
     }
 
     public String getQuartier() {
-        return quartier;
+        return this.quartier;
     }
 
     public void setQuartier(String quartier) {
@@ -63,7 +65,7 @@ public class Project {
     }
 
     public String getStartDate() {
-        return startDate;
+        return this.startDate;
     }
 
     public void setStartDate(String startDate) {
@@ -71,7 +73,7 @@ public class Project {
     }
 
     public String getEndDate() {
-        return endDate;
+        return this.endDate;
     }
 
     public void setEndDate(String endDate) {
@@ -79,7 +81,7 @@ public class Project {
     }
 
     public String getSchedule() {
-        return schedule;
+        return this.schedule;
     }
 
     public void setSchedule(String schedule) {
@@ -87,7 +89,7 @@ public class Project {
     }
 
     public String getStatus() {
-        return status;
+        return this.status;
     }
 
     public void setStatus(String status) {
@@ -95,7 +97,7 @@ public class Project {
     }
 
     public Intervenant getIntervenant() {
-        return intervenant;
+        return this.intervenant;
     }
 
     public void setIntervenant(Intervenant intervenant) {
@@ -107,20 +109,24 @@ public class Project {
         this.status = newStatus;
     }
 
+    public int getNumber() {
+        return this.number;
+    }
+
     // Méthode pour afficher les détails du projet sous forme de chaîne formatée
 
     @Override
     public String toString() {
         return "Project{" +
-                "title='" + title + '\'' +
-                ", type=" + type +
-                ", description='" + description + '\'' +
-                ", quartier='" + quartier + '\'' +
-                ", startDate='" + startDate + '\'' +
-                ", endDate='" + endDate + '\'' +
-                ", schedule='" + schedule + '\'' +
-                ", status='" + status + '\'' +
-                ", intervenant=" + (intervenant != null ? intervenant.getUsername() : "None") +
+                "title='" + this.title + '\'' +
+                ", type=" + this.type.toString() +
+                ", description='" + this.description + '\'' +
+                ", quartier='" + this.quartier + '\'' +
+                ", startDate='" + this.startDate + '\'' +
+                ", endDate='" + this.endDate + '\'' +
+                ", schedule='" + this.schedule + '\'' +
+                ", status='" + this.status + '\'' +
+                ", intervenant=" + (this.intervenant != null ? intervenant.getName() : "None") +
                 '}';
     }
 }

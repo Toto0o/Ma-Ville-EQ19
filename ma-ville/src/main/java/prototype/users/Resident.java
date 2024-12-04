@@ -2,8 +2,10 @@ package prototype.users;
 
 public class Resident extends Utilisateur {
 
-    public Resident(String username, String password, String birthday, String phone, Address address) {
-        super(username, password, birthday, phone, address);
+    public Resident() {}
+
+    public Resident(String name, String lastname, String password, String birthday, Address address, String phone, String email) {
+        super(name, lastname, password, birthday, phone, email, address);
     }
 
 }

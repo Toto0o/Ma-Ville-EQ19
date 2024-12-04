@@ -1,13 +1,18 @@
 package prototype.scenes.resident;
 
-import javafx.collections.FXCollections;
+import java.time.LocalDate;
+
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import prototype.controllers.RequestController;
 import prototype.controllers.SceneController;
+import prototype.projects.Type;
 import prototype.scenes.Scenes;
 
 public class RequestScene extends Scenes{
@@ -16,14 +21,17 @@ public class RequestScene extends Scenes{
 
     private VBox requestBox;
 
-    private TextField titleField, descriptionField, dateField;
+    private TextField titleField;
+    private DatePicker datePicker;
+    private TextArea descriptionArea;
     private Text titleText, descriptionText, typeText, dateText;
 
-    private ComboBox typeComboBox;
-    private String[] types;
+    private ComboBox<Type> typeComboBox;
+
+    private RequestController requestController;
 
 
-    public RequestScene(SceneController sceneController) {
+    public RequestScene(SceneController sceneController, RequestController requestController) {
         super(sceneController);
         this.requestBox = new VBox();
         this.menu = new Button("Menu");
@@ -31,17 +39,17 @@ public class RequestScene extends Scenes{
         this.newRequest = new Button("Ajouter une nouvelle requête de travaux");
 
         this.titleField = new TextField();
-        this.descriptionField = new TextField();
-        this.dateField = new TextField();
+        this.descriptionArea = new TextArea();
+        this.datePicker = new DatePicker();
 
         this.titleText = new Text("Titre du projet");
         this.descriptionText = new Text("Description détaillée");
         this.typeText = new Text("Choisissez le type de projet");
         this.dateText = new Text("Date espéré de début du projet");
 
-        
-        this.types = new String[] {"Travaux routier", "Travaux de gaz ou électricité", "Construction ou renovation"};
-        this.typeComboBox = new ComboBox(FXCollections.observableArrayList(this.types));
+        this.typeComboBox = new ComboBox<>();
+
+        this.requestController = requestController;
     }
 
     @Override
@@ -54,18 +62,24 @@ public class RequestScene extends Scenes{
             this.titleText,
             this.titleField,
             this.descriptionText,
-            this.descriptionField,
+            this.descriptionArea,
             this.typeText,
             this.typeComboBox,
-            this.dateText,
-            this.dateField,
+            /* this.dateText, */
+            this.datePicker,
             this.sendRequest
         );
+        this.typeComboBox.getItems().addAll(Type.values());
         this.titleField.setMaxWidth(250);
-        this.descriptionField.setMaxWidth(250);
+        this.descriptionArea.setMaxWidth(250);
         this.typeComboBox.setMaxWidth(250);
-        this.dateField.setMaxWidth(250);
+        
+        
+        this.datePicker.setPromptText("Date de début espérée");
+        this.datePicker.setValue(LocalDate.now());
 
+
+        
 
         this.requestBox.setSpacing(20);
         this.requestBox.setAlignment(Pos.CENTER);
@@ -76,6 +90,15 @@ public class RequestScene extends Scenes{
 
         this.menu.setOnMouseClicked((menuAction) -> {
             this.sceneController.newScene("menu");
+        });
+
+        this.sendRequest.setOnMouseClicked((newRequest) -> {
+            this.requestController.addRequest(
+                this.titleField.getText(),
+                this.descriptionArea.getText(),
+                this.typeComboBox.getValue(),
+                this.datePicker.getValue().format(this.formatter)
+            );
         });
 
 

@@ -1,14 +1,18 @@
 package prototype.notifications;
 
+import java.io.Serializable;
+
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import prototype.projects.Project;
 
-public class Notification {
+public class Notification implements Serializable {
 
     private Text title, description;
     private VBox vBox;
     private Project project;
+
+    public Notification() {}
 
     public Notification(Project project) {
         this.project = project;

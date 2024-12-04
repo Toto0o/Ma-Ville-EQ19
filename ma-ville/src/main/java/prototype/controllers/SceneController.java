@@ -3,15 +3,17 @@ package prototype.controllers;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import prototype.interfaces.UserController;
-import prototype.scenes.general.ConsultProjectScene;
-import prototype.scenes.general.InfoSettingsScene;
-import prototype.scenes.general.LaunchScene;
-import prototype.scenes.general.LoginScene;
-import prototype.scenes.general.MenuScene;
 import prototype.scenes.general.NotificationScene;
-import prototype.scenes.general.NotificationSettingsScene;
-import prototype.scenes.general.RegisterScene;
-import prototype.scenes.general.SettingsScene;
+import prototype.scenes.general.login.RoleSelectionScene;
+import prototype.scenes.general.consult.ConsultEntraveScene;
+import prototype.scenes.general.consult.ConsultProjectScene;
+import prototype.scenes.general.login.LoginScene;
+import prototype.scenes.general.menu.LaunchScene;
+import prototype.scenes.general.menu.MenuScene;
+import prototype.scenes.general.register.RegisterScene;
+import prototype.scenes.general.settings.InfoSettingsScene;
+import prototype.scenes.general.settings.NotificationSettingsScene;
+import prototype.scenes.general.settings.SettingsScene;
 import prototype.scenes.intervenant.ConsultRequestScene;
 import prototype.scenes.resident.RequestScene;
 
@@ -24,6 +26,7 @@ public class SceneController {
     /* Scenes */
     private LaunchScene launchScene;
     private LoginScene loginScene;
+    private RoleSelectionScene roleSelectionScene;
     private RegisterScene registerScene;
     private ConsultProjectScene consultProjectScene;
     private SettingsScene settingsScene;
@@ -32,19 +35,22 @@ public class SceneController {
     private InfoSettingsScene infoSettingsScene;
     private NotificationSettingsScene notificationSettingsScene;
     private ConsultRequestScene consultRequestScene;
+    private ConsultEntraveScene consultEntraveScene;
     private MenuScene menuScene;
     private Boolean intervenant;
 
     private UserController userController;
+    private RequestController requestController;
 
-    public SceneController(Stage primaryStage, UserController userController) {
+    public SceneController(Stage primaryStage, UserController userController, RequestController requestController) {
         this.primaryStage = primaryStage;
         this.userController = userController;
+        this.requestController = requestController;
         this.intervenant = false;
     }
 
     public void start() {
-        newScene("launch"); /* Default is the launching scene */
+        newScene("menu"); /* Default is the launching scene */
         this.primaryStage.setTitle("Ma ville - Équipe 19");
         this.primaryStage.show();
     }
@@ -53,62 +59,26 @@ public class SceneController {
 
 
         switch (scene) {
-            // General scenes
 
-            case "launch" :
-                this.scene = newLaunchScene();
-                break;
+            case "launch" -> this.scene = newLaunchScene();
+            case "login" -> this.scene = newLoginScene();
+            case "roleSelection" -> this.scene = newRoleSelectionScene();
+            case "settings" -> this.scene = newSettingsScene();
+            case "infoSettings" -> this.scene = newInfoSettingsScene();
+            case "notificationSettings" -> this.scene = newNotificationSettingsScene();
+            case "notifications" -> this.scene = newNotificationScene();
+            case "consult entraves" -> this.scene = newConsultEntraveScene();
             
-            case "login" :
-                this.scene = newLoginScene();
-                break;
-
-            //Settings
-            case "settings" :
-                this.scene = newSettingsScene();
-                break;
+            case "consult project" -> this.scene = newConsultProjectScene(this.intervenant);
+            case "residentRegistration" -> this.scene = newRegisterScene(false);
             
-            case "infoSettings" :
-                this.scene = newInfoSettingsScene();
-                break;
-
-            case "notificationSettings" :
-                this.scene = newNotificationSettingsScene();
-                break;
-
+            case "request" -> this.scene = newRequestScene();
             
-            case "notifications" :
-                this.scene = newNotificationScene();
-                break;
+            case "intervenantRegistration" -> this.scene = newRegisterScene(true);
             
-            case "consult project" :
-                this.scene = newConsultProjectScene(this.intervenant);
-                break;
+            case "menu" -> this.scene = newMenuScene(this.intervenant);
 
-
-            // Resident scenes    
-            case "resident register" :
-                this.scene = newRegisterScene(false);
-                break;
-            
-            case "request" :
-                this.scene = newRequestScene();
-                break;
-
-
-            
-            //Intervenant scenes
-            case "intervenant register" :
-                this.scene = newRegisterScene(true);
-                break;
-            
-            case "menu" :
-                this.scene = newMenuScene(this.intervenant);
-                break;
-
-            case "consult request" :
-                this.scene = newConsultRequestScene();
-                break;
+            case "consult request" -> this.scene = newConsultRequestScene();
 
         }
         
@@ -135,6 +105,12 @@ public class SceneController {
         return this.loginScene.getScene();
     }
 
+    private Scene newRoleSelectionScene() {
+        this.roleSelectionScene = new RoleSelectionScene(this);
+        this.roleSelectionScene.setScene();
+        return this.roleSelectionScene.getScene();
+    }
+
     private Scene newRegisterScene(boolean intervenant) {
 
         this.registerScene = new RegisterScene(this, intervenant);
@@ -155,7 +131,7 @@ public class SceneController {
     }
 
     private Scene newRequestScene() {
-        this.requestScene = new RequestScene(this);
+        this.requestScene = new RequestScene(this, this.requestController);
         this.requestScene.setScene();
         return this.requestScene.getScene();
     }
@@ -188,6 +164,12 @@ public class SceneController {
         this.consultRequestScene = new ConsultRequestScene(this);
         this.consultRequestScene.setScene();
         return this.consultRequestScene.getScene();
+    }
+
+    private Scene newConsultEntraveScene() {
+        this.consultEntraveScene = new ConsultEntraveScene(this);
+        this.consultEntraveScene.setScene();
+        return this.consultEntraveScene.getScene();
     }
 
 

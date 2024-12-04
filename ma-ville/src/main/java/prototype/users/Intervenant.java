@@ -4,8 +4,10 @@ public class Intervenant extends Utilisateur {
 
     private String cityID;
 
-    public Intervenant(String username, String password, String birthday, String phone, Address address, String cityID) {
-        super(username, password, birthday, phone, address);
+    public Intervenant() {}
+
+    public Intervenant(String name, String lastname, String password, String birthday, String phone, String email, Address address, String cityID) {
+        super(name, lastname, password, birthday, phone, email, address);
         this.cityID = cityID;
     }
 
