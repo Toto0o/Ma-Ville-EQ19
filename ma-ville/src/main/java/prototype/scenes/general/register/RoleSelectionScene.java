@@ -1,4 +1,4 @@
-package prototype.scenes.general.login;
+package prototype.scenes.general.register;
 
 import prototype.scenes.Scenes;
 import javafx.geometry.Pos;

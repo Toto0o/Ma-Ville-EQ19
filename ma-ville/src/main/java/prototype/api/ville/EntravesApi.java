@@ -13,7 +13,7 @@ import org.json.JSONObject;
 import prototype.entraves.Entrave;
 
 
-public class EntravesApiLoader {
+public class EntravesApi {
 
     private final String API_URL = "https://donnees.montreal.ca/api/3/action/datastore_search?resource_id=a2bc8014-488c-495d-941b-e7ae1999d1bd";
     
@@ -21,7 +21,7 @@ public class EntravesApiLoader {
 
     private Thread fetchEntravesThread;
 
-    public EntravesApiLoader() {
+    public EntravesApi() {
         this.entravesList = new ArrayList<>();
     }
 

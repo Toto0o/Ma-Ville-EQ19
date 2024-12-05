@@ -59,6 +59,8 @@ public abstract class Utilisateur implements Serializable {
     public void setEmail(String email) {this.email = email;}
 
     public void saveProject(Project project) {this.savedProjects.add(project);}
+
+    public abstract boolean isIntervenant();
     
 
 }

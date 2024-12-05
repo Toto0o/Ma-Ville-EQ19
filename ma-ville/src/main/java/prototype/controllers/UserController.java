@@ -1,10 +1,6 @@
 package prototype.controllers;
 
-import prototype.users.UserCredentialsVerifier;
-import prototype.users.Utilisateur;
-import prototype.users.Address;
-import prototype.users.Intervenant;
-import prototype.users.Resident;
+import prototype.users.*;
 
 
 public class UserController {
@@ -28,17 +24,19 @@ public class UserController {
             Resident resident = new Resident(
             name, lastname, password1, birthday, address, phone, email);
             this.apiController.residentRegister(resident);
+            this.utilisateur = resident;
         } catch (Exception e) {
             throw e;
         }
     }
 
-    public void register(String name, String lastname, String password1, String password2, String cityId, String type) throws Exception{
+    public void register(String name, String lastname, String password1, String password2, String birthday, Address address, String phone, String email, String cityId, IntervenantType type) throws Exception{
         // Intervenant register
         try {
             this.verifier.verifyIntervenantRegister(password1, password2, cityId);
-            Intervenant intervenant = new Intervenant(name, lastname, password1, cityId, type);
+            Intervenant intervenant = new Intervenant(name, lastname, password1, birthday, phone, email, address, cityId, type);
             this.apiController.intervenantRegister(intervenant);
+            this.utilisateur = intervenant;
         } catch (Exception e) {
             throw e;
         }

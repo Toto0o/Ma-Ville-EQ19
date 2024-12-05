@@ -35,7 +35,7 @@ public class UserCredentialsVerifier {
         LocalDate ldbirthday = LocalDate.parse(birthday);
         
         if (Period.between(ldbirthday, today).getYears() < 16) {
-            throw new IllegalArgumentException("Not old enough to register");
+            throw new IllegalArgumentException("Must be at least 16 years old to register");
         }
     }
 

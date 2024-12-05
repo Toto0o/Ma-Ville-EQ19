@@ -18,13 +18,13 @@ import com.google.cloud.storage.Acl;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
-public class ProjectApiLoader {
+public class ProjectApi {
 
     private String API_URL = "https://donnees.montreal.ca/api/3/action/datastore_search?resource_id=cc41b532-f12d-40fb-9f55-eb58c9a2b12b";
     private ArrayList<ProjectVille> projects;
     private Thread fetchThread;
 
-    public ProjectApiLoader() {
+    public ProjectApi() {
         this.projects = new ArrayList<>();
     }
 

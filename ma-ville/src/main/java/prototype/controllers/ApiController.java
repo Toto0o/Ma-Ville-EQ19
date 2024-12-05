@@ -1,27 +1,27 @@
 package prototype.controllers;
 
-import prototype.api.firebase.UserFireBase;
-import prototype.api.ville.EntravesApiLoader;
-import prototype.api.ville.ProjectApiLoader;
+import prototype.api.firebase.UserFirebase;
+import prototype.api.ville.EntravesApi;
+import prototype.api.ville.ProjectApi;
 import prototype.users.*;
 import prototype.projects.*;
 
 import java.util.ArrayList;
 
+import prototype.api.ville.QuartierApi;
 import prototype.entraves.Entrave;
 
 public class ApiController {
 
-    private EntravesApiLoader entravesApi;
-
-    private ProjectApiLoader projectApi;
-
-    private UserFireBase userApi;
+    private EntravesApi entravesApi;
+    private ProjectApi projectApi;
+    private UserFirebase userApi;
+    private QuartierApi quartierApi;
 
     public ApiController() {
-        this.entravesApi = new EntravesApiLoader();
-        this.projectApi = new ProjectApiLoader();
-        this.userApi = new UserFireBase();
+        this.entravesApi = new EntravesApi();
+        this.projectApi = new ProjectApi();
+        this.userApi = new UserFirebase();
     }
 
     public Utilisateur authenticate(String email, String password) throws Exception {
@@ -32,12 +32,12 @@ public class ApiController {
         }
     }
 
-    public void residentRegister(Utilisateur utilisateur) throws Exception{
-        try {
-            this.userApi.saveUserToFirebase(utilisateur);
-        } catch (Exception e) {
-            throw e;
-        }
+    public void residentRegister(Utilisateur utilisateur) throws Exception {
+        this.userApi.saveUserToFirebase(utilisateur, "resident");
+    }
+
+    public void intervenantRegister(Utilisateur utilisateur) throws Exception {
+        this.userApi.saveUserToFirebase(utilisateur, "intervenant");
     }
 
     public ArrayList<ProjectVille> getProjects() throws Exception{
@@ -51,6 +51,14 @@ public class ApiController {
     public ArrayList<Entrave> getEntraves() throws Exception {
         try {
             return this.entravesApi.getEntraves();
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public String getQuartierName(String address) throws Exception {
+        try {
+            return this.quartierApi.getName(address);
         } catch (Exception e) {
             throw e;
         }

@@ -8,4 +8,7 @@ public class Resident extends Utilisateur {
         super(name, lastname, password, birthday, phone, email, address);
     }
 
+    @Override
+    public boolean isIntervenant() {return false;}
+
 }

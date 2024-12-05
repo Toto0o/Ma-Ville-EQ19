@@ -9,9 +9,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import prototype.api.firebase.UserFireBase;
+import prototype.api.firebase.UserFirebase;
 import prototype.controllers.SceneController;
+import prototype.controllers.UserController;
 import prototype.scenes.Scenes;
+import prototype.users.Utilisateur;
 
 public class LoginScene extends Scenes {
     private VBox vBox;
@@ -20,11 +22,10 @@ public class LoginScene extends Scenes {
     private TextField usernameField;
     private PasswordField passwordField;
     private Label statusLabel;
-    private boolean intervenant;
 
-    private UserFireBase authenticate;
+    private UserController userController;
 
-    public LoginScene(SceneController sceneController) {
+    public LoginScene(SceneController sceneController, UserController userController) {
         super(sceneController);
 
         this.vBox = new VBox();
@@ -35,14 +36,13 @@ public class LoginScene extends Scenes {
         this.usernameText = new Text("Email");
         this.passwordField = new PasswordField();
         this.passwordText = new Text("Password");
-        this.authenticate = new UserFireBase();
+        this.userController = userController;
     }
 
     public void setScene() {
         this.root.setCenter(this.vBox);
         this.vBox.setAlignment(Pos.CENTER);
-        this.vBox.getChildren().addAll(usernameText, usernameField, passwordText, passwordField, loginButton,
-                statusLabel, backButton);
+        this.vBox.getChildren().addAll(usernameText, usernameField, passwordText, passwordField, loginButton, statusLabel, backButton);
         this.usernameField.setMaxWidth(250);
         this.passwordField.setMaxWidth(250);
         this.vBox.setSpacing(10);
@@ -76,20 +76,20 @@ public class LoginScene extends Scenes {
         }
 
         try {
-            if (authenticate.authenticateWithFirebase(email, password)) {
-                if (authenticate.getIntervenant()) {
-                    statusLabel.setText("Welcome, Intervenant!");
-                    this.sceneController.setIntervenant(true);
-                    this.sceneController.newScene("menu");
-                }
-    
-                else {
-                    statusLabel.setText("Welcome, Resident!");
-                    this.sceneController.newScene("menu");
-                }
-            }
+            Utilisateur user = this.userController.login(email, password);
 
-        } catch (Exception e) {
+            if (user.isIntervenant()) {
+                this.statusLabel.setText("Welcome, " + user.getName());
+                this.sceneController.setIntervenant(true);
+                this.sceneController.newScene("menu");
+            }
+            else {
+                this.statusLabel.setText("Welcome, " + user.getName());
+                this.sceneController.newScene("menu");
+            }
+        }
+
+        catch (Exception e) {
             statusLabel.setText(e.getMessage());
             usernameField.clear();
             passwordField.clear();

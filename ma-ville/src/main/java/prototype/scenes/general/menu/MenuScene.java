@@ -11,7 +11,9 @@ import javafx.scene.image.*;
 import javafx.scene.layout.BorderPane;
 
 import prototype.controllers.SceneController;
+import prototype.controllers.UserController;
 import prototype.scenes.Scenes;
+import prototype.users.Utilisateur;
 
 public class MenuScene extends Scenes {
 
@@ -20,9 +22,9 @@ public class MenuScene extends Scenes {
     private Button consultButton, entraveButton, settingsButton, requestButton, logoutButton, notificationButton;
     private Text title;
     private Button consultRequestButton;
-    private Boolean intervenant;
+    private Utilisateur user;
 
-    public MenuScene(SceneController sceneController, Boolean intervenant) {
+    public MenuScene(SceneController sceneController, UserController userController) {
         super(sceneController);
         this.consultButton = new Button("Consulter des travaux en cours");
         this.entraveButton = new Button("Consulter les entraves routières");
@@ -37,7 +39,7 @@ public class MenuScene extends Scenes {
 
         this.consultRequestButton = new Button("Consulter la liste des requêtes de travail");
 
-        this.intervenant = intervenant;
+        this.user = userController.getUser();
     }
 
     @Override
@@ -77,11 +79,11 @@ public class MenuScene extends Scenes {
 
 
 
-        this.consultRequestButton.setVisible(this.intervenant);
-        this.consultRequestButton.setManaged(this.intervenant);
+        this.consultRequestButton.setVisible(user.isIntervenant());
+        this.consultRequestButton.setManaged(user.isIntervenant());
 
-        this.requestButton.setVisible(!this.intervenant);
-        this.requestButton.setManaged(!this.intervenant);
+        this.requestButton.setVisible(!user.isIntervenant());
+        this.requestButton.setManaged(!user.isIntervenant());
 
 
         this.consultButton.setOnMouseClicked(event -> newSceneAction(event, "consult project"));

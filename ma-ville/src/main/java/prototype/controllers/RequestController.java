@@ -2,7 +2,7 @@ package prototype.controllers;
 
 import java.util.ArrayList;
 
-import prototype.interfaces.UserController;
+import prototype.controllers.UserController;
 import prototype.projects.Project;
 import prototype.projects.Request;
 import prototype.projects.Type;
@@ -25,7 +25,7 @@ public class RequestController {
     }
 
     public void addRequest(String title, String description, Type type, String date) {
-        Request request = new Request(title, description, date, type, this.userController.getUsername(), this.userController.getAddress().getStreet(), this);
+        Request request = new Request(title, description, date, type, this.userController.getUser().getName(), this.userController.getUser().getAddress().getStreet(), this);
         this.requests.add(request);
     }
 

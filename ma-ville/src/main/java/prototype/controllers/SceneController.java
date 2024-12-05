@@ -2,15 +2,15 @@ package prototype.controllers;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import prototype.interfaces.UserController;
-import prototype.scenes.general.NotificationScene;
-import prototype.scenes.general.login.RoleSelectionScene;
+import prototype.controllers.UserController;
+import prototype.scenes.general.consult.NotificationScene;
 import prototype.scenes.general.consult.ConsultEntraveScene;
 import prototype.scenes.general.consult.ConsultProjectScene;
 import prototype.scenes.general.login.LoginScene;
 import prototype.scenes.general.menu.LaunchScene;
 import prototype.scenes.general.menu.MenuScene;
 import prototype.scenes.general.register.RegisterScene;
+import prototype.scenes.general.register.RoleSelectionScene;
 import prototype.scenes.general.settings.InfoSettingsScene;
 import prototype.scenes.general.settings.NotificationSettingsScene;
 import prototype.scenes.general.settings.SettingsScene;
@@ -41,11 +41,15 @@ public class SceneController {
 
     private UserController userController;
     private RequestController requestController;
+    private ProjectController projectController;
+    private ApiController apiController;
 
-    public SceneController(Stage primaryStage, UserController userController, RequestController requestController) {
+    public SceneController(Stage primaryStage, UserController userController, RequestController requestController, ProjectController projectController, ApiController apiController) {
         this.primaryStage = primaryStage;
         this.userController = userController;
         this.requestController = requestController;
+        this.projectController = projectController;
+        this.apiController = apiController;
         this.intervenant = false;
     }
 
@@ -70,11 +74,11 @@ public class SceneController {
             case "consult entraves" -> this.scene = newConsultEntraveScene();
             
             case "consult project" -> this.scene = newConsultProjectScene(this.intervenant);
-            case "residentRegistration" -> this.scene = newRegisterScene(false);
+            case "residentRegistration" -> this.scene = newRegisterScene();
             
             case "request" -> this.scene = newRequestScene();
             
-            case "intervenantRegistration" -> this.scene = newRegisterScene(true);
+            case "intervenantRegistration" -> this.scene = newRegisterScene();
             
             case "menu" -> this.scene = newMenuScene(this.intervenant);
 
@@ -100,7 +104,7 @@ public class SceneController {
     }
 
     private Scene newLoginScene() {
-        this.loginScene = new LoginScene(this);
+        this.loginScene = new LoginScene(this, this.userController);
         this.loginScene.setScene();
         return this.loginScene.getScene();
     }
@@ -111,9 +115,8 @@ public class SceneController {
         return this.roleSelectionScene.getScene();
     }
 
-    private Scene newRegisterScene(boolean intervenant) {
-
-        this.registerScene = new RegisterScene(this, intervenant);
+    private Scene newRegisterScene() {
+        this.registerScene = new RegisterScene(this, this.userController);
         this.registerScene.setScene();
         return this.registerScene.getScene();
     }
@@ -155,7 +158,7 @@ public class SceneController {
     }
 
     private Scene newMenuScene(Boolean intervenant) {
-        this.menuScene = new MenuScene(this, intervenant);
+        this.menuScene = new MenuScene(this, this.userController);
         this.menuScene.setScene();
         return this.menuScene.getScene();
     }
