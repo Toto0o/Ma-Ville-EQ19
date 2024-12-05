@@ -23,12 +23,12 @@ import prototype.users.Intervenant;
 import prototype.users.Resident;
 import prototype.users.Utilisateur;
 
-public class UserFireBase {
+public class UserFirebase {
 
     private boolean intervenant;
     private volatile Utilisateur user;
 
-    public UserFireBase() {};
+    public UserFirebase() {};
     
     public boolean getIntervenant() {
         return this.intervenant;
@@ -181,7 +181,7 @@ public class UserFireBase {
     }
 
 
-    public void saveUserToFirebase(Utilisateur utilisateur) throws Error {
+    public void saveUserToFirebase(Utilisateur utilisateur, String folder) throws Error {
         try {
             // Register user with Firebase Authentication
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -194,11 +194,11 @@ public class UserFireBase {
             UserRecord userRecord = future.get(); // This will block until the operation completes
 
             String uid = userRecord.getUid(); // Get the unique UID of the user
-
+            
             // Save user to Firebase Database under a folder named after the UID
             FirebaseDatabase database = FirebaseDatabase
                     .getInstance("https://maville-18aa2-default-rtdb.firebaseio.com/");
-            DatabaseReference userFolderRef = database.getReference("residents").child(uid);
+            DatabaseReference userFolderRef = database.getReference(folder).child(uid);
 
             userFolderRef.setValueAsync(utilisateur); // Save resident data under "residents/UID" node
 
