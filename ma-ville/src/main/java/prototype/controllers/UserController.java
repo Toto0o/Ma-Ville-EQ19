@@ -1,6 +1,8 @@
 package prototype.controllers;
 
 import prototype.users.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 
 public class UserController {
@@ -8,38 +10,49 @@ public class UserController {
     private UserCredentialsVerifier verifier;
     private Utilisateur utilisateur;
     private ApiController apiController;
+    private DateTimeFormatter formatter;
 
-    public UserController() {
+    public UserController(ApiController apiController) {
         this.verifier = new UserCredentialsVerifier();
+        this.apiController = apiController;
+        this.formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     }
 
     public Utilisateur getUser() {return this.utilisateur;}
     
     public void setUser(Utilisateur utilisateur) {this.utilisateur = utilisateur;}
 
-    public void register(String name, String lastname, String password1, String password2, String birthday, Address address, String phone, String email) throws Exception {
+    public void register(String name, String lastname, String password1, String password2, LocalDate birthday, Address address, String phone, String email) throws Exception {
         // Resident register
-        try {
-            this.verifier.verifyResidentRegister(password1, password2, birthday, email, address);
-            Resident resident = new Resident(
-            name, lastname, password1, birthday, address, phone, email);
-            this.apiController.residentRegister(resident);
-            this.utilisateur = resident;
-        } catch (Exception e) {
-            throw e;
+        String birthdayString;
+
+        if (birthday != null) {
+            birthdayString = birthday.format(this.formatter);
         }
+        else {
+            throw new IllegalArgumentException("Birhtday cannot be empty");
+        }
+        this.verifier.verifyResidentRegister(password1, password2, birthdayString, email, address);
+        Resident resident = new Resident(
+        name, lastname, password1, birthdayString, address, phone, email);
+        this.apiController.residentRegister(resident);
+        this.utilisateur = resident;
+        
     }
 
-    public void register(String name, String lastname, String password1, String password2, String birthday, Address address, String phone, String email, String cityId, IntervenantType type) throws Exception{
+    public void register(String name, String lastname, String password1, String password2, LocalDate birthday, Address address, String phone, String email, String cityId, IntervenantType type) throws Exception{
         // Intervenant register
-        try {
-            this.verifier.verifyIntervenantRegister(password1, password2, cityId);
-            Intervenant intervenant = new Intervenant(name, lastname, password1, birthday, phone, email, address, cityId, type);
-            this.apiController.intervenantRegister(intervenant);
-            this.utilisateur = intervenant;
-        } catch (Exception e) {
-            throw e;
+        String birthdayString;
+        if (birthday != null) {
+            birthdayString = birthday.format(this.formatter);
         }
+        else {
+            throw new IllegalArgumentException("Birhtday cannot be empty");
+        }
+        this.verifier.verifyIntervenantRegister(password1, password2, cityId);
+        Intervenant intervenant = new Intervenant(name, lastname, password1, birthdayString, phone, email, address, cityId, type);
+        this.apiController.intervenantRegister(intervenant);
+        this.utilisateur = intervenant;
     }
 
     public Utilisateur login(String email, String password) throws Exception {

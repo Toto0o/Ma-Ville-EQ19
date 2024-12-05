@@ -54,7 +54,7 @@ public class SceneController {
     }
 
     public void start() {
-        newScene("menu"); /* Default is the launching scene */
+        newScene("launch"); /* Default is the launching scene */
         this.primaryStage.setTitle("Ma ville - Équipe 19");
         this.primaryStage.show();
     }
@@ -116,7 +116,7 @@ public class SceneController {
     }
 
     private Scene newRegisterScene() {
-        this.registerScene = new RegisterScene(this, this.userController);
+        this.registerScene = new RegisterScene(this, this.intervenant, this.userController);
         this.registerScene.setScene();
         return this.registerScene.getScene();
     }

@@ -34,7 +34,10 @@ public class RoleSelectionScene extends Scenes {
 
         // Set button actions
         residentButton.setOnMouseClicked(event -> this.sceneController.newScene("residentRegistration"));
-        intervenantButton.setOnMouseClicked(event -> this.sceneController.newScene("intervenantRegistration"));
+        intervenantButton.setOnMouseClicked(event -> {
+            this.sceneController.setIntervenant(true);
+            this.sceneController.newScene("intervenantRegistration");
+        });
         backButton.setOnMouseClicked(event -> this.sceneController.newScene("launch"));
     }
 

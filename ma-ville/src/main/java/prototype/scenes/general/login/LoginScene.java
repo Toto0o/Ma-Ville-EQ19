@@ -10,12 +10,14 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import prototype.api.firebase.UserFirebase;
+import prototype.controllers.ApiController;
 import prototype.controllers.SceneController;
 import prototype.controllers.UserController;
 import prototype.scenes.Scenes;
 import prototype.users.Utilisateur;
 
 public class LoginScene extends Scenes {
+
     private VBox vBox;
     private Button loginButton, backButton;
     private Text usernameText, passwordText;
@@ -77,9 +79,9 @@ public class LoginScene extends Scenes {
 
         try {
             Utilisateur user = this.userController.login(email, password);
-
+            this.statusLabel.setText("Welcome, " + user.getName());
+            
             if (user.isIntervenant()) {
-                this.statusLabel.setText("Welcome, " + user.getName());
                 this.sceneController.setIntervenant(true);
                 this.sceneController.newScene("menu");
             }

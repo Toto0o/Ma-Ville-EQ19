@@ -181,7 +181,7 @@ public class UserFirebase {
     }
 
 
-    public void saveUserToFirebase(Utilisateur utilisateur, String folder) throws Error {
+    public void saveUserToFirebase(Utilisateur utilisateur, String folder) throws Exception {
         try {
             // Register user with Firebase Authentication
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -205,7 +205,7 @@ public class UserFirebase {
             System.out.println("Resident data saved to Firebase under UID: " + uid);
 
         } catch (Exception e) {
-            throw new Error(e.getMessage());
+            throw e;
         }
     }
 

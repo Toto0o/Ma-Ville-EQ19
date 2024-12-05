@@ -18,7 +18,6 @@ public class UserCredentialsVerifier {
     public void verifyIntervenantRegister(String password1, String password2, String cityId) throws Exception {
         this.verifiyMatchingPasswords(password1, password2);
         this.verifyIdentifier(cityId); 
-        
     }
 
     
@@ -33,6 +32,8 @@ public class UserCredentialsVerifier {
         // Implement birthday format validation (e.g., YYYY-MM-DD)
         LocalDate today = LocalDate.now();
         LocalDate ldbirthday = LocalDate.parse(birthday);
+
+        if (birthday.equals(null)) throw new IllegalArgumentException("Birhtday cannot be empty");
         
         if (Period.between(ldbirthday, today).getYears() < 16) {
             throw new IllegalArgumentException("Must be at least 16 years old to register");

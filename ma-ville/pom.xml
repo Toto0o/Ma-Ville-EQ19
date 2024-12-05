@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>ma-ville</groupId>
-    <artifactId>ma-ville</artifactId>
+     <groupId>prototype</groupId>
+    <artifactId>prototype</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -21,10 +21,18 @@
     <dependencies>
 
         <dependency>
-            <groupId>com.google.firebase</groupId>
-            <artifactId>firebase-admin</artifactId>
-            <version>9.4.1</version>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.11.0</version>
         </dependency>
+
+
+        <dependency>
+            <groupId>com.google.api.client</groupId>
+            <artifactId>google-api-client-auth-oauth2</artifactId>
+            <version>1.2.3-alpha</version>
+        </dependency>
+
 
         <!-- JavaFX modules -->
         <dependency>
@@ -37,6 +45,13 @@
             <artifactId>javafx-fxml</artifactId>
             <version>22</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.google.firebase</groupId>
+            <artifactId>firebase-admin</artifactId>
+            <version>9.4.1</version>
+        </dependency>
+    
         <!-- Firebase Authentication SDK -->
         <dependency>
             <groupId>com.google.firebase</groupId>
@@ -44,20 +59,19 @@
             <version>21.0.5</version>
             <type>pom</type>
         </dependency>
+        
+        <!-- Google Cloud Firestore -->
+        <dependency>
+            <groupId>com.google.cloud</groupId>
+            <artifactId>google-cloud-firestore</artifactId>
+            <version>3.12.0</version>
+        </dependency>
+
+      
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20210307</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.10.1</version> 
-        </dependency>
-        <dependency>
-            <groupId>com.google.cloud</groupId>
-            <artifactId>google-cloud-storage</artifactId>
-            <version>2.26.0</version> 
         </dependency>
 
     </dependencies>

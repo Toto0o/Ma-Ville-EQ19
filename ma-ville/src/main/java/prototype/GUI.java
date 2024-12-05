@@ -20,6 +20,7 @@ public class GUI extends Application {
     public void start(Stage primaryStage) throws Exception {
         this.projectController = new ProjectController();
         this.apiController = new ApiController();
+        this.userController = new UserController(this.apiController);
         this.requestController = new RequestController(this.userController, this.projectController);
         this.sceneController = new SceneController(primaryStage, this.userController, this.requestController, this.projectController, this.apiController);
         this.sceneController.start();

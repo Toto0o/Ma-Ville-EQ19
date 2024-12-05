@@ -41,27 +41,16 @@ public class ApiController {
     }
 
     public ArrayList<ProjectVille> getProjects() throws Exception{
-        try {
-            return this.projectApi.getProject();
-        } catch (Exception e) {
-            throw e;
-        }
+        return this.projectApi.getProject();
     }
 
     public ArrayList<Entrave> getEntraves() throws Exception {
-        try {
-            return this.entravesApi.getEntraves();
-        } catch (Exception e) {
-            throw e;
-        }
+        return this.entravesApi.getEntraves();
     }
 
     public String getQuartierName(String address) throws Exception {
-        try {
-            return this.quartierApi.getName(address);
-        } catch (Exception e) {
-            throw e;
-        }
+        return this.quartierApi.getName(address);
+        
     }
 
 }

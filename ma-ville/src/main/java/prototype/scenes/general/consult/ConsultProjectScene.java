@@ -19,7 +19,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
-import prototype.api.ville.ProjectApiLoader;
+import prototype.api.ville.ProjectApi;
 import prototype.controllers.SceneController;
 import prototype.projects.ProjectVille;
 import prototype.scenes.Scenes;
@@ -37,7 +37,7 @@ public class ConsultProjectScene extends Scenes {
 
     private Set<String> borough, typesOfWork;
 
-    private ProjectApiLoader projectApiLoader;
+    private ProjectApi projectApiLoader;
 
     private boolean intervenant;
 
@@ -59,7 +59,7 @@ public class ConsultProjectScene extends Scenes {
         this.typesOfWork = new HashSet<>();
 
         this.intervenant = intervenant;
-        this.projectApiLoader = new ProjectApiLoader();
+        this.projectApiLoader = new ProjectApi();
         this.projects = this.projectApiLoader.getProject();
         this.projectCountText = new Text(Integer.toString(this.projects.size()));
 
