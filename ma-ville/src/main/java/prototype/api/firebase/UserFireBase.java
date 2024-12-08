@@ -15,8 +15,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.core.Platform;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+/* import com.google.gson.JsonObject;
+import com.google.gson.JsonParser; */
 
 import prototype.users.Address;
 import prototype.users.Intervenant;
@@ -83,7 +83,7 @@ public class UserFirebase {
 
                         // Extract user ID (localId) from the response
                         String responseBody = response.toString();
-                        String userId = extractFieldFromJson(responseBody, "localId");
+                        String userId = "custom"/* extractFieldFromJson(responseBody, "localId") */;
                         System.out.println("userId:" + userId);
 
                         // Check user role in Firebase Realtime Database
@@ -171,14 +171,14 @@ public class UserFirebase {
         return false;
     }
 
-    private String extractFieldFromJson(String json, String field) {
+/*     private String extractFieldFromJson(String json, String field) {
         try {
             JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
             return jsonObject.get(field).getAsString();
         } catch (Exception e) {
             return null;
         }
-    }
+    } */
 
 
     public void saveUserToFirebase(Utilisateur utilisateur, String folder) throws Exception {

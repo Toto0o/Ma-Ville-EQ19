@@ -13,7 +13,6 @@ import java.util.Set;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.google.cloud.storage.Acl;
 
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -21,7 +20,7 @@ import javafx.scene.text.Font;
 public class ProjectApi {
 
     private String API_URL = "https://donnees.montreal.ca/api/3/action/datastore_search?resource_id=cc41b532-f12d-40fb-9f55-eb58c9a2b12b";
-    private ArrayList<ProjectVille> projects;
+    private ArrayList<Project> projects;
     private Thread fetchThread;
 
     public ProjectApi() {
@@ -59,8 +58,11 @@ public class ProjectApi {
                     String reasonCategory = jsonObject.optString("reason_category", "Non spécifié");
                     String submitterCategory = jsonObject.optString("submittercategory", "Non spécifié");
                     String organizationName = jsonObject.optString("organizationname", "Non spécifié");
+                    String startDate = jsonObject.optString("duration_start_date").replaceAll("[TZ]", " ");
+                    String endDate = jsonObject.optString("duration_end_date").replaceAll("[TZ]", " ");
+                    String streetEntrave = jsonObject.optString("occupancy_name");
 
-                    ProjectVille project = new ProjectVille(id, boroughid, currentStatus, reasonCategory, submitterCategory, organizationName, i);
+                    Project project = new Project(id, boroughid, currentStatus, reasonCategory, submitterCategory, organizationName, startDate, endDate, streetEntrave);
                     this.projects.add(project);
 
                 }
@@ -76,7 +78,7 @@ public class ProjectApi {
 
     }
 
-    public ArrayList<ProjectVille> getProject() {
+    public ArrayList<Project> getProject() {
         try {
             fetchProjects();
             this.fetchThread.join();

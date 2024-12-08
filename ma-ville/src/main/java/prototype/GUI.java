@@ -2,6 +2,7 @@ package prototype;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import prototype.api.firebase.FirebaseInitialize;
 import prototype.controllers.*;
 
 public class GUI extends Application {
@@ -18,8 +19,9 @@ public class GUI extends Application {
     
     @Override
     public void start(Stage primaryStage) throws Exception {
-        this.projectController = new ProjectController();
+        /* FirebaseInitialize.initialize(); */
         this.apiController = new ApiController();
+        this.projectController = new ProjectController(this.apiController);
         this.userController = new UserController(this.apiController);
         this.requestController = new RequestController(this.userController, this.projectController);
         this.sceneController = new SceneController(primaryStage, this.userController, this.requestController, this.projectController, this.apiController);

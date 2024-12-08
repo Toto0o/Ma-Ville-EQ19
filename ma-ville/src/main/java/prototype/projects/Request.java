@@ -1,151 +1,73 @@
 package prototype.projects;
 
-import java.time.format.DateTimeFormatter;
-
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import prototype.controllers.RequestController;
 
 public class Request {
 
+    private String title;
+    private String description;
+    private String type;
+    private String date;
+    private String status;
+    private String quartier;
 
-    private Text titleText, descriptionText;
-    private Text titleTitle, descriptionTitle, startDateTitle, typeTitle, residentTitle, adresseTitle;
-    private Text startDateText;
-    private Text typeText;
-    private Text residentUsernameText;
-    private Text adresseText;
-    private boolean intervenant;
-    private Button acceptButton, enregister;
-    private DatePicker startDatePicker, endDatePicker;
-    private String startDate, endDate;
-    private RequestController requestController;
-    private DateTimeFormatter formatter;
-    private String title, description;
-    private Type type;
-    private String adresse;
-
-    private VBox vBox, titleBox, descriptionBox, dateBox, typeBox, residentBox, adresseBox, acceptBox;
-
-    public Request(String title, String description, String startDate, Type type, String userName, String adresse, RequestController requestController) {
-        this.titleText = new Text(title);
-        this.descriptionText = new Text(description);
-        this.startDateText = new Text(startDate);
-        this.typeText = new Text(type.toString());
-        this.residentUsernameText = new Text(userName);
-        this.adresseText = new Text(adresse);
-
+    // Constructor
+    public Request(String title, String description, String type, String date, String status, String quartier) {
         this.title = title;
         this.description = description;
         this.type = type;
-        this.adresse = adresse;
-
-        this.titleTitle = new Text("Titre du projet");
-        this.descriptionTitle = new Text("Description détaillée");
-        this.startDateTitle = new Text("Date de début espéré");
-        this.typeTitle = new Text("Type de travaux");
-        this.residentTitle = new Text("Résident effectuant la demande");
-        this.adresseTitle = new Text("Adresse de la demande");
-
-        this.acceptButton = new Button("Accepter la requête");
-        this.enregister = new Button("Enregsitrer");
-
-        this.vBox = new VBox();
-        this.dateBox = new VBox();
-        this.descriptionBox = new VBox();
-        this.titleBox = new VBox();
-        this.typeBox = new VBox();
-        this.residentBox = new VBox();
-        this.adresseBox = new VBox();
-        this.acceptBox = new VBox();
-
-        this.startDatePicker = new DatePicker();
-        this.endDatePicker = new DatePicker();
-
-        this.formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-        this.requestController = requestController;
+        this.date = date;
+        this.status = status;
+        this.quartier = quartier;
     }
 
-    public VBox afficher() {
+    // Getters and setters
+    public String getTitle() {
+        return title;
+    }
 
-        this.titleBox.getChildren().addAll(
-            this.titleTitle,
-            this.titleText
-        );
-        this.titleBox.setSpacing(5);
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-        this.descriptionBox.getChildren().addAll(
-            this.descriptionTitle,
-            this.descriptionText
-        );
-        this.descriptionBox.setSpacing(5);
+    public String getDescription() {
+        return description;
+    }
 
-        this.typeBox.getChildren().addAll(
-            this.typeTitle,
-            this.typeText
-        );
-        this.typeBox.setSpacing(5);
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-        this.dateBox.getChildren().addAll(
-            this.startDateTitle,
-            this.startDateText
-        );
-        this.dateBox.setSpacing(5);
+    public String getType() {
+        return type;
+    }
 
-        this.residentBox.getChildren().addAll(
-            this.residentTitle,
-            this.residentUsernameText
-        );
-        this.residentBox.setSpacing(5);
+    public void setType(String type) {
+        this.type = type;
+    }
 
-        this.adresseBox.getChildren().addAll(
-            this.adresseTitle,
-            this.adresseText
-        );
-        this.adresseBox.setSpacing(10);
+    public String getDate() {
+        return date;
+    }
 
-        this.vBox.getChildren().addAll(
-            this.titleBox,
-            this.descriptionBox,
-            this.dateBox,
-            this.typeBox
-        );
-        this.vBox.getChildren().add(this.acceptButton);
+    public void setDate(String date) {
+        this.date = date;
+    }
 
-        this.vBox.setSpacing(10);
-        this.vBox.setStyle("-fx-border-color: black; -fx-border-width: 2; -fx-border-radius: 5; -fx-padding: 10;");
-        this.vBox.setAlignment(Pos.CENTER);
+    public String getStatus() {
+        return status;
+    }
 
-        this.acceptButton.setOnMouseClicked((accept) -> {
-            this.acceptBox.getChildren().addAll(
-                this.startDatePicker,
-                this.endDatePicker,
-                this.enregister
-            );
-            this.acceptBox.setSpacing(10);
-            this.acceptBox.setAlignment(Pos.CENTER);
-            this.vBox.getChildren().clear();
-            this.vBox.getChildren().add(this.acceptBox);
-        //valide date? valide with conflicts...
-            
-        });
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-        this.enregister.setOnMouseClicked((enregistrer) -> {
-            this.requestController.addProject(
-                this.title,
-                this.type,
-                this.description,
-                this.adresse,
-                this.startDatePicker.getValue().format(this.formatter),
-                this.endDatePicker.getValue().format(this.formatter),
-                1
-            );
-        });
+    // Getter for quartier
+    public String getQuartier() {
+        return quartier;
+    }
 
-        return this.vBox;
+    // Setter for quartier (if needed)
+    public void setQuartier(String quartier) {
+        this.quartier = quartier;
     }
 }

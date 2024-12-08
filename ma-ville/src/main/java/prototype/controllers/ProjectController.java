@@ -3,17 +3,20 @@ package prototype.controllers;
 import java.util.ArrayList;
 
 import prototype.projects.Project;
+import prototype.controllers.ApiController;
 
 public class ProjectController {
 
     private ArrayList<Project> projects;
+    private ApiController apiController;
 
-    public ProjectController() {
+    public ProjectController(ApiController apiController) {
         this.projects = new ArrayList<>();
-        loadProject();
+        this.apiController = apiController;
     }
 
-    public ArrayList<Project> getProject() {
+    public ArrayList<Project> getProjects() throws Exception{
+        loadProject();
         return this.projects;
     }
 
@@ -21,6 +24,7 @@ public class ProjectController {
         this.projects.add(project);
     }
 
-    private void loadProject() {};
-
+    public void loadProject() throws Exception{
+        this.projects = this.apiController.getProjects();
+    }
 }

@@ -24,7 +24,7 @@ public class FirebaseInitialize {
         }
 
         try {
-            String serviceAccountPath = "D:\\UNI\\CURRENT COURSES\\IFT 2255\\ProjetMaven\\serviceAccount.json";
+            String serviceAccountPath = "\\resources\\prototype\\serviceAccount.json";
 
             try (FileInputStream serviceAccount = new FileInputStream(serviceAccountPath)) {
                 FirebaseOptions options = new FirebaseOptions.Builder()

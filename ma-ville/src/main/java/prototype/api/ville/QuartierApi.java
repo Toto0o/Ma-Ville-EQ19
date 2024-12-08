@@ -5,9 +5,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
 public class QuartierApi {
 
     private String name;
@@ -16,7 +13,7 @@ public class QuartierApi {
     public QuartierApi() {}
 
     // Method to get the neighborhood from the address using Google Maps API
-    private String getQuartierFromAddress(String address) throws Exception {
+    /* private String getQuartierFromAddress(String address) throws Exception {
         try {
             // Prepare the API URL
             String urlString = "https://maps.googleapis.com/maps/api/geocode/json?address=" +
@@ -73,6 +70,6 @@ public class QuartierApi {
     // Setter for the neighborhood name (optional)
     public void setName(String name) {
         this.name = name;
-    }
+    } */
 
 }

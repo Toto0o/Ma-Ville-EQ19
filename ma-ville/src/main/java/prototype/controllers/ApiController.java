@@ -40,7 +40,7 @@ public class ApiController {
         this.userApi.saveUserToFirebase(utilisateur, "intervenant");
     }
 
-    public ArrayList<ProjectVille> getProjects() throws Exception{
+    public ArrayList<Project> getProjects() throws Exception{
         return this.projectApi.getProject();
     }
 
@@ -48,9 +48,9 @@ public class ApiController {
         return this.entravesApi.getEntraves();
     }
 
-    public String getQuartierName(String address) throws Exception {
+    /* public String getQuartierName(String address) throws Exception {
         return this.quartierApi.getName(address);
         
-    }
+    } */
 
 }

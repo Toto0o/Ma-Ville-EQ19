@@ -54,7 +54,7 @@ public class SceneController {
     }
 
     public void start() {
-        newScene("launch"); /* Default is the launching scene */
+        newScene("consult project"); /* Default is the launching scene */
         this.primaryStage.setTitle("Ma ville - Équipe 19");
         this.primaryStage.show();
     }
@@ -122,7 +122,7 @@ public class SceneController {
     }
 
     private Scene newConsultProjectScene(boolean intervenant) {
-        this.consultProjectScene = new ConsultProjectScene(this, intervenant);
+        this.consultProjectScene = new ConsultProjectScene(this, intervenant, this.projectController);
         this.consultProjectScene.setScene();
         return this.consultProjectScene.getScene();
     }

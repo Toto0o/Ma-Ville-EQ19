@@ -1,14 +1,8 @@
 package prototype.scenes.general.consult;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -19,10 +13,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
-import prototype.api.ville.ProjectApi;
 import prototype.controllers.SceneController;
-import prototype.projects.ProjectVille;
+import prototype.controllers.ProjectController;
 import prototype.scenes.Scenes;
+import prototype.projects.Project;
 
 
 public class ConsultProjectScene extends Scenes {
@@ -37,13 +31,13 @@ public class ConsultProjectScene extends Scenes {
 
     private Set<String> borough, typesOfWork;
 
-    private ProjectApi projectApiLoader;
+    private ProjectController projectController;
 
     private boolean intervenant;
 
-    private ArrayList<ProjectVille> projects;
+    private ArrayList<Project> projects;
 
-    public ConsultProjectScene(SceneController sceneController, boolean intervenant) {
+    public ConsultProjectScene(SceneController sceneController, boolean intervenant, ProjectController projectController) {
         super(sceneController);
 
         this.backButton = new Button("Retour");
@@ -59,9 +53,9 @@ public class ConsultProjectScene extends Scenes {
         this.typesOfWork = new HashSet<>();
 
         this.intervenant = intervenant;
-        this.projectApiLoader = new ProjectApi();
-        this.projects = this.projectApiLoader.getProject();
-        this.projectCountText = new Text(Integer.toString(this.projects.size()));
+        
+        this.projectController = projectController;
+        
 
     }
     
@@ -72,7 +66,7 @@ public class ConsultProjectScene extends Scenes {
         this.root.setCenter(vBox);
         this.title.setFont(new Font("Arial", 30));
         this.title.setStyle("-fx-font-weight: bold;");
-        this.projectCountText.setFont(new Font("Arial", 14));
+        
 
         // Set the layout for the filters
         HBox filterBox = new HBox(10);
@@ -87,16 +81,33 @@ public class ConsultProjectScene extends Scenes {
         // Set the layout for the project list and count
         HBox bottomBox = new HBox(10);
         bottomBox.setAlignment(Pos.BOTTOM_RIGHT);
-        bottomBox.getChildren().add(this.projectCountText);
+        
 
         this.projectListView.getItems().clear();
 
-        for (ProjectVille project : this.projects) {
-            System.out.println("adding projects");
-            this.projectListView.getItems().add(project.afficher());
-            this.borough.add(project.getBorough());
-            this.typesOfWork.add(project.getReason());
+        try {
+            if (this.projects != null) this.projects.clear(); 
+            
+            this.projects = projectController.getProjects();
+
+            this.projectCountText = new Text("Total des projets : " + Integer.toString(this.projects.size()));
+            this.projectCountText.setFont(new Font("Arial", 14));
+            bottomBox.getChildren().add(this.projectCountText);
+
+            for (Project project : this.projects) {
+                System.out.println("adding projects");
+                this.projectListView.getItems().add(project.afficher());
+                this.borough.add(project.getQuartiersAffected());
+                this.typesOfWork.add(project.getDescription());
+            }
+
+        } catch (Exception e) {
+            VBox errorBox = new VBox();
+            errorBox.getChildren().add(new Text(e.getMessage()));
+            this.projectListView.getItems().add(errorBox);
         }
+
+        
 
         // Add components to the VBox
         this.vBox.getChildren().addAll(this.title, filterBox, this.projectListView, bottomBox, this.backButton);
@@ -113,7 +124,10 @@ public class ConsultProjectScene extends Scenes {
         });
 
         boroughFilterCombo.getItems().addAll(this.borough);
+        boroughFilterCombo.getItems().add("Aucun filtre");
+
         typeOfWorkFilterCombo.getItems().addAll(this.typesOfWork);
+        typeOfWorkFilterCombo.getItems().add("Aucun filtre");
 
         // Set up the ComboBoxes for filtering
         boroughFilterCombo.setOnAction(e -> filterProjects());
@@ -129,23 +143,36 @@ public class ConsultProjectScene extends Scenes {
        
         projectListView.getItems().clear();
 
-        int filteredCount = 0; // Counter for filtered projects
-        // Loop through the projects and apply the filters
-        for (ProjectVille project : this.projects) {
-            String boroughid = project.getBorough();
-            String reasonCategory = project.getReason();
+        if (this.projects != null) this.projects.clear();
 
-            // Check if selectedBorough or selectedType is null before comparison
-            boolean matchesBorough = (selectedBorough == null || selectedBorough.equals("Aucun filtre"))
-                    || boroughid.equals(selectedBorough);
-            boolean matchesTypeOfWork = (selectedType == null || selectedType.equals("Aucun filtre"))
-                    || reasonCategory.equals(selectedType);
+        try {
+            this.projects = projectController.getProjects();
 
-            if (matchesBorough && matchesTypeOfWork) {
-                projectListView.getItems().add(project.afficher());
-                filteredCount++; // Increment the counter for each matched project
+            // Loop through the projects and apply the filters
+            for (Project project : this.projects) {
+
+                String boroughid = project.getQuartiersAffected();
+                String reasonCategory = project.getDescription();
+
+    
+                // Check if selectedBorough or selectedType is null before comparison
+                boolean matchesBorough = (selectedBorough == null || selectedBorough.equals("Aucun filtre"))
+                        || boroughid.equals(selectedBorough);
+                boolean matchesTypeOfWork = (selectedType == null || selectedType.equals("Aucun filtre"))
+                        || reasonCategory.equals(selectedType);
+                
+
+                if (matchesBorough && matchesTypeOfWork) {
+                    projectListView.getItems().add(project.afficher());
+                }
+                
             }
+        } catch (Exception e) {
+            VBox errorBox = new VBox();
+            errorBox.getChildren().add(new Text(e.getMessage()));
+            projectListView.getItems().add(errorBox);
         }
-        projectCountText.setText("Total des projets: " + filteredCount);
+
+        projectCountText.setText("Total des projets: " + projectListView.getItems().size());
     }
 }

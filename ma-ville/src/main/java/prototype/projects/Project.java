@@ -1,71 +1,120 @@
 package prototype.projects;
 
-import prototype.users.Intervenant;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+
+import prototype.entraves.Entrave;
 
 public class Project {
 
     private String title;
     private String description;
-    private String quartier;
-    private Type type;
-    private Intervenant intervenant;
-
+    private String type;
+    private String quartiersAffected;
+    private String roadsAffected;
     private String startDate;
     private String endDate;
-    private String schedule; 
+    private String horaireTravaux;
+    private String status;
+    private String uid;
+    private String firebaseKey; // New field for storing the Firebase key
+    private String id;
+    private String intervenant;
+    private String streetEntrave;
 
-    private String status; // E.g., "Prévu", "En cours", "Terminé"
-
-    private int number;
-
-   
-    public Project(String title, Type type, String description, String quartier, String startDate, String endDate, Intervenant intervenant, int number) {
+    // Constructor (without firebaseKey)
+    public Project(String title, String description, String type, String quartiersAffected,
+            String roadsAffected, String startDate, String endDate, String horaireTravaux, 
+            String status, String intervenant, String userId, String streetEntrave) {
+        //Cutom project (in the app)
         this.title = title;
-        this.type = type;
         this.description = description;
-        this.quartier = quartier;
+        this.type = type;
+        this.quartiersAffected = quartiersAffected;
+        this.roadsAffected = roadsAffected;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.horaireTravaux = horaireTravaux;
+        this.status = status;
+        this.uid = userId;
         this.intervenant = intervenant;
-        this.status = "Prévu"; 
-        this.number = number;
+        this.streetEntrave = streetEntrave;
     }
 
-  
+    public Project(String id, String quartierAffected, String status, String reason, String categorie, String organization, String startDate, String endDate, String streetEntrave) {
+        // Projet de la ville (API)
+        this.id = id;
+        this.quartiersAffected = quartierAffected;
+        this.type = categorie;
+        this.description = reason;
+        this.status = status;
+        this.intervenant = organization;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.streetEntrave = streetEntrave;
+    }
+
+    // Getter and Setter for Firebase key
+    public String getFirebaseKey() {
+        return firebaseKey;
+    }
+
+    public void setFirebaseKey(String firebaseKey) {
+        this.firebaseKey = firebaseKey;
+    }
+
+    // Getters and setters for the other fields
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
     public String getTitle() {
-        return this.title;
+        return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public Type getType() {
-        return this.type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
-    }
-
     public String getDescription() {
-        return this.description;
+        return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public String getQuartier() {
-        return this.quartier;
+    public String getType() {
+        return type;
     }
 
-    public void setQuartier(String quartier) {
-        this.quartier = quartier;
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getQuartiersAffected() {
+        return quartiersAffected;
+    }
+
+    public void setQuartiersAffected(String quartiersAffected) {
+        this.quartiersAffected = quartiersAffected;
+    }
+
+    public String getRoadsAffected() {
+        return roadsAffected;
+    }
+
+    public void setRoadsAffected(String roadsAffected) {
+        this.roadsAffected = roadsAffected;
     }
 
     public String getStartDate() {
-        return this.startDate;
+        return startDate;
     }
 
     public void setStartDate(String startDate) {
@@ -73,60 +122,60 @@ public class Project {
     }
 
     public String getEndDate() {
-        return this.endDate;
+        return endDate;
     }
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 
-    public String getSchedule() {
-        return this.schedule;
+    public String getHoraireTravaux() {
+        return horaireTravaux;
     }
 
-    public void setSchedule(String schedule) {
-        this.schedule = schedule;
+    public void setHoraireTravaux(String horaireTravaux) {
+        this.horaireTravaux = horaireTravaux;
     }
 
     public String getStatus() {
-        return this.status;
+        return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
     }
 
-    public Intervenant getIntervenant() {
-        return this.intervenant;
-    }
+    public VBox afficher() {
+        VBox projectBox = new VBox();
+        projectBox.setSpacing(10);
 
-    public void setIntervenant(Intervenant intervenant) {
-        this.intervenant = intervenant;
-    }
+        // Use filteredIndex for labeling
 
-    // Method to update the status of the project
-    public void updateStatus(String newStatus) {
-        this.status = newStatus;
-    }
+        Text projectId = new Text("ID: " + this.id);
+        Text projectBorough = new Text("Arrondissement : " + this.quartiersAffected);
+        Text projectStatus = new Text("Statut actuel : " + this.status);
+        Text projectReason = new Text("Motif : " + this.description);
+        Text projectCategory = new Text("Catégorie : " + this.type);
+        Text projectOrganization = new Text("Intervenant : " + this.intervenant);
+        Text projectStartDate = new Text("Début des travaux : " + this.startDate);
+        Text projectEndDate = new Text("Fin des travaux : " + this.endDate);
+        Text projectStreetEntrave = new Text("Rues impactées : " + this.streetEntrave);
 
-    public int getNumber() {
-        return this.number;
-    }
+        Font font = new Font("Arial", 16);
+        projectId.setFont(font);
+        projectBorough.setFont(font);
+        projectStatus.setFont(font);
+        projectReason.setFont(font);
+        projectCategory.setFont(font);
+        projectOrganization.setFont(font);
+        projectStartDate.setFont(font);
+        projectEndDate.setFont(font);
+        projectStreetEntrave.setFont(font);
 
-    // Méthode pour afficher les détails du projet sous forme de chaîne formatée
+        projectBox.getChildren().addAll(projectId, projectBorough, projectStatus, projectReason,
+                projectCategory, projectOrganization, projectStartDate, projectEndDate, projectStreetEntrave);
+        projectBox.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-padding: 10px;");
 
-    @Override
-    public String toString() {
-        return "Project{" +
-                "title='" + this.title + '\'' +
-                ", type=" + this.type.toString() +
-                ", description='" + this.description + '\'' +
-                ", quartier='" + this.quartier + '\'' +
-                ", startDate='" + this.startDate + '\'' +
-                ", endDate='" + this.endDate + '\'' +
-                ", schedule='" + this.schedule + '\'' +
-                ", status='" + this.status + '\'' +
-                ", intervenant=" + (this.intervenant != null ? intervenant.getName() : "None") +
-                '}';
+        return projectBox;
     }
 }
