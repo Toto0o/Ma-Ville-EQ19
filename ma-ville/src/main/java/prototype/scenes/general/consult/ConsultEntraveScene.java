@@ -13,6 +13,18 @@ import prototype.controllers.SceneController;
 import prototype.entraves.Entrave;
 import prototype.scenes.Scenes;
 
+/**
+ * Scene de consultation des entraves
+ * 
+ * <p> Utilise {@link prototype.controllers.EntraveController} pour charger les entraves </p>
+ * 
+ * @param sceneController
+ * 
+ * @author Antoine Tessier
+ * @author Anmar Rahman
+ * @author Mostafa Heider
+ */
+
 public class ConsultEntraveScene extends Scenes {
 
     private VBox vBox;
@@ -22,7 +34,6 @@ public class ConsultEntraveScene extends Scenes {
     private Text entraveCountText;
     private TextField searchField; // Add a TextField for searching
     private EntravesApi entravesLoader;
-    private static final String API_URL = "https://donnees.montreal.ca/api/3/action/datastore_search?resource_id=a2bc8014-488c-495d-941b-e7ae1999d1bd";
 
     public ConsultEntraveScene(SceneController sceneController) {
         super(sceneController);

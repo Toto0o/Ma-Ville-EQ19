@@ -8,12 +8,28 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+/**
+ * Api Firebase permettant de :
+ *  charger les requêtes faites par les résidents;
+ *  sauvegarder les requêtes faites par les résidents;
+ * 
+ * @author Antoine Tessier
+ * @author Anmar Rahman
+ * @author Mostafa Heider
+ */
+
+
 public class RequestApi {
 
     private ArrayList<Request> requests;
 
     public RequestApi() {
         this.requests = new ArrayList<>();
+    }
+
+    public ArrayList<Request> getRequests() {
+        fetchRequest();
+        return this.requests;
     }
 
     private void fetchRequest() {
@@ -28,6 +44,9 @@ public class RequestApi {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Clear previous requests data (if any)
                 
+                if (requests != null) {
+                    requests.clear();
+                }
 
                 // Loop through all the children of "requests" node
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {

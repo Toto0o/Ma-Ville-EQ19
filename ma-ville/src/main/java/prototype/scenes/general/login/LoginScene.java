@@ -16,6 +16,17 @@ import prototype.controllers.UserController;
 import prototype.scenes.Scenes;
 import prototype.users.Utilisateur;
 
+/**
+ * Scene permettant de s'authentifier
+ * 
+ * @param sceneController
+ * @param userController
+ * 
+ * @author Antoine Tessier
+ * @author Anmar Rahman
+ * @author Mostafa Heider
+ */
+
 public class LoginScene extends Scenes {
 
     private VBox vBox;

@@ -9,6 +9,16 @@ import javafx.scene.text.Text;
 import prototype.controllers.SceneController;
 import prototype.scenes.Scenes;
 
+/**
+ * Scene par défault sur le lancement de l'application
+ * 
+ * @param sceneController
+ * 
+ * @author Antoine Tessier
+ * @author Anmar Rahman
+ * @author Mostafa Heider
+ */
+
 public class LaunchScene extends Scenes {
 
     private VBox vBox;

@@ -7,15 +7,28 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+
+/**
+ * Api de la ville de montréal permettant de charger les travaux en cours
+ * 
+ * <p> Utilise {@link "https://donnees.montreal.ca/api/3/action/datastore_search?resource_id=cc41b532-f12d-40fb-9f55-eb58c9a2b12b"}
+ * 
+ * @author Antoine Tessier
+ * @author Anmar Rahmna
+ * @author Mostafa Heider
+ */
 
 public class ProjectApi {
 
@@ -78,7 +91,7 @@ public class ProjectApi {
 
     }
 
-    public ArrayList<Project> getProject() {
+    public ArrayList<Project> getProjects() {
         try {
             fetchProjects();
             this.fetchThread.join();
@@ -90,5 +103,6 @@ public class ProjectApi {
         return this.projects;
     }
 
-    
+
+   
 }

@@ -65,7 +65,6 @@ public class RequestScene extends Scenes{
             this.descriptionArea,
             this.typeText,
             this.typeComboBox,
-            /* this.dateText, */
             this.datePicker,
             this.sendRequest
         );

@@ -3,7 +3,18 @@ package prototype.controllers;
 import prototype.users.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 
+/**
+ * Controlleur de l'utilisateur. Permet d'avoir l'instance de l'utilisateur et d'assurer qu'il soit unique durant une session.
+ * 
+ * <p> Utilise {@link prototype.users.UserCredentialsVerifier} pour valider les informations lors de l'authentification ou de l'enregistrement </p>
+ * 
+ * @param apiController
+ * @author Antoine Tessier
+ * @author Anmar Rahman
+ * @author Mostafa Heider
+ */
 
 public class UserController {
 
@@ -57,5 +68,9 @@ public class UserController {
 
     public Utilisateur login(String email, String password) throws Exception {
         return this.apiController.authenticate(email, password);
+    }
+
+    public void updateInfo(HashMap<String,String> changes) {
+        this.apiController.updateUserInfo(this.utilisateur, changes);
     }
 }

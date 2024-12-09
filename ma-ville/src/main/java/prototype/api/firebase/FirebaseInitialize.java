@@ -12,38 +12,47 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
 import com.google.firebase.cloud.FirestoreClient;
 
+
+/**
+ * Initie la connexion avec Firebase
+ * 
+ * @author Antoine Tessier
+ * @author Anmar Rahman
+ * @author Mostafa Heider
+ * 
+ */
+
 public class FirebaseInitialize {
 
     private static Firestore firestore;
     private static FirebaseAuth firebaseAuth; // Declare FirebaseAuth
 
     public static void initialize() {
+
         if (firestore != null) {
             System.out.println("Firebase Firestore is already initialized.");
             return;
         }
 
-        try {
-            String serviceAccountPath = "\\resources\\prototype\\serviceAccount.json";
+        String serviceAccountPath = FirebaseInitialize.class.getResource("/prototype/serviceAccount.json").toExternalForm();
 
-            try (FileInputStream serviceAccount = new FileInputStream(serviceAccountPath)) {
-                FirebaseOptions options = new FirebaseOptions.Builder()
-                        .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                        .build();
+        try (FileInputStream serviceAccount = new FileInputStream(serviceAccountPath)) {
+            FirebaseOptions options = new FirebaseOptions.Builder()
+                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                    .build();
 
-                // Initialize FirebaseApp
-                if (FirebaseApp.getApps().isEmpty()) {
-                    FirebaseApp.initializeApp(options);
-                }
-
-                // Initialize Firestore and Auth
-                firestore = FirestoreClient.getFirestore();
-                firebaseAuth = FirebaseAuth.getInstance(); // Initialize FirebaseAuth
-                System.out.println("Firebase Firestore and Auth initialized successfully.");
+            // Initialize FirebaseApp
+            if (FirebaseApp.getApps().isEmpty()) {
+                FirebaseApp.initializeApp(options);
             }
+
+            // Initialize Firestore and Auth
+            firestore = FirestoreClient.getFirestore();
+            firebaseAuth = FirebaseAuth.getInstance(); // Initialize FirebaseAuth
+            System.out.println("Firebase Firestore and Auth initialized successfully.");
         } catch (IOException e) {
-            System.err.println("Failed to initialize Firebase: " + e.getMessage());
-            e.printStackTrace();
+        System.err.println("Failed to initialize Firebase: " + e.getMessage());
+        e.printStackTrace();
         }
     }
 

@@ -1,30 +1,56 @@
 package prototype.controllers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import prototype.projects.Project;
-import prototype.controllers.ApiController;
+
+/**
+ * Controlleur des projets. Permet de
+ * 
+ * <ul>
+ *  <li> Charger les projets : {@link #getProjects()} </li>
+ *  <li> Sauvagrder un projet : {@link #saveProjectChanges(key, changes)} </li>
+ *  <li> Ajouter un nouveau projet : {@link #addProject(title, description, quartierAffected, startDate, endDate, userUid, streetEntrave)}
+ * </ul>
+ * 
+ * <p> Utilise {@link prototype.controllers.ApiController} pour charger les projets </p>
+ * 
+ * @param apiController
+ * 
+ * @author Antoine Tessier 
+ * @author Anmar Rahman
+ * @author Mostafa Heider
+ */
 
 public class ProjectController {
 
-    private ArrayList<Project> projects;
     private ApiController apiController;
 
     public ProjectController(ApiController apiController) {
-        this.projects = new ArrayList<>();
         this.apiController = apiController;
     }
 
     public ArrayList<Project> getProjects() throws Exception{
-        loadProject();
-        return this.projects;
+        return this.apiController.getProjects();
     }
 
-    public void addProject(Project project) {
-        this.projects.add(project);
+    public void saveProjectChanges(String key, HashMap<String,String> changes) {
+        this.apiController.saveProjectChanges(key, changes);
     }
 
-    public void loadProject() throws Exception{
-        this.projects = this.apiController.getProjects();
+    public void addProject(String title, String description, String type, String quartiersAffected, String startDate, String endDate, String userUid, String streetEntrave) {
+        this.apiController.addProject(
+            title,
+            description,
+            type,
+            quartiersAffected,
+            startDate,
+            endDate,
+            "Prévu",
+            userUid,
+            streetEntrave
+
+        );
     }
 }

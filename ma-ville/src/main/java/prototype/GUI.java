@@ -19,11 +19,11 @@ public class GUI extends Application {
     
     @Override
     public void start(Stage primaryStage) throws Exception {
-        /* FirebaseInitialize.initialize(); */
+        FirebaseInitialize.initialize();
         this.apiController = new ApiController();
         this.projectController = new ProjectController(this.apiController);
         this.userController = new UserController(this.apiController);
-        this.requestController = new RequestController(this.userController, this.projectController);
+        this.requestController = new RequestController(this.userController, this.projectController, this.apiController);
         this.sceneController = new SceneController(primaryStage, this.userController, this.requestController, this.projectController, this.apiController);
         this.sceneController.start();
     }

@@ -1,5 +1,25 @@
 package prototype.projects;
 
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+
+/**
+ * Object contentant les informations d'un requêtes.
+ * 
+ * <p> Permet d'être affiché graphiquement avec {@link #afficher()} </p>
+ * 
+ * @param title
+ * @param description
+ * @param type
+ * @param date
+ * @param status
+ * @param quartier
+ * 
+ * @author Antoine Tessier
+ * @author Anmar Rahman
+ * @author Mostafa Heider
+ */
 
 public class Request {
 
@@ -69,5 +89,35 @@ public class Request {
     // Setter for quartier (if needed)
     public void setQuartier(String quartier) {
         this.quartier = quartier;
+    }
+
+    public HBox afficher() {
+
+        String formattedDate = formatDate(getDate());
+
+        String displayText = "Title: " + getTitle() + "\n"
+                + "Description: " + getDescription() + "\n"
+                + "Type: " + getType() + "\n"
+                + "Date: " + formattedDate + "\n"
+                + "Status: " + getStatus() + "\n"
+                + "Quartier: " + getQuartier();
+
+        Text requestText = new Text(displayText);
+        requestText.setStyle("-fx-font-family: 'Arial'; -fx-padding: 10;");
+
+        // Create a bordered HBox for each request
+        HBox requestBox = new HBox(10);
+        requestBox.setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;");
+        requestBox.getChildren().add(requestText);
+
+        return requestBox;
+    }
+
+    private String formatDate(String date) {
+        if (date != null && date.length() == 8) {
+            // Convert from YYYYMMDD to YYYY/MM/DD
+            return date.substring(0, 4) + "/" + date.substring(4, 6) + "/" + date.substring(6, 8);
+        }
+        return date; // Return as is if the format is incorrect
     }
 }

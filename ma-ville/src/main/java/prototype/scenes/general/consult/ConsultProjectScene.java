@@ -18,6 +18,17 @@ import prototype.controllers.ProjectController;
 import prototype.scenes.Scenes;
 import prototype.projects.Project;
 
+/**
+ * Scene de consultation des projets
+ * 
+ * <p> Utilise {@link prototype.controllers.ProjectController} pour charger les projets </p>
+ * 
+ * @param sceneController
+ * 
+ * @author Antoine Tessier
+ * @author Anmar Rahman
+ * @author Mostafa Heider
+ */
 
 public class ConsultProjectScene extends Scenes {
 
@@ -90,16 +101,15 @@ public class ConsultProjectScene extends Scenes {
             
             this.projects = projectController.getProjects();
 
-            this.projectCountText = new Text("Total des projets : " + Integer.toString(this.projects.size()));
-            this.projectCountText.setFont(new Font("Arial", 14));
-            bottomBox.getChildren().add(this.projectCountText);
-
             for (Project project : this.projects) {
-                System.out.println("adding projects");
                 this.projectListView.getItems().add(project.afficher());
                 this.borough.add(project.getQuartiersAffected());
                 this.typesOfWork.add(project.getDescription());
             }
+
+            this.projectCountText = new Text("Total des projets : " + this.projectListView.getItems().size());
+            this.projectCountText.setFont(new Font("Arial", 14));
+            bottomBox.getChildren().add(this.projectCountText);
 
         } catch (Exception e) {
             VBox errorBox = new VBox();

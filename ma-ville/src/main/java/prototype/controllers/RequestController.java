@@ -2,11 +2,28 @@ package prototype.controllers;
 
 import java.util.ArrayList;
 
-import prototype.controllers.UserController;
-import prototype.projects.Project;
 import prototype.projects.Request;
 import prototype.projects.Type;
-import prototype.users.Intervenant;
+
+/**
+ * Controlleur des requêtes. Permet de :
+ * 
+ * <ul>
+ *  <li> Charger les requêtes {@link #getRequests()} </li>
+ *  <li> Ajouter un requête {@link #addRequest(title, description, type, date, status, quartier)} </li>
+ *  <li> Ajouter la candidature d'un intervenant {@link #addCandidature(request, startDate, endDate, userUid)}
+ * </ul>
+ * 
+ * <p> Utilise {@link prototype.controllers.ApiController} pour charger les requêtes </p>
+ * 
+ * @param userController
+ * @param projectController
+ * @param apiController
+ * 
+ * @author Antoine Tessier 
+ * @author Anmar Rahman 
+ * @author Mostafa Heider
+ */
 
 public class RequestController {
 
@@ -14,33 +31,36 @@ public class RequestController {
     
     private ProjectController projectController;
     private UserController userController;
+    private ApiController apiController;
 
-    /* private FireBaseLoader data; */
-
-    public RequestController(UserController userController/* , FireBaseLoader data */, ProjectController projectController) {
+    public RequestController(UserController userController, ProjectController projectController, ApiController apiController) {
         this.userController = userController;
         this.projectController = projectController;
-        /* this.data = data; */
+        this.apiController = apiController;
         this.requests = new ArrayList<>();
     }
 
-    public void addRequest(String title, String description, Type type, String date) {
-        Request request = new Request(title, description, date, type, this.userController.getUser().getName(), this.userController.getUser().getAddress().getStreet(), this);
-        this.requests.add(request);
-    }
-
     public ArrayList<Request> getRequests() {
+        this.requests = this.apiController.getRequests();
         return this.requests;
     }
 
-    public void loadRequest() {
-        /* this.requests = this.data.getRequests(); */
+    public void addRequest(String title, String description, String type, String date, String status, String quartier) {
+        Request request = new Request(title, description, type, date, status, quartier);
+        this.apiController.addRequest(request);
     }
 
-    public void addProject(String title, Type type, String description, String quartier, String startDate, String endDate, int number) {
-        Project project = new Project(title, type, description, quartier, startDate, endDate, (Intervenant) this.userController.getUser(), number);
-        this.projectController.addProject(project);
+    public void addCandidature(Request request, String startDate, String endDate, String userUid) {
+        projectController.addProject(
+            request.getTitle(),
+            request.getDescription(),
+            request.getType(),
+            request.getQuartier(),
+            startDate,
+            endDate,
+            userUid,
+            "Street" // implementer ou en input pour la rue affecte (peut etre avec les info du demandeur, recuperer sa rue...)
+        );
     }
-
 
 }

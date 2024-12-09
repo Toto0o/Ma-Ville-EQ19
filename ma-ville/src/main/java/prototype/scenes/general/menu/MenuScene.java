@@ -15,6 +15,17 @@ import prototype.controllers.UserController;
 import prototype.scenes.Scenes;
 import prototype.users.Utilisateur;
 
+/**
+ * Scene de menu. Permet d'acceder aux différentes options selon le type d'utilisateur (résident ou intervenant) 
+ * 
+ * @param sceneController
+ * @param userController
+ * 
+ * @author Antoine Tessier
+ * @author Anmar Rahman
+ * @author Mostafa Heider
+ */
+
 public class MenuScene extends Scenes {
 
     private VBox vBox;

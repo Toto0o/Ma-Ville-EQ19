@@ -1,10 +1,41 @@
 package prototype.projects;
 
+import java.util.HashMap;
+
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import prototype.entraves.Entrave;
+
+/**
+ * Objet contenant les informations d'un projet (de la ville ou du système). Contient deux constructeurs 
+ * 
+ * <ul>
+ *  <li> Contructeur pour les projets de la ville </li>
+ *  <li> Constructeur pour les projets du systeme </li>
+ * </ul>
+ * 
+ * <p> Permet d'être affiché graphiquement avec : {@link #afficher()} </p>
+ *
+ *  @see prototype.controllers.ProjectController
+ *  @param id
+ *  @param quartierAffected
+ *  @param status
+ *  @param reason
+ *  @param categorie
+ *  @param organization
+ *  @param startDate
+ *  @param endDate
+ *  @param streetEntrave
+ * 
+ * @author Antoine Tessier
+ * @author Anmar Rahman
+ * @author Mostafa Heider
+ */
 
 public class Project {
 
@@ -12,7 +43,6 @@ public class Project {
     private String description;
     private String type;
     private String quartiersAffected;
-    private String roadsAffected;
     private String startDate;
     private String endDate;
     private String horaireTravaux;
@@ -25,20 +55,18 @@ public class Project {
 
     // Constructor (without firebaseKey)
     public Project(String title, String description, String type, String quartiersAffected,
-            String roadsAffected, String startDate, String endDate, String horaireTravaux, 
-            String status, String intervenant, String userId, String streetEntrave) {
+            String startDate, String endDate, String horaireTravaux, 
+            String status, String userId, String streetEntrave) {
         //Cutom project (in the app)
         this.title = title;
         this.description = description;
         this.type = type;
         this.quartiersAffected = quartiersAffected;
-        this.roadsAffected = roadsAffected;
         this.startDate = startDate;
         this.endDate = endDate;
         this.horaireTravaux = horaireTravaux;
         this.status = status;
         this.uid = userId;
-        this.intervenant = intervenant;
         this.streetEntrave = streetEntrave;
     }
 
@@ -105,13 +133,6 @@ public class Project {
         this.quartiersAffected = quartiersAffected;
     }
 
-    public String getRoadsAffected() {
-        return roadsAffected;
-    }
-
-    public void setRoadsAffected(String roadsAffected) {
-        this.roadsAffected = roadsAffected;
-    }
 
     public String getStartDate() {
         return startDate;
@@ -143,6 +164,14 @@ public class Project {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getStreetEntrave() {
+        return this.streetEntrave;
+    }
+
+    public void setStreetEntrvave(String streetEntrave) {
+        this.streetEntrave = streetEntrave;
     }
 
     public VBox afficher() {

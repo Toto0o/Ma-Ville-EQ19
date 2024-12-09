@@ -14,9 +14,26 @@ import prototype.scenes.general.register.RoleSelectionScene;
 import prototype.scenes.general.settings.InfoSettingsScene;
 import prototype.scenes.general.settings.NotificationSettingsScene;
 import prototype.scenes.general.settings.SettingsScene;
-import prototype.scenes.intervenant.ConsultRequestScene;
+import prototype.scenes.intervenant.ConsultRequestsScene;
+import prototype.scenes.intervenant.IntervenantProjectsScene;
 import prototype.scenes.resident.RequestScene;
 
+
+/**
+ * Controlleur des scenes. Permet de charger une nouvelle scene avec {@link #newScene(scene)}
+ * 
+ * <p> Assigne les différents controlleurs aux scenes necessitant un controlleur
+ * 
+ * @param primaryStage
+ * @param userController
+ * @param requestController
+ * @param propjectController
+ * @param apiController
+ * 
+ * @author Antoine Tessier
+ * @author Anmar Rahman
+ * @author Mostafa Heider
+ */
 
 public class SceneController {
 
@@ -34,8 +51,9 @@ public class SceneController {
     private NotificationScene notificationScene;
     private InfoSettingsScene infoSettingsScene;
     private NotificationSettingsScene notificationSettingsScene;
-    private ConsultRequestScene consultRequestScene;
+    private ConsultRequestsScene consultRequestScene;
     private ConsultEntraveScene consultEntraveScene;
+    private IntervenantProjectsScene intervenantProjectScene;
     private MenuScene menuScene;
     private Boolean intervenant;
 
@@ -54,7 +72,7 @@ public class SceneController {
     }
 
     public void start() {
-        newScene("consult project"); /* Default is the launching scene */
+        newScene("lauch"); /* Default is the launching scene */
         this.primaryStage.setTitle("Ma ville - Équipe 19");
         this.primaryStage.show();
     }
@@ -79,6 +97,8 @@ public class SceneController {
             case "request" -> this.scene = newRequestScene();
             
             case "intervenantRegistration" -> this.scene = newRegisterScene();
+
+            case"intervenant project" -> this.scene = newIntervenantProjectScene();
             
             case "menu" -> this.scene = newMenuScene(this.intervenant);
 
@@ -164,7 +184,7 @@ public class SceneController {
     }
 
     private Scene newConsultRequestScene() {
-        this.consultRequestScene = new ConsultRequestScene(this);
+        this.consultRequestScene = new ConsultRequestsScene(this, this.requestController);
         this.consultRequestScene.setScene();
         return this.consultRequestScene.getScene();
     }
@@ -173,6 +193,12 @@ public class SceneController {
         this.consultEntraveScene = new ConsultEntraveScene(this);
         this.consultEntraveScene.setScene();
         return this.consultEntraveScene.getScene();
+    }
+
+    private Scene newIntervenantProjectScene() {
+        this.intervenantProjectScene = new IntervenantProjectsScene(this, this.projectController);
+        this.intervenantProjectScene.setScene();
+        return this.intervenantProjectScene.getScene();
     }
 
 

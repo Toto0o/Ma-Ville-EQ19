@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.NoSuchElementException;
 
 import com.google.api.core.ApiFuture;
@@ -22,6 +23,19 @@ import prototype.users.Address;
 import prototype.users.Intervenant;
 import prototype.users.Resident;
 import prototype.users.Utilisateur;
+
+/**
+ * Api Firebase permettant de :
+ * 
+ *  authentifier un utilisateur (intervenant ou résident);
+ *  déterminer le rôle de l'utilisateur de cette session (intervenant ou résident);
+ *  enregistrer un nouvel utilisateur (intervenant ou résident);
+ *  mettre à jour les informations du profil d'utilisateur;
+ *  
+ * @author Antoine Tessier
+ * @author Anmar Rahman
+ * @author Mostafa Heider
+ */
 
 public class UserFirebase {
 
@@ -44,6 +58,10 @@ public class UserFirebase {
         catch (Exception e) {
             throw e;
         }
+    }
+
+    public void updateInfo(Utilisateur utilisateur, HashMap<String,String> changes) {
+        
     }
 
     private Thread authenticateWithFirebase(String email, String password) throws IllegalAccessException {

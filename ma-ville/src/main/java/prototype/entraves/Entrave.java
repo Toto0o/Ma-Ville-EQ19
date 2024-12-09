@@ -4,6 +4,21 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+/**
+ * Objet contentant les informations d'une entrave.
+ * 
+ * <p> Permet d'afficher l'entrave graphiquement avec {@link #afficher()} <p>
+ * 
+ * @param id_request
+ * @param streetid
+ * @param shortname
+ * @param streetimpacttype
+ * @param number
+ * @author Antoine Tessier
+ * @author Anmar Rahman
+ * @author Mostafa Heider
+ */
+
 public class Entrave {
 
     private String id_request, streetid, shortname, streetimpacttype;
