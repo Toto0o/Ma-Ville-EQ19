@@ -91,6 +91,9 @@ public class Request {
         this.quartier = quartier;
     }
 
+    /**
+     * Méthode pour afficher graphiquemen la requête sous forme d'une {@link HBox}
+     */
     public HBox afficher() {
 
         String formattedDate = formatDate(getDate());

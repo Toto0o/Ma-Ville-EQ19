@@ -8,9 +8,10 @@ import java.util.HashMap;
 /**
  * Controlleur de l'utilisateur. Permet d'avoir l'instance de l'utilisateur et d'assurer qu'il soit unique durant une session.
  * 
- * <p> Utilise {@link prototype.users.UserCredentialsVerifier} pour valider les informations lors de l'authentification ou de l'enregistrement </p>
+ * <p> Utilise {@link prototype.users.UserCredentialsVerifier UserCredentialsVerifier} pour valider les informations lors de l'authentification ou de l'enregistrement </p>
  * 
  * @param apiController
+ * 
  * @author Antoine Tessier
  * @author Anmar Rahman
  * @author Mostafa Heider

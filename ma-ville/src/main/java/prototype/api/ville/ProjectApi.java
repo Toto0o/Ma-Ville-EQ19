@@ -23,6 +23,8 @@ import javafx.scene.text.Font;
 /**
  * Api de la ville de montréal permettant de charger les travaux en cours
  * 
+ * <p> Les projets peuvent être récupérés en {@link ArrayList} avec {@link #getProjects()} </p>
+ * 
  * <p> Utilise {@link "https://donnees.montreal.ca/api/3/action/datastore_search?resource_id=cc41b532-f12d-40fb-9f55-eb58c9a2b12b"}
  * 
  * @author Antoine Tessier
@@ -34,15 +36,19 @@ public class ProjectApi {
 
     private String API_URL = "https://donnees.montreal.ca/api/3/action/datastore_search?resource_id=cc41b532-f12d-40fb-9f55-eb58c9a2b12b";
     private ArrayList<Project> projects;
-    private Thread fetchThread;
 
     public ProjectApi() {
         this.projects = new ArrayList<>();
     }
 
-     private void fetchProjects() {
+    /**
+     * Methode pour charger les projets
+     * 
+     * @return {@link Thread} update la liste des projets
+     */
+     private Thread fetchProjects() {
 
-        this.fetchThread=  new Thread(() -> {
+        Thread thread = new Thread(() -> {
             try {
                 // Set up the API connection
                 URL url = new URL(API_URL);
@@ -87,14 +93,15 @@ public class ProjectApi {
             }
         });
 
-        this.fetchThread.start();
+        return thread;
 
     }
 
     public ArrayList<Project> getProjects() {
         try {
-            fetchProjects();
-            this.fetchThread.join();
+            Thread fetch = fetchProjects();
+            fetch.start();
+            fetch.join();
         } 
         catch (Exception e) {
             e.printStackTrace();

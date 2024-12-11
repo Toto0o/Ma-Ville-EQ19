@@ -16,8 +16,9 @@ import prototype.scenes.Scenes;
 import prototype.users.Utilisateur;
 
 /**
- * Scene de menu. Permet d'acceder aux différentes options selon le type d'utilisateur (résident ou intervenant) 
+ * Scene de menu. Permet d'acceder aux différentes options selon le type d'utilisateur ({@link prototype.users.Resident résident} ou {@link prototype.users.Intervenant intervenant}) 
  * 
+ * <p> Certaines fonctionnalités et bouton ne sont pas visible, dépendement de l'utilisateur. La visibilité est déterminée par {@link Utilisateur#isIntervenant()}
  * @param sceneController
  * @param userController
  * 

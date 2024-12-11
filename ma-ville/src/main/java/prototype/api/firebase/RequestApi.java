@@ -9,9 +9,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 /**
- * Api Firebase permettant de :
- *  charger les requêtes faites par les résidents;
- *  sauvegarder les requêtes faites par les résidents;
+ * Api Firebase permettant de 
+ * <ul>
+ *  <li> Charger les requêtes faites par les résidents avec {@link #getRequests()} </li>
+ *  <li> Sauvegarder les requêtes faites par les résidents avec {@link #saveRequest(request)} </li>
+ * </ul>
+ * 
+ * <p> Les méthode sont accédés par {@link ApiController} </p>
  * 
  * @author Antoine Tessier
  * @author Anmar Rahman
@@ -32,6 +36,13 @@ public class RequestApi {
         return this.requests;
     }
 
+
+    /**
+     * Charge les requêtes avec {@link FirebaseDatabase} et {@link DatabaseReference}
+     * 
+     * <p> Les données chargées pour chaques requêtes sont instancié dans une {@link Request} avant d'être ajouté a une 
+     * {@link ArrayList} accesible avec {@link #getRequests()}
+     */
     private void fetchRequest() {
         FirebaseDatabase database = FirebaseDatabase
                 .getInstance("https://maville-18aa2-default-rtdb.firebaseio.com/");

@@ -12,9 +12,13 @@ import java.util.HashMap;
 import prototype.projects.Project;
 
 /**
- * Api Firebase permettant de :
- *   charger les projets contenus dans la base de donnée;
- *   sauvagder les projets dans la base de donnée;
+ * Connexion Api avec Firebase permettant de 
+ * <ul>
+ *  <li> Charger les projet avec {@link #getProject()} </li>
+ *  <li> Enregistrer les changements d'un projet en cours avec {@link #saveProjectChanges(projectKey, changes)}
+ * </ul>
+ * 
+ * <p> Les méthodes sont accédés par {@link prototype.controllers.ApiController ApiController} </p>
  * 
  * @author Antoine Tessier
  * @author Anmar Rahman
@@ -35,6 +39,12 @@ public class ProjectApiFirebase {
         return this.projects;
     }
 
+    /**
+     * Lis la base de donnée avec {@link DatabaseReference}
+     * 
+     * <p> Les données récupéréres sont ajouté sous forme de {@link Project} dans une {@link ArrayList} renvoyée par {@link #getProjects()} </p>
+     * 
+     */
     private void fetchProjects() {
         FirebaseDatabase database = FirebaseDatabase
                 .getInstance("https://maville-18aa2-default-rtdb.firebaseio.com/");
@@ -52,8 +62,6 @@ public class ProjectApiFirebase {
                 // Loop through all the projects and filter by user UID
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     String projectUid = snapshot.child("uid").getValue(String.class);
-
-                    // Only add the project if the UID matches the logged-in user
                     
                     // Fetching project details
                     String title = snapshot.child("title").getValue(String.class);
@@ -91,13 +99,19 @@ public class ProjectApiFirebase {
         });
     }
 
+    /**
+     * Enregistre les changement apporté à un projet
+     * 
+     * @param projectKey la clé Firebase associé au projet dans le folder "projects"
+     * @param changes une Map (id, field) des changements apportés
+     */
+
     public void saveProjectChanges(String projectKey, HashMap<String,String> changes) {
         FirebaseDatabase database = FirebaseDatabase
                 .getInstance("https://maville-18aa2-default-rtdb.firebaseio.com/");
         DatabaseReference projectsRef = database.getReference("projects").child(projectKey);
 
         for (String key : changes.keySet()) {
-            if (changes.get(key) != null)
             projectsRef.child(key).setValueAsync(changes.get(key));
         }
     }

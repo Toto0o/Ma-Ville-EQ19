@@ -14,7 +14,7 @@ import prototype.projects.Project;
  *  <li> Ajouter un nouveau projet : {@link #addProject(title, description, quartierAffected, startDate, endDate, userUid, streetEntrave)}
  * </ul>
  * 
- * <p> Utilise {@link prototype.controllers.ApiController} pour charger les projets </p>
+ * <p> Utilise {@link ApiController} pour charger les projets </p>
  * 
  * @param apiController
  * 
@@ -35,6 +35,12 @@ public class ProjectController {
         return this.apiController.getProjects();
     }
 
+    /**
+     * Méthode pour sauvegarder les changements apportés à un {@link Project} avec {@link ApiController}
+     * 
+     * @param key la clé firebase du projet
+     * @param key {@link HashMap} id,value des champs modifiés
+     */
     public void saveProjectChanges(String key, HashMap<String,String> changes) {
         this.apiController.saveProjectChanges(key, changes);
     }

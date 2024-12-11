@@ -9,11 +9,11 @@ import javafx.scene.text.Text;
  * 
  * <p> Permet d'afficher l'entrave graphiquement avec {@link #afficher()} <p>
  * 
- * @param id_request
- * @param streetid
- * @param shortname
- * @param streetimpacttype
- * @param number
+ * @param id_request le id de l'entrave
+ * @param streetid le nom de la rue entravée
+ * @param shortname le nom de l'entrave
+ * @param streetimpacttype le type d'impact sur la rue
+ * @param number le numéro de l'entrave
  * @author Antoine Tessier
  * @author Anmar Rahman
  * @author Mostafa Heider
@@ -50,6 +50,9 @@ public class Entrave {
         return this.streetimpacttype;
     }
 
+    /**
+     * Méthode pour afficher graphiquement l'entrave sous forme d'une {@link VBox}
+     */
     public VBox afficher() {
 
         // Add the selected details into the VBox

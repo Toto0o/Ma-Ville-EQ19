@@ -25,13 +25,17 @@ import prototype.users.Resident;
 import prototype.users.Utilisateur;
 
 /**
- * Api Firebase permettant de :
+ * Class de connexion avec l'Api de Firebase pour les fonctionnalités liés au compte d'utilisateur;
+ *
+ * <p> Les méthodes clés incluent :
+ * <ul>
+ *  <li> {@link #authenticate()} : authentifier un utilisateur </li>
+ *  <li> {@link #updateInfo(utilisateur, changes)} pour modifier les informations de l'utilisateur </li>
+ *  <li> {@link #saveUserToFirebase(utilisateur, folder)} enregistrer un nouvel utilisateur (intervenant ou résident) </li>
+ * </ul>
+ * </p>
  * 
- *  authentifier un utilisateur (intervenant ou résident);
- *  déterminer le rôle de l'utilisateur de cette session (intervenant ou résident);
- *  enregistrer un nouvel utilisateur (intervenant ou résident);
- *  mettre à jour les informations du profil d'utilisateur;
- *  
+ * <p> Les méthodes sont accédées par {@link prototype.controllers.ApiController ApiController} </p>
  * @author Antoine Tessier
  * @author Anmar Rahman
  * @author Mostafa Heider
@@ -44,10 +48,20 @@ public class UserFirebase {
 
     public UserFirebase() {};
     
+
     public boolean getIntervenant() {
         return this.intervenant;
     }
 
+
+    /**
+     * Méthode pour authentifier un utilisateur
+     * 
+     * @param email Par défault le nom d'utilisateur
+     * @param password Le mot de passe
+     * 
+     * @return {@link Utilisateur} de la session en cours
+     */
     public Utilisateur authenticate(String email, String password) throws Exception {
         try {
             Thread authThread = authenticateWithFirebase(email, password);
@@ -64,6 +78,9 @@ public class UserFirebase {
         
     }
 
+    /**
+     * Methode pour
+     */
     private Thread authenticateWithFirebase(String email, String password) throws IllegalAccessException {
         Thread thread = new Thread(() -> {
             try {

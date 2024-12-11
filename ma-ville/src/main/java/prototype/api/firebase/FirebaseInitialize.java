@@ -14,7 +14,9 @@ import com.google.firebase.cloud.FirestoreClient;
 
 
 /**
- * Initie la connexion avec Firebase
+ * Initie la connexion avec Firebase;
+ * 
+ * <p> Appeler de {@link #initialize()} à l'instanciation pour initier la connexion avec Firebase </p>
  * 
  * @author Antoine Tessier
  * @author Anmar Rahman
@@ -27,6 +29,13 @@ public class FirebaseInitialize {
     private static Firestore firestore;
     private static FirebaseAuth firebaseAuth; // Declare FirebaseAuth
 
+
+    /**
+     * Initie la connexion avec Firebase si elle n'est pas déja initialisé avec <code>prototype/serviceAccount.json</code>
+     * 
+     * @throws RuntimeException du a un erreur de chargement du fichier de service de compte ou dans une erreur d'initialisation de Firebase
+     *      
+     */
     public static void initialize() {
 
         if (firestore != null) {

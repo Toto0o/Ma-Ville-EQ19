@@ -16,6 +16,8 @@ import prototype.entraves.Entrave;
 /**
  * Api de la ville de montréal permettant de charger les entraves routières
  * 
+ * <p> Les entraves peuvent être récupérés en {@link ArrayList} avec {@link #getEntraves()}
+ * 
  *<p> Utilise {@link "https://donnees.montreal.ca/api/3/action/datastore_search?resource_id=a2bc8014-488c-495d-941b-e7ae1999d1bd"} </p>
  * @author Antoine Tessier
  * @author Anmar Rahman
@@ -28,14 +30,12 @@ public class EntravesApi {
     
     private ArrayList<Entrave> entravesList;
 
-    private Thread fetchEntravesThread;
-
     public EntravesApi() {
         this.entravesList = new ArrayList<>();
     }
 
-    private void fetchEntraves() {
-        this.fetchEntravesThread = new Thread(() -> {
+    private Thread fetchEntraves() {
+        Thread = new Thread(() -> {
             try {
                 
                 URL url = new URL(API_URL);
@@ -77,13 +77,14 @@ public class EntravesApi {
             } 
         });
 
-        this.fetchEntravesThread.start();
+        return thread;
     }
 
     public ArrayList<Entrave> getEntraves() {
         try {
-            fetchEntraves();
-            this.fetchEntravesThread.join();
+            Thread fetch = fetchEntraves();
+            fetch.start();
+            fetch.join();
         }
         catch (Exception e) {
             

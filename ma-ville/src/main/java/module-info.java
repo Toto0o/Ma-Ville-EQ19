@@ -6,7 +6,7 @@ module prototype {
     requires com.google.auth.oauth2;
     requires com.google.api.apicommon;
     requires google.cloud.firestore;
-   /*requires com.google.gson; */
+    requires com.google.gson;
 
     opens prototype to javafx.fxml;
     exports prototype;

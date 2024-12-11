@@ -19,6 +19,8 @@ import prototype.users.Utilisateur;
 /**
  * Scene permettant de s'authentifier
  * 
+ * <p> Utilise {@link UserController#}
+ * 
  * @param sceneController
  * @param userController
  * 
@@ -72,7 +74,12 @@ public class LoginScene extends Scenes {
             }
         });
     }
-
+    /**
+     * Méthode pour authentifier un utilisateur selon les éentrées; Les indentifiants
+     * sont vérifié par {@link SceneController}
+     * 
+     * <p> Si l'utilisateur est un intervenant, set le champ boolean a vrai dans @link prototype.controllers.ScenceController 
+     */
     private void handleLogin() {
 
         String email = usernameField.getText().trim();

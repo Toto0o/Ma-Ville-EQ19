@@ -71,11 +71,22 @@ public class SceneController {
         this.intervenant = false;
     }
 
+
+    /**
+     * Méthode pour lancer l'application. La scène par défault est {@link LaunchScene}
+     * 
+     */
     public void start() {
         newScene("lauch"); /* Default is the launching scene */
         this.primaryStage.setTitle("Ma ville - Équipe 19");
         this.primaryStage.show();
     }
+
+    /**
+     * Méthode pour changer de scene. Utilise une logique switch pour assigner la scene en cours à {@link #scene}
+     *
+     * @param scene {@link String} pour le switch
+     */
 
     public void newScene(String scene) {
 
