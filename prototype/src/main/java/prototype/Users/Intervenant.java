@@ -5,7 +5,7 @@ public class Intervenant extends Utilisateur {
     private String cityID;
 
     public Intervenant(String name, String lastName, String password, String birthday, String phone, String address,
-            String email, String cityID, String accountType) {
+            String email, String cityID) {
         super(name, lastName, birthday, address, email, phone, password);
         this.cityID = cityID;
 

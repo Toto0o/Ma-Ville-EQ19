@@ -1,9 +1,5 @@
 package prototype.Scenes;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,6 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import prototype.Controllers.SceneController;
+import prototype.service.ProjectServices;
 
 public class SearchProjectsScene extends Scenes {
 
@@ -32,7 +29,6 @@ public class SearchProjectsScene extends Scenes {
     private TextField searchTitleField;
     private TextField searchBoroughField;
     private ComboBox<String> typeFilter;
-    private static final String API_URL = "https://donnees.montreal.ca/api/3/action/datastore_search?resource_id=cc41b532-f12d-40fb-9f55-eb58c9a2b12b";
 
     public SearchProjectsScene(SceneController sceneController) {
         super(sceneController);
@@ -49,20 +45,6 @@ public class SearchProjectsScene extends Scenes {
         this.searchBoroughField = new TextField();
         this.typeFilter = new ComboBox<>();
 
-        // Mapping of API categories to filter options
-        Map<String, String> categoryMapping = new HashMap<>();
-        categoryMapping.put("Construction/rénovation avec excavation", "Construction ou rénovation");
-        categoryMapping.put("Construction/rénovation sans excavation", "Construction ou rénovation");
-        categoryMapping.put("Égouts et aqueducs - Excavation", "Travaux routiers");
-        categoryMapping.put("Égouts et aqueducs - Inspection et nettoyage", "Travaux de gaz ou électricité");
-        categoryMapping.put("Égouts et aqueducs - Réhabilitation", "Travaux de gaz ou électricité");
-        categoryMapping.put("Réseaux routier - Réfection et travaux corrélatifs", "Travaux routiers");
-        categoryMapping.put("Feux de signalisation - Ajout/réparation", "Travaux de signalisation et éclairage");
-        categoryMapping.put("Toiture - Rénovation", "Construction ou rénovation");
-        categoryMapping.put("S-3 Infrastructure souterraine majeure - Puits d'accès", "Travaux souterrains");
-        categoryMapping.put("Autre", "Autre");
-        categoryMapping.put("Entretien", "Entretien urbain");
-
         // Add filter items (options)
         typeFilter.getItems().addAll(
                 "Travaux routiers",
@@ -76,6 +58,20 @@ public class SearchProjectsScene extends Scenes {
                 "Entretien urbain",
                 "Entretien des réseaux de télécommunication");
         typeFilter.setValue("Tous les types");
+
+        // Mapping of API categories to filter options
+        Map<String, String> categoryMapping = new HashMap<>();
+        categoryMapping.put("Construction/rénovation avec excavation", "Construction ou rénovation");
+        categoryMapping.put("Construction/rénovation sans excavation", "Construction ou rénovation");
+        categoryMapping.put("Égouts et aqueducs - Excavation", "Travaux routiers");
+        categoryMapping.put("Égouts et aqueducs - Inspection et nettoyage", "Travaux de gaz ou électricité");
+        categoryMapping.put("Égouts et aqueducs - Réhabilitation", "Travaux de gaz ou électricité");
+        categoryMapping.put("Réseaux routier - Réfection et travaux corrélatifs", "Travaux routiers");
+        categoryMapping.put("Feux de signalisation - Ajout/réparation", "Travaux de signalisation et éclairage");
+        categoryMapping.put("Toiture - Rénovation", "Construction ou rénovation");
+        categoryMapping.put("S-3 Infrastructure souterraine majeure - Puits d'accès", "Travaux souterrains");
+        categoryMapping.put("Autre", "Autre");
+        categoryMapping.put("Entretien", "Entretien urbain");
 
         // Fetch data from the API
         fetchProjects();
@@ -122,24 +118,7 @@ public class SearchProjectsScene extends Scenes {
     private void fetchProjects() {
         new Thread(() -> {
             try {
-                // Set up the API connection
-                URL url = new URL(API_URL);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("GET");
-
-                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
-                StringBuilder response = new StringBuilder();
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    response.append(line);
-                }
-
-                reader.close();
-
-                // Parse the response using org.json
-                JSONObject jsonResponse = new JSONObject(response.toString());
-                JSONObject result = jsonResponse.getJSONObject("result");
-                JSONArray records = result.getJSONArray("records");
+                JSONArray records = ProjectServices.fetchProjects();
 
                 // Update the UI with the fetched data
                 Platform.runLater(() -> {
@@ -192,34 +171,13 @@ public class SearchProjectsScene extends Scenes {
         String titleQuery = searchTitleField.getText().toLowerCase().trim();
         String boroughQuery = searchBoroughField.getText().toLowerCase().trim();
         String typeQuery = mapFilterToApiCategory(typeFilter.getValue());
-        System.out.println(titleQuery); // For debugging purposes
-        System.out.println(boroughQuery); // For debugging purposes
-        System.out.println(typeQuery); // For debugging purposes
 
         if (titleQuery.isEmpty() && boroughQuery.isEmpty() && typeQuery.equals("tous les types")) {
             fetchProjects(); // If no search is provided, fetch all projects
         } else {
             new Thread(() -> {
                 try {
-                    // Set up the API connection
-                    URL url = new URL(API_URL);
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setRequestMethod("GET");
-
-                    BufferedReader reader = new BufferedReader(
-                            new InputStreamReader(connection.getInputStream(), "UTF-8"));
-                    StringBuilder response = new StringBuilder();
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        response.append(line);
-                    }
-
-                    reader.close();
-
-                    // Parse the response using org.json
-                    JSONObject jsonResponse = new JSONObject(response.toString());
-                    JSONObject result = jsonResponse.getJSONObject("result");
-                    JSONArray records = result.getJSONArray("records");
+                    JSONArray records = ProjectServices.fetchProjects();
 
                     // Update the UI with the fetched data
                     Platform.runLater(() -> {
@@ -298,14 +256,11 @@ public class SearchProjectsScene extends Scenes {
             case "Travaux souterrains":
                 return "S-3 Infrastructure souterraine majeure - Puits d'accès";
             case "Travaux résidentiel":
-                return "Autre"; // Update as needed
+                return "Toiture - Rénovation";
             case "Entretien urbain":
                 return "Entretien";
-            case "Entretien des réseaux de télécommunication":
-                return "Autre"; // Adjust mapping as needed
             default:
-                return "Tous les types"; // Default to "all types"
+                return "tous les types"; // Default
         }
     }
-
 }

@@ -4,19 +4,13 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
-import com.google.api.core.ApiFuture;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.UserRecord;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import prototype.Controllers.SceneController;
-import prototype.Users.Resident;
+import prototype.service.UserService;
 
 public class ResidentRegistrationScene extends Scenes {
 
@@ -87,54 +81,36 @@ public class ResidentRegistrationScene extends Scenes {
             String phone = this.phoneField.getText().trim();
             String password = this.passwordField.getText().trim();
 
-            // Validate birthday: must be in the past and the user must be at least 16 years
-            // old
+            // Validate the fields and birthday as before
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate birthDate = LocalDate.parse(birthday, formatter);
             LocalDate currentDate = LocalDate.now();
 
-            // Check if the birthday is in the future
             if (birthDate.isAfter(currentDate)) {
                 errorMessage.setText("Birthday cannot be in the future.");
-                return; // Exit if the date is in the future
+                return;
             }
 
-            // Check if the user is at least 16 years old
             long age = ChronoUnit.YEARS.between(birthDate, currentDate);
             if (age < 16) {
                 errorMessage.setText("You must be at least 16 years old.");
-                return; // Exit if the user is under 16
+                return;
             }
 
-            // Register user with Firebase Authentication
-            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-            ApiFuture<UserRecord> future = firebaseAuth.createUserAsync(new UserRecord.CreateRequest()
-                    .setEmail(email)
-                    .setPassword(password)
-                    .setDisplayName(name + " " + lastName));
+            // Call the static method of UserService to save to Firebase and get the UID
+            String uid = UserService.saveResidentToFirebase(name, lastName, birthday, address, email, phone, password);
 
-            // Block and get the result of the async operation
-            UserRecord userRecord = future.get(); // This will block until the operation completes
-
-            String uid = userRecord.getUid(); // Get the unique UID of the user
-
-            // Save user to Firebase Database under a folder named after the UID
-            FirebaseDatabase database = FirebaseDatabase
-                    .getInstance("https://maville-18aa2-default-rtdb.firebaseio.com/");
-            DatabaseReference userFolderRef = database.getReference("residents").child(uid);
-
-            Resident resident = new Resident(name, lastName, birthday, address, email, phone, password, "Resident");
-            userFolderRef.setValueAsync(resident); // Save resident data under "residents/UID" node
-
-            System.out.println("Resident data saved to Firebase under UID: " + uid);
-
-            // Navigate to login scene after successful registration
-            this.sceneController.newScene("login");
+            if (uid != null) {
+                System.out.println("Resident data saved to Firebase under UID: " + uid);
+                this.sceneController.newScene("login"); // Navigate to the login scene after success
+            } else {
+                errorMessage.setText("An error occurred. Please try again.");
+            }
 
         } catch (Exception e) {
-            // Catch any other exceptions and display a generic error message
             errorMessage.setText("An error occurred. Please try again.");
             e.printStackTrace();
         }
     }
+
 }

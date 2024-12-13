@@ -21,6 +21,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import prototype.Controllers.SceneController;
+import prototype.service.ProjectServices;
 
 public class ConsultProjectScene extends Scenes {
 
@@ -207,24 +208,8 @@ public class ConsultProjectScene extends Scenes {
         // selection
         new Thread(() -> {
             try {
-                // Set up the API connection
-                URL url = new URL(API_URL);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("GET");
-
-                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
-                StringBuilder response = new StringBuilder();
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    response.append(line);
-                }
-
-                reader.close();
-
-                // Parse the response using org.json
-                JSONObject jsonResponse = new JSONObject(response.toString());
-                JSONObject result = jsonResponse.getJSONObject("result");
-                JSONArray records = result.getJSONArray("records");
+                // Use the utility class to fetch the projects
+                JSONArray records = ProjectServices.fetchProjects();
 
                 // Update the UI with the filtered data
                 Platform.runLater(() -> {

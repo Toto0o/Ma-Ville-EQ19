@@ -49,7 +49,7 @@ public class Quartier {
                     for (var component : addressComponents) {
                         var types = component.getAsJsonObject().getAsJsonArray("types");
                         if (types.toString().contains("sublocality_level_1")) {
-                            return component.getAsJsonObject().get("short_name").getAsString();
+                            return component.getAsJsonObject().get("short_name").getAsString().replace(" ", "");
                         }
                     }
                 }

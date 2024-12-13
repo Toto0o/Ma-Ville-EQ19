@@ -3,9 +3,6 @@ package prototype.Scenes;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -15,8 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import prototype.Controllers.SceneController;
-import prototype.Projects.Project;
-import prototype.Users.UserSession;
+import prototype.service.ProjectServices;
 
 public class IntervenantSubmitProjectScene extends Scenes {
 
@@ -56,39 +52,6 @@ public class IntervenantSubmitProjectScene extends Scenes {
 
         this.startDatePicker = new DatePicker(); // Initialize start DatePicker
         this.endDatePicker = new DatePicker(); // Initialize end DatePicker
-    }
-
-    /**
-     * Saves a new request to Firestore with the formatted date.
-     */
-    private void saveRequestToFirebase(String title, String description, String type, String quartiersAffected,
-            String roadsAffected, String startDate,
-            String endDate, String horaireTravaux, String status) {
-        try {
-            // Generate a random request ID
-            String requestId = java.util.UUID.randomUUID().toString();
-
-            // Initialize Firebase Database
-            FirebaseDatabase database = FirebaseDatabase
-                    .getInstance("https://maville-18aa2-default-rtdb.firebaseio.com/");
-            DatabaseReference requestFolderRef = database.getReference("projects").child(requestId);
-
-            String userUid = UserSession.getInstance().getUserId(); // Use the UID from UserSession
-
-            // Create a Project object with collected data
-            Project project = new Project(title, description, type, quartiersAffected, roadsAffected, startDate,
-                    endDate, horaireTravaux,
-                    status, userUid);
-            requestFolderRef.setValueAsync(project); // Save request data under "projects/RequestID" node
-
-            System.out.println("Request saved to Firebase under ID: " + requestId);
-
-            // Navigate to a confirmation or dashboard scene after successful submission
-            this.sceneController.newScene("dashboard");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -137,6 +100,9 @@ public class IntervenantSubmitProjectScene extends Scenes {
         // Go back to the main menu
         this.menu.setOnMouseClicked(event -> this.sceneController.newScene("intervenantMenu"));
 
+        // Initialize ProjectService
+        ProjectServices projectService = new ProjectServices();
+
         // Save the request to Firestore
         this.sendRequest.setOnMouseClicked(event -> {
             String title = this.titleField.getText();
@@ -159,9 +125,14 @@ public class IntervenantSubmitProjectScene extends Scenes {
                 String formattedStartDate = startDate.format(formatter);
                 String formattedEndDate = endDate.format(formatter);
 
-                saveRequestToFirebase(title, description, type, quartiersAffected, roadsAffected, formattedStartDate,
-                        formattedEndDate, horaireTravaux,
-                        status);
+                // Use the ProjectService to save the project to Firebase
+                projectService.saveProjectToFirebase(title, description, type, quartiersAffected, roadsAffected,
+                        formattedStartDate,
+                        formattedEndDate, horaireTravaux, status);
+
+                // Optionally, navigate to a new scene or display a confirmation message
+                this.sceneController.newScene("intervenantMenu");
+
             } else {
                 System.out.println("Please fill in all fields.");
             }

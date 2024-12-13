@@ -15,6 +15,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import prototype.Controllers.SceneController;
+import prototype.Users.Resident;
+import prototype.Users.UserSession;
 
 public class NotificationScene extends Scenes {
 
@@ -29,11 +31,11 @@ public class NotificationScene extends Scenes {
 
         // Setting title and subtitle
         this.title = new Text("Notifications");
-        this.subtitle = new Text("Les Projets dans votre quartier (Le Sud-Ouest)");
+        this.subtitle = new Text("Les Projets dans votre quartier");
 
         vbox.getChildren().addAll(title, subtitle);
 
-        // Fetch projects for Le Sud-Ouest
+        // Fetch projects based on the logged-in user's address
         fetchProjects();
     }
 
@@ -53,10 +55,26 @@ public class NotificationScene extends Scenes {
         });
     }
 
-    // Method to fetch and display projects for the borough 'Le Sud-Ouest'
+    // Method to fetch and display projects for the current user's neighborhood
     private void fetchProjects() {
         try {
-            // API URL for projects in Le Sud-Ouest
+            // Get the logged-in resident from UserSession
+            Resident resident = (Resident) UserSession.getInstance().getUser();
+
+            // Get the quartier directly from the resident object
+            String quartier = resident.getQuartier();
+            System.out.println("Resident Quartier : " + quartier);
+
+            if (quartier == null || quartier.isEmpty()) {
+                // Handle the case where the quartier is not available
+                System.out.println("Quartier not found for the resident.");
+                return;
+            }
+
+            // Update the subtitle with the quartier name
+            this.subtitle.setText("Les Projets dans votre quartier (" + quartier + ")");
+
+            // API URL for projects
             String urlString = "https://donnees.montreal.ca/api/3/action/datastore_search?resource_id=cc41b532-f12d-40fb-9f55-eb58c9a2b12b";
             URL url = new URL(urlString);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -85,14 +103,13 @@ public class NotificationScene extends Scenes {
 
             int projectCount = 0;
 
-            // Loop through each record and filter based on 'boroughid' equal to 'Le
-            // Sud-Ouest'
+            // Loop through each record and filter based on the quartier
             for (int i = 0; i < records.length(); i++) {
                 JSONObject project = records.getJSONObject(i);
                 String boroughId = project.optString("boroughid", "");
 
-                // Check if the project is in Le Sud-Ouest
-                if ("Le Sud-Ouest".equalsIgnoreCase(boroughId)) {
+                // Check if the project is in the resident's quartier
+                if (boroughId.equalsIgnoreCase(quartier)) {
                     projectCount++; // Increment the project count
 
                     // Extracting project details
@@ -145,4 +162,5 @@ public class NotificationScene extends Scenes {
             vbox.getChildren().add(errorText);
         }
     }
+
 }

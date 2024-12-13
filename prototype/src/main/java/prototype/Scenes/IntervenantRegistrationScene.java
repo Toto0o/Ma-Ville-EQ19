@@ -1,18 +1,12 @@
 package prototype.Scenes;
 
-import com.google.api.core.ApiFuture;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.UserRecord;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import prototype.Controllers.SceneController;
-import prototype.Users.Intervenant;
+import prototype.service.UserService;
 
 public class IntervenantRegistrationScene extends Scenes {
 
@@ -81,38 +75,20 @@ public class IntervenantRegistrationScene extends Scenes {
             String password = this.passwordField.getText().trim();
             String cityID = this.cityIDField.getText().trim(); // Get cityID from the input field
 
-            // Register user with Firebase Authentication
-            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-            ApiFuture<UserRecord> future = firebaseAuth.createUserAsync(new UserRecord.CreateRequest()
-                    .setEmail(email)
-                    .setPassword(password)
-                    .setDisplayName(name + " " + lastName));
+            // Call the static method of UserService to save to Firebase and get the UID
+            String uid = UserService.saveIntervenantToFirebase(name, lastName, birthday, address, email, phone,
+                    password, cityID);
 
-            // Block and get the result of the async operation
-            UserRecord userRecord = future.get(); // This will block until the operation completes
-
-            String uid = userRecord.getUid(); // Get the unique UID of the user
-
-            // Save Intervenant to Firebase Database under a folder named after the UID
-            FirebaseDatabase database = FirebaseDatabase
-                    .getInstance("https://maville-18aa2-default-rtdb.firebaseio.com/");
-            DatabaseReference userFolderRef = database.getReference("intervenants").child(uid);
-
-            // Create a new Intervenant object
-            Intervenant intervenant = new Intervenant(name, lastName, password, birthday, phone, address, email, cityID,
-                    "Intervenant");
-
-            // Save the Intervenant data under the UID folder
-            userFolderRef.setValueAsync(intervenant);
-
-            System.out.println("Intervenant data saved to Firebase under UID: " + uid);
-
-            // Navigate to login scene after successful registration
-            this.sceneController.newScene("login");
+            if (uid != null) {
+                System.out.println("Intervenant data saved to Firebase under UID: " + uid);
+                this.sceneController.newScene("login"); // Navigate to the login scene after success
+            } else {
+                // Handle the case where the UID is null (error occurred)
+                System.out.println("Error saving Intervenant data.");
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 }
