@@ -7,21 +7,28 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import prototype.projects.Project;
 import prototype.projects.Request;
 import prototype.projects.Type;
 import prototype.users.UserSession;
 
+/**
+ * Méthode pour charger les requêtes de la base de donnée Firebase
+ *
+ * <p>Utiliser {@link #getRequests()} pour obtenir les requêtes chargées</p>
+ * <p>Utiliser {@link #newRequest(Request)} pour enregister une nouvelle requête</p>
+ */
 public class RequestService {
     // Firebase database reference URL
     private static final String DATABASE_URL = "https://maville-18aa2-default-rtdb.firebaseio.com/";
     private static final String REQUESTS_NODE = "requests";
+
     /**
-     * Fetches requests from the Firebase database and passes the results to the
-     * given callback.
+     * Charge les requêtes de Firebase
      *
-     * @param callback A Consumer that accepts a List of Request objects.
+     * @return {@link ArrayList}&lt;{@link Request}&gt;
      */
-    public ArrayList<Request> fetchRequests() {
+    private static ArrayList<Request> fetchRequests() {
         ArrayList<Request> requestsList = new ArrayList<>();
         FirebaseDatabase database = FirebaseDatabase.getInstance(DATABASE_URL);
         DatabaseReference requestFolderRef = database.getReference(REQUESTS_NODE);
@@ -55,11 +62,19 @@ public class RequestService {
         return requestsList;
     }
 
+    /**
+     * Retourne les requêtes chargées par {@link #fetchRequests()}
+     * @return @return {@link ArrayList}&lt;{@link Request}&gt;
+     */
     public ArrayList<Request> getRequests() {
         return fetchRequests();
     }
 
-    public static void saveRequest(Request request) {
+    /**
+     * Ajoute une requête dans la base de donnée Firebase
+     * @param request la requête à enregistrer
+     */
+    private static void saveRequest(Request request) {
         try {
             // Default status for a new request
             String status = "Pending";
@@ -77,6 +92,10 @@ public class RequestService {
         }
     }
 
+    /**
+     * Méthode appeler la méthode statique {@link #saveRequest(Request)} dans un context non static
+     * @param request la requête à enregistrer
+     */
     public void newRequest(Request request) {
         saveRequest(request);
     }

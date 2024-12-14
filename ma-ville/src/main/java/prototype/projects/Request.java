@@ -24,7 +24,16 @@ public class Request {
     private String quartier;
     private String street;
 
-    // Constructor
+    /**
+     * Constructeur
+     * @param title le titre de la requête
+     * @param description la description de la requête
+     * @param type {@link Type} de la requête
+     * @param date la date espérée
+     * @param status {@link Status} de la requête
+     * @param quartier le quartier
+     * @param street la rue impacté
+     */
     public Request(String title, String description, Type type, String date, String status, String quartier, String street) {
         this.title = title;
         this.description = description;
@@ -97,7 +106,9 @@ public class Request {
 
 
     /**
-     * Méthode pour afficher graphiquemen la requête sous forme d'une {@link HBox}
+     * Méthode pour afficher graphiquemen la requête
+     *
+     * @return {@link HBox}
      */
     public HBox afficher() {
 
@@ -121,6 +132,11 @@ public class Request {
         return requestBox;
     }
 
+    /**
+     * Méthode pour formatter les dates
+     * @param date la date a formater
+     * @return {@link String} la date formattée
+     */
     private String formatDate(String date) {
         if (date != null && date.length() == 8) {
             // Convert from YYYYMMDD to YYYY/MM/DD

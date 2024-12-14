@@ -1,27 +1,36 @@
 package prototype.services;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import javafx.application.Platform;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
+import prototype.entraves.Entrave;
 import prototype.projects.Project;
 import prototype.projects.Status;
 import prototype.projects.Type;
 import prototype.users.UserSession;
 
-
+/**
+ * Connexion Api avec Firebase pour modifier un projet et charger les projets associé à l'intervenant utilisateur en cours
+ *
+ * <p>Utiliser {@link #getProjects()} pour récupérer les projets</p>
+ */
 public class IntervenantServices {
 
+    /**
+     * Retourne les projets chargés avec {@link #fetchProjectsForCurrentUser()}
+     * @return {@link ArrayList}&lt;{@link Project}&gt;
+     */
     public ArrayList<Project> getProjects() {
         return fetchProjectsForCurrentUser();
     }
 
+    /**
+     * Méthode pour charger les projets; filtre les projets et renvoi seulement ceux associés à l'intervenant utilisateur en cours
+     * @return {@link ArrayList}&lt;{@link Project}&gt;
+     */
     public static ArrayList<Project> fetchProjectsForCurrentUser() {
         ArrayList<Project> projects = new ArrayList<>();
         String userUid = UserSession.getInstance().getUserId();
@@ -67,6 +76,12 @@ public class IntervenantServices {
         });
         return projects;
     }
+
+    /**
+     * Méthode pour mettre à jours les information d'un projet
+     * @param changes {@link HashMap} (id, value) des champs modifiés
+     * @param projectKey la clé firebase du projet
+     */
     public static void saveProjectChanges(HashMap<String, String> changes, String projectKey) {
         FirebaseDatabase database = FirebaseDatabase
                 .getInstance("https://maville-18aa2-default-rtdb.firebaseio.com/");
@@ -78,6 +93,11 @@ public class IntervenantServices {
         }
     }
 
+    /**
+     * Permet un appel à la méthode statique {@link #saveProjectChanges(HashMap, String)} dans un context non statique
+     * @param changes {@link HashMap} (id, value) des champs modifiés
+     * @param projectKey la clé firebase du projet
+     */
     public void updateProject(HashMap<String,String> changes, String projectKey) {
         saveProjectChanges(changes, projectKey);
     }

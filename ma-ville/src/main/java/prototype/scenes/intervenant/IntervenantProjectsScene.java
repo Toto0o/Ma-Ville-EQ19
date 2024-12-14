@@ -19,6 +19,12 @@ import prototype.users.UserSession;
 import prototype.projects.*;
 import prototype.scenes.Scenes;
 
+/**
+ * Scene de consultation des projets pour les intervenants
+ * 
+ * <p>Charge les projets avec {@link ApiController#getProjects(boolean)}</p>
+ * <p>Accessible par {@link prototype.scenes.general.menu.MenuScene MenuScene}</p>
+ */
 public class IntervenantProjectsScene extends Scenes{
 
     private VBox vbox;
@@ -27,6 +33,10 @@ public class IntervenantProjectsScene extends Scenes{
     private List<Project> projectsList;
     private ApiController apiController;
 
+    /**
+     * Constructeur
+     * @param sceneController
+     */
     public IntervenantProjectsScene(SceneController sceneController) {
         super(sceneController);
         this.vbox = new VBox(10);
@@ -48,22 +58,19 @@ public class IntervenantProjectsScene extends Scenes{
 
         try {
 
-            String userUid = UserSession.getInstance().getUserId();
+
             ArrayList<Project> projects = this.apiController.getProjects(true);
-            
 
             for (Project project : projects) {
-                if (userUid.equals(project.getUid())) {
-                    VBox box = new VBox();
-                    Button updateButton = new Button("Mettre à jours les informations");
+                VBox box = new VBox();
+                Button updateButton = new Button("Mettre à jours les informations");
 
-                    updateButton.setOnMouseClicked(event -> {
-                        box.getChildren().clear();
-                        box.getChildren().add(updateProjectDisplay(project));
-                    });
-                    box.getChildren().addAll(project.afficher(), updateButton);
+                updateButton.setOnMouseClicked(event -> {
+                    box.getChildren().clear();
+                    box.getChildren().add(updateProjectDisplay(project));
+                });
+                box.getChildren().addAll(project.afficher(), updateButton);
 
-                }
             }
         } catch (Exception e) {
             System.err.println(e.getMessage());
@@ -78,6 +85,10 @@ public class IntervenantProjectsScene extends Scenes{
         });
     }
 
+    /**
+     * Crée un {@link ScrollPane} pour afficher les projets
+     * @return {@link ScrollPane}
+     */
     private ScrollPane createScrollableProjectBox() {
         // Make the vbox scrollable
         ScrollPane scrollPane = new ScrollPane();
@@ -93,6 +104,11 @@ public class IntervenantProjectsScene extends Scenes{
     }
 
 
+    /**
+     * Display pour mettre à jours les informations d'un projet
+     * @param project le projet à mettre à jour
+     * @return {@link VBox} affichant les champs modifiable
+     */
     private VBox updateProjectDisplay(Project project) {
         // Ensure UI updates are done on the JavaFX Application Thread
         Platform.runLater(() -> {

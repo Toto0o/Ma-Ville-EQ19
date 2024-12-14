@@ -23,10 +23,10 @@ import prototype.users.UserSession;
 /**
  * Scene de consultation des projets
  * 
- * <p> Utilise {@link prototype.controllers.ProjectController} pour charger les projets </p>
- * 
- * @param sceneController
- * 
+ * <p> Utilise {@link ApiController#getProjects(boolean)} pour charger les projets </p>
+ *
+ * <p>Accessible par {@link prototype.scenes.general.menu.MenuScene MenuScene}</p>
+ *
  * @author Antoine Tessier
  * @author Anmar Rahman
  * @author Mostafa Heider
@@ -41,15 +41,15 @@ public class ConsultProjectScene extends Scenes {
     private Text projectCountText;
     private ComboBox<String> boroughFilterCombo;
     private ComboBox<String> typeOfWorkFilterCombo;
-
     private Set<String> borough, typesOfWork;
-
     private ApiController apiController;
-
-    private boolean intervenant;
-
     private ArrayList<Project> projects;
 
+
+    /**
+     * Constructeur
+     * @param sceneController
+     */
     public ConsultProjectScene(SceneController sceneController) {
         super(sceneController);
 
@@ -66,9 +66,7 @@ public class ConsultProjectScene extends Scenes {
         this.borough = new HashSet<>();
         this.typesOfWork = new HashSet<>();
 
-        this.intervenant = UserSession.getInstance().getUser().isIntervenant();
         this.apiController = sceneController.getApiController();
-
 
     }
     
@@ -150,6 +148,9 @@ public class ConsultProjectScene extends Scenes {
         typeOfWorkFilterCombo.setOnAction(e -> filterProjects());
     }
 
+    /**
+     * Méthode pour filtrer les projets lors de l'activation du filtre
+     */
     private void filterProjects() {
         String selectedBorough = boroughFilterCombo.getValue();
         String selectedType = typeOfWorkFilterCombo.getValue();

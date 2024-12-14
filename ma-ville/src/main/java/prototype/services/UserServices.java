@@ -4,9 +4,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 
 import com.google.api.core.ApiFuture;
@@ -18,12 +15,24 @@ import javafx.application.Platform;
 import javafx.scene.control.Label;
 import prototype.users.*;
 
-
+/**
+ * Connexion Api avec firebase pour traiter les actions relatives à l'utilisateur
+ *
+ * <p>Utiliser {@link #authenticateWithFirebase(String, String, Label)} pour l'authentification</p>
+ * <p>Utiliser {@link #register(Resident)} pour enregistrer un résident</p>
+ * <p>Utiliser {@link #register(Intervenant)} pour enregistrer un intervenant</p>
+ */
 public class UserServices {
     private static final String API_KEY = "AIzaSyD95B1nhXm9xVTn_QJjXpQD-FDEqlG6cKM";
     private static final String DATABASE_URL = "https://maville-18aa2-default-rtdb.firebaseio.com/";
     /**
-     * Authenticate the user with Firebase using email and password.
+     * Atuthentifier l'utilisateur avec Firebase en utilisant l'email et le mot de passe
+     *
+     * <p><a href = "https://cloud.google.com/identity-platform/docs/reference/rest">identitytoolkit.googleapis.com</a> </p>
+     *
+     * @param email le email de l'utilisateur
+     * @param password le mot de passe de l'utilisateur
+     * @param statusLabel {@link Label} pour afficher les messages d'erreur
      */
     public void authenticateWithFirebase(String email, String password, Label statusLabel) {
         Thread thread = new Thread(() -> {
@@ -78,7 +87,7 @@ public class UserServices {
         }
     }
     /**
-     * Check the role of the user in Firebase database (residents or intervenants).
+     * Détermine le rôle de l'utilisateur selon son emplacement dans la base de donnée
      */
     private void checkUserRole(String userId, Label statusLabel) {
         Thread thread = new Thread(() -> {
@@ -118,7 +127,8 @@ public class UserServices {
         }
     }
     /**
-     * Fetch and populate user data from Firebase.
+     * Méthode pour obtenir l'utilisateur en cours
+     * @return {@link Utilisateur}
      */
     private Utilisateur fetchUserData(String urlString, boolean isResident) {
         try {
@@ -174,7 +184,9 @@ public class UserServices {
         return null;
     }
     /**
-     * Check if the user exists in the specified folder.
+     * Méthode pour vérifier si l'utilisateur se trouve dans le dossier spécifié
+     *
+     * @return true si l'utilisateur est trouvé
      */
     private boolean isUserInFolder(String urlString) {
         try {
@@ -200,7 +212,12 @@ public class UserServices {
         return false;
     }
     /**
-     * Extract a specific field from a JSON response.
+     * Méthode utilitaire pour extraire un field d'une String json
+     *
+     * @param json la chaîne de caractère contenant les champs
+     * @param field le champ à extraire
+     *
+     * @return le champ extrait
      */
     private String extractFieldFromJson(String json, String field) {
         try {
@@ -211,6 +228,10 @@ public class UserServices {
         }
     }
 
+    /**
+     * Méthode pour enregistrer un nouveau résident
+     * @param resident le résident à enregistrer
+     */
     public void register(Resident resident) {
         try {
             // Register user with Firebase Authentication
@@ -234,6 +255,11 @@ public class UserServices {
 
         }
     }
+
+    /**
+     * Méthode pour enregistrer un nouvel intervenant
+     * @param intervenant l'intervenant à enregistrer
+     */
     public void register(Intervenant intervenant) {
         try {
             // Register user with Firebase Authentication
@@ -258,5 +284,10 @@ public class UserServices {
         }
     }
 
+    /**
+     * Méthode pour mettre à jours les informations du profil
+     * @param userId l'id de l'utilisateur
+     * @param changes {@link HashMap} (id, changes) des champs modifiés
+     */
     public void updateInfo(String userId, HashMap<String, String> changes) {}
 }

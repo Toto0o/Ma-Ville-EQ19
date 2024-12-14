@@ -16,7 +16,7 @@ public class AddressService {
 
     /**
      * Méthode qui utilise l'api de google pour trouver le quartier d'une adresse donnée
-     *
+     * <p><a href = "https://maps.googleapis.com/maps/api/geocode">maps.googleapis.com</a></p>
      * @param codePostal le code postal de l'adresse
      * @return {@link String} - le quartier
      * @throws Exception
@@ -66,7 +66,8 @@ public class AddressService {
     }
 
     /**
-     * Méthode pour trouver la ville d'une adresse donnée. Principalement utilisé par {@link prototype.users.UserCredentialsVerifier UserCredentialsVerifier}
+     * Méthode pour trouver la ville d'une adresse donnée
+     * <p><a href = "https://maps.googleapis.com/maps/api/geocode">maps.googleapis.com</a></p>
      * @param codePostal le code postal de l'adresse
      * @return {@link String} - la ville
      * @throws Exception
@@ -113,7 +114,6 @@ public class AddressService {
 
     /**
      * Getter pour le quartier d'une adresse, renvoyé par {@link #getQuartierFromAddress(String)}
-     *
      * @param codePostal le code postal de l'adresse
      * @return {@link String} le quartier
      * @throws Exception

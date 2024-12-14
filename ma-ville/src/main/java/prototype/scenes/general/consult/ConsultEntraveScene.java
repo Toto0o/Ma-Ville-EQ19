@@ -16,7 +16,9 @@ import prototype.scenes.Scenes;
 /**
  * Scene de consultation des entraves
  * 
- * <p> Utilise {@link prototype.controllers.EntravesController} pour charger les entraves </p>
+ * <p> Utilise {@link ApiController#getEntraves()} pour charger les entraves </p>
+ *
+ * <p>Accessible par {@link prototype.scenes.general.menu.MenuScene MenuScene}</p>
  * 
  * @author Antoine Tessier
  * @author Anmar Rahman
@@ -33,6 +35,12 @@ public class ConsultEntraveScene extends Scenes {
     private TextField searchField; // Add a TextField for searching
     private ApiController apiController;
 
+    /**
+     * Constructeur
+     *
+     * <p>Charge les entraves à l'instanciation avec {@link #fetchEntraves()}</p>
+     * @param sceneController
+     */
     public ConsultEntraveScene(SceneController sceneController) {
         super(sceneController);
 
@@ -82,6 +90,11 @@ public class ConsultEntraveScene extends Scenes {
         searchField.setOnAction(e -> searchEntraves());
     }
 
+    /**
+     * Méthode pour charger les entraves
+     * <p>Utilise {@link ApiController#getEntraves()} pour charger les entraves</p>
+     * <p>Utilise {@link Entrave#afficher()} pour les afficher</p>
+     */
     private void fetchEntraves() {
        
         // Clear existing list
@@ -102,6 +115,9 @@ public class ConsultEntraveScene extends Scenes {
     
     }
 
+    /**
+     * Méthode pour filtrer les entraves selon la recherche de l'utilisateur
+     */
     private void searchEntraves() {
         String searchQuery = searchField.getText().toLowerCase().trim();
 

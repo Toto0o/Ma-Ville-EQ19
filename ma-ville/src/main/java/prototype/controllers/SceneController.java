@@ -2,6 +2,7 @@ package prototype.controllers;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import prototype.scenes.Scenes;
 import prototype.scenes.general.consult.NotificationScene;
 import prototype.scenes.general.consult.ConsultEntraveScene;
 import prototype.scenes.general.consult.ConsultProjectScene;
@@ -17,7 +18,6 @@ import prototype.scenes.general.settings.SettingsScene;
 import prototype.scenes.intervenant.ConsultRequestsScene;
 import prototype.scenes.intervenant.IntervenantProjectsScene;
 import prototype.scenes.resident.RequestScene;
-import prototype.users.UserSession;
 import prototype.scenes.general.consult.SearchProjectsScene;
 
 
@@ -36,25 +36,6 @@ public class SceneController {
 
     private Stage primaryStage;
     private Scene scene;
-
-    /* Scenes */
-    private LaunchScene launchScene;
-    private LoginScene loginScene;
-    private RoleSelectionScene roleSelectionScene;
-    private RegisterScene registerScene;
-    private ConsultProjectScene consultProjectScene;
-    private SettingsScene settingsScene;
-    private RequestScene requestScene;
-    private NotificationScene notificationScene;
-    private InfoSettingsScene infoSettingsScene;
-    private NotificationSettingsScene notificationSettingsScene;
-    private ConsultRequestsScene consultRequestScene;
-    private ConsultEntraveScene consultEntraveScene;
-    private IntervenantProjectsScene intervenantProjectScene;
-    private SearchProjectsScene searchProjectsScene;
-    private MenuScene menuScene;
-    private PreferencesPlagesHorairesScene preferencesPlagesHorairesScene;
-
 
     private ApiController apiController;
 
@@ -75,7 +56,7 @@ public class SceneController {
      * 
      */
     public void start() {
-        newScene("launch"); /* Default is the launching scene */
+        newScene("intervenantProject"); /* Default is the launching scene */
         this.primaryStage.setTitle("Ma ville - Équipe 19");
         this.primaryStage.show();
     }
@@ -88,136 +69,53 @@ public class SceneController {
      */
     public void newScene(String scene) {
 
+        // Insure currentScene is asserted
+        Scenes currentScene = null;
 
         switch (scene) {
 
-            case "launch" -> this.scene = newLaunchScene();
-            case "login" -> this.scene = newLoginScene();
-            case "roleSelection" -> this.scene = newRoleSelectionScene();
-            case "settings" -> this.scene = newSettingsScene();
-            case "infoSettings" -> this.scene = newInfoSettingsScene();
-            case "notificationSettings" -> this.scene = newNotificationSettingsScene();
-            case "notifications" -> this.scene = newNotificationScene();
-            case "preferencesPlagesHoraires" -> this.scene = newPreferencesPlagesHorairesScene();
-            case "residentRegistration" -> this.scene = newRegisterScene(false);
-            case "consult entraves" -> this.scene = newConsultEntraveScene();
-            case "search project" -> this.scene = newSearchProjectsScene();
-            case "request" -> this.scene = newRequestScene();
-            case "intervenantRegistration" -> this.scene = newRegisterScene(true);
-            case"intervenantProject" -> this.scene = newIntervenantProjectScene();
-            case "consultRequest" -> this.scene = newConsultRequestScene();
+            // General scenes (accessible to intervenants and residents)
+            case "launch" -> currentScene = new LaunchScene(this);
+            case "login" -> currentScene = new LoginScene(this);
+            case "roleSelection" -> currentScene = new RoleSelectionScene(this);
+            case "menu" -> currentScene = new MenuScene(this);
+            case "settings" -> currentScene = new SettingsScene(this);
+            case "infoSettings" -> currentScene = new InfoSettingsScene(this);
+            case "notificationSettings" -> currentScene = new NotificationSettingsScene(this);
+            case "notifications" -> currentScene = new NotificationScene(this);
+            case "preferencesPlagesHoraires" -> currentScene = new PreferencesPlagesHorairesScene(this);
+            case "consult entraves" -> currentScene = new ConsultEntraveScene(this);
+            case "search project" -> currentScene = new SearchProjectsScene(this);
+
+
+            // Scenes accessible only to residents
+            case "residentRegistration" -> currentScene = new RegisterScene(this, false);
+            case "request" -> currentScene = new RequestScene(this);
+            case "consult projects" -> currentScene = new ConsultProjectScene(this);
+
+            // Scenes accessible only to intervenants
+            case "intervenantRegistration" -> currentScene = new RegisterScene(this,true);
+            case"intervenantProject" -> currentScene = new IntervenantProjectsScene(this);
+            case "consultRequest" -> currentScene = new ConsultRequestsScene(this);
 
         }
-        
+
+        // Insure currentScene has been assigned
+        assert currentScene != null;
+        currentScene.setScene();
+        // Assign current scene to scene field
+        this.scene = currentScene.getScene();
         this.primaryStage.setScene(this.scene);
+
+        // To get full screen on scene change
         this.primaryStage.setMaximized(false);
         this.primaryStage.setMaximized(true);
-        
     }
 
-
-    private Scene newLaunchScene() {
-        /* Set a new Launching Scene */
-        this.launchScene = new LaunchScene(this);
-        this.launchScene.setScene();
-        return this.launchScene.getScene();
-    }
-
-    private Scene newLoginScene() {
-        this.loginScene = new LoginScene(this);
-        this.loginScene.setScene();
-        return this.loginScene.getScene();
-    }
-
-    private Scene newRoleSelectionScene() {
-        this.roleSelectionScene = new RoleSelectionScene(this);
-        this.roleSelectionScene.setScene();
-        return this.roleSelectionScene.getScene();
-    }
-
-    private Scene newRegisterScene(boolean intervenant) {
-        this.registerScene = new RegisterScene(this, intervenant);
-        this.registerScene.setScene();
-        return this.registerScene.getScene();
-    }
-
-    private Scene newConsultProjectScene(boolean intervenant) {
-        this.consultProjectScene = new ConsultProjectScene(this);
-        this.consultProjectScene.setScene();
-        return this.consultProjectScene.getScene();
-    }
-
-    private Scene newSettingsScene() {
-        this.settingsScene = new SettingsScene(this);
-        this.settingsScene.setScene();
-        return this.settingsScene.getScene();
-    }
-
-    private Scene newRequestScene() {
-        this.requestScene = new RequestScene(this);
-
-        this.requestScene = new RequestScene(this);
-
-        this.requestScene.setScene();
-        return this.requestScene.getScene();
-    }
-
-    private Scene newNotificationScene() {
-        this.notificationScene = new NotificationScene(this);
-        this.notificationScene.setScene();
-        return this.notificationScene.getScene();
-    }
-
-    private Scene newInfoSettingsScene() {
-        this.infoSettingsScene = new InfoSettingsScene(this);
-        this.infoSettingsScene.setScene();
-        return this.infoSettingsScene.getScene();
-    }
-
-    private Scene newNotificationSettingsScene() {
-        this.notificationSettingsScene = new NotificationSettingsScene(this);
-        this.notificationSettingsScene.setScene();
-        return this.notificationSettingsScene.getScene();
-    }
-
-    private Scene newMenuScene(Boolean intervenant) {
-        this.menuScene = new MenuScene(this);
-        this.menuScene.setScene();
-        return this.menuScene.getScene();
-    }
-
-    private Scene newConsultRequestScene() {
-        this.consultRequestScene = new ConsultRequestsScene(this);
-        this.consultRequestScene.setScene();
-        return this.consultRequestScene.getScene();
-    }
-
-    private Scene newConsultEntraveScene() {
-        this.consultEntraveScene = new ConsultEntraveScene(this);
-        this.consultEntraveScene.setScene();
-        return this.consultEntraveScene.getScene();
-    }
-
-    private Scene newIntervenantProjectScene() {
-        this.intervenantProjectScene = new IntervenantProjectsScene(this);
-        this.intervenantProjectScene.setScene();
-        return this.intervenantProjectScene.getScene();
-    }
-
-
-    private Scene newPreferencesPlagesHorairesScene() {
-        this.preferencesPlagesHorairesScene = new PreferencesPlagesHorairesScene(this);
-        this.preferencesPlagesHorairesScene.setScene();
-        return this.preferencesPlagesHorairesScene.getScene();
-    }
-
-    private Scene newSearchProjectsScene() {
-        this.searchProjectsScene = new SearchProjectsScene(this);
-        this.searchProjectsScene.setScene();
-        return this.searchProjectsScene.getScene();
-    }
-
-
+    /**
+     * Donne accèes aux scenes nécessitant une connexion à la bases de données
+     * @return {@link ApiController}
+     */
     public ApiController getApiController() {
         return apiController;
     }

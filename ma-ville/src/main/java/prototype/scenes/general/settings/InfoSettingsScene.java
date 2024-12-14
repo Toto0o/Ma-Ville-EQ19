@@ -13,7 +13,13 @@ import prototype.users.UserSession;
 import java.time.LocalDate;
 import java.util.HashMap;
 
-
+/**
+ * Scene de modification des informations du profil
+ *
+ * <p>Enregistre les champs modifiés avec {@link ApiController#updateUserInfo(String, HashMap)}</p>
+ *
+ * <p>Accessible par {@link SettingsScene}</p>
+ */
 public class InfoSettingsScene extends Scenes {
 
     private TextField name, lastname, password, email, phone, street, streetNumber, postalCode;

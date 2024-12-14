@@ -20,7 +20,13 @@ import prototype.scenes.Scenes;
 import prototype.users.UserSession;
 import prototype.users.Utilisateur;
 
-
+/**
+ * Scene de soumission d'une requête de travail pour les résidents
+ *
+ * <p>Utilise {@link ApiController#saveRequest(Request)} pour enregistrer la requête soumise</p>
+ *
+ * <p>Accessible par {@link prototype.scenes.general.menu.MenuScene MenuScene}</p>
+ */
 public class RequestScene extends Scenes{
 
     private Button menu, sendRequest, newRequest;
@@ -35,7 +41,10 @@ public class RequestScene extends Scenes{
     private ApiController apiController;
     private Utilisateur utilisateur;
 
-
+    /**
+     * Constructeur
+     * @param sceneController
+     */
     public RequestScene(SceneController sceneController) {
 
         super(sceneController);

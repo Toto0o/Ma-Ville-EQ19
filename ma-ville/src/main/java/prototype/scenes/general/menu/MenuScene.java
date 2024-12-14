@@ -12,13 +12,15 @@ import javafx.scene.layout.BorderPane;
 
 import prototype.controllers.SceneController;
 import prototype.scenes.Scenes;
+import prototype.users.Intervenant;
 import prototype.users.UserSession;
 import prototype.users.Utilisateur;
 
 /**
  * Scene de menu. Permet d'acceder aux différentes options selon le type d'utilisateur ({@link prototype.users.Resident résident} ou {@link prototype.users.Intervenant intervenant}) 
  * 
- * <p> Certaines fonctionnalités et bouton ne sont pas visible, dépendement de l'utilisateur. La visibilité est déterminée par {@link Utilisateur#isIntervenant()}
+ * <p> Certaines fonctionnalités et bouton ne sont pas visible, dépendement de l'utilisateur. La visibilité est déterminée par {@link Utilisateur#isIntervenant()} </p>
+ *
  * 
  * @author Antoine Tessier
  * @author Anmar Rahman
@@ -50,6 +52,8 @@ public class MenuScene extends Scenes {
 
         this.consultRequestButton = new Button("Consulter la liste des requêtes de travail");
 
+        UserSession.getInstance().setUser(new Intervenant());
+
         this.user = UserSession.getInstance().getUser();
     }
 
@@ -65,7 +69,7 @@ public class MenuScene extends Scenes {
             this.settingsButton,
             this.requestButton,
             this.consultRequestButton,
-            intervenantProjectButton,
+            this.intervenantProjectButton,
             this.logoutButton
         );
         this.vBox.setAlignment(Pos.CENTER);

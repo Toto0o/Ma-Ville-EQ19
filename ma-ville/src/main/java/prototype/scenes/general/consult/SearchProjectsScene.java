@@ -17,6 +17,10 @@ import prototype.controllers.SceneController;
 import prototype.projects.Project;
 import prototype.scenes.Scenes;
 
+/**
+ * Scene de recherche de projets
+ * <p>Accessible par {@link ConsultProjectScene}</p>
+ */
 public class SearchProjectsScene extends Scenes {
 
     private VBox vBox;
@@ -30,6 +34,10 @@ public class SearchProjectsScene extends Scenes {
     private ApiController apiController;
     private static final String API_URL = "https://donnees.montreal.ca/api/3/action/datastore_search?resource_id=cc41b532-f12d-40fb-9f55-eb58c9a2b12b";
 
+    /**
+     * Constructeur
+     * @param sceneController
+     */
     public SearchProjectsScene(SceneController sceneController) {
         super(sceneController);
         this.apiController = this.sceneController.getApiController();
@@ -38,9 +46,9 @@ public class SearchProjectsScene extends Scenes {
 
         // Initialize layout elements
         this.vBox = new VBox();
-        this.title = new Text("Rechercher des projets");
+        this.title = labelText("Rechercher des projets");
         this.projectListView = new ListView<>();
-        this.projectCountText = new Text();
+        this.projectCountText = labelText("");
         this.searchTitleField = new TextField();
         this.searchBoroughField = new TextField();
         this.typeFilter = new ComboBox<>();
@@ -85,12 +93,12 @@ public class SearchProjectsScene extends Scenes {
         // Set the layout for the search and filter elements
         HBox searchBox = new HBox(10);
         searchBox.setAlignment(Pos.CENTER);
-        searchBox.getChildren().addAll(new Text("Titre: "), searchTitleField, new Text("Quartier: "),
+        searchBox.getChildren().addAll(labelText("Titre: "), searchTitleField, labelText("Quartier: "),
                 searchBoroughField);
 
         HBox filterBox = new HBox(10);
         filterBox.setAlignment(Pos.CENTER);
-        filterBox.getChildren().addAll(new Text("Type de travail: "), typeFilter);
+        filterBox.getChildren().addAll(labelText("Type de travail: "), typeFilter);
 
         // Set the layout for the project list and count
         HBox bottomBox = new HBox(10);
@@ -114,6 +122,9 @@ public class SearchProjectsScene extends Scenes {
         typeFilter.setOnAction(e -> searchProjects());
     }
 
+    /**
+     * Méthode pour afficher les projets selon une recherche de l'utilisateur
+     */
     private void searchProjects() {
         String titleQuery = searchTitleField.getText().toLowerCase().trim();
         String boroughQuery = searchBoroughField.getText().toLowerCase().trim();
@@ -176,7 +187,11 @@ public class SearchProjectsScene extends Scenes {
         }
     }
 
-    // Map selected filter to actual API category
+    /**
+     * Méthode pour associer la filtre aux type de projets de la ville de Montréal
+     * @param filter le filtre appliqué
+     * @return le type correspondant
+     */
     private String mapFilterToApiCategory(String filter) {
         switch (filter) {
             case "Travaux routiers":

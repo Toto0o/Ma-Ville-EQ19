@@ -19,6 +19,13 @@ public class Entrave {
     private String id_request, streetid, shortname, streetimpacttype;
     private VBox entraveBox;
 
+    /**
+     * Constructeur
+     * @param id_request le id de l'entrave
+     * @param streetid le nom de la rue
+     * @param shortname le type d'entrave
+     * @param streetimpacttype l'impact sur la voie
+     */
     public Entrave(String id_request, String streetid, String shortname, String streetimpacttype) {
         this.id_request = id_request;
         this.streetid = streetid;

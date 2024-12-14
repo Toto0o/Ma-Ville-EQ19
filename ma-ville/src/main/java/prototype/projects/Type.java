@@ -1,5 +1,8 @@
 package prototype.projects;
 
+/**
+ * Type des travaux et projets
+ */
 public enum Type {
 
     TRAVAUX_ROUTIERS("travaux routiers"),
@@ -19,10 +22,20 @@ public enum Type {
         this.toString = toString;
     }
 
+    /**
+     * Méthode pour obtenir le type en {@link String}
+     * @return {@link String} du type
+     */
     public String toString() {
         return toString;
     }
 
+    /**
+     * Méthode pour obtenir le type d'une String
+     * @param toString le type à obtenir
+     * @return {@link Type} si le type existe; <code>null</code> sinon
+     * @return {@link null}
+     */
     public static Type getType(String toString) {
         for (Type type : Type.values()) {
             if (type.toString.equals(toString)) {

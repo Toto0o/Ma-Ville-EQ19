@@ -76,6 +76,18 @@ public class Project {
         this.streetEntrave = streetEntrave;
     }
 
+    /**
+     * Constructeur pour les projets de la ville de Montréal
+     * @param id le id du projet
+     * @param quartierAffected le quartier
+     * @param reason la raison des travaux
+     * @param categorie le type du projet
+     * @param organization l'intervenant associé
+     * @param startDate la début du projet
+     * @param endDate la fin du projet
+     * @param status le status du projet
+     * @param streetEntrave les rues impactés
+     */
     public Project(
             String id,
             String quartierAffected,
@@ -190,6 +202,10 @@ public class Project {
         this.streetEntrave = streetEntrave;
     }
 
+    /**
+     * Méthode pour afficher graphiquement le projet
+     * @return {@link VBox}
+     */
     public VBox afficher() {
         VBox projectBox = new VBox();
         projectBox.setSpacing(10);
@@ -224,6 +240,10 @@ public class Project {
         return projectBox;
     }
 
+    /**
+     * Méthode pour vérifier le status d'un projet
+     * @return {@link Status} ({@link Enum} des status possible
+     */
     public Status checkStatus() {
         LocalDate start = LocalDate.parse(getStartDate());
         LocalDate end = LocalDate.parse(getEndDate());

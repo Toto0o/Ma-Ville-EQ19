@@ -14,6 +14,11 @@ import prototype.controllers.SceneController;
 import prototype.users.Horaire;
 import prototype.users.UserSession;
 
+/**
+ * Scene pour modifier / enregistrer les préférences d'horaires
+ *
+ * <p>Accessible par {@link SettingsScene}</p>
+ */
 public class PreferencesPlagesHorairesScene extends Scenes {
 
     private VBox vbox;
@@ -22,6 +27,12 @@ public class PreferencesPlagesHorairesScene extends Scenes {
     private GridPane grid;
     private HBox mainLayout; // VBox to stack the timetable and legend vertically
 
+    /**
+     * Constructeur
+     *
+     * <p>Construit la grille de plage horaire avec {@link #setupGrid()}</p>
+     * @param sceneController
+     */
     public PreferencesPlagesHorairesScene(SceneController sceneController) {
         super(sceneController);
 
@@ -64,8 +75,9 @@ public class PreferencesPlagesHorairesScene extends Scenes {
         });
     }
 
-    // Method to set up the timetable grid (week schedule with hours from 08:00 to
-    // 20:00)
+    /**
+     * Method to set up the timetable grid (week schedule with hours from 08:00 to 20:00)
+     */
     private void setupGrid() {
         grid.setHgap(10);
         grid.setVgap(10);

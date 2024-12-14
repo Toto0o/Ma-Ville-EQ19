@@ -13,8 +13,9 @@ import prototype.scenes.Scenes;
 
 /**
  * Scene par défault sur le lancement de l'application
- * 
- * @param sceneController
+ *
+ * <p> Donne accès à {@link prototype.scenes.general.login.LoginScene LoginScene} et
+ * {@link prototype.scenes.general.register.RoleSelectionScene RoleSelectionScene}</p>
  * 
  * @author Antoine Tessier
  * @author Anmar Rahman
@@ -25,11 +26,13 @@ public class LaunchScene extends Scenes {
 
     private VBox vBox;
     private HBox buttonsBox;
-
     private Text title;
-
     private Button loginButton, registerButton;
 
+    /**
+     * Constructeur
+     * @param sceneController
+     */
     public LaunchScene(SceneController sceneController) {
         super(sceneController);
 

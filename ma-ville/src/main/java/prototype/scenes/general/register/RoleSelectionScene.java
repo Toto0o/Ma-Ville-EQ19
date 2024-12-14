@@ -9,10 +9,17 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import prototype.controllers.SceneController;
 
+/**
+ * Scene de choix du role de l'utilisateur pour l'enregistrement
+ */
 public class RoleSelectionScene extends Scenes {
 
     private Button residentButton, intervenantButton, backButton;
 
+    /**
+     * Constructeur
+     * @param sceneController
+     */
     public RoleSelectionScene(SceneController sceneController) {
         super(sceneController);
     }

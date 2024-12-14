@@ -4,15 +4,22 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 
+import com.google.firebase.database.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import prototype.projects.Status;
+import prototype.projects.Type;
 import prototype.users.UserSession;
 import prototype.projects.Project;
 
-
+/**
+ * Connexion Api avec firebase pour charger les projets et sauvgarder un nouveau projet
+ *
+ * <p>Utiliser {@link #saveProjectToFirebase(Project)} pour enregistrer un nouveau projet</p>
+ * <p>Utiliser {@link #getProjects()} pour charger les projets</p>
+ */
 public class ProjectService {
 
     public void saveProjectToFirebase(Project project) {
@@ -33,6 +40,12 @@ public class ProjectService {
     }
     private static final String API_URL = "https://donnees.montreal.ca/api/3/action/datastore_search?resource_id=cc41b532-f12d-40fb-9f55-eb58c9a2b12b";
 
+    /**
+     * Charge les projets contenus dans la base données de la ville de Montréal
+     * <p><a href = "https://donnees.montreal.ca/api/3/action/datastore_search?resource_id=cc41b532-f12d-40fb-9f55-eb58c9a2b12b">donnees.montreal.ca</a></p>
+     * @return {@link ArrayList}&lt;{@link Project}&gt;
+     * @throws Exception
+     */
     public static ArrayList<Project> fetchProjects() throws Exception {
         // Set up the API connection
         URL url = new URL(API_URL);
@@ -79,7 +92,63 @@ public class ProjectService {
         }
     }
 
+    /**
+     * Méthode pour charger les projets dans la base de données Firebase
+     * @return {@link ArrayList}&lt;{@link Project}&gt;
+     * @throws Exception
+     */
+    private static ArrayList<Project> fetchProjectsFromFirebase() throws Exception {
+        ArrayList<Project> projects = new ArrayList<>();
+        String userUid = UserSession.getInstance().getUserId();
+        FirebaseDatabase database = FirebaseDatabase
+                .getInstance("https://maville-18aa2-default-rtdb.firebaseio.com/");
+        DatabaseReference projectsRef = database.getReference("projects");
+        projectsRef.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String projectUid = snapshot.child("uid").getValue(String.class);
+                    String title = snapshot.child("title").getValue(String.class);
+                    String description = snapshot.child("description").getValue(String.class);
+                    String type = snapshot.child("type").getValue(String.class);
+                    String quartiersAffected = snapshot.child("quartiersAffected").getValue(String.class);
+                    String roadsAffected = snapshot.child("roadsAffected").getValue(String.class);
+                    String startDate = snapshot.child("startDate").getValue(String.class);
+                    String endDate = snapshot.child("endDate").getValue(String.class);
+                    String horaireTravaux = snapshot.child("horaireTravaux").getValue(String.class);
+                    String status = snapshot.child("status").getValue(String.class);
+                    Project project = new Project(
+                            title,
+                            description,
+                            Type.valueOf(type),
+                            quartiersAffected,
+                            startDate,
+                            endDate,
+                            horaireTravaux,
+                            Status.valueOf(status),
+                            projectUid,
+                            roadsAffected);
+                    project.setFirebaseKey(snapshot.getKey());
+                    projects.add(project);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+                System.err.println("Failed to fetch projects: " + error.getMessage());
+            }
+        });
+        return projects;
+    }
+
+    /**
+     * Retourne les projets chargés par {@link #fetchProjects()} et {@link #fetchProjectsFromFirebase()}
+     * @return {@link ArrayList}&lt;{@link Project}&gt;
+     * @throws Exception
+     */
     public ArrayList<Project> getProjects() throws Exception {
-        return fetchProjects();
+        ArrayList<Project> projects = new ArrayList<>(fetchProjects());
+        projects.addAll(fetchProjectsFromFirebase());
+        return projects;
     }
 }

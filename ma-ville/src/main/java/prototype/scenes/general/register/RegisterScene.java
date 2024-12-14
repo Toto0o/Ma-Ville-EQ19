@@ -15,6 +15,18 @@ import prototype.controllers.SceneController;
 import prototype.scenes.Scenes;
 import prototype.users.*;
 
+/**
+ * Scene pour authentifier un utilisateur
+ *
+ * <p>Utilise
+ * <ul>
+ *     <li>{@link ApiController#register(Resident)} pour les résidents</li>
+ *     <li>{@link ApiController#register(Intervenant)} pour les intervenants</li>
+ * </ul>
+ * </p>
+ *
+ * <p>Accessible par {@link RoleSelectionScene}</p>
+ */
 public class RegisterScene extends Scenes {
 
     private TextField nameField, lastNameField, streetNumberField, streetNameField, postalCodeField, emailField, phoneField, password1Field, password2Field, cityIDField;
@@ -27,6 +39,11 @@ public class RegisterScene extends Scenes {
     private ApiController apiController;
     private UserCredentialsVerifier userCredentials;
 
+    /**
+     * Constructeur
+     * @param sceneController
+     * @param intervenant true si l'utilisateur désire s'enregistrer comme intervenant (à partir de {@link RoleSelectionScene})
+     */
     public RegisterScene(SceneController sceneController, boolean intervenant) {
         super(sceneController);
         this.intervenant = intervenant;

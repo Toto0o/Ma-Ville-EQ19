@@ -22,6 +22,13 @@ import prototype.scenes.Scenes;
 import prototype.projects.Request;
 import prototype.users.UserSession;
 
+/**
+ * Scene de consultation des requêtes pour les intervenants
+ *
+ * <p>Charge les requêtes avec {@link ApiController#getRequests()}</p>
+ * <p>Permet la soumission de candidature pour chacun des projets</p>
+ * <p>Accessible par {@link prototype.scenes.general.menu.MenuScene MenuScene}</p>
+ */
 public class ConsultRequestsScene extends Scenes {
 
     private VBox vbox;
@@ -33,6 +40,10 @@ public class ConsultRequestsScene extends Scenes {
     private TextField quartierSearchField;
     private ApiController apiController;
 
+    /**
+     * Constructeur
+     * @param sceneController
+     */
     public ConsultRequestsScene(SceneController sceneController) {
         super(sceneController);
         this.vbox = new VBox(10);
@@ -101,6 +112,9 @@ public class ConsultRequestsScene extends Scenes {
         dateFilterPicker.setOnAction(e -> updateRequestDisplay());
     }
 
+    /**
+     * Affiche les requêtes selon les filtres choisis (ou selon la recherche)
+     */
     private void updateRequestDisplay() {
         // Ensure UI updates are done on the JavaFX Application Thread
         Platform.runLater(() -> {

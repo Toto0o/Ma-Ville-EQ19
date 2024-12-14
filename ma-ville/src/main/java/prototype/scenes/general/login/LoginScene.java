@@ -16,9 +16,9 @@ import prototype.scenes.Scenes;
 /**
  * Scene permettant de s'authentifier
  * 
- * <p> Utilise {@link UserController#}
+ * <p> Utilise {@link ApiController#authenticate(String, String, Label)} </p>
+ * <p>Accessible par {@link prototype.scenes.general.menu.MenuScene MenuScene}</p>
  *
- * 
  * @author Antoine Tessier
  * @author Anmar Rahman
  * @author Mostafa Heider
@@ -35,6 +35,10 @@ public class LoginScene extends Scenes {
 
     private ApiController apiController;
 
+    /**
+     * Constructeur
+     * @param sceneController
+     */
     public LoginScene(SceneController sceneController) {
         super(sceneController);
 
@@ -43,9 +47,9 @@ public class LoginScene extends Scenes {
         this.backButton = new Button("Back");
         this.statusLabel = new Label();
         this.usernameField = new TextField();
-        this.usernameText = new Text("Email");
+        this.usernameText = labelText("Email");
         this.passwordField = new PasswordField();
-        this.passwordText = new Text("Password");
+        this.passwordText = labelText("Password");
         this.apiController = sceneController.getApiController();
     }
 
@@ -71,10 +75,8 @@ public class LoginScene extends Scenes {
         });
     }
     /**
-     * Méthode pour authentifier un utilisateur selon les éentrées; Les indentifiants
-     * sont vérifié par {@link SceneController}
-     * 
-     * <p> Si l'utilisateur est un intervenant, set le champ boolean a vrai dans @link prototype.controllers.ScenceController 
+     * Méthode pour authentifier un utilisateur selon les indentifiants entrés avec {@link ApiController#authenticate(String, String, Label)}
+     *
      */
     private void handleLogin() {
 
@@ -98,9 +100,6 @@ public class LoginScene extends Scenes {
 
         catch (Exception e) {
             statusLabel.setText(e.getMessage());
-            /*usernameField.clear();
-            passwordField.clear();*/
-            
         }
     }
     

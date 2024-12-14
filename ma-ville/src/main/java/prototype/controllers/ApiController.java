@@ -12,32 +12,33 @@ import java.util.HashMap;
 import prototype.entraves.Entrave;
 
 /**
- * Controlleur des Api pour Ma-Ville
+ * Controlleur des services d'api pour Ma-Ville
  * 
  * <p> Les api utilisé :
- *  <ul> 
- *  <li> Entraves : {@link EntravesApi} </li>
- *  <li> Projets de la ville :{@link ProjectApi} </li>
- *  <li> Projets du système : {@link ProjectApiFirebase} </li>
- *  <li> Requêtes : {@link RequestApi} </li>
- *  <li> Utilisateurs : {@link UserFirebase} </li>
+ *  <ul>
+ *      <li> {@link AddressService} pour valider l'adresse et obtenir le quartier</li>
+ *      <li> {@link EntravesServices} pour charger les entraves routières</li>
+ *      <li> {@link ProjectService} pour charger les travaux de la ville de Montréal</li>
+ *      <li> {@link IntervenantServices} pour les projets associés à un intervenant
+ *      <li> {@link RequestService} pour charger et sauvegarder les requêtes</li>
+ *      <li> {@link UserServices} pour l'authentification et l'enregistrement d'utilisateur </li>
  *  </ul>
  * </p>
  * 
  * <p> Les méthodes clés incluent :
  *  <ul>
- *      <li> {@link #authenticate(email, pasword)} </li>
- *      <li> {@link #updateUserInfo(utilisateur, changes)} </li>
- *      <li> {@link #getProjects()} </li>
- *      <li> {@link #saveProjectChange(key, changes)} </li>
- *      <li> {@link #addProject(title, description, type, quartier, startDate, endDate, status, userUid, streetEntrave)} </li>
- *      <li> {@link #addRequest(request)} </li>
+ *      <li> {@link #authenticate(String, String, Label)} </li>
+ *      <li> {@link #updateUserInfo(String, HashMap)} </li>
+ *      <li> {@link #getProjects(boolean)} </li>
+ *      <li> {@link #saveProjectChanges(String, HashMap)} </li>
+ *      <li> {@link #addProject(Project)} </li>
+ *      <li> {@link #addRequest(Request)} </li>
  *      <li> {@link #getRequests()} </li>
  *      <li> {@link #getEntraves()} </li>
  *  </ul>
  * </p>
  * 
- * <p> Toutes classes nécéssitant un accès à la base de donnée du système ou de la ville passent par cette classe pour traiter l'information
+ * <p> Toutes classes nécéssitant un accès à la base de donnée du système ou de la ville passent par cette classe pour traiter l'information </p>
  *
  * @author Antoine Tessier
  * @author Anmar Rahman
@@ -54,6 +55,9 @@ public class ApiController {
     private AddressService addressService;
     private RequestService requestService;
 
+    /**
+     * Instancie les classes de services
+     */
     public ApiController() {
         this.entravesServices = new EntravesServices();
         this.projectService = new ProjectService();
@@ -64,23 +68,22 @@ public class ApiController {
     }
 
     /**
-     * Authentifie l'utilisateur avec {@link UserFirebase}
+     * Authentifie l'utilisateur avec {@link UserServices#authenticateWithFirebase(String, String, Label)}
      * 
      * @param email le nom d'utilisateur
      * @param password le mot de passe de l'utilisateur
+     * @param label le status de l'authentification; permet d'afficher les messages d'erreur
      * 
-     * @return {@link Utilisateur} l'utilisateur de la session en cours sur succès de l'authentification
-     * 
-     * @throws Exception sur erreur de chargement de l'Api
+     * @throws Exception sur erreur de chargement ou des indentifiants invalide
      */
     public void authenticate(String email, String password, Label label) throws Exception {
         this.userServices.authenticateWithFirebase(email, password, label);
     }
 
-
     /**
-     * Enregistre un utilisateur comme résident avec {@link UserFirebase}
+     * Enregistre un utilisateur comme résident avec {@link UserServices#register(Resident)}
      *
+     * @param resident le résident a enregistrer
      * 
      * @throws Exception sur erreur de chargement de l'api
      */
@@ -89,11 +92,11 @@ public class ApiController {
     }  
 
     /**
-     * Enregistre un utilisateur comme intervenant avec {@link UserFirebase}
+     * Enregistre un utilisateur comme intervenant avec {@link UserServices#register(Intervenant)}
      * 
-     * @param utilisateur le nouvel utilisateur à enregistrer
+     * @param intervenant l'intervenant a enregistrer
      */
-    public void intervenantRegister(Intervenant intervenant) throws Exception {
+    public void register(Intervenant intervenant) throws Exception {
         this.userServices.register(intervenant);
     }
 
@@ -108,6 +111,14 @@ public class ApiController {
         this.userServices.updateInfo(userId, changes);
     }
 
+    /**
+     * Charge les projets avec {@link ProjectService#getProjects()} (ou {@link IntervenantServices#getProjects()}
+     * si l'utilisateur est un intervenant)
+     *
+     * @param intervenant true si l'utilisateur est intervenant
+     * @return {@link ArrayList}&lt;{@link Project}&gt;
+     * @throws Exception sur erreur de chargement
+     */
     public ArrayList<Project> getProjects(boolean intervenant) throws Exception {
         if (intervenant) {
             return this.intervenantServices.getProjects();
@@ -117,68 +128,79 @@ public class ApiController {
     }
 
     /**
-     * Sauvegarde les informations changées d'un {@link Projects projet} avec {@link ProjectApiFirebase}
+     * Sauvegarde les informations changées d'un {@link Project projet} avec {@link IntervenantServices#saveProjectChanges(HashMap, String)}
      * 
      * @param key la clé Firebase associé au projet
-     * @param changes Map (id, field) des champs modifiés
+     * @param changes {@link HashMap} (id, field) des champs modifiés
      */
     public void saveProjectChanges(String key, HashMap<String,String> changes) {
         this.intervenantServices.updateProject(changes, key);
     }
 
     /**
-     * Ajoute un nouveau projet à la base de donnée avec {@link ProjectApiFirebase}
-     * 
-     * @param title le titre du projet
-     * @param description la description du projet
-     * @param type le type du projet
-     * @param quartiersAffected le quartier dans lequel se déroule le projet
-     * @param startDate la date de début
-     * @param endDate la date de fin du projet
-     * @param streetEntrave la(les) rue(s) entravée(s) par le projet
-     * 
+     * Ajoute un nouveau projet à la base de donnée avec {@link ProjectService#saveProjectToFirebase(Project)}
+     *
+     * @param project {@link Project} à sauvegarder
      */    
     public void addProject(Project project) {
         this.projectService.saveProjectToFirebase(project);
     }
 
-
+    /**
+     * Ajoute une nouvelle {@link Request} à la base de donnée avec {@link RequestService#saveRequest(Request)}
+     * @param request {@link Request} à sauvegarder
+     */
     public void addRequest(Request request) {
         this.requestService.newRequest(request);
     }
 
 
     /**
-     * Méthode pour récuperer les {@link Request requêtes} avec {@link RequestApi}
+     * Méthode pour charger les {@link Request requêtes} avec {@link RequestService#getRequests()}
      * 
-     * @return {@link ArrayList} de {@link Request requêtes}
+     * @return {@link ArrayList}&lt;{@link Request}&gt;
      */
     public ArrayList<Request> getRequests() {
         return this.requestService.getRequests();
     }
 
     /**
-     * Ajoute d'une requête dans la base de données avec {@link RequestApi}
+     * Ajoute d'une requête dans la base de données avec {@link RequestService#saveRequest(Request)}
      *
-     * @param request la {@link Request requête}
+     * @param request {@link Request} a sauvegarder
      */
     public void saveRequest(Request request) {
         this.requestService.newRequest(request);
     }
 
     /**
-     * Méthode pour récupérer les {@link Entrave entraves} avec {@link EntravesApi}
+     * Méthode pour récupérer les {@link Entrave entraves} avec {@link EntravesServices#getEntraves()}
      * 
-     * @return {@link ArrayList} d'{@link Entrave entraves}
+     * @return {@link ArrayList}&lt;{@link Entrave entraves}&gt;
+     *
+     * @throws Exception sur erreur de chargement
      */
     public ArrayList<Entrave> getEntraves() throws Exception {
         return this.entravesServices.getEntraves();
     }
 
+    /**
+     * Charger le quartier d'une adresse avec {@link AddressService#getQuartier(String)}
+     *
+     * @param postalCode le code postal de l'adresse
+     * @return {@link String} le quartier associé
+     * @throws Exception sur erreur de chargement (ou sur un code postal invalide)
+     */
     public String getQuartier(String postalCode) throws Exception {
         return this.addressService.getQuartier(postalCode);
     }
 
+    /**
+     * Charger la ville d'une adresse avec {@link AddressService#getCity(String)}
+     * @param postalCode le code postal de l'adresse
+     * @return {@link String} la ville associée
+     * @throws Exception sur erreur de chargement (ou sur un code postal invalide)
+     */
     public String getCity(String postalCode) throws Exception {
         return this.addressService.getCity(postalCode);
     }

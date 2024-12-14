@@ -11,11 +11,21 @@ import org.json.JSONObject;
 
 import prototype.entraves.Entrave;
 
-
+/**
+ * Connexion api avec la base de donnée de la ville de Montréal pour charger les entraves routières
+ *
+ * <p><a href = "https://donnees.montreal.ca/api/3/action/datastore_search?resource_id=a2bc8014-488c-495d-941b-e7ae1999d1bd">donnes.montreal.ca</a></p>
+ */
 public class EntravesServices {
 
     private static final String API_URL = "https://donnees.montreal.ca/api/3/action/datastore_search?resource_id=a2bc8014-488c-495d-941b-e7ae1999d1bd";
 
+    /**
+     *
+     * Charges les entraves de la base de données
+     * @return {@link ArrayList}&lt;{@link Entrave}&gt;
+     * @throws Exception
+     */
     public static ArrayList<Entrave> fetchEntraves() throws Exception {
         ArrayList<Entrave> entraves = new ArrayList<>();
 
@@ -49,6 +59,11 @@ public class EntravesServices {
         return entraves;
     }
 
+    /**
+     * Retourne les entraves cahrgés par {@link #fetchEntraves()}
+     * @return {@link ArrayList}&lt;{@link Entrave}&gt;
+     * @throws Exception
+     */
     public ArrayList<Entrave> getEntraves() throws Exception {
         return fetchEntraves();
     }

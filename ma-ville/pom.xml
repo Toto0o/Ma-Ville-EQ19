@@ -49,7 +49,46 @@
             <artifactId>json</artifactId>
             <version>20210307</version>
         </dependency>
-
     </dependencies>
-
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.4.1</version><!-- Vérifiez la dernière version disponible -->
+                <configuration>
+                    <groups>
+                        <group>
+                            <title>Controllers</title>
+                            <packages>prototype.controllers</packages>
+                        </group>
+                        <group>
+                            <title>Entraves</title>
+                            <packages>prototype.entraves</packages>
+                        </group>
+                        <group>
+                            <title>Notifications</title>
+                            <packages>prototype.notifications</packages>
+                        </group>
+                        <group>
+                            <title>Projets</title>
+                            <packages>prototype.projects</packages>
+                        </group>
+                        <group>
+                            <title>Scenes</title>
+                            <packages>prototype.scenes:prototype.scenes.general:prototype.scenes.general.consult:prototype.scenes.general.login:prototype.scenes.general.menu:prototype.scenes.general.register:prototype.scenes.general.settings:prototype.scenes.intervenant:prototype.scenes.resident</packages>
+                        </group>
+                        <group>
+                            <title>Services</title>
+                            <packages>prototype.services</packages>
+                        </group>
+                        <group>
+                            <title>Utilisateurs</title>
+                            <packages>prototype.users</packages>
+                        </group>
+                    </groups>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
