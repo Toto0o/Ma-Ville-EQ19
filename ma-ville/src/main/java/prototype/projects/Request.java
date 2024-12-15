@@ -2,7 +2,11 @@ package prototype.projects;
 
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Object contentant les informations d'un requêtes.
@@ -110,25 +114,56 @@ public class Request {
      *
      * @return {@link HBox}
      */
-    public HBox afficher() {
+    public VBox afficher() {
+        List<Text> texts = new ArrayList<>();
 
-        String formattedDate = formatDate(getDate());
+        Text title = new Text("Titre : ");
+        title.setStyle("-fx-font-weight: bold");
+        HBox titleBox = new HBox(5);
+        titleBox.getChildren().addAll(title, new Text(getTitle()));
 
-        String displayText = "Title: " + getTitle() + "\n"
-                + "Description: " + getDescription() + "\n"
-                + "Type: " + getType().toString() + "\n"
-                + "Date: " + formattedDate + "\n"
-                + "Status: " + getStatus() + "\n"
-                + "Quartier: " + getQuartier();
+        Text description = new Text("Description : ");
+        description.setStyle("-fx-font-weight: bold");
+        Text descriptionText = new Text(getDescription());
+        descriptionText.setWrappingWidth(300);
+        HBox descriptionBox = new HBox(5);
+        descriptionBox.getChildren().addAll(description, descriptionText);
 
-        Text requestText = new Text(displayText);
-        requestText.setStyle("-fx-font-family: 'Arial'; -fx-padding: 10;");
+        Text type = new Text("Type : ");
+        type.setStyle("-fx-font-weight: bold");
+        HBox typeBox = new HBox(5);
+        typeBox.getChildren().addAll(type /*,new Text(getType().toString())*/);
+        Text date = new Text("Date : ");
+        date.setStyle("-fx-font-weight: bold");
+
+        Text status = new Text("Status : ");
+        status.setStyle("-fx-font-weight: bold");
+        HBox statusBox = new HBox(5);
+        statusBox.getChildren().addAll(status, new Text(getStatus().toString()));
+
+        Text quartier = new Text("Quartier : ");
+        quartier.setStyle("-fx-font-weight: bold");
+        HBox quartierBox = new HBox(5);
+        quartierBox.getChildren().addAll(quartier);
+
+        Text street = new Text("Street : ");
+        street.setStyle("-fx-font-weight: bold");
+        HBox streetBox = new HBox(5);
+        streetBox.getChildren().addAll(street, new Text(getStreet()));
 
         // Create a bordered HBox for each request
-        HBox requestBox = new HBox(10);
-        requestBox.setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;");
-        requestBox.getChildren().add(requestText);
-
+        VBox requestBox = new VBox(10);
+        requestBox.setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;" +
+                "-fx-background-color: white");
+        requestBox.getChildren().addAll(
+                titleBox,
+                descriptionBox,
+                typeBox,
+                statusBox,
+                quartierBox,
+                streetBox
+        );
+        requestBox.setMaxWidth(400);
         return requestBox;
     }
 

@@ -113,7 +113,7 @@ public class SearchProjectsScene extends Scenes {
 
         // Set back button action
         this.backButton.setOnMouseClicked((event) -> {
-            this.sceneController.newScene("consult project");
+            this.sceneController.newScene("consultProjects");
         });
 
         // Set up the search fields and filter actions
@@ -140,7 +140,7 @@ public class SearchProjectsScene extends Scenes {
 
             try {
                 int i = 1;
-                for (Project project : apiController.getProjects(false)) {
+                for (Project project : apiController.getProjects()) {
                     String title = project.getTitle();
                     String borough = project.getQuartiersAffected();
                     String type = project.getType().toString();

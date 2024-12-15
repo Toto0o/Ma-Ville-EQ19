@@ -6,6 +6,7 @@ import prototype.projects.*;
 
 import javafx.scene.control.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -119,12 +120,12 @@ public class ApiController {
      * @return {@link ArrayList}&lt;{@link Project}&gt;
      * @throws Exception sur erreur de chargement
      */
-    public ArrayList<Project> getProjects(boolean intervenant) throws Exception {
-        if (intervenant) {
-            return this.intervenantServices.getProjects();
-        }
+    public ArrayList<Project> getProjects() throws Exception {
         return this.projectService.getProjects();
+    }
 
+    public void getProjects(ArrayList<Project> projects, Runnable updateDisplayCallback) throws Exception {
+        this.intervenantServices.getProjects(projects, updateDisplayCallback);
     }
 
     /**
@@ -160,8 +161,8 @@ public class ApiController {
      * 
      * @return {@link ArrayList}&lt;{@link Request}&gt;
      */
-    public ArrayList<Request> getRequests() {
-        return this.requestService.getRequests();
+    public void getRequests(ArrayList<Request> requestsList, Runnable updateDisplayCallback) {
+        this.requestService.getRequests(requestsList, updateDisplayCallback);
     }
 
     /**

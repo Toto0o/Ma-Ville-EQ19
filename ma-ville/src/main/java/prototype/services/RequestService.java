@@ -7,6 +7,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import javafx.application.Platform;
 import prototype.projects.Project;
 import prototype.projects.Request;
 import prototype.projects.Type;
@@ -28,14 +29,12 @@ public class RequestService {
      *
      * @return {@link ArrayList}&lt;{@link Request}&gt;
      */
-    private static ArrayList<Request> fetchRequests() {
-        ArrayList<Request> requestsList = new ArrayList<>();
+    private static void fetchRequests(ArrayList<Request> requestsList,Runnable updateRequestCallBack) {
         FirebaseDatabase database = FirebaseDatabase.getInstance(DATABASE_URL);
         DatabaseReference requestFolderRef = database.getReference(REQUESTS_NODE);
         requestFolderRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     String title = snapshot.child("title").getValue(String.class);
                     String description = snapshot.child("description").getValue(String.class);
@@ -46,11 +45,12 @@ public class RequestService {
                     Request request = new Request(
                             title,
                             description,
-                            Type.valueOf(type),
+                            Type.getType(type),
                             date,
                             status,
                             quartier,
-                            UserSession.getInstance().getUser().getAddress().getStreet());
+                            "test"
+                            /*UserSession.getInstance().getUser().getAddress().getStreet()*/);
                     requestsList.add(request);
                 }
             }
@@ -59,15 +59,16 @@ public class RequestService {
                 System.err.println("Failed to fetch data: " + error.getMessage());
             }
         });
-        return requestsList;
+        Platform.runLater(updateRequestCallBack);
+
     }
 
     /**
      * Retourne les requêtes chargées par {@link #fetchRequests()}
      * @return @return {@link ArrayList}&lt;{@link Request}&gt;
      */
-    public ArrayList<Request> getRequests() {
-        return fetchRequests();
+    public void getRequests(ArrayList<Request> requestsList, Runnable updateRequestCallBack) {
+        fetchRequests(requestsList, updateRequestCallBack);
     }
 
     /**

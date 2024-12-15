@@ -6,6 +6,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import javafx.application.Platform;
 import prototype.entraves.Entrave;
 import prototype.projects.Project;
 import prototype.projects.Status;
@@ -23,16 +24,16 @@ public class IntervenantServices {
      * Retourne les projets chargés avec {@link #fetchProjectsForCurrentUser()}
      * @return {@link ArrayList}&lt;{@link Project}&gt;
      */
-    public ArrayList<Project> getProjects() {
-        return fetchProjectsForCurrentUser();
+    public void getProjects(ArrayList<Project> projects,Runnable updateDisplayCallBack) {
+        fetchProjectsForCurrentUser(projects, updateDisplayCallBack);
     }
 
     /**
      * Méthode pour charger les projets; filtre les projets et renvoi seulement ceux associés à l'intervenant utilisateur en cours
      * @return {@link ArrayList}&lt;{@link Project}&gt;
      */
-    public static ArrayList<Project> fetchProjectsForCurrentUser() {
-        ArrayList<Project> projects = new ArrayList<>();
+    public static void fetchProjectsForCurrentUser(ArrayList<Project> projects, Runnable updateDisplayCallBack) {
+
         String userUid = UserSession.getInstance().getUserId();
         FirebaseDatabase database = FirebaseDatabase
                 .getInstance("https://maville-18aa2-default-rtdb.firebaseio.com/");
@@ -41,9 +42,11 @@ public class IntervenantServices {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                try {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    System.out.println(snapshot.getKey());
                     String projectUid = snapshot.child("uid").getValue(String.class);
-                    if (userUid.equals(projectUid)) {
+                    /*if (userUid.equals(projectUid)) {*/
                         String title = snapshot.child("title").getValue(String.class);
                         String description = snapshot.child("description").getValue(String.class);
                         String type = snapshot.child("type").getValue(String.class);
@@ -53,28 +56,35 @@ public class IntervenantServices {
                         String endDate = snapshot.child("endDate").getValue(String.class);
                         String horaireTravaux = snapshot.child("horaireTravaux").getValue(String.class);
                         String status = snapshot.child("status").getValue(String.class);
+
                         Project project = new Project(
                                 title,
                                 description,
-                                Type.valueOf(type),
+                                Type.getType(type),
                                 quartiersAffected,
                                 startDate,
                                 endDate,
                                 horaireTravaux,
-                                Status.valueOf(status),
+                                Status.getStatus(status),
                                 projectUid,
                                 roadsAffected);
                         project.setFirebaseKey(snapshot.getKey());
                         projects.add(project);
-                    }
+
+                   /* }*/
+                }
+                System.out.println("called datasnapshot end");
+                Platform.runLater(updateDisplayCallBack);} catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
             @Override
             public void onCancelled(DatabaseError error) {
-                System.err.println("Failed to fetch projects: " + error.getMessage());
+                System.out.println("Failed to fetch projects: " + error.getMessage());
             }
         });
-        return projects;
+
+
     }
 
     /**

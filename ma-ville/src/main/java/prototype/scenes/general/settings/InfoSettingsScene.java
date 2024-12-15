@@ -38,17 +38,17 @@ public class InfoSettingsScene extends Scenes {
         this.lastname.setId("lastname");
         this.password = new TextField(UserSession.getInstance().getUser().getPassword());
         this.password.setId("password");
-        this.birthday = new DatePicker(LocalDate.parse(UserSession.getInstance().getUser().getBirthday()));
+        this.birthday = new DatePicker(/*LocalDate.parse(UserSession.getInstance().getUser().getBirthday())*/);
         this.birthday.setId("birthday");
         this.email = new TextField(UserSession.getInstance().getUser().getEmail());
         this.email.setId("email");
         this.phone = new TextField(UserSession.getInstance().getUser().getPhone());
         this.phone.setId("phone");
-        this.street = new TextField(UserSession.getInstance().getUser().getAddress().getStreet());
+        this.street = new TextField(/*UserSession.getInstance().getUser().getAddress().getStreet()*/);
         this.street.setId("street");
-        this.streetNumber = new TextField(UserSession.getInstance().getUser().getAddress().getNumber());
+        this.streetNumber = new TextField(/*UserSession.getInstance().getUser().getAddress().getNumber()*/);
         this.streetNumber.setId("streetNumber");
-        this.postalCode = new TextField(UserSession.getInstance().getUser().getAddress().getPostalCode());
+        this.postalCode = new TextField(/*UserSession.getInstance().getUser().getAddress().getPostalCode()*/);
         this.postalCode.setId("postalCode");
 
         this.back = new Button("Retour");

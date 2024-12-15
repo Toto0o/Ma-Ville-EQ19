@@ -56,7 +56,7 @@ public class SceneController {
      * 
      */
     public void start() {
-        newScene("intervenantProject"); /* Default is the launching scene */
+        newScene("consultRequest"); /* Default is the launching scene */
         this.primaryStage.setTitle("Ma ville - Équipe 19");
         this.primaryStage.show();
     }
@@ -84,14 +84,14 @@ public class SceneController {
             case "notificationSettings" -> currentScene = new NotificationSettingsScene(this);
             case "notifications" -> currentScene = new NotificationScene(this);
             case "preferencesPlagesHoraires" -> currentScene = new PreferencesPlagesHorairesScene(this);
-            case "consult entraves" -> currentScene = new ConsultEntraveScene(this);
-            case "search project" -> currentScene = new SearchProjectsScene(this);
+            case "consultEntraves" -> currentScene = new ConsultEntraveScene(this);
+            case "searchProject" -> currentScene = new SearchProjectsScene(this);
 
 
             // Scenes accessible only to residents
             case "residentRegistration" -> currentScene = new RegisterScene(this, false);
             case "request" -> currentScene = new RequestScene(this);
-            case "consult projects" -> currentScene = new ConsultProjectScene(this);
+            case "consultProjects" -> currentScene = new ConsultProjectScene(this);
 
             // Scenes accessible only to intervenants
             case "intervenantRegistration" -> currentScene = new RegisterScene(this,true);

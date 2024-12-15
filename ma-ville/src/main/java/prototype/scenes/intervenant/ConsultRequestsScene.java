@@ -7,10 +7,8 @@ import java.util.stream.Collectors;
 import javafx.application.Platform;
 
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -62,8 +60,12 @@ public class ConsultRequestsScene extends Scenes {
         // Set the back button at the top
         this.root.setTop(this.backButton);
 
+        BorderPane borderPane = new BorderPane();
+        borderPane.setCenter(createScrollableProjectBox());
         // Set the main content in the center
-        this.root.setCenter(this.vbox);
+        this.root.setCenter(borderPane);
+
+        this.root.setCenter(borderPane);
 
         // Add the back button's functionality
         this.backButton.setOnMouseClicked((menuAction) -> {
@@ -92,8 +94,9 @@ public class ConsultRequestsScene extends Scenes {
         this.vbox.getChildren().addAll(searchBox, filterBox);
 
         // Fetch requests from Firebase
-        this.requestsList = this.apiController.getRequests();
-        updateRequestDisplay();
+
+        this.requestsList = new ArrayList<>();
+        this.apiController.getRequests(requestsList, this::updateRequestDisplay);
 
         // Add the event handler for the apply button
         applyFiltersButton.setOnMouseClicked(e -> updateRequestDisplay());
@@ -113,11 +116,31 @@ public class ConsultRequestsScene extends Scenes {
     }
 
     /**
+     * Crée un {@link ScrollPane} pour afficher les projets
+     * @return {@link ScrollPane}
+     */
+    private ScrollPane createScrollableProjectBox() {
+        // Make the vbox scrollable
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(this.vbox);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+
+        // Set max height for scrollable area
+
+        this.vbox.setStyle("-fx-padding: 10;");
+        this.vbox.setAlignment(Pos.CENTER);
+        this.vbox.setStyle("-fx-background-color: linear-gradient(to left, #0000FF, #87CEDA);");
+
+        return scrollPane;
+    }
+
+
+    /**
      * Affiche les requêtes selon les filtres choisis (ou selon la recherche)
      */
     private void updateRequestDisplay() {
         // Ensure UI updates are done on the JavaFX Application Thread
-        Platform.runLater(() -> {
             // Clear previous display
             vbox.getChildren().clear();
 
@@ -208,10 +231,7 @@ public class ConsultRequestsScene extends Scenes {
                 
                 vbox.getChildren().add(box);
                 vbox.setSpacing(20);
-                vbox.setMaxWidth(400);
             }
-
-        });
     }
 
 }

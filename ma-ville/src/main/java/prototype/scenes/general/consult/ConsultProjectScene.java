@@ -99,7 +99,7 @@ public class ConsultProjectScene extends Scenes {
         try {
             if (this.projects != null) this.projects.clear(); 
             
-            this.projects = apiController.getProjects(false);
+            this.projects = apiController.getProjects();
 
             for (Project project : this.projects) {
                 this.projectListView.getItems().add(project.afficher());
@@ -134,7 +134,7 @@ public class ConsultProjectScene extends Scenes {
         });
 
         this.searchButton.setOnMouseClicked((even) -> {
-            this.sceneController.newScene("search project");
+            this.sceneController.newScene("searchProject");
         });
 
         boroughFilterCombo.getItems().addAll(this.borough);
@@ -163,7 +163,7 @@ public class ConsultProjectScene extends Scenes {
         if (this.projects != null) this.projects.clear();
 
         try {
-            this.projects = apiController.getProjects(false);
+            this.projects = apiController.getProjects();
 
             // Loop through the projects and apply the filters
             for (Project project : this.projects) {

@@ -109,7 +109,7 @@ public class MenuScene extends Scenes {
         this.requestButton.setManaged(!user.isIntervenant());
 
 
-        this.consultButton.setOnMouseClicked(event -> newSceneAction(event, "consultProject"));
+        this.consultButton.setOnMouseClicked(event -> newSceneAction(event, "consultProjects"));
 
         this.settingsButton.setOnMouseClicked(event -> newSceneAction(event, "settings"));
 
@@ -117,7 +117,7 @@ public class MenuScene extends Scenes {
 
         this.notificationButton.setOnMouseClicked(event -> newSceneAction(event, "notifications"));
 
-        this.intervenantProjectButton.setOnMouseClicked(event -> newSceneAction(event, "intervenantProject"));
+        this.intervenantProjectButton.setOnMouseClicked(event -> newSceneAction(event, "intervenantProjects"));
 
         this.logoutButton.setOnMouseClicked((event) -> {
             this.sceneController.newScene("launch");
