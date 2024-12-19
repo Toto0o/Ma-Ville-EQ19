@@ -1,12 +1,13 @@
 package prototype.controllers;
 
+import org.apache.http.auth.InvalidCredentialsException;
+import prototype.notifications.Notification;
 import prototype.services.*;
 import prototype.users.*;
 import prototype.projects.*;
 
 import javafx.scene.control.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -55,6 +56,7 @@ public class ApiController {
     private UserServices userServices;
     private AddressService addressService;
     private RequestService requestService;
+    private NotificationService notificationService;
 
     /**
      * Instancie les classes de services
@@ -66,19 +68,20 @@ public class ApiController {
         this.userServices = new UserServices();
         this.addressService = new AddressService();
         this.requestService = new RequestService();
+        this.notificationService = new NotificationService();
     }
 
     /**
      * Authentifie l'utilisateur avec {@link UserServices#authenticateWithFirebase(String, String, Label)}
-     * 
-     * @param email le nom d'utilisateur
+     *
+     * @param email    le nom d'utilisateur
      * @param password le mot de passe de l'utilisateur
-     * @param label le status de l'authentification; permet d'afficher les messages d'erreur
-     * 
+     * @param label    le status de l'authentification; permet d'afficher les messages d'erreur
+     * @return
      * @throws Exception sur erreur de chargement ou des indentifiants invalide
      */
-    public void authenticate(String email, String password, Label label) throws Exception {
-        this.userServices.authenticateWithFirebase(email, password, label);
+    public void authenticate(String email, String password) throws IllegalArgumentException {
+        this.userServices.authenticateWithFirebase(email, password);
     }
 
     /**
@@ -104,12 +107,18 @@ public class ApiController {
     /**
      * 
      * Enregistre les informations modifiés de l'utilisateur
-     * 
-     * @param userId le id de l'utilisateur
-     * @param changes Map (id, value) des champs modifiés
+     *
      */
-    public void updateUserInfo(String userId, HashMap<String,String> changes) {
-        this.userServices.updateInfo(userId, changes);
+    public void updateUserInfo(Utilisateur utilisateur) {
+        this.userServices.updateUser(utilisateur);
+    }
+
+    public Utilisateur getUser(String id) {
+        return this.userServices.getUser(id);
+    }
+
+    public ArrayList<String> getUsers() {
+        return this.userServices.getUsers();
     }
 
     /**
@@ -204,6 +213,14 @@ public class ApiController {
      */
     public String getCity(String postalCode) throws Exception {
         return this.addressService.getCity(postalCode);
+    }
+
+    public ArrayList<Notification> getNotifications() throws Exception {
+        return this.notificationService.getNotifications();
+    }
+
+    public void addNotification(Notification notification) {
+        this.notificationService.addNotification(notification);
     }
 
 }

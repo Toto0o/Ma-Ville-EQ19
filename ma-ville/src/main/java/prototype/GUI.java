@@ -4,6 +4,13 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import prototype.services.FirebaseInitialize;
 import prototype.controllers.*;
+import prototype.services.UserServices;
+import prototype.users.Address;
+import prototype.users.Horaire;
+import prototype.users.Resident;
+import prototype.users.UserSession;
+
+import java.util.ArrayList;
 
 /**
  * Interface graphique de l'application
@@ -33,6 +40,9 @@ public class GUI extends Application {
 
         FirebaseInitialize.initialize();
 
+        UserServices service = new UserServices();
+        ArrayList< Horaire > horaires = service.getPreferencesHoraires();
+        System.out.println(horaires.size());
         this.apiController = new ApiController();
 
         this.sceneController = new SceneController(

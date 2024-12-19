@@ -4,27 +4,35 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.google.api.core.ApiFuture;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserRecord;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.*;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
+import org.apache.http.auth.InvalidCredentialsException;
 import prototype.users.*;
 
 /**
  * Connexion Api avec firebase pour traiter les actions relatives à l'utilisateur
  *
- * <p>Utiliser {@link #authenticateWithFirebase(String, String, Label)} pour l'authentification</p>
+ * <p>Utiliser {@link #authenticateWithFirebase(String, String)} pour l'authentification</p>
  * <p>Utiliser {@link #register(Resident)} pour enregistrer un résident</p>
  * <p>Utiliser {@link #register(Intervenant)} pour enregistrer un intervenant</p>
  */
 public class UserServices {
     private static final String API_KEY = "AIzaSyD95B1nhXm9xVTn_QJjXpQD-FDEqlG6cKM";
     private static final String DATABASE_URL = "https://maville-18aa2-default-rtdb.firebaseio.com/";
+    private final List<Exception> exceptionsList;
+
+    public UserServices() {
+        this.exceptionsList = new ArrayList<>();
+    }
+
     /**
      * Atuthentifier l'utilisateur avec Firebase en utilisant l'email et le mot de passe
      *
@@ -32,10 +40,10 @@ public class UserServices {
      *
      * @param email le email de l'utilisateur
      * @param password le mot de passe de l'utilisateur
-     * @param statusLabel {@link Label} pour afficher les messages d'erreur
      */
-    public void authenticateWithFirebase(String email, String password, Label statusLabel) {
+    public void authenticateWithFirebase(String email, String password) throws IllegalArgumentException {
         Thread thread = new Thread(() -> {
+            exceptionsList.clear();
             try {
                 URL authUrl = new URL(
                         "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + API_KEY);
@@ -64,18 +72,15 @@ public class UserServices {
                         String userId = extractFieldFromJson(responseBody, "localId");
                         // Save UID in UserSession
                         UserSession.getInstance().setUserId(userId);
+                        UserSession.getInstance().setUser(getUser(userId));
                         // Check user role in Firebase Realtime Database
-                        checkUserRole(userId, statusLabel);
+                        checkUserRole(userId);
                     }
                 } else {
-                    Platform.runLater(() -> {
-                        statusLabel.setText("Login failed.");
-                    });
+                    exceptionsList.add(new IllegalArgumentException("Invalid email or password"));
                 }
             } catch (Exception e) {
-                Platform.runLater(() -> {
-                    statusLabel.setText("Error: " + e.getMessage());
-                });
+                e.printStackTrace();
             }
         });
 
@@ -85,11 +90,13 @@ public class UserServices {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        if (!exceptionsList.isEmpty()) {
+             throw (IllegalArgumentException) exceptionsList.get(0);}
     }
     /**
      * Détermine le rôle de l'utilisateur selon son emplacement dans la base de donnée
      */
-    private void checkUserRole(String userId, Label statusLabel) {
+    private void checkUserRole(String userId) {
         Thread thread = new Thread(() -> {
             try {
                 // Check the 'residents' folder
@@ -107,16 +114,10 @@ public class UserServices {
                     // Fetch and save Intervenant data
                     Intervenant intervenant = (Intervenant) fetchUserData(intervenantUrl, false);
                     UserSession.getInstance().setUser(intervenant);
-                    return;
                 }
-                // If user not found in either folder
-                Platform.runLater(() -> {
-                    statusLabel.setText("Error: User not found in any folder.");
-                });
+
             } catch (Exception e) {
-                Platform.runLater(() -> {
-                    statusLabel.setText("Error: " + e.getMessage());
-                });
+                e.printStackTrace();
             }
         });
         thread.start();
@@ -246,7 +247,7 @@ public class UserServices {
             FirebaseDatabase database = FirebaseDatabase
                     .getInstance("https://maville-18aa2-default-rtdb.firebaseio.com/");
             DatabaseReference userFolderRef = database.getReference("residents").child(uid);
-            userFolderRef.setValueAsync(resident);
+            userFolderRef.setValueAsync(resident).get();
             UserSession.getInstance().setUser(resident);
             UserSession.getInstance().setUserId(uid);
 
@@ -275,7 +276,7 @@ public class UserServices {
                     .getInstance("https://maville-18aa2-default-rtdb.firebaseio.com/");
             DatabaseReference userFolderRef = database.getReference("intervenants").child(uid);
             // Save the Intervenant data under the UID folder
-            userFolderRef.setValueAsync(intervenant);
+            userFolderRef.setValueAsync(intervenant).get();
             UserSession.getInstance().setUser(intervenant);
             UserSession.getInstance().setUserId(uid);
         } catch (Exception e) {
@@ -284,10 +285,96 @@ public class UserServices {
         }
     }
 
-    /**
-     * Méthode pour mettre à jours les informations du profil
-     * @param userId l'id de l'utilisateur
-     * @param changes {@link HashMap} (id, changes) des champs modifiés
-     */
-    public void updateInfo(String userId, HashMap<String, String> changes) {}
+    public Utilisateur getUser(String userId) {
+        final Utilisateur[] utilisateur = new Utilisateur[1];
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance(
+                "https://maville-18aa2-default-rtdb.firebaseio.com/"
+        ).getReference("residents").child(userId);
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                try {
+                    utilisateur[0] = dataSnapshot.getValue(Resident.class);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+               }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+        return utilisateur[0];
+    }
+
+    public ArrayList<Horaire> getPreferencesHoraires() {
+        ArrayList<Horaire> horaires = new ArrayList<>();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance(
+                "https://maville-18aa2-default-rtdb.firebaseio.com/"
+        ).getReference("residents");
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Utilisateur utilisateur = ds.getValue(Resident.class);
+                    horaires.add(utilisateur.getHoraire());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+        return horaires;
+    }
+
+    public void updateUser(Utilisateur utilisateur) {
+        try {
+            DatabaseReference databaseReference;
+            if (utilisateur instanceof Resident resident) {
+                databaseReference = FirebaseDatabase.getInstance(
+                        "https://maville-18aa2-default-rtdb.firebaseio.com/"
+                ).getReference("residents");
+            } else {
+                databaseReference = FirebaseDatabase.getInstance(
+                        "https://maville-18aa2-default-rtdb.firebaseio.com/"
+                ).getReference("intervenants");
+            }
+            databaseReference.child(UserSession.getInstance().getUserId())
+                    .setValueAsync(utilisateur);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ArrayList<String> getUsers() {
+        ArrayList<String> users = new ArrayList<>();
+        DatabaseReference databaseReference;
+
+        databaseReference = FirebaseDatabase.getInstance(
+                "https://maville-18aa2-default-rtdb.firebaseio.com/"
+        ).getReference("residents");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Utilisateur utilisateur = ds.getValue(Resident.class);
+                    users.add(utilisateur.getId());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+        return users;
+    }
 }

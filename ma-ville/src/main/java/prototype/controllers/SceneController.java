@@ -56,7 +56,7 @@ public class SceneController {
      * 
      */
     public void start() {
-        newScene("consultRequest"); /* Default is the launching scene */
+        newScene("launch"); /* Default is the launching scene */
         this.primaryStage.setTitle("Ma ville - Équipe 19");
         this.primaryStage.show();
     }

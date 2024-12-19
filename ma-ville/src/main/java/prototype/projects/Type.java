@@ -5,16 +5,25 @@ package prototype.projects;
  */
 public enum Type {
 
-    TRAVAUX_ROUTIERS("travaux routiers"),
-    TRAVAUX_GAZ_ELECTRICITE("travaux de gaz et d'électricité"),
-    CONSTRUCTION_RENOVATION("contruction et rénovation"),
-    ENTRETIEN_PAYSAGER("entretien paysager"),
-    TRAVAUX_TRANSPORTS_COMMUN("travaux de transport en commun"),
-    TRAVAUX_SIGNALISATION_ECLAIRAGE("travaux de singalisation et éclairage"),
-    TRAVAUX_SOUTERRAINS("travaux souterrains"),
-    TRAVAIL_RESIDENTIEL("travail résidentiel"),
-    ENTRETIEN_URBAIN("entretien urbain"),
-    ENTRETIEN_RESEAUX_TELECOMMUNICATION("entretien des réseaux de télécommunication");
+    AUTRE("Autre"),
+    EGOUT_ET_AQUEDUC_EXCAVATION("Égouts et queducs - Excavation"),
+    TOITURE_NETTOYAGE("Toiture - Nettoyage"),
+    TOITURE_RENOVATION("Toiture - Rénovation"),
+    TRAVAUX_ROUTIERS("Réseaux routier - Réfection et travaux corrélatifs"),
+    EGOUT_AQUEDUC_NETTOYAGE("Égouts et aqueducs - Inspection et nettoyage"),
+    CONSTRUCTION_RENOVATION_AVEC("Construction/rénovation avec excavation"),
+    CONSTRUCTION_RENOVATION_SANS("Construction/rénovation sans excavation"),
+    ENTRETIEN_PAYSAGER("Autre"),
+    TRAVAUX_TRANSPORTS_COMMUN("Autre"),
+    TRAVAUX_SIGNALISATION_ECLAIRAGE("Feux de signalisation - Ajout/réparation"),
+    TRAVAUX_SOUTERRAINS_S3("S-3 Infrastructure souterraine majeure - Puits d'accès"),
+    TRAVAUX_SOUTERRAINS_S2("S-2 Infrastructure souterraine mineure ou équipement hors-sol - Réseaux électriques, télécommunications ou câbles des distributions"),
+    TRAVAIL_RESIDENTIEL("Travail résidentiel"),
+    RESEAUX_GAZ("S-2 Infrastructure souterraine mineure ou équipement hors-sol - Réseaux de gaz"),
+    ENTRETIEN_URBAIN("Entretien urbain"),
+    ENTRETIEN("Entretien"),
+    RESEAUX_ROUTIER_REFECTION_CORRELATIFS("Réseaux routier - Réfection et travaux corrélatifs "),
+    ENTRETIEN_RESEAUX_TELECOMMUNICATION("Autre");
 
     private final String toString;
 

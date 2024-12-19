@@ -1,22 +1,16 @@
 package prototype.users;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 
-import prototype.notifications.Notification;
-import prototype.projects.Project;
+import com.google.firebase.database.PropertyName;
 
 public abstract class Utilisateur implements Serializable {
 
     protected String name, lastname, password, birthday, phone, email;
-    protected Address address;
-
-    protected ArrayList<Project> savedProjects;
-
+    protected String id;
+    protected Address address;;
     protected Horaire horaire;
-
-    protected ArrayList<Notification> notifications;
+    protected boolean intervenant;
 
     public Utilisateur() {
     }
@@ -29,8 +23,6 @@ public abstract class Utilisateur implements Serializable {
             this.phone = phone;
             this.address = address;
             this.email = email;
-            this.savedProjects = new ArrayList<>();
-            this.notifications = new ArrayList<>();
             this.horaire = new Horaire();
     }
 
@@ -48,8 +40,6 @@ public abstract class Utilisateur implements Serializable {
 
     public String getEmail() {return this.email;}
 
-    public ArrayList<Project> getSavedProjects() {return this.savedProjects;}
-
     public void setName(String name) {this.name = name;}
 
     public void setLastname(String lastname) {this.lastname = lastname;}
@@ -64,13 +54,42 @@ public abstract class Utilisateur implements Serializable {
 
     public void setEmail(String email) {this.email = email;}
 
-    public void saveProject(Project project) {this.savedProjects.add(project);}
+    @PropertyName("intervenant")
+    public void setIntervenant(boolean intervenant) {this.intervenant = intervenant;}
 
     public Horaire getHoraire() {return this.horaire;}
 
-    public void setHoraire(Horaire horaire) {this.horaire = horaire;}
+    @PropertyName("horaire")
+    public void setHoraire(List<List<Boolean>> horaire) {
+        Horaire rawHoraire = new Horaire();
+        rawHoraire.setSchedule(horaire);
+        this.horaire = rawHoraire;
+    }
 
+    public String getId() {return this.id;}
+
+    public void setId(String id) {this.id = id;}
+
+    @PropertyName("intervenant")
     public abstract boolean isIntervenant();
     
-
+    public void set(String id, String value) {
+        switch (id) {
+            case "name" -> setName(value);
+            case "lastname" -> setLastname(value);
+            case "password" -> setPasword(value);
+            case "birthday" -> setBirthday(value);
+            case "phone" -> setPhone(value);
+            case "email" -> setEmail(value);
+            case "address number" -> {
+                this.address.setNumber(value);
+            }
+            case "address street" -> {
+                this.address.setStreet(value);
+            }
+            case "postal code" -> {
+                this.address.setPostalCode(value);
+            }
+        }
+    }
 }

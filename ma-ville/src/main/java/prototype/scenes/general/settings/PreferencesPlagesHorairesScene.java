@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import prototype.controllers.ApiController;
 import prototype.scenes.Scenes;
 import prototype.controllers.SceneController;
 import prototype.users.Horaire;
@@ -25,7 +26,8 @@ public class PreferencesPlagesHorairesScene extends Scenes {
     private Button submitButton, backButton;
     private Text confirmationText;
     private GridPane grid;
-    private HBox mainLayout; // VBox to stack the timetable and legend vertically
+    private HBox mainLayout;// VBox to stack the timetable and legend vertically
+    private ApiController apiController;
 
     /**
      * Constructeur
@@ -63,6 +65,8 @@ public class PreferencesPlagesHorairesScene extends Scenes {
 
         // Initially hide the submit button
         submitButton.setDisable(true);
+
+        this.apiController = sceneController.getApiController();
     }
 
     @Override
@@ -192,6 +196,7 @@ public class PreferencesPlagesHorairesScene extends Scenes {
 
         }
         UserSession.getInstance().getUser().setHoraire(horaire);
+        this.apiController.updateUserInfo(UserSession.getInstance().getUser());
         confirmationText.setText("Préférence de plages horaires soumise.");
     }
 }

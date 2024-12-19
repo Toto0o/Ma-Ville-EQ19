@@ -46,7 +46,7 @@ public class ProjectService {
      * @return {@link ArrayList}&lt;{@link Project}&gt;
      * @throws Exception
      */
-    public static ArrayList<Project> fetchProjects() throws Exception {
+    private static ArrayList<Project> fetchProjects() throws Exception {
         // Set up the API connection
         URL url = new URL(API_URL);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -74,16 +74,17 @@ public class ProjectService {
                 String startDate = jsonObject.optString("duration_start_date").replaceAll("[TZ]", " ");
                 String endDate = jsonObject.optString("duration_end_date").replaceAll("[TZ]", " ");
                 String streetEntrave = jsonObject.optString("occupancy_name");
-
+                String horaireTravaux = startDate.split(" ")[1] + " " + endDate.split(" ")[1];
                 Project project = new Project(
                         id,
-                        boroughid,
-                        reasonCategory,
                         submitterCategory,
-                        organizationName,
+                        Type.getType(reasonCategory),
+                        boroughid,
                         startDate,
                         endDate,
-                        currentStatus,
+                        horaireTravaux,
+                        Status.getStatus(currentStatus),
+                        organizationName,
                         streetEntrave);
                 projects.add(project);
 
@@ -99,7 +100,6 @@ public class ProjectService {
      */
     private static ArrayList<Project> fetchProjectsFromFirebase() throws Exception {
         ArrayList<Project> projects = new ArrayList<>();
-        String userUid = UserSession.getInstance().getUserId();
         FirebaseDatabase database = FirebaseDatabase
                 .getInstance("https://maville-18aa2-default-rtdb.firebaseio.com/");
         DatabaseReference projectsRef = database.getReference("projects");

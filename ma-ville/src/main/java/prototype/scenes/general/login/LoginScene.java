@@ -75,7 +75,7 @@ public class LoginScene extends Scenes {
         });
     }
     /**
-     * Méthode pour authentifier un utilisateur selon les indentifiants entrés avec {@link ApiController#authenticate(String, String, Label)}
+     * Méthode pour authentifier un utilisateur selon les indentifiants entrés avec {@link ApiController#authenticate(String, String)}
      *
      */
     private void handleLogin() {
@@ -94,17 +94,15 @@ public class LoginScene extends Scenes {
         }
 
         try {
-            this.apiController.authenticate(email, password, statusLabel);
-            this.sceneController.newScene("menu");
+            this.apiController.authenticate(email, password);
         }
 
         catch (Exception e) {
             statusLabel.setText(e.getMessage());
+            return;
         }
-    }
-    
 
-    public Scene getScene() {
-        return this.scene;
+        this.sceneController.newScene("menu");
     }
+
 }

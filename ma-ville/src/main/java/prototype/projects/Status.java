@@ -25,7 +25,10 @@ public enum Status {
     //Projects
     PREVU("Prévu"),
     EN_COURS("En cours"),
-    TERMINE("Terminé");
+    TERMINE("Terminé"),
+
+    //Project form mtl city
+    PERMIS_EMIS("Permis émis");
 
     private final String toString;
 

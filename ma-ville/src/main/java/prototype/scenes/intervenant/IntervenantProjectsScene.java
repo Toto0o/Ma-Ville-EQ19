@@ -3,6 +3,7 @@ package prototype.scenes.intervenant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
+import java.util.Objects;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -15,9 +16,11 @@ import javafx.application.Platform;
 
 import prototype.controllers.ApiController;
 import prototype.controllers.SceneController;
+import prototype.notifications.Notification;
 import prototype.users.UserSession;
 import prototype.projects.*;
 import prototype.scenes.Scenes;
+import prototype.users.Utilisateur;
 
 /**
  * Scene de consultation des projets pour les intervenants
@@ -156,6 +159,21 @@ public class IntervenantProjectsScene extends Scenes{
                 }
 
                 this.apiController.saveProjectChanges(project.getFirebaseKey(), changes);
+
+                //Send notification on project change
+                Notification notification = new Notification(
+                        "Projet mis à jours",
+                        project.getTitle() + " a été mis à jour"
+                );
+                ArrayList<String> users = new ArrayList<>();
+                for (String userid : this.apiController.getUsers()) {
+                    Utilisateur user = this.apiController.getUser(userid);
+                    if (Objects.equals(project.getQuartiersAffected(), user.getAddress().getBorough())) {
+                        users.add(userid);
+                    }
+                }
+                notification.setUsersId(users);
+                this.apiController.addNotification(notification);
             });
 
             vbox.getChildren().add(projectBox);

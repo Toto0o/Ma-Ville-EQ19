@@ -36,6 +36,10 @@ public class MenuScene extends Scenes {
     private Button consultRequestButton;
     private Utilisateur user;
 
+    /**
+     * Constructeur
+     * @param sceneController
+     */
     public MenuScene(SceneController sceneController) {
         super(sceneController);
         this.consultButton = new Button("Consulter des travaux en cours");
@@ -51,8 +55,6 @@ public class MenuScene extends Scenes {
         this.title = new Text("Bienvenu dans le menu");
 
         this.consultRequestButton = new Button("Consulter la liste des requêtes de travail");
-
-        UserSession.getInstance().setUser(new Intervenant());
 
         this.user = UserSession.getInstance().getUser();
     }
@@ -117,9 +119,10 @@ public class MenuScene extends Scenes {
 
         this.notificationButton.setOnMouseClicked(event -> newSceneAction(event, "notifications"));
 
-        this.intervenantProjectButton.setOnMouseClicked(event -> newSceneAction(event, "intervenantProjects"));
+        this.intervenantProjectButton.setOnMouseClicked(event -> newSceneAction(event, "intervenantProject"));
 
         this.logoutButton.setOnMouseClicked((event) -> {
+            UserSession.disconnect();
             this.sceneController.newScene("launch");
         } );
 

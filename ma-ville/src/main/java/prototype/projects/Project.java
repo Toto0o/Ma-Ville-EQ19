@@ -32,7 +32,6 @@ public class Project {
     private Status status;
     private String uid;
     private String firebaseKey; // New field for storing the Firebase key
-    private String intervenant;
     private String streetEntrave;
 
     /**
@@ -73,40 +72,6 @@ public class Project {
         this.horaireTravaux = horaireTravaux;
         this.status = status;
         this.uid = userId;
-        this.streetEntrave = streetEntrave;
-    }
-
-    /**
-     * Constructeur pour les projets de la ville de Montréal
-     * @param id le id du projet
-     * @param quartierAffected le quartier
-     * @param reason la raison des travaux
-     * @param categorie le type du projet
-     * @param organization l'intervenant associé
-     * @param startDate la début du projet
-     * @param endDate la fin du projet
-     * @param status le status du projet
-     * @param streetEntrave les rues impactés
-     */
-    public Project(
-            String id,
-            String quartierAffected,
-            String reason,
-            String categorie,
-            String organization,
-            String startDate,
-            String endDate,
-            String status,
-            String streetEntrave) {
-        // Projet de la ville (API)
-        this.title = id;
-        this.quartiersAffected = quartierAffected;
-        this.type = Type.getType(categorie);
-        this.description = reason;
-        this.intervenant = organization;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.status = Status.getStatus(status);
         this.streetEntrave = streetEntrave;
     }
 
@@ -215,26 +180,27 @@ public class Project {
         Text projectId = new Text("ID: " + this.title);
         Text projectBorough = new Text("Arrondissement : " + this.quartiersAffected);
         Text projectStatus = new Text("Statut actuel : " + this.status);
-        Text projectReason = new Text("Motif : " + this.description);
-        Text projectCategory = new Text("Catégorie : " + this.type);
-        Text projectOrganization = new Text("Intervenant : " + this.intervenant);
+        Text projectReason = new Text("Description : " + this.description);
+        Text projectType = new Text("Type : " + this.type);
+        Text projectOrganization = new Text("Intervenant : " + this.uid);
         Text projectStartDate = new Text("Début des travaux : " + this.startDate);
         Text projectEndDate = new Text("Fin des travaux : " + this.endDate);
+        Text projectHoraireTravaux = new Text("Horaire de travaux : " + this.horaireTravaux);
         Text projectStreetEntrave = new Text("Rues impactées : " + this.streetEntrave);
 
         Font font = new Font("Arial", 16);
         projectId.setFont(font);
         projectBorough.setFont(font);
         projectStatus.setFont(font);
+        projectType.setFont(font);
         projectReason.setFont(font);
-        projectCategory.setFont(font);
         projectOrganization.setFont(font);
         projectStartDate.setFont(font);
         projectEndDate.setFont(font);
         projectStreetEntrave.setFont(font);
 
-        projectBox.getChildren().addAll(projectId, projectBorough, projectStatus, projectReason,
-                projectCategory, projectOrganization, projectStartDate, projectEndDate, projectStreetEntrave);
+        projectBox.getChildren().addAll(projectId, projectBorough, projectStatus, projectReason, projectType,
+                 projectOrganization, projectStartDate, projectEndDate, projectHoraireTravaux, projectStreetEntrave);
         projectBox.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-padding: 10px;");
 
         return projectBox;

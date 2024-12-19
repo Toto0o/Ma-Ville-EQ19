@@ -14,9 +14,14 @@ public class UserSession {
         return instance;
     }
 
+    public static void disconnect() {
+        instance = null;
+    }
+
     // Setters and getters for userId and user
     public void setUserId(String userId) {
         this.userId = userId;
+        this.user.setId(userId);
     }
 
     public String getUserId() {

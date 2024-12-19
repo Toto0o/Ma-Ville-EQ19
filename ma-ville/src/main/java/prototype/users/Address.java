@@ -1,9 +1,25 @@
 package prototype.users;
 
-public class Address {
+import java.io.Serializable;
+
+/**
+ * Objet d'adresse pour les utilisateurs
+ */
+public class Address implements Serializable {
 
     private String number, street, postalCode, borough;
 
+    /**
+     * Constructeur vide pour la serialisation avec {@link com.google.firebase.database.FirebaseDatabase FirebaseDatabase}
+     */
+    public Address() {}
+
+    /**
+     * Constructeur
+     * @param number le numéro de la résidence
+     * @param street le nom de la rue
+     * @param postalCode le code postal
+     */
     public Address(String number, String street, String postalCode) {
         this.number = number;
         this.street = street;

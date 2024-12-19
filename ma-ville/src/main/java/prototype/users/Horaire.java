@@ -1,21 +1,29 @@
 package prototype.users;
 
+import java.io.Serializable;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Horaire extends AbstractList<List<Boolean>> {
+/**
+ * Objet d'horaire
+ */
+public class Horaire extends AbstractList<List<Boolean>> implements Serializable {
 
-    private final List<List<Boolean>> schedule;
+    private List<List<Boolean>> schedule;
 
     public Horaire() {
+        initialize();
+    }
+
+    public void initialize() {
         schedule = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
-            List<Boolean> days = new ArrayList<>();
+        for (int i = 0; i < 8; i++) {
+            ArrayList<Boolean> day = new ArrayList<>();
             for (int j = 0; j < 13; j++) {
-                days.add(false);
+                day.add(false);
             }
-            schedule.add(days);
+            schedule.add(day);
         }
     }
 
@@ -35,5 +43,9 @@ public class Horaire extends AbstractList<List<Boolean>> {
 
     public void set(int day, int hour, boolean value) {
         schedule.get(day).set(hour, value);
+    }
+
+    public void setSchedule(List<List<Boolean>> schedule) {
+        this.schedule = schedule;
     }
 }

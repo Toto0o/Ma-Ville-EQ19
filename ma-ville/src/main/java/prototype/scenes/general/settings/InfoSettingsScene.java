@@ -9,6 +9,7 @@ import prototype.controllers.ApiController;
 import prototype.controllers.SceneController;
 import prototype.scenes.Scenes;
 import prototype.users.UserSession;
+import prototype.users.Utilisateur;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -78,12 +79,25 @@ public class InfoSettingsScene extends Scenes {
         this.root.setCenter(this.Vbox);
 
         this.name.setMaxWidth(250);
+        this.name.setId("name");
+
         this.lastname.setMaxWidth(250);
+        this.lastname.setId("lastname");
+
         this.password.setMaxWidth(250);
+        this.password.setId("password");
+
         this.email.setMaxWidth(250);
+        this.email.setId("email");
+
         this.phone.setMaxWidth(250);
+        this.phone.setId("phone");
+
         this.street.setMaxWidth(250);
+        this.street.setId("address street");
+
         this.streetNumber.setMaxWidth(250);
+        this.streetNumber.setId("address number");
         this.postalCode.setMaxWidth(250);
 
         this.back.setOnAction(backAction -> {
@@ -91,16 +105,13 @@ public class InfoSettingsScene extends Scenes {
         });
 
         this.save.setOnAction(saveAction -> {
-            HashMap<String, String> changes = new HashMap<>();
-
+            Utilisateur utilisateur = UserSession.getInstance().getUser();
             for (javafx.scene.Node node : this.Vbox.getChildren()) {
                 if (node instanceof TextField field) {
-                    if (field.getText() != null) {
-                        changes.put(field.getId(), field.getText());
-                    }
+                    utilisateur.set(field.getId(), field.getText());
                 }
             }
-            this.sceneController.getApiController().updateUserInfo(UserSession.getInstance().getUserId(), changes);
+            this.sceneController.getApiController().updateUserInfo(utilisateur);
         });
     }
 }

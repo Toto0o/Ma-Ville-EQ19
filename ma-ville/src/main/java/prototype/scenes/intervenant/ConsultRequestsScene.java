@@ -2,6 +2,7 @@ package prototype.scenes.intervenant;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import javafx.application.Platform;
@@ -14,11 +15,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import prototype.controllers.ApiController;
 import prototype.controllers.SceneController;
+import prototype.notifications.Notification;
 import prototype.projects.Project;
 import prototype.projects.Status;
 import prototype.scenes.Scenes;
 import prototype.projects.Request;
 import prototype.users.UserSession;
+import prototype.users.Utilisateur;
 
 /**
  * Scene de consultation des requêtes pour les intervenants
@@ -212,6 +215,21 @@ public class ConsultRequestsScene extends Scenes {
                                     request.getStreet()
                             );
                             this.apiController.addProject(project);
+                            // Send notification on new projet added
+                            Notification notification = new Notification(
+                                    "Nouveau projet",
+                                    "Un nouveau projet à été approuvé dans vore quartier : " +
+                                            project.getDescription()
+                            );
+                            ArrayList<String> users = new ArrayList<>();
+                            for (String userid : this.apiController.getUsers()) {
+                                Utilisateur user = this.apiController.getUser(userid);
+                                if (Objects.equals(project.getQuartiersAffected(), user.getAddress().getBorough())) {
+                                    users.add(userid);
+                                }
+                            }
+                            notification.setUsersId(users);
+                            this.apiController.addNotification(notification);
                         }
                     });
 

@@ -9,6 +9,8 @@ module prototype {
     requires com.google.auth;
     requires com.google.gson;
     requires com.google.api.services.storage;
+    requires org.apache.httpcomponents.httpclient;
+    requires java.desktop;
 
     exports prototype;
     exports prototype.controllers;
@@ -25,5 +27,9 @@ module prototype {
     exports prototype.scenes.resident;
     exports prototype.services;
     exports prototype.users;
+
     opens prototype to javafx.fxml, firebase.admin;
+    opens prototype.projects to firebase.admin;
+    opens prototype.notifications to firebase.admin;
+    opens prototype.users to firebase.admin;
 }
