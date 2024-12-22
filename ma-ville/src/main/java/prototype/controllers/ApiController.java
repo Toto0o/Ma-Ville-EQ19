@@ -1,6 +1,6 @@
 package prototype.controllers;
 
-import org.apache.http.auth.InvalidCredentialsException;
+import org.checkerframework.checker.units.qual.N;
 import prototype.notifications.Notification;
 import prototype.services.*;
 import prototype.users.*;
@@ -80,8 +80,8 @@ public class ApiController {
      * @return
      * @throws Exception sur erreur de chargement ou des indentifiants invalide
      */
-    public void authenticate(String email, String password) throws IllegalArgumentException {
-        this.userServices.authenticateWithFirebase(email, password);
+    public void authenticate(String email, String password, FirebaseCallback callback) throws IllegalArgumentException {
+        this.userServices.authenticateWithFirebase(email, password, callback);
     }
 
     /**
@@ -109,28 +109,30 @@ public class ApiController {
      * Enregistre les informations modifiés de l'utilisateur
      *
      */
-    public void updateUserInfo(Utilisateur utilisateur) {
-        this.userServices.updateUser(utilisateur);
+    public void updateUserInfo() {
+        this.userServices.updateUser();
     }
 
-    public Utilisateur getUser(String id) {
-        return this.userServices.getUser(id);
+    public void getResidents(FirebaseCallback callback) {
+        this.userServices.getResidents(callback);
     }
 
-    public ArrayList<String> getUsers() {
-        return this.userServices.getUsers();
+    public void getIntervenants(FirebaseCallback callback) {
+        this.userServices.getIntervenants(callback);
     }
 
     /**
-     * Charge les projets avec {@link ProjectService#getProjects()} (ou {@link IntervenantServices#getProjects()}
-     * si l'utilisateur est un intervenant)
+     * Charge les projets avec {@link ProjectService#getProjects(FirebaseCallback)}
      *
-     * @param intervenant true si l'utilisateur est intervenant
      * @return {@link ArrayList}&lt;{@link Project}&gt;
      * @throws Exception sur erreur de chargement
      */
     public ArrayList<Project> getProjects() throws Exception {
         return this.projectService.getProjects();
+    }
+
+    public void getProjects(FirebaseCallback<ArrayList<Project>> callback) throws Exception {
+        this.projectService.getProjectsFromFirebase(callback);
     }
 
     public void getProjects(ArrayList<Project> projects, Runnable updateDisplayCallback) throws Exception {
@@ -143,8 +145,8 @@ public class ApiController {
      * @param key la clé Firebase associé au projet
      * @param changes {@link HashMap} (id, field) des champs modifiés
      */
-    public void saveProjectChanges(String key, HashMap<String,String> changes) {
-        this.intervenantServices.updateProject(changes, key);
+    public void saveProjectChanges(Project project) {
+        this.intervenantServices.saveProjectChanges(project);
     }
 
     /**
@@ -215,8 +217,8 @@ public class ApiController {
         return this.addressService.getCity(postalCode);
     }
 
-    public ArrayList<Notification> getNotifications() throws Exception {
-        return this.notificationService.getNotifications();
+    public ArrayList<Notification> getNotifications(FirebaseCallback<ArrayList<Notification>> callback) throws Exception {
+        return this.notificationService.getNotifications(callback);
     }
 
     public void addNotification(Notification notification) {

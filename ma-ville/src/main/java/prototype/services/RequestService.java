@@ -29,29 +29,20 @@ public class RequestService {
      *
      * @return {@link ArrayList}&lt;{@link Request}&gt;
      */
-    private static void fetchRequests(ArrayList<Request> requestsList,Runnable updateRequestCallBack) {
+    private static void fetchRequests(ArrayList<Request> requestsList, Runnable updateRequestCallBack) {
         FirebaseDatabase database = FirebaseDatabase.getInstance(DATABASE_URL);
         DatabaseReference requestFolderRef = database.getReference(REQUESTS_NODE);
         requestFolderRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    String title = snapshot.child("title").getValue(String.class);
-                    String description = snapshot.child("description").getValue(String.class);
-                    String type = snapshot.child("type").getValue(String.class);
-                    String date = snapshot.child("date").getValue(String.class);
-                    String status = snapshot.child("status").getValue(String.class);
-                    String quartier = snapshot.child("quartier").getValue(String.class);
-                    Request request = new Request(
-                            title,
-                            description,
-                            Type.getType(type),
-                            date,
-                            status,
-                            quartier,
-                            "test"
-                            /*UserSession.getInstance().getUser().getAddress().getStreet()*/);
-                    requestsList.add(request);
+                    try {
+                        Request request = snapshot.getValue(Request.class);
+                        requestsList.add(request);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
                 }
             }
             @Override

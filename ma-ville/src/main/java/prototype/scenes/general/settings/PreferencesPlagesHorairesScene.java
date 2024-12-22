@@ -12,6 +12,7 @@ import javafx.scene.text.Text;
 import prototype.controllers.ApiController;
 import prototype.scenes.Scenes;
 import prototype.controllers.SceneController;
+import prototype.services.ServiceSession;
 import prototype.users.Horaire;
 import prototype.users.UserSession;
 
@@ -40,9 +41,12 @@ public class PreferencesPlagesHorairesScene extends Scenes {
 
         this.vbox = new VBox(10);
         this.submitButton = new Button("Soumettre");
+        this.submitButton.setId("submitButton");
         this.confirmationText = labelText("");
         this.grid = new GridPane();
+        this.grid.setId("grid");
         this.mainLayout = new HBox(20); // Add spacing between timetable and legend
+        this.mainLayout.setId("mainLayout");
 
         // Setting the title for the scene
         Text title = labelText("Préférences de Plages Horaires");
@@ -66,7 +70,7 @@ public class PreferencesPlagesHorairesScene extends Scenes {
         // Initially hide the submit button
         submitButton.setDisable(true);
 
-        this.apiController = sceneController.getApiController();
+        this.apiController = ServiceSession.getInstance().getController();
     }
 
     @Override
@@ -196,7 +200,7 @@ public class PreferencesPlagesHorairesScene extends Scenes {
 
         }
         UserSession.getInstance().getUser().setHoraire(horaire);
-        this.apiController.updateUserInfo(UserSession.getInstance().getUser());
+        this.apiController.updateUserInfo();
         confirmationText.setText("Préférence de plages horaires soumise.");
     }
 }

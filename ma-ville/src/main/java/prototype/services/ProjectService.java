@@ -18,7 +18,7 @@ import prototype.projects.Project;
  * Connexion Api avec firebase pour charger les projets et sauvgarder un nouveau projet
  *
  * <p>Utiliser {@link #saveProjectToFirebase(Project)} pour enregistrer un nouveau projet</p>
- * <p>Utiliser {@link #getProjects()} pour charger les projets</p>
+ * <p>Utiliser {@link #getProjects(FirebaseCallback)} pour charger les projets</p>
  */
 public class ProjectService {
 
@@ -98,47 +98,30 @@ public class ProjectService {
      * @return {@link ArrayList}&lt;{@link Project}&gt;
      * @throws Exception
      */
-    private static ArrayList<Project> fetchProjectsFromFirebase() throws Exception {
+    private static void fetchProjectsFromFirebase(FirebaseCallback<ArrayList<Project>> callback) throws Exception {
         ArrayList<Project> projects = new ArrayList<>();
         FirebaseDatabase database = FirebaseDatabase
                 .getInstance("https://maville-18aa2-default-rtdb.firebaseio.com/");
         DatabaseReference projectsRef = database.getReference("projects");
-        projectsRef.addValueEventListener(new ValueEventListener() {
+        projectsRef.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    String projectUid = snapshot.child("uid").getValue(String.class);
-                    String title = snapshot.child("title").getValue(String.class);
-                    String description = snapshot.child("description").getValue(String.class);
-                    String type = snapshot.child("type").getValue(String.class);
-                    String quartiersAffected = snapshot.child("quartiersAffected").getValue(String.class);
-                    String roadsAffected = snapshot.child("roadsAffected").getValue(String.class);
-                    String startDate = snapshot.child("startDate").getValue(String.class);
-                    String endDate = snapshot.child("endDate").getValue(String.class);
-                    String horaireTravaux = snapshot.child("horaireTravaux").getValue(String.class);
-                    String status = snapshot.child("status").getValue(String.class);
-                    Project project = new Project(
-                            title,
-                            description,
-                            Type.valueOf(type),
-                            quartiersAffected,
-                            startDate,
-                            endDate,
-                            horaireTravaux,
-                            Status.valueOf(status),
-                            projectUid,
-                            roadsAffected);
-                    project.setFirebaseKey(snapshot.getKey());
-                    projects.add(project);
+                try {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Project project = snapshot.getValue(Project.class);
+                        projects.add(project);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+                callback.onSucessReturn(projects);
             }
             @Override
             public void onCancelled(DatabaseError error) {
                 System.err.println("Failed to fetch projects: " + error.getMessage());
             }
         });
-        return projects;
     }
 
     /**
@@ -146,9 +129,11 @@ public class ProjectService {
      * @return {@link ArrayList}&lt;{@link Project}&gt;
      * @throws Exception
      */
+    public void getProjectsFromFirebase(FirebaseCallback<ArrayList<Project>> callback) throws Exception {
+        fetchProjectsFromFirebase(callback);
+    }
+
     public ArrayList<Project> getProjects() throws Exception {
-        ArrayList<Project> projects = new ArrayList<>(fetchProjects());
-        projects.addAll(fetchProjectsFromFirebase());
-        return projects;
+        return fetchProjects();
     }
 }

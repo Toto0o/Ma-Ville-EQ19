@@ -198,6 +198,7 @@ public class Project {
         projectStartDate.setFont(font);
         projectEndDate.setFont(font);
         projectStreetEntrave.setFont(font);
+        projectHoraireTravaux.setFont(font);
 
         projectBox.getChildren().addAll(projectId, projectBorough, projectStatus, projectReason, projectType,
                  projectOrganization, projectStartDate, projectEndDate, projectHoraireTravaux, projectStreetEntrave);

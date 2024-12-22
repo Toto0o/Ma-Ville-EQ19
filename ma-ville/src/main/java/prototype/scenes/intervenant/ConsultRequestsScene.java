@@ -20,6 +20,8 @@ import prototype.projects.Project;
 import prototype.projects.Status;
 import prototype.scenes.Scenes;
 import prototype.projects.Request;
+import prototype.services.FirebaseCallback;
+import prototype.services.ServiceSession;
 import prototype.users.UserSession;
 import prototype.users.Utilisateur;
 
@@ -48,14 +50,19 @@ public class ConsultRequestsScene extends Scenes {
     public ConsultRequestsScene(SceneController sceneController) {
         super(sceneController);
         this.vbox = new VBox(10);
+        this.vbox.setId("RequestContainer");
         this.requestsList = new ArrayList<>();
         this.backButton = new Button("Back");
+        this.backButton.setId("menu");
         this.applyFiltersButton = new Button("Apply Filters"); // Initialize the button
         this.typeFilterComboBox = new ComboBox<>();
+        this.typeFilterComboBox.setId("typeFilterComboBox");
         this.dateFilterPicker = new DatePicker();
+        this.dateFilterPicker.setId("dateFilterPicker");
         this.quartierSearchField = new TextField();
+        this.quartierSearchField.setId("quartierSearchField");
         this.quartierSearchField.setPromptText("Rechercher par quartier");
-        this.apiController = sceneController.getApiController();
+        this.apiController = ServiceSession.getInstance().getController();
     }
 
     @Override
@@ -180,21 +187,26 @@ public class ConsultRequestsScene extends Scenes {
                     })
                     .collect(Collectors.toList());
                     
-
+            int i = 0;
             // Loop through the filtered requests and add each to the VBox
             for (Request request : filteredRequests) {
                 VBox box = new VBox();
                 box.setAlignment(Pos.CENTER);
                 Button candidature = new Button("Soumettre sa candidature pour ce projet");
+                candidature.setId("candidature"+i);
                 box.getChildren().addAll(request.afficher(), candidature);
 
                 candidature.setOnMouseClicked(event -> {
                     box.getChildren().remove(candidature);
                     VBox choose = new VBox(3);
                     DatePicker startDate = new DatePicker();
+                    startDate.setId("startDate");
                     DatePicker endDate = new DatePicker();
+                    endDate.setId("endDate");
                     Button soumettre = new Button("Soumettre");
+                    soumettre.setId("soumettre");
                     Button annuler = new Button("Annuler");
+                    annuler.setId("annuler");
                     Text status = labelText("");
                     
                     soumettre.setOnMouseClicked(e -> {
@@ -221,15 +233,30 @@ public class ConsultRequestsScene extends Scenes {
                                     "Un nouveau projet à été approuvé dans vore quartier : " +
                                             project.getDescription()
                             );
-                            ArrayList<String> users = new ArrayList<>();
-                            for (String userid : this.apiController.getUsers()) {
-                                Utilisateur user = this.apiController.getUser(userid);
-                                if (Objects.equals(project.getQuartiersAffected(), user.getAddress().getBorough())) {
-                                    users.add(userid);
+                            ArrayList<String> usersIds = new ArrayList<>();
+                            FirebaseCallback<ArrayList<Utilisateur>> callback = new FirebaseCallback<>() {
+                                @Override
+                                public void onSucessReturn(ArrayList<Utilisateur> users) {
+                                    Platform.runLater(() -> {
+                                        for (Utilisateur utilisateur : users) {
+                                            if (Objects.equals(project.getQuartiersAffected(), utilisateur.getAddress().getBorough())) {
+                                                usersIds.add(utilisateur.getId());
+                                            }
+                                        }
+                                        notification.setUsersId(usersIds);
+                                        apiController.addNotification(notification);
+                                    });
                                 }
-                            }
-                            notification.setUsersId(users);
-                            this.apiController.addNotification(notification);
+
+                                @Override
+                                public void onFailure(String message) {
+                                }
+
+                                @Override
+                                public void onSucess() {}
+                            };
+                            this.apiController.getResidents(callback);
+
                         }
                     });
 

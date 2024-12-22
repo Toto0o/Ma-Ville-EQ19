@@ -23,9 +23,13 @@ public class SettingsScene extends Scenes {
         super(sceneController);
 
         this.addHoursPreference = new Button("Modifier mes préférences d'horaire");
+        this.addHoursPreference.setId("addHoursPreference");
         this.addNotificationPreference = new Button("Personnaliser mes notifications");
+        this.addNotificationPreference.setId("addNotificationPreference");
         this.menu = new Button("Menu");
+        this.menu.setId("menu");
         this.infoSettings = new Button("Modifier mes informations");
+        this.infoSettings.setId("infoSettings");
 
         this.buttonBox = new VBox();
 

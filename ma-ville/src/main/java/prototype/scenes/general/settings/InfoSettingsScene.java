@@ -8,6 +8,7 @@ import javafx.scene.layout.VBox;
 import prototype.controllers.ApiController;
 import prototype.controllers.SceneController;
 import prototype.scenes.Scenes;
+import prototype.services.ServiceSession;
 import prototype.users.UserSession;
 import prototype.users.Utilisateur;
 
@@ -45,11 +46,11 @@ public class InfoSettingsScene extends Scenes {
         this.email.setId("email");
         this.phone = new TextField(UserSession.getInstance().getUser().getPhone());
         this.phone.setId("phone");
-        this.street = new TextField(/*UserSession.getInstance().getUser().getAddress().getStreet()*/);
+        this.street = new TextField(UserSession.getInstance().getUser().getAddress().getStreet());
         this.street.setId("street");
-        this.streetNumber = new TextField(/*UserSession.getInstance().getUser().getAddress().getNumber()*/);
+        this.streetNumber = new TextField(UserSession.getInstance().getUser().getAddress().getNumber());
         this.streetNumber.setId("streetNumber");
-        this.postalCode = new TextField(/*UserSession.getInstance().getUser().getAddress().getPostalCode()*/);
+        this.postalCode = new TextField(UserSession.getInstance().getUser().getAddress().getPostalCode());
         this.postalCode.setId("postalCode");
 
         this.back = new Button("Retour");
@@ -111,7 +112,7 @@ public class InfoSettingsScene extends Scenes {
                     utilisateur.set(field.getId(), field.getText());
                 }
             }
-            this.sceneController.getApiController().updateUserInfo(utilisateur);
+            ServiceSession.getInstance().getController().updateUserInfo();
         });
     }
 }

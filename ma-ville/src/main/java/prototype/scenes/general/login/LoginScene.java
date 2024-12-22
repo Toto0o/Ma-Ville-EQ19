@@ -1,7 +1,7 @@
 package prototype.scenes.general.login;
 
+import javafx.application.Platform;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -12,6 +12,9 @@ import javafx.scene.text.Text;
 import prototype.controllers.ApiController;
 import prototype.controllers.SceneController;
 import prototype.scenes.Scenes;
+import prototype.services.FirebaseCallback;
+import prototype.services.ServiceSession;
+import prototype.users.Utilisateur;
 
 /**
  * Scene permettant de s'authentifier
@@ -43,14 +46,20 @@ public class LoginScene extends Scenes {
         super(sceneController);
 
         this.vBox = new VBox();
-        this.loginButton = new Button("Log In");
-        this.backButton = new Button("Back");
+        this.loginButton = new Button("Login");
+        this.loginButton.setId("login");
+        this.backButton = new Button("Retour");
+        this.backButton.setId("back");
         this.statusLabel = new Label();
         this.usernameField = new TextField();
-        this.usernameText = labelText("Email");
+        this.usernameField.setId("username");
+
         this.passwordField = new PasswordField();
+        this.passwordField.setId("password");
+
+        this.usernameText = labelText("Email");
         this.passwordText = labelText("Password");
-        this.apiController = sceneController.getApiController();
+        this.apiController = ServiceSession.getInstance().getController();
     }
 
     public void setScene() {
@@ -94,15 +103,29 @@ public class LoginScene extends Scenes {
         }
 
         try {
-            this.apiController.authenticate(email, password);
+            this.apiController.authenticate(email, password, new FirebaseCallback<Utilisateur>()  {
+                @Override
+                public void onSucess() {
+                    Platform.runLater(() -> {
+                        sceneController.newScene("menu");
+                    });
+                }
+
+                @Override
+                public void onSucessReturn(Utilisateur sucess) {}
+
+                @Override
+                public void onFailure(String message) {
+                    Platform.runLater(() -> statusLabel.setText(message));
+                }
+            });
         }
 
         catch (Exception e) {
+            e.printStackTrace();
             statusLabel.setText(e.getMessage());
-            return;
         }
 
-        this.sceneController.newScene("menu");
     }
 
 }

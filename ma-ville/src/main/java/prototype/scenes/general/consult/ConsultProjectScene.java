@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.google.api.services.storage.Storage;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -18,6 +20,8 @@ import prototype.controllers.ApiController;
 import prototype.controllers.SceneController;
 import prototype.scenes.Scenes;
 import prototype.projects.Project;
+import prototype.services.FirebaseCallback;
+import prototype.services.ServiceSession;
 import prototype.users.UserSession;
 
 /**
@@ -57,16 +61,21 @@ public class ConsultProjectScene extends Scenes {
 
         // Initialize layout elements
         this.vBox = new VBox();
+        this.vBox.setId("mainContainer");
         this.title = new Text("Consulter les travaux en cours");
         this.projectListView = new ListView<>();
+        this.projectListView.setId("projectListView");
         this.boroughFilterCombo = new ComboBox<>();
+        this.boroughFilterCombo.setId("boroughFilterCombo");
         this.typeOfWorkFilterCombo = new ComboBox<>();
+        this.typeOfWorkFilterCombo.setId("typeOfWorkFilterCombo");
         this.searchButton = new Button("Rechercher");
+        this.searchButton.setId("searchButton");
 
         this.borough = new HashSet<>();
         this.typesOfWork = new HashSet<>();
 
-        this.apiController = sceneController.getApiController();
+        this.apiController = ServiceSession.getInstance().getController();
 
     }
     
@@ -97,19 +106,43 @@ public class ConsultProjectScene extends Scenes {
         this.projectListView.getItems().clear();
 
         try {
-            if (this.projects != null) this.projects.clear(); 
-            
-            this.projects = apiController.getProjects();
+            if (this.projects != null) this.projects.clear();
 
-            for (Project project : this.projects) {
-                this.projectListView.getItems().add(project.afficher());
-                this.borough.add(project.getQuartiersAffected());
-                this.typesOfWork.add(project.getDescription());
+            for (Project project : apiController.getProjects()) {
+                projectListView.getItems().add(project.afficher());
+                borough.add(project.getQuartiersAffected());
+                typesOfWork.add(project.getDescription());
             }
 
-            this.projectCountText = new Text("Total des projets : " + this.projectListView.getItems().size());
-            this.projectCountText.setFont(new Font("Arial", 14));
-            bottomBox.getChildren().add(this.projectCountText);
+            FirebaseCallback<ArrayList<Project>> callback = new FirebaseCallback<>() {
+                @Override
+                public void onSucessReturn(ArrayList<Project> projects) {
+                    Platform.runLater(() -> {
+                        for (Project project : projects) {
+                            projectListView.getItems().add(project.afficher());
+                            borough.add(project.getQuartiersAffected());
+                            typesOfWork.add(project.getDescription());
+                        }
+
+                        projectCountText = new Text("Total des projets : " + projectListView.getItems().size());
+                        projectCountText.setFont(new Font("Arial", 14));
+                        bottomBox.getChildren().add(projectCountText);
+                    });
+                }
+
+                @Override
+                public void onFailure(String message) {
+                }
+
+                @Override
+                public void onSucess() {}
+            };
+            try {
+                this.apiController.getProjects(callback);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
 
         } catch (Exception e) {
             VBox errorBox = new VBox();

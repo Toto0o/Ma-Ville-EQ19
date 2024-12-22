@@ -28,10 +28,13 @@ public class RoleSelectionScene extends Scenes {
     public void setScene() {
         // Initialize buttons
         this.residentButton = new Button("Resident");
+        this.residentButton.setId("resident");
         this.residentButton.setMaxWidth(80);
         this.intervenantButton = new Button("Intervenant");
+        this.intervenantButton.setId("intervenant");
         this.intervenantButton.setMaxWidth(80);
         this.backButton = new Button("Back");
+        this.backButton.setId("back");
         this.backButton.setMaxWidth(80);
 
 

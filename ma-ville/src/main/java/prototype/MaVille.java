@@ -4,25 +4,18 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import prototype.services.FirebaseInitialize;
 import prototype.controllers.*;
-import prototype.services.UserServices;
-import prototype.users.Address;
-import prototype.users.Horaire;
-import prototype.users.Resident;
-import prototype.users.UserSession;
-
-import java.util.ArrayList;
 
 /**
  * Interface graphique de l'application
  *
  */
-public class GUI extends Application {
+public class MaVille extends Application {
 
     private SceneController sceneController;
     private ApiController apiController;
 
     public static void main (String[] args) {
-        GUI.launch(args);
+        MaVille.launch(args);
     }
 
     /**
@@ -37,18 +30,12 @@ public class GUI extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
+        this.sceneController = new SceneController(primaryStage);
+        primaryStage.setTitle("Ma ville - Équipe 19");
+        primaryStage.show();
+    }
 
-        FirebaseInitialize.initialize();
-
-        UserServices service = new UserServices();
-        ArrayList< Horaire > horaires = service.getPreferencesHoraires();
-        System.out.println(horaires.size());
-        this.apiController = new ApiController();
-
-        this.sceneController = new SceneController(
-                primaryStage,
-                this.apiController);
-
-        this.sceneController.start();
+    public SceneController getSceneController() {
+        return sceneController;
     }
 }

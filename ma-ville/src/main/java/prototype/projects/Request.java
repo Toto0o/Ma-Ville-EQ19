@@ -28,11 +28,12 @@ public class Request {
     private String quartier;
     private String street;
 
+    public Request() {}
     /**
      * Constructeur
      * @param title le titre de la requête
      * @param description la description de la requête
-     * @param type {@link Type} de la requête
+     * @param type type de la requête
      * @param date la date espérée
      * @param status {@link Status} de la requête
      * @param quartier le quartier

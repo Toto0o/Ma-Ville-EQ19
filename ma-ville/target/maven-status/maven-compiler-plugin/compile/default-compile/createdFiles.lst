@@ -1,8 +1,10 @@
 prototype\users\Address.class
 prototype\scenes\general\login\LoginScene.class
 prototype\services\AddressService.class
+prototype\MaVille.class
 prototype\services\EntravesServices.class
-prototype\GUI.class
+prototype\scenes\resident\NotificationScene.class
+prototype\services\UserServices$3.class
 prototype\entraves\Entrave.class
 prototype\scenes\intervenant\IntervenantProjectsScene.class
 prototype\users\Intervenant.class
@@ -11,6 +13,7 @@ prototype\controllers\ApiController.class
 prototype\scenes\general\register\RegisterScene.class
 prototype\services\IntervenantServices.class
 prototype\services\ProjectService$1.class
+prototype\services\NotificationService$1.class
 prototype\projects\Type.class
 prototype\users\Utilisateur.class
 prototype\scenes\general\menu\LaunchScene.class
@@ -18,9 +21,11 @@ prototype\users\UserSession.class
 prototype\projects\Status.class
 prototype\scenes\general\settings\SettingsScene.class
 prototype\projects\Project.class
+prototype\services\NotificationService.class
 prototype\users\Horaire.class
 prototype\scenes\general\settings\InfoSettingsScene.class
 prototype\scenes\general\consult\SearchProjectsScene.class
+prototype\services\UserServices$1.class
 prototype\scenes\general\consult\ConsultProjectScene.class
 prototype\controllers\SceneController.class
 prototype\users\Resident.class
@@ -28,6 +33,7 @@ module-info.class
 prototype\scenes\general\settings\NotificationSettingsScene.class
 prototype\users\UserCredentialsVerifier.class
 prototype\services\IntervenantServices$1.class
+prototype\services\ServiceSession.class
 prototype\scenes\general\consult\NotificationScene.class
 prototype\notifications\Notification.class
 prototype\services\UserServices.class
@@ -35,6 +41,7 @@ prototype\services\RequestService.class
 prototype\scenes\Scenes.class
 prototype\services\FirebaseInitialize.class
 prototype\Main.class
+prototype\services\UserServices$2.class
 prototype\projects\Request.class
 prototype\users\IntervenantType.class
 prototype\scenes\intervenant\ConsultRequestsScene.class

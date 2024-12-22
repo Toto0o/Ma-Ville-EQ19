@@ -17,6 +17,8 @@ import javafx.application.Platform;
 import prototype.controllers.ApiController;
 import prototype.controllers.SceneController;
 import prototype.notifications.Notification;
+import prototype.services.FirebaseCallback;
+import prototype.services.ServiceSession;
 import prototype.users.UserSession;
 import prototype.projects.*;
 import prototype.scenes.Scenes;
@@ -43,9 +45,11 @@ public class IntervenantProjectsScene extends Scenes{
     public IntervenantProjectsScene(SceneController sceneController) {
         super(sceneController);
         this.vbox = new VBox(10);
+        this.vbox.setId("projectView");
         this.projectsList = new ArrayList<>();
         this.backButton = new Button("Back");
-        this.apiController = this.sceneController.getApiController();
+        this.backButton.setId("menu");
+        this.apiController = ServiceSession.getInstance().getController();
         this.projectsList = new ArrayList<>();
         UserSession.getInstance().setUserId("FAl15hewCLTJdqZVSglbw4vIUo83");
     }
@@ -150,30 +154,38 @@ public class IntervenantProjectsScene extends Scenes{
                     saveButton);
 
             saveButton.setOnMouseClicked((me) -> {
-                HashMap<String, String> changes = new HashMap<>();
-
-                for (javafx.scene.Node node : vbox.getChildren()) {
-                    if (node instanceof TextField value) {
-                        changes.put(value.getId(), value.getText());
-                    }
-                }
-
-                this.apiController.saveProjectChanges(project.getFirebaseKey(), changes);
+                this.apiController.saveProjectChanges(project);
 
                 //Send notification on project change
                 Notification notification = new Notification(
-                        "Projet mis à jours",
+                        "Projet mis à jour",
                         project.getTitle() + " a été mis à jour"
                 );
-                ArrayList<String> users = new ArrayList<>();
-                for (String userid : this.apiController.getUsers()) {
-                    Utilisateur user = this.apiController.getUser(userid);
-                    if (Objects.equals(project.getQuartiersAffected(), user.getAddress().getBorough())) {
-                        users.add(userid);
+
+                FirebaseCallback<ArrayList<Utilisateur>> callback = new FirebaseCallback<>() {
+                    @Override
+                    public void onSucessReturn(ArrayList<Utilisateur> users) {
+                        Platform.runLater(() -> {
+                            ArrayList<String> usersIds = new ArrayList<>();
+                            for (Utilisateur utilisateur : users) {
+                                if (Objects.equals(project.getQuartiersAffected(), utilisateur.getAddress().getBorough())) {
+                                    usersIds.add(utilisateur.getId());
+                                }
+                            }
+                            notification.setUsersId(usersIds);
+                            apiController.addNotification(notification);
+                        });
                     }
-                }
-                notification.setUsersId(users);
-                this.apiController.addNotification(notification);
+
+                    @Override
+                    public void onFailure(String message) {
+                    }
+
+                    @Override
+                    public void onSucess() {};
+                };
+                this.apiController.getResidents(callback);
+
             });
 
             vbox.getChildren().add(projectBox);

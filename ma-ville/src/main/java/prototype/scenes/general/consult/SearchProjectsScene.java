@@ -16,6 +16,7 @@ import prototype.controllers.ApiController;
 import prototype.controllers.SceneController;
 import prototype.projects.Project;
 import prototype.scenes.Scenes;
+import prototype.services.ServiceSession;
 
 /**
  * Scene de recherche de projets
@@ -40,9 +41,10 @@ public class SearchProjectsScene extends Scenes {
      */
     public SearchProjectsScene(SceneController sceneController) {
         super(sceneController);
-        this.apiController = this.sceneController.getApiController();
+        this.apiController = ServiceSession.getInstance().getController();
         // Initialize buttons
         this.backButton = new Button("Retour");
+        this.backButton.setId("retour");
 
         // Initialize layout elements
         this.vBox = new VBox();
@@ -50,8 +52,11 @@ public class SearchProjectsScene extends Scenes {
         this.projectListView = new ListView<>();
         this.projectCountText = labelText("");
         this.searchTitleField = new TextField();
+        this.searchTitleField.setId("search-title");
         this.searchBoroughField = new TextField();
+        this.searchBoroughField.setId("search-borough");
         this.typeFilter = new ComboBox<>();
+        this.typeFilter.setId("type-filter");
 
         // Mapping of API categories to filter options
         Map<String, String> categoryMapping = new HashMap<>();

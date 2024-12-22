@@ -9,7 +9,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import prototype.projects.Project;
 
-import javax.swing.event.ChangeListener;
 
 public class Notification implements Serializable {
 

@@ -12,6 +12,7 @@ import prototype.controllers.ApiController;
 import prototype.controllers.SceneController;
 import prototype.entraves.Entrave;
 import prototype.scenes.Scenes;
+import prototype.services.ServiceSession;
 
 /**
  * Scene de consultation des entraves
@@ -51,10 +52,12 @@ public class ConsultEntraveScene extends Scenes {
         this.vBox = new VBox();
         this.title = new Text("Consulter les entraves");
         this.entraveListView = new ListView<>();
+        this.entraveListView.setId("entraveListView");
         this.entraveCountText = new Text();
         this.searchField = new TextField(); // Initialize the search field
+        this.searchField.setId("searchField");
         this.searchField.setPromptText("Rechercher par ID ou rue");
-        this.apiController = sceneController.getApiController();
+        this.apiController = ServiceSession.getInstance().getController();
 
         // Fetch data from the API
         fetchEntraves();

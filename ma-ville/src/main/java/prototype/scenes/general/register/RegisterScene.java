@@ -13,6 +13,7 @@ import javafx.scene.text.Text;
 import prototype.controllers.ApiController;
 import prototype.controllers.SceneController;
 import prototype.scenes.Scenes;
+import prototype.services.ServiceSession;
 import prototype.users.*;
 
 /**
@@ -47,7 +48,7 @@ public class RegisterScene extends Scenes {
     public RegisterScene(SceneController sceneController, boolean intervenant) {
         super(sceneController);
         this.intervenant = intervenant;
-        this.apiController = sceneController.getApiController();
+        this.apiController = ServiceSession.getInstance().getController();
         this.userCredentials = new UserCredentialsVerifier(this.apiController);
     }
 
@@ -56,18 +57,31 @@ public class RegisterScene extends Scenes {
     public void setScene() {
         // Initialize form fields
         this.nameField = new TextField();
+        this.nameField.setId("name");
         this.lastNameField = new TextField();
+        this.lastNameField.setId("lastName");
         this.birthdayPicker = new DatePicker();
+        this.birthdayPicker.setId("birthday");
         this.streetNameField = new TextField();
+        this.streetNameField.setId("streetName");
         this.streetNumberField = new TextField();
+        this.streetNumberField.setId("streetNumber");
         this.postalCodeField = new TextField();
+        this.postalCodeField.setId("postalCode");
         this.emailField = new TextField();
+        this.emailField.setId("email");
         this.phoneField = new TextField();
+        this.phoneField.setId("phone");
         this.password1Field = new TextField();
+        this.password1Field.setId("password1");
         this.password2Field = new TextField();
+        this.password2Field.setId("password2");
         this.cityIDField = new TextField();
+        this.cityIDField.setId("cityID");
         this.intervenantType = new ComboBox<>();
+        this.intervenantType.getItems().addAll(IntervenantType.values());
         this.status = new Label();
+        this.status.setId("status");
 
         this.nameField.setMaxWidth(250);
         this.lastNameField.setMaxWidth(250);
@@ -86,8 +100,11 @@ public class RegisterScene extends Scenes {
         
 
         this.submitButton = new Button("Submit");
+        this.submitButton.setId("submitButton");
         this.intervenantSubmitButton = new Button("Submit");
+        this.intervenantSubmitButton.setId("intervenantSubmitButton");
         this.backButton = new Button("Back");
+        this.backButton.setId("backButton");
 
         this.intervenantSubmitButton.setVisible(this.intervenant);
         this.intervenantSubmitButton.setVisible(this.intervenant);
@@ -171,6 +188,7 @@ public class RegisterScene extends Scenes {
         } catch (Exception e) {
             status.setText(e.getMessage());
         }
+        this.sceneController.newScene("login");
         });
         
         intervenantSubmitButton.setOnMouseClicked((event) -> {
@@ -209,6 +227,7 @@ public class RegisterScene extends Scenes {
         } catch (Exception e) {
             this.status.setText(e.getMessage());
         }
+        this.sceneController.newScene("login");
         });
     }
 }

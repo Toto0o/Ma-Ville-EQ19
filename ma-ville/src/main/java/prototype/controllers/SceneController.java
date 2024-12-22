@@ -3,7 +3,7 @@ package prototype.controllers;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import prototype.scenes.Scenes;
-import prototype.scenes.general.consult.NotificationScene;
+import prototype.scenes.resident.NotificationScene;
 import prototype.scenes.general.consult.ConsultEntraveScene;
 import prototype.scenes.general.consult.ConsultProjectScene;
 import prototype.scenes.general.login.LoginScene;
@@ -19,7 +19,8 @@ import prototype.scenes.intervenant.ConsultRequestsScene;
 import prototype.scenes.intervenant.IntervenantProjectsScene;
 import prototype.scenes.resident.RequestScene;
 import prototype.scenes.general.consult.SearchProjectsScene;
-
+import prototype.users.Resident;
+import prototype.users.UserSession;
 
 
 /**
@@ -36,29 +37,15 @@ public class SceneController {
 
     private Stage primaryStage;
     private Scene scene;
-
-    private ApiController apiController;
+    private Scenes currentScene;
 
     /**
      *
      * @param primaryStage {@link Stage}
-     * @param apiController {@link ApiController}
      */
-    public SceneController(Stage primaryStage, ApiController apiController) {
-
+    public SceneController(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        this.apiController = apiController;
-    }
-
-
-    /**
-     * Méthode pour lancer l'application. La scène par défault est {@link LaunchScene}
-     * 
-     */
-    public void start() {
-        newScene("launch"); /* Default is the launching scene */
-        this.primaryStage.setTitle("Ma ville - Équipe 19");
-        this.primaryStage.show();
+        newScene("launch");
     }
 
     /**
@@ -70,7 +57,7 @@ public class SceneController {
     public void newScene(String scene) {
 
         // Insure currentScene is asserted
-        Scenes currentScene = null;
+         currentScene = null;
 
         switch (scene) {
 
@@ -112,12 +99,8 @@ public class SceneController {
         this.primaryStage.setMaximized(true);
     }
 
-    /**
-     * Donne accèes aux scenes nécessitant une connexion à la bases de données
-     * @return {@link ApiController}
-     */
-    public ApiController getApiController() {
-        return apiController;
-    }
 
+    public Scenes getScene() {
+        return currentScene;
+    }
 }

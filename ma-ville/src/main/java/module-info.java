@@ -10,7 +10,7 @@ module prototype {
     requires com.google.gson;
     requires com.google.api.services.storage;
     requires org.apache.httpcomponents.httpclient;
-    requires java.desktop;
+    requires org.checkerframework.checker.qual;
 
     exports prototype;
     exports prototype.controllers;

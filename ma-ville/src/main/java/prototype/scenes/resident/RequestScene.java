@@ -3,11 +3,7 @@ package prototype.scenes.resident;
 import java.time.LocalDate;
 
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -17,6 +13,7 @@ import prototype.projects.Request;
 import prototype.projects.Status;
 import prototype.projects.Type;
 import prototype.scenes.Scenes;
+import prototype.services.ServiceSession;
 import prototype.users.UserSession;
 import prototype.users.Utilisateur;
 
@@ -39,7 +36,7 @@ public class RequestScene extends Scenes{
     private Text titleText, descriptionText, typeText, dateText;
     private ComboBox<Type> typeComboBox;
     private ApiController apiController;
-    private Utilisateur utilisateur;
+    private Label label;
 
     /**
      * Constructeur
@@ -49,13 +46,20 @@ public class RequestScene extends Scenes{
 
         super(sceneController);
         this.requestBox = new VBox();
+        this.requestBox.setId("requestBox");
         this.menu = new Button("Menu");
+        this.menu.setId("menu");
         this.sendRequest = new Button("Envoyer la requête");
+        this.sendRequest.setId("sendRequest");
         this.newRequest = new Button("Ajouter une nouvelle requête de travaux");
+        this.newRequest.setId("newRequest");
 
         this.titleField = new TextField();
+        this.titleField.setId("title");
         this.descriptionArea = new TextArea();
+        this.descriptionArea.setId("description");
         this.datePicker = new DatePicker();
+        this.datePicker.setId("date");
 
         this.titleText = new Text("Titre du projet");
         this.descriptionText = new Text("Description détaillée");
@@ -63,8 +67,12 @@ public class RequestScene extends Scenes{
         this.dateText = new Text("Date espéré de début du projet");
 
         this.typeComboBox = new ComboBox<>();
+        this.typeComboBox.setId("type");
 
-        this.apiController = this.sceneController.getApiController();
+        this.label = new Label("Remplissez les champs pour envoyer la requête");
+        this.label.setId("label");
+
+        this.apiController = ServiceSession.getInstance().getController();
 
 
     }
@@ -83,7 +91,8 @@ public class RequestScene extends Scenes{
             this.typeText,
             this.typeComboBox,
             this.datePicker,
-            this.sendRequest
+            this.sendRequest,
+            this.label
         );
         this.typeComboBox.getItems().addAll(Type.values());
         this.titleField.setMaxWidth(250);
@@ -116,6 +125,7 @@ public class RequestScene extends Scenes{
                     UserSession.getInstance().getUser().getAddress().getStreet()
             );
             this.apiController.saveRequest(request);
+            this.label.setText("Votre requête à été enregistré. Un intervenant consultera votre demande sous peu");
 
         });
 

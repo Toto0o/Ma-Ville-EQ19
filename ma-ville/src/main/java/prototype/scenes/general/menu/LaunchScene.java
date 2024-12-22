@@ -38,8 +38,10 @@ public class LaunchScene extends Scenes {
 
         this.vBox = new VBox();
         this.buttonsBox = new HBox();
-        this.loginButton = new Button("Log In");
+        this.loginButton = new Button("Login");
+        this.loginButton.setId("loginButton");
         this.registerButton = new Button("Register");
+        this.registerButton.setId("registerButton");
         this.title = new Text("Ma Ville");
     }
 

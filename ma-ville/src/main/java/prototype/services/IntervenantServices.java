@@ -42,32 +42,13 @@ public class IntervenantServices {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    String projectUid = snapshot.child("uid").getValue(String.class);
-                    String title = snapshot.child("title").getValue(String.class);
-                    String description = snapshot.child("description").getValue(String.class);
-                    String type = snapshot.child("type").getValue(String.class);
-                    String quartiersAffected = snapshot.child("quartiersAffected").getValue(String.class);
-                    String roadsAffected = snapshot.child("roadsAffected").getValue(String.class);
-                    String startDate = snapshot.child("startDate").getValue(String.class);
-                    String endDate = snapshot.child("endDate").getValue(String.class);
-                    String horaireTravaux = snapshot.child("horaireTravaux").getValue(String.class);
-                    String status = snapshot.child("status").getValue(String.class);
-                    if (userId.equals(projectUid)) {
-                        Project project = new Project(
-                                title,
-                                description,
-                                Type.getType(type),
-                                quartiersAffected,
-                                startDate,
-                                endDate,
-                                horaireTravaux,
-                                Status.getStatus(status),
-                                projectUid,
-                                roadsAffected);
-                        project.setFirebaseKey(snapshot.getKey());
-                        projects.add(project);
+                        Project project = snapshot.getValue(Project.class);
+                        if (project.getUid().equals(userId)) {
+                            project.setFirebaseKey(snapshot.getKey());
+                            projects.add(project);
+                        }
+
                     }
-                }
                 Platform.runLater(updateDisplayCallBack);
             }
             @Override
@@ -82,24 +63,12 @@ public class IntervenantServices {
      * @param changes {@link HashMap} (id, value) des champs modifiés
      * @param projectKey la clé firebase du projet
      */
-    public static void saveProjectChanges(HashMap<String, String> changes, String projectKey) {
+    public void saveProjectChanges(Project projet) {
         FirebaseDatabase database = FirebaseDatabase
                 .getInstance("https://maville-18aa2-default-rtdb.firebaseio.com/");
-        DatabaseReference projectsRef = database.getReference("projects").child(projectKey);
-
-        for (String key : changes.keySet()) {
-            String value = changes.get(key);
-            projectsRef.child(key).setValueAsync(value);
-        }
+        DatabaseReference projectsRef = database.getReference("projects").child(projet.getFirebaseKey());
+        projectsRef.setValueAsync(projet);
     }
 
-    /**
-     * Permet un appel à la méthode statique {@link #saveProjectChanges(HashMap, String)} dans un context non statique
-     * @param changes {@link HashMap} (id, value) des champs modifiés
-     * @param projectKey la clé firebase du projet
-     */
-    public void updateProject(HashMap<String,String> changes, String projectKey) {
-        saveProjectChanges(changes, projectKey);
-    }
 
 }

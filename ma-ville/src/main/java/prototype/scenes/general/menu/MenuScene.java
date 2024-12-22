@@ -43,18 +43,26 @@ public class MenuScene extends Scenes {
     public MenuScene(SceneController sceneController) {
         super(sceneController);
         this.consultButton = new Button("Consulter des travaux en cours");
+        this.consultButton.setId("consultButton");
         this.entraveButton = new Button("Consulter les entraves routières");
+        this.entraveButton.setId("entraveButton");
         this.settingsButton = new Button("Personnaliser le profil");
+        this.settingsButton.setId("settingsButton");
         this.requestButton = new Button("Soumettre une requête de travail");
+        this.requestButton.setId("requestButton");
         this.notificationButton = new Button();
+        this.notificationButton.setId("notificationButton");
         this.logoutButton = new Button("Déconnexion");
+        this.logoutButton.setId("logoutButton");
         this.intervenantProjectButton = new Button("Consulter mes projets");
+        this.intervenantProjectButton.setId("intervenantProjectButton");
 
         this.vBox = new VBox();
         this.titleBox = new HBox();
         this.title = new Text("Bienvenu dans le menu");
 
         this.consultRequestButton = new Button("Consulter la liste des requêtes de travail");
+        this.consultRequestButton.setId("consultRequestButton");
 
         this.user = UserSession.getInstance().getUser();
     }
@@ -122,7 +130,7 @@ public class MenuScene extends Scenes {
         this.intervenantProjectButton.setOnMouseClicked(event -> newSceneAction(event, "intervenantProject"));
 
         this.logoutButton.setOnMouseClicked((event) -> {
-            UserSession.disconnect();
+            UserSession.getInstance().disconnect();
             this.sceneController.newScene("launch");
         } );
 
