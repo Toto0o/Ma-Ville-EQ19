@@ -12,6 +12,7 @@ import javafx.scene.layout.BorderPane;
 
 import prototype.controllers.SceneController;
 import prototype.scenes.Scenes;
+import prototype.services.ServiceSession;
 import prototype.users.Intervenant;
 import prototype.users.UserSession;
 import prototype.users.Utilisateur;

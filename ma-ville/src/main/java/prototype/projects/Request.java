@@ -145,7 +145,7 @@ public class Request {
         Text quartier = new Text("Quartier : ");
         quartier.setStyle("-fx-font-weight: bold");
         HBox quartierBox = new HBox(5);
-        quartierBox.getChildren().addAll(quartier);
+        quartierBox.getChildren().addAll(quartier, new Text(getQuartier()));
 
         Text street = new Text("Street : ");
         street.setStyle("-fx-font-weight: bold");

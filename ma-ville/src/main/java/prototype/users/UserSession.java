@@ -1,5 +1,8 @@
 package prototype.users;
 
+/**
+ * Singleton pour obtenir l'utilisateur; Assure un seul utilisateur par session
+ */
 public class UserSession {
     private static UserSession instance;
     private String userId;
@@ -14,6 +17,10 @@ public class UserSession {
         return instance;
     }
 
+    /**
+     * Méthode pour la deconnexion.
+     * <p>Set {@link #user} à null</p>
+     */
     public void disconnect() {
         this.user = null;
     }

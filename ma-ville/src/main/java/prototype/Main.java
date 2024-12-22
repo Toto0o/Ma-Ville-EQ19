@@ -14,17 +14,13 @@ import prototype.users.UserSession;
 
 /**
  * Classe main pour des fins de construction d'artifact JAR; permet de lancer l'executable
+ *
+ * <p>Initialise la connexion avec Firebase par {@link FirebaseInitialize#initialize()}</p>
  */
 public class Main {
 
     public static void main(String[] args) {
         FirebaseInitialize.initialize();
-        Notification notification = new Notification(
-                "titre",
-                "description"
-        );
-        ApiController controller = new ApiController();
-        controller.addNotification(notification);
         MaVille.main(args);
     }
 }

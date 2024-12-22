@@ -14,6 +14,7 @@ import prototype.controllers.SceneController;
 import prototype.scenes.Scenes;
 import prototype.services.FirebaseCallback;
 import prototype.services.ServiceSession;
+import prototype.users.UserSession;
 import prototype.users.Utilisateur;
 
 /**
@@ -107,6 +108,7 @@ public class LoginScene extends Scenes {
                 @Override
                 public void onSucess() {
                     Platform.runLater(() -> {
+                        System.out.println(UserSession.getInstance().getUser().getAddress().getBorough());
                         sceneController.newScene("menu");
                     });
                 }

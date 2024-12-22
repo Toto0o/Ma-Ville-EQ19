@@ -126,7 +126,6 @@ public class RequestScene extends Scenes{
             );
             this.apiController.saveRequest(request);
             this.label.setText("Votre requête à été enregistré. Un intervenant consultera votre demande sous peu");
-
         });
 
 

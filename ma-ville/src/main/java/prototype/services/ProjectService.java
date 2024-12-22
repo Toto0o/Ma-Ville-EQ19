@@ -25,15 +25,15 @@ public class ProjectService {
     public void saveProjectToFirebase(Project project) {
         try {
             // Generate a random request ID
-            String requestId = java.util.UUID.randomUUID().toString();
+            String projectId = java.util.UUID.randomUUID().toString();
             // Initialize Firebase Database
             FirebaseDatabase database = FirebaseDatabase
                     .getInstance("https://maville-18aa2-default-rtdb.firebaseio.com/");
-            DatabaseReference requestFolderRef = database.getReference("projects").child(requestId);
+            DatabaseReference requestFolderRef = database.getReference("projects").child(projectId);
             String userUid = UserSession.getInstance().getUserId(); // Use the UID from UserSession
             // Create a Project object with collected data
             requestFolderRef.setValueAsync(project); // Save request data under "projects/RequestID" node
-            System.out.println("Request saved to Firebase under ID: " + requestId);
+            System.out.println("Project saved to Firebase under ID: " + projectId);
         } catch (Exception e) {
             e.printStackTrace();
         }

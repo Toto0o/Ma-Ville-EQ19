@@ -7,15 +7,25 @@ import java.util.List;
 
 /**
  * Objet d'horaire
+ *
+ * <p> Implémente {@link AbstractList} sous forme de matrice 2D</p>
  */
 public class Horaire extends AbstractList<List<Boolean>> implements Serializable {
 
     private List<List<Boolean>> schedule;
 
+    /**
+     * Constructeur. Initialise la matrice sur instanciation avec {@link #initialize()}
+     */
     public Horaire() {
         initialize();
     }
 
+    /**
+     * Initialise la matrice
+     *
+     * <p>12 colonnes d'heures, 7 rangées de jours</p>
+     */
     public void initialize() {
         schedule = new ArrayList<>();
         for (int i = 0; i < 8; i++) {

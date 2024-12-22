@@ -19,9 +19,9 @@ public class MaVille extends Application {
     }
 
     /**
-     * Initialise Firebase avec {@link FirebaseInitialize#initialize()}
-     * <p>Instancie {@link ApiController} et {@link SceneController}</p>
-     * <p>Lance l'appication avec {@link SceneController#start()}</p>
+     * Démarrage de l'application.
+     *
+     * <p>Instancie le controlleur de scenes {@link SceneController}</p>
      * @param primaryStage the primary stage for this application, onto which
      * the application scene can be set.
      * Applications may create other stages, if needed, but they will not be
@@ -35,6 +35,10 @@ public class MaVille extends Application {
         primaryStage.show();
     }
 
+    /**
+     * Méthode pour le débuggage et pour les test
+     * @return {@link SceneController}
+     */
     public SceneController getSceneController() {
         return sceneController;
     }

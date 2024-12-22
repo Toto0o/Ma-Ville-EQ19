@@ -193,7 +193,7 @@ public class ConsultRequestsScene extends Scenes {
                 VBox box = new VBox();
                 box.setAlignment(Pos.CENTER);
                 Button candidature = new Button("Soumettre sa candidature pour ce projet");
-                candidature.setId("candidature"+i);
+                candidature.setId("candidature");
                 box.getChildren().addAll(request.afficher(), candidature);
 
                 candidature.setOnMouseClicked(event -> {
@@ -256,7 +256,6 @@ public class ConsultRequestsScene extends Scenes {
                                 public void onSucess() {}
                             };
                             this.apiController.getResidents(callback);
-
                         }
                     });
 

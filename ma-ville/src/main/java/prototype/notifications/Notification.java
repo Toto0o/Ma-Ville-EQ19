@@ -9,15 +9,28 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import prototype.projects.Project;
 
-
+/**
+ * Objet de notification
+ *
+ * <p>Les utilisateurs ayant la visibilité sur la notification sont souvegardé avec leur id dans une {@link ArrayList}</p>
+ */
 public class Notification implements Serializable {
 
     private String title, description, id;
     private boolean lu;
     private ArrayList<String> usersId;
 
+    /**
+     * Constructeur vide pour la déserialisation
+     */
     public Notification() {}
 
+    /**
+     * Constructeur de nouvelles notifications
+     *
+     * @param title le titre
+     * @param description la description de la notification
+     */
     public Notification(String title, String description) {
         this.title = title;
         this.description = description;

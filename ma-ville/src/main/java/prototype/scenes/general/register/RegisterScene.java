@@ -204,7 +204,7 @@ public class RegisterScene extends Scenes {
         Address address = new Address(
                 streetNumberField.getText().trim(),
                 streetNameField.getText().trim(),
-                postalCodeField.getText().trim()
+                postalCodeField.getText().trim().toLowerCase()
         );
 
         try {
@@ -224,6 +224,7 @@ public class RegisterScene extends Scenes {
                     address,
                     cityIDField.getText().trim()
             );
+            this.apiController.register(intervenant);
         } catch (Exception e) {
             this.status.setText(e.getMessage());
         }

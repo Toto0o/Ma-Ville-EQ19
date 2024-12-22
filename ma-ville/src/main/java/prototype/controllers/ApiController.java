@@ -1,6 +1,5 @@
 package prototype.controllers;
 
-import org.checkerframework.checker.units.qual.N;
 import prototype.notifications.Notification;
 import prototype.services.*;
 import prototype.users.*;
@@ -29,13 +28,13 @@ import prototype.entraves.Entrave;
  * 
  * <p> Les méthodes clés incluent :
  *  <ul>
- *      <li> {@link #authenticate(String, String, Label)} </li>
- *      <li> {@link #updateUserInfo(String, HashMap)} </li>
- *      <li> {@link #getProjects(boolean)} </li>
- *      <li> {@link #saveProjectChanges(String, HashMap)} </li>
+ *      <li> {@link #authenticate(String, String, FirebaseCallback)} </li>
+ *      <li> {@link #updateUserInfo()} </li>
+ *      <li> {@link #getProjects()} </li>
+ *      <li> {@link #saveProjectChanges(Project)} </li>
  *      <li> {@link #addProject(Project)} </li>
  *      <li> {@link #addRequest(Request)} </li>
- *      <li> {@link #getRequests()} </li>
+ *      <li> {@link #getRequests(ArrayList, Runnable)} </li>
  *      <li> {@link #getEntraves()} </li>
  *  </ul>
  * </p>
@@ -59,7 +58,7 @@ public class ApiController {
     private NotificationService notificationService;
 
     /**
-     * Instancie les classes de services
+     * Constructeur. Instancie les classes de services
      */
     public ApiController() {
         this.entravesServices = new EntravesServices();
@@ -72,15 +71,14 @@ public class ApiController {
     }
 
     /**
-     * Authentifie l'utilisateur avec {@link UserServices#authenticateWithFirebase(String, String, Label)}
+     * Authentifie l'utilisateur avec {@link UserServices#authenticateWithFirebase(String, String, FirebaseCallback)}
      *
      * @param email    le nom d'utilisateur
      * @param password le mot de passe de l'utilisateur
-     * @param label    le status de l'authentification; permet d'afficher les messages d'erreur
-     * @return
+     * @param callback {@link FirebaseCallback} attends que {@link com.google.firebase.database.FirebaseDatabase FirebaseDatabse} termine l'opération
      * @throws Exception sur erreur de chargement ou des indentifiants invalide
      */
-    public void authenticate(String email, String password, FirebaseCallback callback) throws IllegalArgumentException {
+    public void authenticate(String email, String password, FirebaseCallback<Utilisateur> callback) throws IllegalArgumentException {
         this.userServices.authenticateWithFirebase(email, password, callback);
     }
 
@@ -113,16 +111,25 @@ public class ApiController {
         this.userServices.updateUser();
     }
 
+
+    /**
+     * Méthode pour obtenir tous les résidents enregistré dans le système
+     * @param callback
+     */
     public void getResidents(FirebaseCallback callback) {
         this.userServices.getResidents(callback);
     }
 
+    /**
+     * Méthode pour obtenir tous les intervenant enregistrés dans le système
+     * @param callback
+     */
     public void getIntervenants(FirebaseCallback callback) {
         this.userServices.getIntervenants(callback);
     }
 
     /**
-     * Charge les projets avec {@link ProjectService#getProjects(FirebaseCallback)}
+     * Charge les projets de la ville de Montréal
      *
      * @return {@link ArrayList}&lt;{@link Project}&gt;
      * @throws Exception sur erreur de chargement
@@ -131,10 +138,21 @@ public class ApiController {
         return this.projectService.getProjects();
     }
 
+    /**
+     * Charge les projets de {@link com.google.firebase.database.FirebaseDatabase FirebaseDatase}
+     * @param callback pour assurer le chargement complet avant de poursuivre les opérations
+     * @throws Exception
+     */
     public void getProjects(FirebaseCallback<ArrayList<Project>> callback) throws Exception {
         this.projectService.getProjectsFromFirebase(callback);
     }
 
+    /**
+     * Charge les projets reliés à l'intervenant
+     * @param projects la liste de projet à charger
+     * @param updateDisplayCallback update le display sur callback de la méthode
+     * @throws Exception sur erreur de chargement
+     */
     public void getProjects(ArrayList<Project> projects, Runnable updateDisplayCallback) throws Exception {
         this.intervenantServices.getProjects(projects, updateDisplayCallback);
     }
@@ -142,8 +160,7 @@ public class ApiController {
     /**
      * Sauvegarde les informations changées d'un {@link Project projet} avec {@link IntervenantServices#saveProjectChanges(HashMap, String)}
      * 
-     * @param key la clé Firebase associé au projet
-     * @param changes {@link HashMap} (id, field) des champs modifiés
+     * @param project Le projet à enregistrer
      */
     public void saveProjectChanges(Project project) {
         this.intervenantServices.saveProjectChanges(project);
@@ -159,7 +176,7 @@ public class ApiController {
     }
 
     /**
-     * Ajoute une nouvelle {@link Request} à la base de donnée avec {@link RequestService#saveRequest(Request)}
+     * Ajoute une nouvelle {@link Request} à la base de donnée avec {@link RequestService#newRequest(Request)}
      * @param request {@link Request} à sauvegarder
      */
     public void addRequest(Request request) {
@@ -168,16 +185,17 @@ public class ApiController {
 
 
     /**
-     * Méthode pour charger les {@link Request requêtes} avec {@link RequestService#getRequests()}
+     * Méthode pour charger les {@link Request requêtes} avec {@link RequestService#getRequests(ArrayList, Runnable)}
      * 
-     * @return {@link ArrayList}&lt;{@link Request}&gt;
+     * @param requestsList la liste de requête à remplir
+     * @param updateDisplayCallback update le display sur callback de le méthode
      */
     public void getRequests(ArrayList<Request> requestsList, Runnable updateDisplayCallback) {
         this.requestService.getRequests(requestsList, updateDisplayCallback);
     }
 
     /**
-     * Ajoute d'une requête dans la base de données avec {@link RequestService#saveRequest(Request)}
+     * Ajoute d'une requête dans la base de données avec {@link RequestService#newRequest(Request)}
      *
      * @param request {@link Request} a sauvegarder
      */
@@ -217,10 +235,20 @@ public class ApiController {
         return this.addressService.getCity(postalCode);
     }
 
+    /**
+     * Charge les notification avec {@link NotificationService#getNotifications(FirebaseCallback)}
+     * @param callback update le display sur callback de la méthode
+     * @return {@link ArrayList}&lt;{@link Notification}&gt;
+     * @throws Exception sur erreur de chargement
+     */
     public ArrayList<Notification> getNotifications(FirebaseCallback<ArrayList<Notification>> callback) throws Exception {
         return this.notificationService.getNotifications(callback);
     }
 
+    /**
+     * Méthode pour enrgistrer une nouvelle notification dans la base de donnée
+     * @param notification la notification a enregister
+     */
     public void addNotification(Notification notification) {
         this.notificationService.addNotification(notification);
     }

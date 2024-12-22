@@ -4,6 +4,9 @@ import java.util.List;
 
 import com.google.firebase.database.PropertyName;
 
+/**
+ * Utilisateur général
+ */
 public abstract class Utilisateur implements Serializable {
 
     protected String name, lastname, password, birthday, phone, email;
@@ -12,9 +15,22 @@ public abstract class Utilisateur implements Serializable {
     protected Horaire horaire;
     protected boolean intervenant;
 
+    /**
+     * Constructeur vide pour la désérialisation
+     */
     public Utilisateur() {
     }
 
+    /**
+     * Constreucteur à l'instanciation
+     * @param name
+     * @param lastname
+     * @param password
+     * @param birthday
+     * @param phone
+     * @param email
+     * @param address
+     */
     public Utilisateur(String name, String lastname, String password, String birthday, String phone, String email, Address address) {
             this.name = name;
             this.lastname = lastname;
@@ -72,7 +88,12 @@ public abstract class Utilisateur implements Serializable {
 
     @PropertyName("intervenant")
     public abstract boolean isIntervenant();
-    
+
+    /**
+     * Méthode utile pour faciliter les setters; À utiliser dans une forloop
+     * @param id le champ a set
+     * @param value la valeur a set
+     */
     public void set(String id, String value) {
         switch (id) {
             case "name" -> setName(value);

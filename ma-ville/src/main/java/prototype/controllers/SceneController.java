@@ -99,7 +99,10 @@ public class SceneController {
         this.primaryStage.setMaximized(true);
     }
 
-
+    /**
+     * Méthode de débuggage et pour les test
+     * @return {@link Scenes} en cours
+     */
     public Scenes getScene() {
         return currentScene;
     }
