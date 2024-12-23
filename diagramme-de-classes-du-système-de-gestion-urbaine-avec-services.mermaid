@@ -1,0 +1,282 @@
+classDiagram
+    class Scene {
+        <<abstract>>
+        +initialiser()
+        +mettreAJour()
+        +dessiner()
+        +gererEvenements()
+    }
+
+    class SceneGenerale {
+        -formulaireConnexion
+        -boutonInscription
+        +afficherFormulaire()
+        +traiterConnexion()
+        +redirigerVersInscription()
+    }
+
+    class SceneIntervenant {
+        -tableauProjets
+        -gestionnaireCandidatures
+        -calendrierPlanification
+        +afficherProjets()
+        +gererCandidatures()
+        +planifierTravaux()
+    }
+
+    class SceneResident {
+        -carteDistrict
+        -listeNotifications
+        -preferencesTemps
+        +afficherCarte()
+        +gererNotifications()
+        +configurerPreferences()
+    }
+
+    class ControlleurUtilisateur {
+        +enregistrerUtilisateur(UtilisateurDTO)
+        +connexion(email, motDePasse)
+        +deconnexion()
+        +obtenirProfil()
+        +mettreAJourProfil(UtilisateurDTO)
+    }
+
+    class TypeIntervenant {
+        <<enumeration>>
+        SOCIETE_PUBLIQUE
+        ENTREPRENEUR_PRIVE
+        INDIVIDUEL
+    }
+
+    class ControlleurResident {
+        +enregistrerResident(ResidentDTO)
+        +obtenirTravauxEnCours()
+        +obtenirTravauxPrevus()
+        +obtenirObstructions()
+        +rechercherTravauxParDistrict(String)
+        +rechercherTravauxParType(TypeTravail)
+        +rechercherTravauxParRue(String)
+        +obtenirNotifications()
+        +souscrireNotifications(String district, String rue)
+        +definirPreferencesTemps(PreferenceTempsDTO[])
+        +obtenirPreferencesTemps()
+        +soumettreDemandeTravauxDTO()
+        +suivreDemandeTravauxString()
+    }
+
+    class ControlleurIntervenant {
+        +enregistrerIntervenant(IntervenantDTO)
+        +obtenirDemandesTravaux()
+        +soumettreProjet(ProjetDTO)
+        +mettreAJourProjet(String, StatutProjetDTO)
+        +soumettreCandidat(String, CandidatDTO)
+        +retirerCandidat(String)
+        +obtenirPreferencesResident(String)
+    }
+
+    class Utilisateur {
+        +String id
+        +String nom
+        +String email
+        +String motDePasse
+        +String type
+        +validerIdentifiants()
+    }
+
+    class Resident {
+        -Date dateNaissance
+        -String telephone
+        -Adresse adresse
+        -List~PreferenceTemps~ preferences
+        -List~Notification~ notifications
+        +validerAge()
+        +obtenirAge()
+        +obtenirDistrict()
+    }
+
+    class Intervenant {
+        -String idVille
+        -TypeIntervenant type
+        -List~Projet~ projets
+        -List~Candidature~ candidatures
+        +validerIdVille()
+    }
+
+    class DemandeTravail {
+        -String id
+        -String titre
+        -String description
+        -TypeTravail type
+        -Date dateCreation
+        -List~Candidature~ candidats
+        -StatutDemande statut
+        +ajouterCandidat()
+        +mettreAJourStatut()
+    }
+
+    class PreferenceTemps {
+        -String jourSemaine
+        -Time heureDebut
+        -Time heureFin
+        -String district
+        +estEnConflitAvecProjet()
+    }
+
+    class Adresse {
+        -String rue
+        -String numero
+        -String district
+        -String codePostal
+        -String ville
+        +validerDistrict()
+    }
+
+    class Notification {
+        -String id
+        -String message
+        -Date date
+        -TypeNotification type
+        -Boolean estLu
+        -String projetId
+        +marquerCommeLu()
+    }
+
+    class Candidature {
+        -String id
+        -Date dateDebut
+        -Date dateFin
+        -StatutCandidature statut
+        -String message
+        +accepter()
+        +rejeter()
+    }
+
+    class Projet {
+        -String id
+        -String titre
+        -String description
+        -TypeTravail type
+        -List~String~ districts
+        -List~String~ ruesAffectees
+        -Date dateDebut
+        -Date dateFin
+        -String planning
+        -StatutProjet statut
+        -List~Obstruction~ obstructions
+        +verifierPreferencesResident()
+        +mettreAJourStatut()
+    }
+
+    class Obstruction {
+        -String id
+        -String rue
+        -TypeObstruction type
+        -Date dateDebut
+        -Date dateFin
+        -String impact
+        +isActive()
+    }
+
+    class TypeTravail {
+        <<enumeration>>
+        TRAVAUX_ROUTE
+        GAZ_ELECTRICITE
+        CONSTRUCTION
+        AMENAGEMENT_PAYSAGER
+        TRANSPORT_PUBLIC
+        SIGNALISATION_ECLAIRAGE
+        SOUTERRAIN
+        RESIDENTIEL
+        ENTRETIEN_URBAIN
+        RESEAU_TELECOM
+    }
+
+    class StatutProjet {
+        <<enumeration>>
+        PLANIFIE
+        EN_COURS
+        SUSPENDU
+        TERMINE
+    }
+
+    class ServiceAdresse {
+        +obtenirAdresse(String id)
+        +creerAdresse(AdresseDTO)
+        +mettreAJourAdresse(String id, AdresseDTO)
+        +supprimerAdresse(String id)
+    }
+
+    class ServiceEntraves {
+        +obtenirEntraves()
+        +creerEntrave(EntraveDTO)
+        +mettreAJourEntrave(String id, EntraveDTO)
+        +supprimerEntrave(String id)
+    }
+
+    class InitialisationFirebase {
+        +initialiserApp()
+        +obtenirInstance()
+    }
+
+    class ServiceIntervenant {
+        +obtenirIntervenant(String id)
+        +creerIntervenant(IntervenantDTO)
+        +mettreAJourIntervenant(String id, IntervenantDTO)
+        +supprimerIntervenant(String id)
+    }
+
+    class ServiceProjet {
+        +obtenirProjet(String id)
+        +creerProjet(ProjetDTO)
+        +mettreAJourProjet(String id, ProjetDTO)
+        +supprimerProjet(String id)
+    }
+
+    class ServiceDemande {
+        +obtenirDemande(String id)
+        +creerDemande(DemandeDTO)
+        +mettreAJourDemande(String id, DemandeDTO)
+        +supprimerDemande(String id)
+    }
+
+    class ServiceUtilisateur {
+        +obtenirUtilisateur(String id)
+        +creerUtilisateur(UtilisateurDTO)
+        +mettreAJourUtilisateur(String id, UtilisateurDTO)
+        +supprimerUtilisateur(String id)
+        +authentifierUtilisateur(String email, String motDePasse)
+    }
+
+    Scene <|-- SceneGenerale
+    Scene <|-- SceneIntervenant
+    Scene <|-- SceneResident
+    
+    SceneGenerale --> ControlleurUtilisateur
+    SceneIntervenant --> ControlleurIntervenant
+    SceneResident --> ControlleurResident
+    
+    ControlleurUtilisateur --> Utilisateur
+    Utilisateur <|-- Resident
+    Utilisateur <|-- Intervenant
+    Resident --> DemandeTravail
+    Resident --> PreferenceTemps
+    Resident --> Adresse
+    Resident --> Notification
+    Intervenant --> Projet
+    DemandeTravail --> Candidature
+    Projet --> Obstruction
+    Projet --> TypeTravail
+    Projet --> StatutProjet
+
+    ControlleurUtilisateur --> ServiceUtilisateur
+    ControlleurResident --> ServiceAdresse
+    ControlleurResident --> ServiceDemande
+    ControlleurIntervenant --> ServiceIntervenant
+    ControlleurIntervenant --> ServiceProjet
+    ServiceEntraves --> Obstruction
+    InitialisationFirebase --> ServiceUtilisateur
+    InitialisationFirebase --> ServiceAdresse
+    InitialisationFirebase --> ServiceEntraves
+    InitialisationFirebase --> ServiceIntervenant
+    InitialisationFirebase --> ServiceProjet
+    InitialisationFirebase --> ServiceDemande
