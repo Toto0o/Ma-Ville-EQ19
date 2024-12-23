@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConsultProjectScene.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prototype</a> &gt; <a href="index.source.html" class="el_package">prototype.scenes.general.consult</a> &gt; <span class="el_source">ConsultProjectScene.java</span></div><h1>ConsultProjectScene.java</h1><pre class="source lang-java linenums">package prototype.scenes.general.consult;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
+import com.google.api.services.storage.Storage;
+import javafx.application.Platform;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.stage.Screen;
+import prototype.controllers.ApiController;
+import prototype.controllers.SceneController;
+import prototype.scenes.Scenes;
+import prototype.projects.Project;
+import prototype.services.FirebaseCallback;
+import prototype.services.ServiceSession;
+import prototype.users.UserSession;
+
+/**
+ * Scene de consultation des projets
+ * 
+ * &lt;p&gt; Utilise {@link ApiController#getProjects(boolean)} pour charger les projets &lt;/p&gt;
+ *
+ * &lt;p&gt;Accessible par {@link prototype.scenes.general.menu.MenuScene MenuScene}&lt;/p&gt;
+ *
+ * @author Antoine Tessier
+ * @author Anmar Rahman
+ * @author Mostafa Heider
+ */
+
+public class ConsultProjectScene extends Scenes {
+
+    private VBox vBox;
+    private Button backButton, searchButton;
+    private Text title;
+    private ListView&lt;VBox&gt; projectListView;
+    private Text projectCountText;
+    private ComboBox&lt;String&gt; boroughFilterCombo;
+    private ComboBox&lt;String&gt; typeOfWorkFilterCombo;
+    private Set&lt;String&gt; borough, typesOfWork;
+    private ApiController apiController;
+    private ArrayList&lt;Project&gt; projects;
+
+
+    /**
+     * Constructeur
+     * @param sceneController
+     */
+    public ConsultProjectScene(SceneController sceneController) {
+<span class="fc" id="L58">        super(sceneController);</span>
+
+<span class="fc" id="L60">        this.backButton = new Button(&quot;Retour&quot;);</span>
+
+        // Initialize layout elements
+<span class="fc" id="L63">        this.vBox = new VBox();</span>
+<span class="fc" id="L64">        this.vBox.setId(&quot;mainContainer&quot;);</span>
+<span class="fc" id="L65">        this.title = new Text(&quot;Consulter les travaux en cours&quot;);</span>
+<span class="fc" id="L66">        this.projectListView = new ListView&lt;&gt;();</span>
+<span class="fc" id="L67">        this.projectListView.setId(&quot;projectListView&quot;);</span>
+<span class="fc" id="L68">        this.boroughFilterCombo = new ComboBox&lt;&gt;();</span>
+<span class="fc" id="L69">        this.boroughFilterCombo.setId(&quot;boroughFilterCombo&quot;);</span>
+<span class="fc" id="L70">        this.typeOfWorkFilterCombo = new ComboBox&lt;&gt;();</span>
+<span class="fc" id="L71">        this.typeOfWorkFilterCombo.setId(&quot;typeOfWorkFilterCombo&quot;);</span>
+<span class="fc" id="L72">        this.searchButton = new Button(&quot;Rechercher&quot;);</span>
+<span class="fc" id="L73">        this.searchButton.setId(&quot;searchButton&quot;);</span>
+
+<span class="fc" id="L75">        this.borough = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L76">        this.typesOfWork = new HashSet&lt;&gt;();</span>
+
+<span class="fc" id="L78">        this.apiController = ServiceSession.getInstance().getController();</span>
+
+<span class="fc" id="L80">    }</span>
+    
+    @Override
+    public void setScene() {
+
+        // Set up the root layout and title font
+<span class="fc" id="L86">        this.root.setCenter(vBox);</span>
+<span class="fc" id="L87">        this.title.setFont(new Font(&quot;Arial&quot;, 30));</span>
+<span class="fc" id="L88">        this.title.setStyle(&quot;-fx-font-weight: bold;&quot;);</span>
+        
+
+        // Set the layout for the filters
+<span class="fc" id="L92">        HBox filterBox = new HBox(10);</span>
+<span class="fc" id="L93">        filterBox.setAlignment(Pos.CENTER);</span>
+<span class="fc" id="L94">        filterBox.getChildren().addAll(new Text(&quot;Filtrer par quartier: &quot;), this.boroughFilterCombo,</span>
+                new Text(&quot;Filtrer par type de travaux: &quot;), this.typeOfWorkFilterCombo);
+
+        // Set default values for ComboBoxes
+<span class="fc" id="L98">        boroughFilterCombo.setValue(&quot;Aucun filtre&quot;);</span>
+<span class="fc" id="L99">        typeOfWorkFilterCombo.setValue(&quot;Aucun filtre&quot;);</span>
+
+        // Set the layout for the project list and count
+<span class="fc" id="L102">        HBox bottomBox = new HBox(10);</span>
+<span class="fc" id="L103">        bottomBox.setAlignment(Pos.BOTTOM_RIGHT);</span>
+        
+
+<span class="fc" id="L106">        this.projectListView.getItems().clear();</span>
+
+        try {
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">            if (this.projects != null) this.projects.clear();</span>
+
+<span class="fc bfc" id="L111" title="All 2 branches covered.">            for (Project project : apiController.getProjects()) {</span>
+<span class="fc" id="L112">                projectListView.getItems().add(project.afficher());</span>
+<span class="fc" id="L113">                borough.add(project.getQuartiersAffected());</span>
+<span class="fc" id="L114">                typesOfWork.add(project.getDescription());</span>
+<span class="fc" id="L115">            }</span>
+
+<span class="fc" id="L117">            FirebaseCallback&lt;ArrayList&lt;Project&gt;&gt; callback = new FirebaseCallback&lt;&gt;() {</span>
+                @Override
+                public void onSucessReturn(ArrayList&lt;Project&gt; projects) {
+<span class="nc" id="L120">                    Platform.runLater(() -&gt; {</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">                        for (Project project : projects) {</span>
+<span class="nc" id="L122">                            projectListView.getItems().add(project.afficher());</span>
+<span class="nc" id="L123">                            borough.add(project.getQuartiersAffected());</span>
+<span class="nc" id="L124">                            typesOfWork.add(project.getDescription());</span>
+<span class="nc" id="L125">                        }</span>
+
+<span class="nc" id="L127">                        projectCountText = new Text(&quot;Total des projets : &quot; + projectListView.getItems().size());</span>
+<span class="nc" id="L128">                        projectCountText.setFont(new Font(&quot;Arial&quot;, 14));</span>
+<span class="nc" id="L129">                        bottomBox.getChildren().add(projectCountText);</span>
+<span class="nc" id="L130">                    });</span>
+<span class="nc" id="L131">                }</span>
+
+                @Override
+                public void onFailure(String message) {
+<span class="nc" id="L135">                }</span>
+
+                @Override
+<span class="nc" id="L138">                public void onSucess() {}</span>
+            };
+            try {
+<span class="fc" id="L141">                this.apiController.getProjects(callback);</span>
+<span class="nc" id="L142">            } catch (Exception e) {</span>
+<span class="nc" id="L143">                e.printStackTrace();</span>
+<span class="fc" id="L144">            }</span>
+
+
+<span class="nc" id="L147">        } catch (Exception e) {</span>
+<span class="nc" id="L148">            VBox errorBox = new VBox();</span>
+<span class="nc" id="L149">            errorBox.getChildren().add(new Text(e.getMessage()));</span>
+<span class="nc" id="L150">            this.projectListView.getItems().add(errorBox);</span>
+<span class="fc" id="L151">        }</span>
+
+        
+
+        // Add components to the VBox
+<span class="fc" id="L156">        this.vBox.getChildren().addAll(this.title, filterBox, this.searchButton, this.projectListView, bottomBox, this.backButton);</span>
+<span class="fc" id="L157">        this.vBox.setAlignment(Pos.TOP_CENTER);</span>
+<span class="fc" id="L158">        this.vBox.setSpacing(20);</span>
+
+<span class="fc" id="L160">        double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();</span>
+<span class="fc" id="L161">        double listViewHeight = screenHeight * 0.6;</span>
+<span class="fc" id="L162">        this.projectListView.setPrefHeight(listViewHeight);</span>
+
+        // Set back button action
+<span class="fc" id="L165">        this.backButton.setOnMouseClicked((event) -&gt; {</span>
+<span class="nc" id="L166">            this.sceneController.newScene(&quot;menu&quot;);</span>
+<span class="nc" id="L167">        });</span>
+
+<span class="fc" id="L169">        this.searchButton.setOnMouseClicked((even) -&gt; {</span>
+<span class="fc" id="L170">            this.sceneController.newScene(&quot;searchProject&quot;);</span>
+<span class="fc" id="L171">        });</span>
+
+<span class="fc" id="L173">        boroughFilterCombo.getItems().addAll(this.borough);</span>
+<span class="fc" id="L174">        boroughFilterCombo.getItems().add(&quot;Aucun filtre&quot;);</span>
+
+<span class="fc" id="L176">        typeOfWorkFilterCombo.getItems().addAll(this.typesOfWork);</span>
+<span class="fc" id="L177">        typeOfWorkFilterCombo.getItems().add(&quot;Aucun filtre&quot;);</span>
+
+        // Set up the ComboBoxes for filtering
+<span class="pc" id="L180">        boroughFilterCombo.setOnAction(e -&gt; filterProjects());</span>
+<span class="pc" id="L181">        typeOfWorkFilterCombo.setOnAction(e -&gt; filterProjects());</span>
+<span class="fc" id="L182">    }</span>
+
+    /**
+     * Méthode pour filtrer les projets lors de l'activation du filtre
+     */
+    private void filterProjects() {
+<span class="nc" id="L188">        String selectedBorough = boroughFilterCombo.getValue();</span>
+<span class="nc" id="L189">        String selectedType = typeOfWorkFilterCombo.getValue();</span>
+
+        // Fetch the original list of projects from the API again and filter based on
+        // selection
+       
+<span class="nc" id="L194">        projectListView.getItems().clear();</span>
+
+<span class="nc bnc" id="L196" title="All 2 branches missed.">        if (this.projects != null) this.projects.clear();</span>
+
+        try {
+<span class="nc" id="L199">            this.projects = apiController.getProjects();</span>
+
+            // Loop through the projects and apply the filters
+<span class="nc bnc" id="L202" title="All 2 branches missed.">            for (Project project : this.projects) {</span>
+
+<span class="nc" id="L204">                String boroughid = project.getQuartiersAffected();</span>
+<span class="nc" id="L205">                String reasonCategory = project.getDescription();</span>
+
+    
+                // Check if selectedBorough or selectedType is null before comparison
+<span class="nc bnc" id="L209" title="All 4 branches missed.">                boolean matchesBorough = (selectedBorough == null || selectedBorough.equals(&quot;Aucun filtre&quot;))</span>
+<span class="nc bnc" id="L210" title="All 2 branches missed.">                        || boroughid.equals(selectedBorough);</span>
+<span class="nc bnc" id="L211" title="All 4 branches missed.">                boolean matchesTypeOfWork = (selectedType == null || selectedType.equals(&quot;Aucun filtre&quot;))</span>
+<span class="nc bnc" id="L212" title="All 2 branches missed.">                        || reasonCategory.equals(selectedType);</span>
+                
+
+<span class="nc bnc" id="L215" title="All 4 branches missed.">                if (matchesBorough &amp;&amp; matchesTypeOfWork) {</span>
+<span class="nc" id="L216">                    projectListView.getItems().add(project.afficher());</span>
+                }
+                
+<span class="nc" id="L219">            }</span>
+<span class="nc" id="L220">        } catch (Exception e) {</span>
+<span class="nc" id="L221">            VBox errorBox = new VBox();</span>
+<span class="nc" id="L222">            errorBox.getChildren().add(new Text(e.getMessage()));</span>
+<span class="nc" id="L223">            projectListView.getItems().add(errorBox);</span>
+<span class="nc" id="L224">        }</span>
+
+<span class="nc" id="L226">        projectCountText.setText(&quot;Total des projets: &quot; + projectListView.getItems().size());</span>
+<span class="nc" id="L227">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

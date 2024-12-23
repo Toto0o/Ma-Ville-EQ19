@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RegisterScene.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prototype</a> &gt; <a href="index.source.html" class="el_package">prototype.scenes.general.register</a> &gt; <span class="el_source">RegisterScene.java</span></div><h1>RegisterScene.java</h1><pre class="source lang-java linenums">package prototype.scenes.general.register;
+
+import com.google.auth.oauth2.UserCredentials;
+import com.google.firebase.auth.internal.GetAccountInfoResponse;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import prototype.controllers.ApiController;
+import prototype.controllers.SceneController;
+import prototype.scenes.Scenes;
+import prototype.services.ServiceSession;
+import prototype.users.*;
+
+/**
+ * Scene pour authentifier un utilisateur
+ *
+ * &lt;p&gt;Utilise
+ * &lt;ul&gt;
+ *     &lt;li&gt;{@link ApiController#register(Resident)} pour les résidents&lt;/li&gt;
+ *     &lt;li&gt;{@link ApiController#register(Intervenant)} pour les intervenants&lt;/li&gt;
+ * &lt;/ul&gt;
+ * &lt;/p&gt;
+ *
+ * &lt;p&gt;Accessible par {@link RoleSelectionScene}&lt;/p&gt;
+ */
+public class RegisterScene extends Scenes {
+
+    private TextField nameField, lastNameField, streetNumberField, streetNameField, postalCodeField, emailField, phoneField, password1Field, password2Field, cityIDField;
+    private ComboBox&lt;IntervenantType&gt; intervenantType;
+    private DatePicker birthdayPicker;
+    private Label status;
+    private Button submitButton, intervenantSubmitButton, backButton;
+
+    private boolean intervenant;
+    private ApiController apiController;
+    private UserCredentialsVerifier userCredentials;
+
+    /**
+     * Constructeur
+     * @param sceneController
+     * @param intervenant true si l'utilisateur désire s'enregistrer comme intervenant (à partir de {@link RoleSelectionScene})
+     */
+    public RegisterScene(SceneController sceneController, boolean intervenant) {
+<span class="fc" id="L49">        super(sceneController);</span>
+<span class="fc" id="L50">        this.intervenant = intervenant;</span>
+<span class="fc" id="L51">        this.apiController = ServiceSession.getInstance().getController();</span>
+<span class="fc" id="L52">        this.userCredentials = new UserCredentialsVerifier(this.apiController);</span>
+<span class="fc" id="L53">    }</span>
+
+
+    @Override
+    public void setScene() {
+        // Initialize form fields
+<span class="fc" id="L59">        this.nameField = new TextField();</span>
+<span class="fc" id="L60">        this.nameField.setId(&quot;name&quot;);</span>
+<span class="fc" id="L61">        this.lastNameField = new TextField();</span>
+<span class="fc" id="L62">        this.lastNameField.setId(&quot;lastName&quot;);</span>
+<span class="fc" id="L63">        this.birthdayPicker = new DatePicker();</span>
+<span class="fc" id="L64">        this.birthdayPicker.setId(&quot;birthday&quot;);</span>
+<span class="fc" id="L65">        this.streetNameField = new TextField();</span>
+<span class="fc" id="L66">        this.streetNameField.setId(&quot;streetName&quot;);</span>
+<span class="fc" id="L67">        this.streetNumberField = new TextField();</span>
+<span class="fc" id="L68">        this.streetNumberField.setId(&quot;streetNumber&quot;);</span>
+<span class="fc" id="L69">        this.postalCodeField = new TextField();</span>
+<span class="fc" id="L70">        this.postalCodeField.setId(&quot;postalCode&quot;);</span>
+<span class="fc" id="L71">        this.emailField = new TextField();</span>
+<span class="fc" id="L72">        this.emailField.setId(&quot;email&quot;);</span>
+<span class="fc" id="L73">        this.phoneField = new TextField();</span>
+<span class="fc" id="L74">        this.phoneField.setId(&quot;phone&quot;);</span>
+<span class="fc" id="L75">        this.password1Field = new TextField();</span>
+<span class="fc" id="L76">        this.password1Field.setId(&quot;password1&quot;);</span>
+<span class="fc" id="L77">        this.password2Field = new TextField();</span>
+<span class="fc" id="L78">        this.password2Field.setId(&quot;password2&quot;);</span>
+<span class="fc" id="L79">        this.cityIDField = new TextField();</span>
+<span class="fc" id="L80">        this.cityIDField.setId(&quot;cityID&quot;);</span>
+<span class="fc" id="L81">        this.intervenantType = new ComboBox&lt;&gt;();</span>
+<span class="fc" id="L82">        this.intervenantType.getItems().addAll(IntervenantType.values());</span>
+<span class="fc" id="L83">        this.status = new Label();</span>
+<span class="fc" id="L84">        this.status.setId(&quot;status&quot;);</span>
+
+<span class="fc" id="L86">        this.nameField.setMaxWidth(250);</span>
+<span class="fc" id="L87">        this.lastNameField.setMaxWidth(250);</span>
+<span class="fc" id="L88">        this.birthdayPicker.setMinWidth(250);</span>
+<span class="fc" id="L89">        this.streetNumberField.setMaxWidth(250);</span>
+<span class="fc" id="L90">        this.streetNameField.setMaxWidth(250);</span>
+<span class="fc" id="L91">        this.postalCodeField.setMaxWidth(250);</span>
+<span class="fc" id="L92">        this.emailField.setMaxWidth(250);</span>
+<span class="fc" id="L93">        this.phoneField.setMaxWidth(250);</span>
+<span class="fc" id="L94">        this.password1Field.setMaxWidth(250);</span>
+<span class="fc" id="L95">        this.password2Field.setMaxWidth(250);</span>
+<span class="fc" id="L96">        this.cityIDField.setMaxWidth(250);</span>
+
+<span class="fc" id="L98">        this.cityIDField.setVisible(this.intervenant);</span>
+<span class="fc" id="L99">        this.cityIDField.setManaged(this.intervenant);</span>
+        
+
+<span class="fc" id="L102">        this.submitButton = new Button(&quot;Submit&quot;);</span>
+<span class="fc" id="L103">        this.submitButton.setId(&quot;submitButton&quot;);</span>
+<span class="fc" id="L104">        this.intervenantSubmitButton = new Button(&quot;Submit&quot;);</span>
+<span class="fc" id="L105">        this.intervenantSubmitButton.setId(&quot;intervenantSubmitButton&quot;);</span>
+<span class="fc" id="L106">        this.backButton = new Button(&quot;Back&quot;);</span>
+<span class="fc" id="L107">        this.backButton.setId(&quot;backButton&quot;);</span>
+
+<span class="fc" id="L109">        this.intervenantSubmitButton.setVisible(this.intervenant);</span>
+<span class="fc" id="L110">        this.intervenantSubmitButton.setVisible(this.intervenant);</span>
+
+<span class="fc bfc" id="L112" title="All 2 branches covered.">        this.submitButton.setVisible(!this.intervenant);</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">        this.submitButton.setManaged(!this.intervenant);</span>
+
+<span class="fc" id="L115">        this.intervenantType.getItems().addAll(IntervenantType.values());</span>
+<span class="fc" id="L116">        this.intervenantType.setVisible(this.intervenant);</span>
+<span class="fc" id="L117">        this.intervenantType.setManaged(this.intervenant);</span>
+
+<span class="fc" id="L119">        Text cityIDText = labelText(&quot;City ID&quot;);</span>
+<span class="fc" id="L120">        cityIDText.setVisible(this.intervenant);</span>
+<span class="fc" id="L121">        cityIDText.setManaged(this.intervenant);</span>
+        
+<span class="fc" id="L123">        Text intervenantTypeText = labelText(&quot;Type d'Intervenant&quot;);</span>
+<span class="fc" id="L124">        intervenantTypeText.setVisible(this.intervenant);</span>
+<span class="fc" id="L125">        intervenantTypeText.setManaged(this.intervenant);</span>
+
+<span class="fc" id="L127">        VBox vBox = new VBox(10);</span>
+<span class="fc" id="L128">        vBox.setAlignment(Pos.CENTER);</span>
+<span class="fc" id="L129">        vBox.setStyle(&quot;-fx-text-fill: white;&quot;);</span>
+<span class="fc" id="L130">        vBox.getChildren().addAll(</span>
+<span class="fc" id="L131">                labelText(&quot;Name&quot;), this.nameField,</span>
+<span class="fc" id="L132">                labelText(&quot;Last Name&quot;), this.lastNameField,</span>
+<span class="fc" id="L133">                labelText(&quot;Enter your birhtday&quot;), this.birthdayPicker,</span>
+<span class="fc" id="L134">                labelText(&quot;Street number&quot;), this.streetNumberField,</span>
+<span class="fc" id="L135">                labelText(&quot;Street name&quot;), this.streetNameField,</span>
+<span class="fc" id="L136">                labelText(&quot;Code postal&quot;), this.postalCodeField,</span>
+<span class="fc" id="L137">                labelText(&quot;Email&quot;), this.emailField,</span>
+<span class="fc" id="L138">                labelText(&quot;Phone&quot;), this.phoneField,</span>
+<span class="fc" id="L139">                labelText(&quot;Password&quot;), this.password1Field,</span>
+<span class="fc" id="L140">                labelText(&quot;Enter password again&quot;), this.password2Field,</span>
+                cityIDText, this.cityIDField, // Adding cityID input field
+                intervenantTypeText, this.intervenantType,
+                this.status,
+                this.submitButton,
+                this.intervenantSubmitButton,
+                this.backButton);
+
+<span class="fc" id="L148">        this.root.setCenter(vBox);</span>
+
+        // Set actions for buttons
+<span class="pc" id="L151">        backButton.setOnMouseClicked(event -&gt; this.sceneController.newScene(&quot;roleSelection&quot;));</span>
+<span class="fc" id="L152">        submitButton.setOnMouseClicked((event) -&gt; { try {</span>
+<span class="pc" id="L153">            this.userCredentials.verifyResidentRegister(</span>
+<span class="fc" id="L154">                    password1Field.getText().trim(),</span>
+<span class="fc" id="L155">                    password2Field.getText().trim(),</span>
+<span class="fc" id="L156">                    birthdayPicker.getValue(),</span>
+<span class="fc" id="L157">                    emailField.getText().trim(),</span>
+                    new Address(
+<span class="fc" id="L159">                            streetNumberField.getText().trim(),</span>
+<span class="fc" id="L160">                            streetNameField.getText().trim(),</span>
+<span class="fc" id="L161">                            postalCodeField.getText().trim()</span>
+                    )
+            );
+<span class="fc" id="L164">        } catch (Exception e) {</span>
+<span class="fc" id="L165">            this.status.setText(e.getMessage());</span>
+<span class="nc" id="L166">        }</span>
+<span class="fc" id="L167">        Address address = new Address(</span>
+<span class="fc" id="L168">                streetNumberField.getText().trim(),</span>
+<span class="fc" id="L169">                streetNameField.getText().trim(),</span>
+<span class="fc" id="L170">                postalCodeField.getText().trim()</span>
+        );
+        try {
+<span class="fc" id="L173">            this.apiController.getQuartier(address.getPostalCode());</span>
+<span class="nc" id="L174">        } catch (Exception e) {</span>
+<span class="nc" id="L175">            this.status.setText(e.getMessage());</span>
+<span class="fc" id="L176">        }</span>
+<span class="fc" id="L177">        Resident resident = new Resident(</span>
+<span class="fc" id="L178">                nameField.getText().trim(),</span>
+<span class="fc" id="L179">                lastNameField.getText().trim(),</span>
+<span class="fc" id="L180">                password1Field.getText().trim(),</span>
+<span class="fc" id="L181">                birthdayPicker.getValue().format(this.formatter),</span>
+                address,
+<span class="fc" id="L183">                phoneField.getText().trim(),</span>
+<span class="fc" id="L184">                emailField.getText().trim()</span>
+        );
+        try {
+<span class="fc" id="L187">            this.apiController.register(resident);</span>
+<span class="nc" id="L188">        } catch (Exception e) {</span>
+<span class="nc" id="L189">            status.setText(e.getMessage());</span>
+<span class="fc" id="L190">        }</span>
+<span class="fc" id="L191">        this.sceneController.newScene(&quot;login&quot;);</span>
+<span class="fc" id="L192">        });</span>
+        
+<span class="fc" id="L194">        intervenantSubmitButton.setOnMouseClicked((event) -&gt; {</span>
+        try {
+<span class="nc" id="L196">            this.userCredentials.verifyIntervenantRegister(</span>
+<span class="nc" id="L197">                    password1Field.getText().trim(),</span>
+<span class="nc" id="L198">                    password2Field.getText().trim(),</span>
+<span class="nc" id="L199">                    cityIDField.getText().trim()</span>
+            );
+<span class="nc" id="L201">        } catch (Exception e) {</span>
+<span class="nc" id="L202">            this.status.setText(e.getMessage());</span>
+<span class="nc" id="L203">        }</span>
+<span class="nc" id="L204">        Address address = new Address(</span>
+<span class="nc" id="L205">                streetNumberField.getText().trim(),</span>
+<span class="nc" id="L206">                streetNameField.getText().trim(),</span>
+<span class="nc" id="L207">                postalCodeField.getText().trim().toLowerCase()</span>
+        );
+
+        try {
+<span class="nc" id="L211">            address.setBorough(this.apiController.getQuartier(address.getPostalCode()));</span>
+<span class="nc" id="L212">        } catch (Exception e) {</span>
+<span class="nc" id="L213">            this.status.setText(e.getMessage());</span>
+<span class="nc" id="L214">        }</span>
+
+        try {
+<span class="nc" id="L217">            Intervenant intervenant = new Intervenant(</span>
+<span class="nc" id="L218">                    nameField.getText().trim(),</span>
+<span class="nc" id="L219">                    lastNameField.getText().trim(),</span>
+<span class="nc" id="L220">                    password1Field.getText().trim(),</span>
+<span class="nc" id="L221">                    birthdayPicker.getValue().format(this.formatter),</span>
+<span class="nc" id="L222">                    phoneField.getText().trim(),</span>
+<span class="nc" id="L223">                    emailField.getText().trim(),</span>
+                    address,
+<span class="nc" id="L225">                    cityIDField.getText().trim()</span>
+            );
+<span class="nc" id="L227">            this.apiController.register(intervenant);</span>
+<span class="nc" id="L228">        } catch (Exception e) {</span>
+<span class="nc" id="L229">            this.status.setText(e.getMessage());</span>
+<span class="nc" id="L230">        }</span>
+<span class="nc" id="L231">        this.sceneController.newScene(&quot;login&quot;);</span>
+<span class="nc" id="L232">        });</span>
+<span class="fc" id="L233">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

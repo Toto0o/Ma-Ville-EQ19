@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FirebaseInitialize.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prototype</a> &gt; <a href="index.source.html" class="el_package">prototype.services</a> &gt; <span class="el_source">FirebaseInitialize.java</span></div><h1>FirebaseInitialize.java</h1><pre class="source lang-java linenums">package prototype.services;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.firestore.Firestore;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseToken;
+import com.google.firebase.cloud.FirestoreClient;
+
+
+/**
+ * Initie la connexion avec Firebase;
+ * 
+ * &lt;p&gt; Appeler {@link #initialize()} à l'instanciation pour initier la connexion avec Firebase &lt;/p&gt;
+ * 
+ * @author Antoine Tessier
+ * @author Anmar Rahman
+ * @author Mostafa Heider
+ * 
+ */
+
+<span class="nc" id="L27">public class FirebaseInitialize {</span>
+
+    private static Firestore firestore;
+    private static FirebaseAuth firebaseAuth; // Declare FirebaseAuth
+
+
+    /**
+     * Initie la connexion avec Firebase si elle n'est pas déja initialisé avec &lt;code&gt;prototype/serviceAccount.json&lt;/code&gt;
+     * 
+     * @throws RuntimeException du a un erreur de chargement du fichier de service de compte ou dans une erreur d'initialisation de Firebase
+     *      
+     */
+    public static void initialize() {
+
+<span class="nc bnc" id="L41" title="All 2 branches missed.">        if (firestore != null) {</span>
+<span class="nc" id="L42">            System.out.println(&quot;Firebase Firestore is already initialized.&quot;);</span>
+<span class="nc" id="L43">            return;</span>
+        }
+
+<span class="nc" id="L46">        String serviceAccountPath = &quot;src/main/resources/prototype/serviceAccount.json&quot;;</span>
+
+<span class="nc" id="L48">        try (FileInputStream serviceAccount = new FileInputStream(serviceAccountPath)) {</span>
+<span class="nc" id="L49">            FirebaseOptions options = new FirebaseOptions.Builder()</span>
+<span class="nc" id="L50">                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))</span>
+<span class="nc" id="L51">                    .build();</span>
+
+            // Initialize FirebaseApp
+
+<span class="nc" id="L55">            FirebaseApp.initializeApp(options);</span>
+
+
+            // Initialize Firestore and Auth
+<span class="nc" id="L59">            firestore = FirestoreClient.getFirestore();</span>
+<span class="nc" id="L60">            firebaseAuth = FirebaseAuth.getInstance(); // Initialize FirebaseAuth</span>
+<span class="nc" id="L61">            System.out.println(&quot;Firebase Firestore and Auth initialized successfully.&quot;);</span>
+<span class="nc" id="L62">        } catch (IOException e) {</span>
+<span class="nc" id="L63">        System.err.println(&quot;Failed to initialize Firebase: &quot; + e.getMessage());</span>
+<span class="nc" id="L64">        e.printStackTrace();</span>
+<span class="nc" id="L65">        }</span>
+<span class="nc" id="L66">    }</span>
+
+    public static Firestore getFirestore() {
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        if (firestore == null) {</span>
+<span class="nc" id="L70">            throw new IllegalStateException(&quot;Firestore has not been initialized. Call initialize() first.&quot;);</span>
+        }
+<span class="nc" id="L72">        return firestore;</span>
+    }
+
+    public static FirebaseAuth getFirebaseAuth() {
+<span class="nc bnc" id="L76" title="All 2 branches missed.">        if (firebaseAuth == null) {</span>
+<span class="nc" id="L77">            throw new IllegalStateException(&quot;FirebaseAuth has not been initialized. Call initialize() first.&quot;);</span>
+        }
+<span class="nc" id="L79">        return firebaseAuth;</span>
+    }
+
+    // Method to verify Firebase ID Token and extract UID
+    public static String getUidFromToken(String idToken) throws FirebaseAuthException {
+<span class="nc" id="L84">        FirebaseToken decodedToken = firebaseAuth.verifyIdToken(idToken);</span>
+<span class="nc" id="L85">        return decodedToken.getUid(); // Extract UID from the decoded token</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

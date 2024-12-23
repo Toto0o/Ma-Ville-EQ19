@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Request.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prototype</a> &gt; <a href="index.source.html" class="el_package">prototype.projects</a> &gt; <span class="el_source">Request.java</span></div><h1>Request.java</h1><pre class="source lang-java linenums">package prototype.projects;
+
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Object contentant les informations d'un requêtes.
+ * 
+ * &lt;p&gt; Permet d'être affiché graphiquement avec {@link #afficher()} &lt;/p&gt;
+ *
+ * @author Antoine Tessier
+ * @author Anmar Rahman
+ * @author Mostafa Heider
+ */
+
+public class Request {
+
+    /**
+     * Le titre de la requête
+     */
+    private String title;
+
+    /**
+     * La description de la requête
+     */
+    private String description;
+
+    /**
+     * Le {@link Type} de la requête
+     */
+    private Type type;
+
+    /**
+     * La date de début espéré
+     */
+    private String date;
+
+    /**
+     * Le {@link Status} de la requête
+     */
+    private String status;
+
+    /**
+     * Le quartier impacté
+     */
+    private String quartier;
+
+    /**
+     * La rue impacté
+     */
+    private String street;
+
+<span class="nc" id="L58">    public Request() {}</span>
+    /**
+     * Constructeur
+     * @param title le titre de la requête
+     * @param description la description de la requête
+     * @param type type de la requête
+     * @param date la date espérée
+     * @param status {@link Status} de la requête
+     * @param quartier le quartier
+     * @param street la rue impacté
+     */
+<span class="nc" id="L69">    public Request(String title, String description, Type type, String date, String status, String quartier, String street) {</span>
+<span class="nc" id="L70">        this.title = title;</span>
+<span class="nc" id="L71">        this.description = description;</span>
+<span class="nc" id="L72">        this.type = type;</span>
+<span class="nc" id="L73">        this.date = date;</span>
+<span class="nc" id="L74">        this.status = status;</span>
+<span class="nc" id="L75">        this.quartier = quartier;</span>
+<span class="nc" id="L76">        this.street = street;</span>
+
+<span class="nc" id="L78">    }</span>
+
+    // Getters and setters
+    public String getTitle() {
+<span class="nc" id="L82">        return title;</span>
+    }
+
+    public void setTitle(String title) {
+<span class="nc" id="L86">        this.title = title;</span>
+<span class="nc" id="L87">    }</span>
+
+    public String getDescription() {
+<span class="nc" id="L90">        return description;</span>
+    }
+
+    public void setDescription(String description) {
+<span class="nc" id="L94">        this.description = description;</span>
+<span class="nc" id="L95">    }</span>
+
+    public Type getType() {
+<span class="nc" id="L98">        return type;</span>
+    }
+
+    public void setType(Type type) {
+<span class="nc" id="L102">        this.type = type;</span>
+<span class="nc" id="L103">    }</span>
+
+    public String getDate() {
+<span class="nc" id="L106">        return date;</span>
+    }
+
+    public void setDate(String date) {
+<span class="nc" id="L110">        this.date = date;</span>
+<span class="nc" id="L111">    }</span>
+
+    public String getStatus() {
+<span class="nc" id="L114">        return status;</span>
+    }
+
+    public void setStatus(String status) {
+<span class="nc" id="L118">        this.status = status;</span>
+<span class="nc" id="L119">    }</span>
+
+    // Getter for quartier
+    public String getQuartier() {
+<span class="nc" id="L123">        return quartier;</span>
+    }
+
+    // Setter for quartier (if needed)
+    public void setQuartier(String quartier) {
+<span class="nc" id="L128">        this.quartier = quartier;</span>
+<span class="nc" id="L129">    }</span>
+
+    public String getStreet() {
+<span class="nc" id="L132">        return this.street;</span>
+    }
+
+    public void setStreet(String street) {
+<span class="nc" id="L136">        this.street = street;</span>
+<span class="nc" id="L137">    }</span>
+
+
+    /**
+     * Méthode pour afficher graphiquemen la requête
+     *
+     * @return {@link HBox}
+     */
+    public VBox afficher() {
+<span class="nc" id="L146">        List&lt;Text&gt; texts = new ArrayList&lt;&gt;();</span>
+
+<span class="nc" id="L148">        Text title = new Text(&quot;Titre : &quot;);</span>
+<span class="nc" id="L149">        title.setStyle(&quot;-fx-font-weight: bold&quot;);</span>
+<span class="nc" id="L150">        HBox titleBox = new HBox(5);</span>
+<span class="nc" id="L151">        titleBox.getChildren().addAll(title, new Text(getTitle()));</span>
+
+<span class="nc" id="L153">        Text description = new Text(&quot;Description : &quot;);</span>
+<span class="nc" id="L154">        description.setStyle(&quot;-fx-font-weight: bold&quot;);</span>
+<span class="nc" id="L155">        Text descriptionText = new Text(getDescription());</span>
+<span class="nc" id="L156">        descriptionText.setWrappingWidth(300);</span>
+<span class="nc" id="L157">        HBox descriptionBox = new HBox(5);</span>
+<span class="nc" id="L158">        descriptionBox.getChildren().addAll(description, descriptionText);</span>
+
+<span class="nc" id="L160">        Text type = new Text(&quot;Type : &quot;);</span>
+<span class="nc" id="L161">        type.setStyle(&quot;-fx-font-weight: bold&quot;);</span>
+<span class="nc" id="L162">        HBox typeBox = new HBox(5);</span>
+<span class="nc" id="L163">        typeBox.getChildren().addAll(type /*,new Text(getType().toString())*/);</span>
+<span class="nc" id="L164">        Text date = new Text(&quot;Date : &quot;);</span>
+<span class="nc" id="L165">        date.setStyle(&quot;-fx-font-weight: bold&quot;);</span>
+
+<span class="nc" id="L167">        Text status = new Text(&quot;Status : &quot;);</span>
+<span class="nc" id="L168">        status.setStyle(&quot;-fx-font-weight: bold&quot;);</span>
+<span class="nc" id="L169">        HBox statusBox = new HBox(5);</span>
+<span class="nc" id="L170">        statusBox.getChildren().addAll(status, new Text(getStatus().toString()));</span>
+
+<span class="nc" id="L172">        Text quartier = new Text(&quot;Quartier : &quot;);</span>
+<span class="nc" id="L173">        quartier.setStyle(&quot;-fx-font-weight: bold&quot;);</span>
+<span class="nc" id="L174">        HBox quartierBox = new HBox(5);</span>
+<span class="nc" id="L175">        quartierBox.getChildren().addAll(quartier, new Text(getQuartier()));</span>
+
+<span class="nc" id="L177">        Text street = new Text(&quot;Street : &quot;);</span>
+<span class="nc" id="L178">        street.setStyle(&quot;-fx-font-weight: bold&quot;);</span>
+<span class="nc" id="L179">        HBox streetBox = new HBox(5);</span>
+<span class="nc" id="L180">        streetBox.getChildren().addAll(street, new Text(getStreet()));</span>
+
+        // Create a bordered HBox for each request
+<span class="nc" id="L183">        VBox requestBox = new VBox(10);</span>
+<span class="nc" id="L184">        requestBox.setStyle(&quot;-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;&quot; +</span>
+                &quot;-fx-background-color: white&quot;);
+<span class="nc" id="L186">        requestBox.getChildren().addAll(</span>
+                titleBox,
+                descriptionBox,
+                typeBox,
+                statusBox,
+                quartierBox,
+                streetBox
+        );
+<span class="nc" id="L194">        requestBox.setMaxWidth(400);</span>
+<span class="nc" id="L195">        return requestBox;</span>
+    }
+
+    /**
+     * Méthode pour formatter les dates
+     * @param date la date a formater
+     * @return {@link String} la date formattée
+     */
+    private String formatDate(String date) {
+<span class="nc bnc" id="L204" title="All 4 branches missed.">        if (date != null &amp;&amp; date.length() == 8) {</span>
+            // Convert from YYYYMMDD to YYYY/MM/DD
+<span class="nc" id="L206">            return date.substring(0, 4) + &quot;/&quot; + date.substring(4, 6) + &quot;/&quot; + date.substring(6, 8);</span>
+        }
+<span class="nc" id="L208">        return date; // Return as is if the format is incorrect</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

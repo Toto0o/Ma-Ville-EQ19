@@ -1,0 +1,59 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+prototype,prototype.scenes.general.register,RegisterScene,124,578,0,4,34,109,2,5,2,3
+prototype,prototype.scenes.general.register,RoleSelectionScene,0,128,0,0,0,22,0,5,0,5
+prototype,prototype.notifications,Notification,121,0,2,0,35,0,15,0,14,0
+prototype,prototype.scenes.general.login,LoginScene.new FirebaseCallback() {...},34,0,0,0,9,0,6,0,6,0
+prototype,prototype.scenes.general.login,LoginScene,60,149,6,0,19,26,7,2,4,2
+prototype,prototype.scenes.general.settings,PreferencesPlagesHorairesScene,91,491,9,15,21,68,10,11,5,4
+prototype,prototype.scenes.general.settings,InfoSettingsScene,37,329,4,0,9,55,4,2,2,2
+prototype,prototype.scenes.general.settings,SettingsScene,5,125,0,0,2,27,1,5,1,5
+prototype,prototype.scenes.general.settings,NotificationSettingsScene,5,56,0,0,2,12,1,2,1,2
+prototype,prototype,Main,7,0,0,0,4,0,2,0,2,0
+prototype,prototype,MaVille,6,15,0,0,3,5,2,2,2,2
+prototype,prototype.scenes,Scenes,0,56,0,0,0,15,0,4,0,4
+prototype,prototype.entraves,Entrave,113,0,0,0,22,0,6,0,6,0
+prototype,prototype.projects,Request,337,0,4,0,68,0,20,0,18,0
+prototype,prototype.projects,Type,25,147,4,0,4,24,3,3,1,3
+prototype,prototype.projects,Status,81,0,4,0,15,0,6,0,4,0
+prototype,prototype.projects,Project,307,0,4,0,81,0,28,0,26,0
+prototype,prototype.scenes.general.menu,LaunchScene,0,147,0,0,0,27,0,5,0,5
+prototype,prototype.scenes.general.menu,MenuScene,0,368,0,4,0,61,0,12,0,10
+prototype,prototype.scenes.general.consult,ConsultProjectScene,149,305,21,3,30,55,15,4,4,3
+prototype,prototype.scenes.general.consult,SearchProjectsScene,250,343,37,0,49,52,28,3,5,3
+prototype,prototype.scenes.general.consult,ConsultEntraveScene,84,202,12,2,20,36,9,4,3,3
+prototype,prototype.scenes.general.consult,NotificationScene,323,0,6,0,67,0,7,0,4,0
+prototype,prototype.scenes.general.consult,ConsultProjectScene.new FirebaseCallback() {...},71,9,2,0,13,1,5,1,4,1
+prototype,prototype.users,Intervenant,10,15,0,0,3,4,3,2,3,2
+prototype,prototype.users,IntervenantType,0,35,0,0,0,8,0,3,0,3
+prototype,prototype.users,UserSession,3,23,0,2,1,10,1,6,1,5
+prototype,prototype.users,Utilisateur,99,54,10,0,29,18,22,9,13,9
+prototype,prototype.users,Horaire,25,49,0,4,6,11,4,5,4,3
+prototype,prototype.users,Resident,3,12,0,0,1,3,1,2,1,2
+prototype,prototype.users,Address,18,25,0,0,5,9,5,5,5,5
+prototype,prototype.users,UserCredentialsVerifier,18,69,1,7,6,23,3,9,2,6
+prototype,prototype.services,FirebaseInitialize,69,0,6,0,26,0,8,0,5,0
+prototype,prototype.services,IntervenantServices.new ValueEventListener() {...},54,0,4,0,11,0,5,0,3,0
+prototype,prototype.services,NotificationService,42,0,0,0,14,0,3,0,3,0
+prototype,prototype.services,ProjectService,205,0,4,0,49,0,8,0,6,0
+prototype,prototype.services,ProjectService.new ValueEventListener() {...},47,0,2,0,12,0,4,0,3,0
+prototype,prototype.services,AddressService,249,0,20,0,51,0,15,0,5,0
+prototype,prototype.services,ServiceSession,5,18,1,3,1,7,1,4,0,3
+prototype,prototype.services,RequestService,54,0,0,0,21,0,5,0,5,0
+prototype,prototype.services,RequestService.new ValueEventListener() {...},39,0,2,0,11,0,4,0,3,0
+prototype,prototype.services,IntervenantServices,42,0,0,0,14,0,4,0,4,0
+prototype,prototype.services,NotificationService.new ValueEventListener() {...},58,0,6,0,14,0,6,0,3,0
+prototype,prototype.services,UserServices,476,0,18,0,142,0,23,0,14,0
+prototype,prototype.services,EntravesServices,107,0,4,0,23,0,5,0,3,0
+prototype,prototype.services,UserServices.new ValueEventListener() {...},41,0,2,0,8,0,4,0,3,0
+prototype,prototype.services,UserServices.new ValueEventListener() {...},41,0,2,0,8,0,4,0,3,0
+prototype,prototype.services,UserServices.new ValueEventListener() {...},48,0,2,0,11,0,4,0,3,0
+prototype,prototype.services,UserServices.new ValueEventListener() {...},36,0,2,0,8,0,4,0,3,0
+prototype,prototype.scenes.resident,NotificationScene,8,58,0,0,2,15,1,2,1,2
+prototype,prototype.scenes.resident,NotificationScene.new FirebaseCallback() {...},47,6,4,0,12,1,6,1,4,1
+prototype,prototype.scenes.resident,RequestScene,45,235,0,0,12,42,2,3,2,3
+prototype,prototype.controllers,ApiController,138,0,0,0,44,0,21,0,21,0
+prototype,prototype.controllers,SceneController,4,170,2,18,0,32,2,20,0,4
+prototype,prototype.scenes.intervenant,ConsultRequestsScene.new FirebaseCallback() {...},60,0,4,0,12,0,7,0,5,0
+prototype,prototype.scenes.intervenant,IntervenantProjectsScene,273,104,2,0,46,27,4,3,3,3
+prototype,prototype.scenes.intervenant,IntervenantProjectsScene.new FirebaseCallback() {...},59,0,4,0,13,0,7,0,5,0
+prototype,prototype.scenes.intervenant,ConsultRequestsScene,309,380,17,1,57,70,18,6,9,6

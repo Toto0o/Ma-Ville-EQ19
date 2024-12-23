@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Type.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prototype</a> &gt; <a href="index.source.html" class="el_package">prototype.projects</a> &gt; <span class="el_source">Type.java</span></div><h1>Type.java</h1><pre class="source lang-java linenums">package prototype.projects;
+
+/**
+ * Type des travaux et projets
+ */
+<span class="fc" id="L6">public enum Type {</span>
+
+<span class="fc" id="L8">    AUTRE(&quot;Autre&quot;),</span>
+<span class="fc" id="L9">    EGOUT_ET_AQUEDUC_EXCAVATION(&quot;Égouts et queducs - Excavation&quot;),</span>
+<span class="fc" id="L10">    TOITURE_NETTOYAGE(&quot;Toiture - Nettoyage&quot;),</span>
+<span class="fc" id="L11">    TOITURE_RENOVATION(&quot;Toiture - Rénovation&quot;),</span>
+<span class="fc" id="L12">    TRAVAUX_ROUTIERS(&quot;Réseaux routier - Réfection et travaux corrélatifs&quot;),</span>
+<span class="fc" id="L13">    EGOUT_AQUEDUC_NETTOYAGE(&quot;Égouts et aqueducs - Inspection et nettoyage&quot;),</span>
+<span class="fc" id="L14">    CONSTRUCTION_RENOVATION_AVEC(&quot;Construction/rénovation avec excavation&quot;),</span>
+<span class="fc" id="L15">    CONSTRUCTION_RENOVATION_SANS(&quot;Construction/rénovation sans excavation&quot;),</span>
+<span class="fc" id="L16">    ENTRETIEN_PAYSAGER(&quot;Autre&quot;),</span>
+<span class="fc" id="L17">    TRAVAUX_TRANSPORTS_COMMUN(&quot;Autre&quot;),</span>
+<span class="fc" id="L18">    TRAVAUX_SIGNALISATION_ECLAIRAGE(&quot;Feux de signalisation - Ajout/réparation&quot;),</span>
+<span class="fc" id="L19">    TRAVAUX_SOUTERRAINS_S3(&quot;S-3 Infrastructure souterraine majeure - Puits d'accès&quot;),</span>
+<span class="fc" id="L20">    TRAVAUX_SOUTERRAINS_S2(&quot;S-2 Infrastructure souterraine mineure ou équipement hors-sol - Réseaux électriques, télécommunications ou câbles des distributions&quot;),</span>
+<span class="fc" id="L21">    TRAVAIL_RESIDENTIEL(&quot;Travail résidentiel&quot;),</span>
+<span class="fc" id="L22">    RESEAUX_GAZ(&quot;S-2 Infrastructure souterraine mineure ou équipement hors-sol - Réseaux de gaz&quot;),</span>
+<span class="fc" id="L23">    ENTRETIEN_URBAIN(&quot;Entretien urbain&quot;),</span>
+<span class="fc" id="L24">    ENTRETIEN(&quot;Entretien&quot;),</span>
+<span class="fc" id="L25">    RESEAUX_ROUTIER_REFECTION_CORRELATIFS(&quot;Réseaux routier - Réfection et travaux corrélatifs &quot;),</span>
+<span class="fc" id="L26">    ENTRETIEN_RESEAUX_TELECOMMUNICATION(&quot;Autre&quot;);</span>
+
+    private final String toString;
+
+<span class="fc" id="L30">    private Type(String toString) {</span>
+<span class="fc" id="L31">        this.toString = toString;</span>
+<span class="fc" id="L32">    }</span>
+
+    /**
+     * Méthode pour obtenir le type en {@link String}
+     * @return {@link String} du type
+     */
+    public String toString() {
+<span class="fc" id="L39">        return toString;</span>
+    }
+
+    /**
+     * Méthode pour obtenir le type d'une String
+     * @param toString le type à obtenir
+     * @return {@link Type} si le type existe; &lt;code&gt;null&lt;/code&gt; sinon
+     * @return {@link null}
+     */
+    public static Type getType(String toString) {
+<span class="nc bnc" id="L49" title="All 2 branches missed.">        for (Type type : Type.values()) {</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">            if (type.toString.equals(toString)) {</span>
+<span class="nc" id="L51">                return type;</span>
+            }
+        }
+<span class="nc" id="L54">        return null;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

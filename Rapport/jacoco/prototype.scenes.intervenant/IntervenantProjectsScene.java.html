@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>IntervenantProjectsScene.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prototype</a> &gt; <a href="index.source.html" class="el_package">prototype.scenes.intervenant</a> &gt; <span class="el_source">IntervenantProjectsScene.java</span></div><h1>IntervenantProjectsScene.java</h1><pre class="source lang-java linenums">package prototype.scenes.intervenant;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.HashMap;
+import java.util.Objects;
+
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.application.Platform;
+
+import prototype.controllers.ApiController;
+import prototype.controllers.SceneController;
+import prototype.notifications.Notification;
+import prototype.services.FirebaseCallback;
+import prototype.services.ServiceSession;
+import prototype.users.UserSession;
+import prototype.projects.*;
+import prototype.scenes.Scenes;
+import prototype.users.Utilisateur;
+
+/**
+ * Scene de consultation des projets pour les intervenants
+ * 
+ * &lt;p&gt;Charge les projets avec {@link ApiController#getProjects(boolean)}&lt;/p&gt;
+ * &lt;p&gt;Accessible par {@link prototype.scenes.general.menu.MenuScene MenuScene}&lt;/p&gt;
+ */
+public class IntervenantProjectsScene extends Scenes{
+
+    private VBox vbox;
+    private Button backButton;
+    private ArrayList&lt;Project&gt; projectsList;
+    private ApiController apiController;
+
+
+    /**
+     * Constructeur
+     * @param sceneController
+     */
+    public IntervenantProjectsScene(SceneController sceneController) {
+<span class="fc" id="L46">        super(sceneController);</span>
+<span class="fc" id="L47">        this.vbox = new VBox(10);</span>
+<span class="fc" id="L48">        this.vbox.setId(&quot;projectView&quot;);</span>
+<span class="fc" id="L49">        this.projectsList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L50">        this.backButton = new Button(&quot;Back&quot;);</span>
+<span class="fc" id="L51">        this.backButton.setId(&quot;menu&quot;);</span>
+<span class="fc" id="L52">        this.apiController = ServiceSession.getInstance().getController();</span>
+<span class="fc" id="L53">        this.projectsList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L54">        UserSession.getInstance().setUserId(&quot;FAl15hewCLTJdqZVSglbw4vIUo83&quot;);</span>
+<span class="fc" id="L55">    }</span>
+
+    @Override
+    public void setScene() {
+        // Set the back button at the top
+<span class="fc" id="L60">        this.root.setTop(this.backButton);</span>
+
+        // Set up the BorderPane
+<span class="fc" id="L63">        BorderPane borderPane = new BorderPane();</span>
+<span class="fc" id="L64">        borderPane.setCenter(createScrollableProjectBox());</span>
+
+<span class="fc" id="L66">        this.root.setCenter(borderPane);</span>
+
+        try {
+<span class="fc" id="L69">            this.apiController.getProjects(projectsList, this::updateProjectDisplay);</span>
+<span class="nc" id="L70">        } catch (Exception e) {</span>
+<span class="nc" id="L71">            System.err.println(e.getMessage());</span>
+<span class="fc" id="L72">        }</span>
+
+        // Set the main content in the center
+
+
+        // Add the back button's functionality
+<span class="fc" id="L78">        this.backButton.setOnMouseClicked((menuAction) -&gt; {</span>
+<span class="nc" id="L79">            this.sceneController.newScene(&quot;menu&quot;);</span>
+<span class="nc" id="L80">        });</span>
+<span class="fc" id="L81">    }</span>
+
+    /**
+     * Crée un {@link ScrollPane} pour afficher les projets
+     * @return {@link ScrollPane}
+     */
+    private ScrollPane createScrollableProjectBox() {
+        // Make the vbox scrollable
+<span class="fc" id="L89">        ScrollPane scrollPane = new ScrollPane();</span>
+<span class="fc" id="L90">        scrollPane.setContent(this.vbox);</span>
+<span class="fc" id="L91">        scrollPane.setFitToWidth(true);</span>
+<span class="fc" id="L92">        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);</span>
+
+        // Set max height for scrollable area
+<span class="fc" id="L95">        this.vbox.setMaxHeight(400);</span>
+<span class="fc" id="L96">        this.vbox.setStyle(&quot;-fx-padding: 10;&quot;);</span>
+<span class="fc" id="L97">        this.vbox.setAlignment(Pos.CENTER);</span>
+<span class="fc" id="L98">        this.vbox.setStyle(&quot;-fx-background-color: linear-gradient(to left, #0000FF, #87CEDA);&quot;);</span>
+
+<span class="fc" id="L100">        return scrollPane;</span>
+    }
+
+
+    /**
+     * Display pour mettre à jours les informations d'un projet
+     * @param project le projet à mettre à jour
+     * @return {@link VBox} affichant les champs modifiable
+     */
+    private void updateProjectDisplay() {
+<span class="nc" id="L110">        vbox.getChildren().clear();</span>
+
+<span class="nc bnc" id="L112" title="All 2 branches missed.">        for (Project project : projectsList) {</span>
+<span class="nc" id="L113">            VBox projectBox = new VBox(5);</span>
+<span class="nc" id="L114">            projectBox.setStyle(&quot;-fx-border-color: gray; -fx-border-width: 1px; -fx-padding: 10;&quot; +</span>
+                    &quot;-fx-background-color: white&quot;);
+<span class="nc" id="L116">            projectBox.setAlignment(Pos.CENTER);</span>
+<span class="nc" id="L117">            projectBox.setMaxWidth(300);</span>
+<span class="nc" id="L118">            Button saveButton = new Button(&quot;Enregistrer&quot;);</span>
+
+<span class="nc" id="L120">            TextField titleField = new TextField(project.getTitle());</span>
+<span class="nc" id="L121">            titleField.setId(&quot;title&quot;);</span>
+<span class="nc" id="L122">            titleField.setMaxWidth(250);</span>
+<span class="nc" id="L123">            TextField descriptionField = new TextField(project.getDescription());</span>
+<span class="nc" id="L124">            descriptionField.setId(&quot;description&quot;);</span>
+<span class="nc" id="L125">            descriptionField.setMaxWidth(250);</span>
+<span class="nc" id="L126">            TextField typeField = new TextField(/*project.getType().toString()*/);</span>
+<span class="nc" id="L127">            typeField.setId(&quot;type&quot;);</span>
+<span class="nc" id="L128">            typeField.setMaxWidth(250);</span>
+<span class="nc" id="L129">            TextField quartiersField = new TextField(project.getQuartiersAffected());</span>
+<span class="nc" id="L130">            quartiersField.setId(&quot;quartiers&quot;);</span>
+<span class="nc" id="L131">            quartiersField.setMaxWidth(250);</span>
+<span class="nc" id="L132">            TextField roadsField = new TextField(project.getStreetEntrave());</span>
+<span class="nc" id="L133">            roadsField.setId(&quot;roads&quot;);</span>
+<span class="nc" id="L134">            roadsField.setMaxWidth(250);</span>
+<span class="nc" id="L135">            TextField startDateField = new TextField(project.getStartDate());</span>
+<span class="nc" id="L136">            startDateField.setId(&quot;startDate&quot;);</span>
+<span class="nc" id="L137">            startDateField.setMaxWidth(250);</span>
+<span class="nc" id="L138">            TextField endDateField = new TextField(project.getEndDate());</span>
+<span class="nc" id="L139">            endDateField.setId(&quot;endDate&quot;);</span>
+<span class="nc" id="L140">            endDateField.setMaxWidth(250);</span>
+<span class="nc" id="L141">            TextField horaireTravauxField = new TextField(project.getHoraireTravaux());</span>
+<span class="nc" id="L142">            horaireTravauxField.setId(&quot;horaireTravaux&quot;);</span>
+<span class="nc" id="L143">            horaireTravauxField.setMaxWidth(250);</span>
+
+<span class="nc" id="L145">            projectBox.getChildren().addAll(</span>
+                    new Text(&quot;Title:&quot;), titleField,
+                    new Text(&quot;Description:&quot;), descriptionField,
+                    new Text(&quot;Type:&quot;), typeField,
+                    new Text(&quot;Quartiers Affected:&quot;), quartiersField,
+                    new Text(&quot;Roads Affected:&quot;), roadsField,
+                    new Text(&quot;Start Date:&quot;), startDateField,
+                    new Text(&quot;End Date:&quot;), endDateField,
+                    new Text(&quot;Horaire Travaux:&quot;), horaireTravauxField,
+                    saveButton);
+
+<span class="nc" id="L156">            saveButton.setOnMouseClicked((me) -&gt; {</span>
+<span class="nc" id="L157">                this.apiController.saveProjectChanges(project);</span>
+
+                //Send notification on project change
+<span class="nc" id="L160">                Notification notification = new Notification(</span>
+                        &quot;Projet mis à jour&quot;,
+<span class="nc" id="L162">                        project.getTitle() + &quot; a été mis à jour&quot;</span>
+                );
+
+<span class="nc" id="L165">                FirebaseCallback&lt;ArrayList&lt;Utilisateur&gt;&gt; callback = new FirebaseCallback&lt;&gt;() {</span>
+                    @Override
+                    public void onSucessReturn(ArrayList&lt;Utilisateur&gt; users) {
+<span class="nc" id="L168">                        Platform.runLater(() -&gt; {</span>
+<span class="nc" id="L169">                            ArrayList&lt;String&gt; usersIds = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">                            for (Utilisateur utilisateur : users) {</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">                                if (Objects.equals(project.getQuartiersAffected(), utilisateur.getAddress().getBorough())) {</span>
+<span class="nc" id="L172">                                    usersIds.add(utilisateur.getId());</span>
+                                }
+<span class="nc" id="L174">                            }</span>
+<span class="nc" id="L175">                            notification.setUsersId(usersIds);</span>
+<span class="nc" id="L176">                            apiController.addNotification(notification);</span>
+<span class="nc" id="L177">                        });</span>
+<span class="nc" id="L178">                    }</span>
+
+                    @Override
+                    public void onFailure(String message) {
+<span class="nc" id="L182">                    }</span>
+
+                    @Override
+<span class="nc" id="L185">                    public void onSucess() {};</span>
+                };
+<span class="nc" id="L187">                this.apiController.getResidents(callback);</span>
+
+<span class="nc" id="L189">            });</span>
+
+<span class="nc" id="L191">            vbox.getChildren().add(projectBox);</span>
+<span class="nc" id="L192">        }</span>
+<span class="nc" id="L193">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

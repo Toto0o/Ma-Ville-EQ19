@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MenuScene.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prototype</a> &gt; <a href="index.source.html" class="el_package">prototype.scenes.general.menu</a> &gt; <span class="el_source">MenuScene.java</span></div><h1>MenuScene.java</h1><pre class="source lang-java linenums">package prototype.scenes.general.menu;
+
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.image.*;
+import javafx.scene.layout.BorderPane;
+
+import prototype.controllers.SceneController;
+import prototype.scenes.Scenes;
+import prototype.services.ServiceSession;
+import prototype.users.Intervenant;
+import prototype.users.UserSession;
+import prototype.users.Utilisateur;
+
+/**
+ * Scene de menu. Permet d'acceder aux différentes options selon le type d'utilisateur ({@link prototype.users.Resident résident} ou {@link prototype.users.Intervenant intervenant}) 
+ * 
+ * &lt;p&gt; Certaines fonctionnalités et bouton ne sont pas visible, dépendement de l'utilisateur. La visibilité est déterminée par {@link Utilisateur#isIntervenant()} &lt;/p&gt;
+ *
+ * 
+ * @author Antoine Tessier
+ * @author Anmar Rahman
+ * @author Mostafa Heider
+ */
+
+public class MenuScene extends Scenes {
+
+    private VBox vBox;
+    private HBox titleBox;
+    private Button consultButton, entraveButton, settingsButton, requestButton, logoutButton, notificationButton, intervenantProjectButton;
+    private Text title;
+    private Button consultRequestButton;
+    private Utilisateur user;
+
+    /**
+     * Constructeur
+     * @param sceneController
+     */
+    public MenuScene(SceneController sceneController) {
+<span class="fc" id="L45">        super(sceneController);</span>
+<span class="fc" id="L46">        this.consultButton = new Button(&quot;Consulter des travaux en cours&quot;);</span>
+<span class="fc" id="L47">        this.consultButton.setId(&quot;consultButton&quot;);</span>
+<span class="fc" id="L48">        this.entraveButton = new Button(&quot;Consulter les entraves routières&quot;);</span>
+<span class="fc" id="L49">        this.entraveButton.setId(&quot;entraveButton&quot;);</span>
+<span class="fc" id="L50">        this.settingsButton = new Button(&quot;Personnaliser le profil&quot;);</span>
+<span class="fc" id="L51">        this.settingsButton.setId(&quot;settingsButton&quot;);</span>
+<span class="fc" id="L52">        this.requestButton = new Button(&quot;Soumettre une requête de travail&quot;);</span>
+<span class="fc" id="L53">        this.requestButton.setId(&quot;requestButton&quot;);</span>
+<span class="fc" id="L54">        this.notificationButton = new Button();</span>
+<span class="fc" id="L55">        this.notificationButton.setId(&quot;notificationButton&quot;);</span>
+<span class="fc" id="L56">        this.logoutButton = new Button(&quot;Déconnexion&quot;);</span>
+<span class="fc" id="L57">        this.logoutButton.setId(&quot;logoutButton&quot;);</span>
+<span class="fc" id="L58">        this.intervenantProjectButton = new Button(&quot;Consulter mes projets&quot;);</span>
+<span class="fc" id="L59">        this.intervenantProjectButton.setId(&quot;intervenantProjectButton&quot;);</span>
+
+<span class="fc" id="L61">        this.vBox = new VBox();</span>
+<span class="fc" id="L62">        this.titleBox = new HBox();</span>
+<span class="fc" id="L63">        this.title = new Text(&quot;Bienvenu dans le menu&quot;);</span>
+
+<span class="fc" id="L65">        this.consultRequestButton = new Button(&quot;Consulter la liste des requêtes de travail&quot;);</span>
+<span class="fc" id="L66">        this.consultRequestButton.setId(&quot;consultRequestButton&quot;);</span>
+
+<span class="fc" id="L68">        this.user = UserSession.getInstance().getUser();</span>
+<span class="fc" id="L69">    }</span>
+
+    @Override
+    public void setScene() {
+<span class="fc" id="L73">        this.root.setCenter(this.vBox);</span>
+<span class="fc" id="L74">        this.title.setFont(new Font(&quot;Arial&quot;, 25));</span>
+<span class="fc" id="L75">        this.titleBox.getChildren().add(this.title);</span>
+<span class="fc" id="L76">        this.titleBox.setAlignment(Pos.CENTER);</span>
+<span class="fc" id="L77">        this.vBox.getChildren().addAll(</span>
+            this.consultButton,
+            this.entraveButton,
+            this.settingsButton,
+            this.requestButton,
+            this.consultRequestButton,
+            this.intervenantProjectButton,
+            this.logoutButton
+        );
+<span class="fc" id="L86">        this.vBox.setAlignment(Pos.CENTER);</span>
+<span class="fc" id="L87">        this.vBox.setSpacing(30);</span>
+
+<span class="fc" id="L89">        BorderPane topPane = new BorderPane();</span>
+<span class="fc" id="L90">        this.root.setTop(topPane);</span>
+        
+<span class="fc" id="L92">        topPane.setCenter(this.titleBox);</span>
+<span class="fc" id="L93">        this.titleBox.setAlignment(Pos.TOP_CENTER);</span>
+
+
+
+<span class="fc" id="L97">        ImageView notificationIcon = new ImageView(new Image(</span>
+<span class="fc" id="L98">            getClass().getResource(&quot;/prototype/assets/bell.png&quot;).toExternalForm()</span>
+        ));
+
+<span class="fc" id="L101">        notificationIcon.setFitHeight(15);</span>
+<span class="fc" id="L102">        notificationIcon.setPreserveRatio(true);</span>
+<span class="fc" id="L103">        this.notificationButton.setGraphic(notificationIcon);</span>
+<span class="fc" id="L104">        this.notificationButton.setAlignment(Pos.CENTER);</span>
+<span class="fc" id="L105">        HBox notificationBox = new HBox();</span>
+<span class="fc" id="L106">        notificationBox.getChildren().add(this.notificationButton);</span>
+<span class="fc" id="L107">        notificationBox.setMargin(this.notificationButton, new Insets(10));</span>
+<span class="fc" id="L108">        topPane.setRight(notificationBox);</span>
+
+
+        // Intervenant option access
+<span class="fc" id="L112">        this.consultRequestButton.setVisible(user.isIntervenant());</span>
+<span class="fc" id="L113">        this.consultRequestButton.setManaged(user.isIntervenant());</span>
+
+<span class="fc" id="L115">        this.intervenantProjectButton.setVisible(user.isIntervenant());</span>
+<span class="fc" id="L116">        this.intervenantProjectButton.setManaged(user.isIntervenant());</span>
+
+        // Resident option access
+<span class="fc bfc" id="L119" title="All 2 branches covered.">        this.requestButton.setVisible(!user.isIntervenant());</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">        this.requestButton.setManaged(!user.isIntervenant());</span>
+
+
+<span class="fc" id="L123">        this.consultButton.setOnMouseClicked(event -&gt; newSceneAction(event, &quot;consultProjects&quot;));</span>
+
+<span class="fc" id="L125">        this.settingsButton.setOnMouseClicked(event -&gt; newSceneAction(event, &quot;settings&quot;));</span>
+
+<span class="fc" id="L127">        this.requestButton.setOnMouseClicked(event -&gt; newSceneAction(event, &quot;request&quot;));</span>
+
+<span class="fc" id="L129">        this.notificationButton.setOnMouseClicked(event -&gt; newSceneAction(event, &quot;notifications&quot;));</span>
+
+<span class="fc" id="L131">        this.intervenantProjectButton.setOnMouseClicked(event -&gt; newSceneAction(event, &quot;intervenantProject&quot;));</span>
+
+<span class="fc" id="L133">        this.logoutButton.setOnMouseClicked((event) -&gt; {</span>
+<span class="fc" id="L134">            UserSession.getInstance().disconnect();</span>
+<span class="fc" id="L135">            this.sceneController.newScene(&quot;launch&quot;);</span>
+<span class="fc" id="L136">        } );</span>
+
+<span class="fc" id="L138">        this.entraveButton.setOnMouseClicked(event -&gt; newSceneAction(event, &quot;consultEntraves&quot;));</span>
+
+<span class="fc" id="L140">        this.consultRequestButton.setOnMouseClicked(event -&gt; newSceneAction(event, &quot;consultRequest&quot;));</span>
+<span class="fc" id="L141">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

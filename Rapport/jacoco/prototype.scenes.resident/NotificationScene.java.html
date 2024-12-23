@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NotificationScene.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prototype</a> &gt; <a href="index.source.html" class="el_package">prototype.scenes.resident</a> &gt; <span class="el_source">NotificationScene.java</span></div><h1>NotificationScene.java</h1><pre class="source lang-java linenums">package prototype.scenes.resident;
+
+import javafx.application.Platform;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import prototype.controllers.ApiController;
+import prototype.controllers.SceneController;
+import prototype.notifications.Notification;
+import prototype.scenes.Scenes;
+import prototype.services.FirebaseCallback;
+import prototype.services.ServiceSession;
+
+import java.util.ArrayList;
+
+public class NotificationScene extends Scenes {
+
+    private VBox vbox;
+    private Button menu;
+    private Text nonLu;
+    private ApiController apiController;
+
+    public NotificationScene(SceneController sceneController) {
+<span class="fc" id="L26">        super(sceneController);</span>
+<span class="fc" id="L27">        apiController = ServiceSession.getInstance().getController();</span>
+<span class="fc" id="L28">    }</span>
+
+    @Override
+    public void setScene() {
+<span class="fc" id="L32">        this.vbox = new VBox(10);</span>
+<span class="fc" id="L33">        ScrollPane scrollPane = new ScrollPane(vbox);</span>
+<span class="fc" id="L34">        scrollPane.setFitToHeight(true);</span>
+<span class="fc" id="L35">        scrollPane.setFitToWidth(true);</span>
+
+<span class="fc" id="L37">        this.nonLu = new Text();</span>
+
+<span class="fc" id="L39">        this.menu = new Button(&quot;Menu&quot;);</span>
+<span class="fc" id="L40">        this.root.setTop(menu);</span>
+<span class="fc" id="L41">        this.root.setCenter(scrollPane);</span>
+
+        try {
+<span class="fc" id="L44">            FirebaseCallback&lt;ArrayList&lt;Notification&gt;&gt; callback = new FirebaseCallback&lt;&gt;() {</span>
+                @Override
+                public void onSucessReturn(ArrayList&lt;Notification&gt; notifications) {
+<span class="nc" id="L47">                    Platform.runLater(() -&gt; {</span>
+<span class="nc" id="L48">                        int nnlu = 0;</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">                        for (Notification notification : notifications) {</span>
+<span class="nc" id="L50">                            vbox.getChildren().add(notification.afficher());</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">                            if (!notification.isLu()) nnlu++;</span>
+<span class="nc" id="L52">                            nonLu.setText(nnlu + &quot; nouvelles notifications&quot;);</span>
+<span class="nc" id="L53">                            vbox.getChildren().addFirst(nonLu);</span>
+<span class="nc" id="L54">                        }</span>
+<span class="nc" id="L55">                    });</span>
+<span class="nc" id="L56">                }</span>
+
+                @Override
+                public void onFailure(String message) {
+<span class="nc" id="L60">                }</span>
+
+                @Override
+<span class="nc" id="L63">                public void onSucess() {}</span>
+            };
+
+<span class="nc" id="L66">        } catch (Exception e) {</span>
+<span class="nc" id="L67">            e.printStackTrace();</span>
+<span class="fc" id="L68">        }</span>
+
+<span class="pc" id="L70">        this.menu.setOnAction(e -&gt; newSceneAction(e, &quot;menu&quot;));</span>
+<span class="fc" id="L71">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SearchProjectsScene.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prototype</a> &gt; <a href="index.source.html" class="el_package">prototype.scenes.general.consult</a> &gt; <span class="el_source">SearchProjectsScene.java</span></div><h1>SearchProjectsScene.java</h1><pre class="source lang-java linenums">package prototype.scenes.general.consult;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import prototype.controllers.ApiController;
+import prototype.controllers.SceneController;
+import prototype.projects.Project;
+import prototype.scenes.Scenes;
+import prototype.services.ServiceSession;
+
+/**
+ * Scene de recherche de projets
+ * &lt;p&gt;Accessible par {@link ConsultProjectScene}&lt;/p&gt;
+ */
+public class SearchProjectsScene extends Scenes {
+
+    private VBox vBox;
+    private Button backButton;
+    private Text title;
+    private ListView&lt;VBox&gt; projectListView;
+    private Text projectCountText;
+    private TextField searchTitleField;
+    private TextField searchBoroughField;
+    private ComboBox&lt;String&gt; typeFilter;
+    private ApiController apiController;
+    private static final String API_URL = &quot;https://donnees.montreal.ca/api/3/action/datastore_search?resource_id=cc41b532-f12d-40fb-9f55-eb58c9a2b12b&quot;;
+
+    /**
+     * Constructeur
+     * @param sceneController
+     */
+    public SearchProjectsScene(SceneController sceneController) {
+<span class="fc" id="L43">        super(sceneController);</span>
+<span class="fc" id="L44">        this.apiController = ServiceSession.getInstance().getController();</span>
+        // Initialize buttons
+<span class="fc" id="L46">        this.backButton = new Button(&quot;Retour&quot;);</span>
+<span class="fc" id="L47">        this.backButton.setId(&quot;retour&quot;);</span>
+
+        // Initialize layout elements
+<span class="fc" id="L50">        this.vBox = new VBox();</span>
+<span class="fc" id="L51">        this.title = labelText(&quot;Rechercher des projets&quot;);</span>
+<span class="fc" id="L52">        this.projectListView = new ListView&lt;&gt;();</span>
+<span class="fc" id="L53">        this.projectCountText = labelText(&quot;&quot;);</span>
+<span class="fc" id="L54">        this.searchTitleField = new TextField();</span>
+<span class="fc" id="L55">        this.searchTitleField.setId(&quot;search-title&quot;);</span>
+<span class="fc" id="L56">        this.searchBoroughField = new TextField();</span>
+<span class="fc" id="L57">        this.searchBoroughField.setId(&quot;search-borough&quot;);</span>
+<span class="fc" id="L58">        this.typeFilter = new ComboBox&lt;&gt;();</span>
+<span class="fc" id="L59">        this.typeFilter.setId(&quot;type-filter&quot;);</span>
+
+        // Mapping of API categories to filter options
+<span class="fc" id="L62">        Map&lt;String, String&gt; categoryMapping = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L63">        categoryMapping.put(&quot;Construction/rénovation avec excavation&quot;, &quot;Construction ou rénovation&quot;);</span>
+<span class="fc" id="L64">        categoryMapping.put(&quot;Construction/rénovation sans excavation&quot;, &quot;Construction ou rénovation&quot;);</span>
+<span class="fc" id="L65">        categoryMapping.put(&quot;Égouts et aqueducs - Excavation&quot;, &quot;Travaux routiers&quot;);</span>
+<span class="fc" id="L66">        categoryMapping.put(&quot;Égouts et aqueducs - Inspection et nettoyage&quot;, &quot;Travaux de gaz ou électricité&quot;);</span>
+<span class="fc" id="L67">        categoryMapping.put(&quot;Égouts et aqueducs - Réhabilitation&quot;, &quot;Travaux de gaz ou électricité&quot;);</span>
+<span class="fc" id="L68">        categoryMapping.put(&quot;Réseaux routier - Réfection et travaux corrélatifs&quot;, &quot;Travaux routiers&quot;);</span>
+<span class="fc" id="L69">        categoryMapping.put(&quot;Feux de signalisation - Ajout/réparation&quot;, &quot;Travaux de signalisation et éclairage&quot;);</span>
+<span class="fc" id="L70">        categoryMapping.put(&quot;Toiture - Rénovation&quot;, &quot;Construction ou rénovation&quot;);</span>
+<span class="fc" id="L71">        categoryMapping.put(&quot;S-3 Infrastructure souterraine majeure - Puits d'accès&quot;, &quot;Travaux souterrains&quot;);</span>
+<span class="fc" id="L72">        categoryMapping.put(&quot;Autre&quot;, &quot;Autre&quot;);</span>
+<span class="fc" id="L73">        categoryMapping.put(&quot;Entretien&quot;, &quot;Entretien urbain&quot;);</span>
+
+        // Add filter items (options)
+<span class="fc" id="L76">        typeFilter.getItems().addAll(</span>
+                &quot;Travaux routiers&quot;,
+                &quot;Travaux de gaz ou électricité&quot;,
+                &quot;Construction ou rénovation&quot;,
+                &quot;Entretien paysager&quot;,
+                &quot;Travaux liés aux transports en commun&quot;,
+                &quot;Travaux de signalisation et éclairage&quot;,
+                &quot;Travaux souterrains&quot;,
+                &quot;Travaux résidentiel&quot;,
+                &quot;Entretien urbain&quot;,
+                &quot;Entretien des réseaux de télécommunication&quot;);
+<span class="fc" id="L87">        typeFilter.setValue(&quot;Tous les types&quot;);</span>
+
+        // Fetch data from the API
+<span class="fc" id="L90">    }</span>
+
+    public void setScene() {
+<span class="fc" id="L93">        this.root.setCenter(vBox);</span>
+<span class="fc" id="L94">        this.title.setFont(new Font(&quot;Arial&quot;, 30));</span>
+<span class="fc" id="L95">        this.title.setStyle(&quot;-fx-font-weight: bold;&quot;);</span>
+<span class="fc" id="L96">        this.projectCountText.setFont(new Font(&quot;Arial&quot;, 14));</span>
+
+        // Set the layout for the search and filter elements
+<span class="fc" id="L99">        HBox searchBox = new HBox(10);</span>
+<span class="fc" id="L100">        searchBox.setAlignment(Pos.CENTER);</span>
+<span class="fc" id="L101">        searchBox.getChildren().addAll(labelText(&quot;Titre: &quot;), searchTitleField, labelText(&quot;Quartier: &quot;),</span>
+                searchBoroughField);
+
+<span class="fc" id="L104">        HBox filterBox = new HBox(10);</span>
+<span class="fc" id="L105">        filterBox.setAlignment(Pos.CENTER);</span>
+<span class="fc" id="L106">        filterBox.getChildren().addAll(labelText(&quot;Type de travail: &quot;), typeFilter);</span>
+
+        // Set the layout for the project list and count
+<span class="fc" id="L109">        HBox bottomBox = new HBox(10);</span>
+<span class="fc" id="L110">        bottomBox.setAlignment(Pos.BOTTOM_RIGHT);</span>
+<span class="fc" id="L111">        bottomBox.getChildren().add(projectCountText);</span>
+
+        // Add components to the VBox
+<span class="fc" id="L114">        this.vBox.getChildren().addAll(this.title, searchBox, filterBox, this.projectListView, bottomBox,</span>
+                this.backButton);
+<span class="fc" id="L116">        this.vBox.setAlignment(Pos.TOP_CENTER);</span>
+<span class="fc" id="L117">        this.vBox.setSpacing(20);</span>
+
+        // Set back button action
+<span class="fc" id="L120">        this.backButton.setOnMouseClicked((event) -&gt; {</span>
+<span class="fc" id="L121">            this.sceneController.newScene(&quot;consultProjects&quot;);</span>
+<span class="fc" id="L122">        });</span>
+
+        // Set up the search fields and filter actions
+<span class="pc" id="L125">        searchTitleField.setOnAction(e -&gt; searchProjects());</span>
+<span class="pc" id="L126">        searchBoroughField.setOnAction(e -&gt; searchProjects());</span>
+<span class="pc" id="L127">        typeFilter.setOnAction(e -&gt; searchProjects());</span>
+<span class="fc" id="L128">    }</span>
+
+    /**
+     * Méthode pour afficher les projets selon une recherche de l'utilisateur
+     */
+    private void searchProjects() {
+<span class="nc" id="L134">        String titleQuery = searchTitleField.getText().toLowerCase().trim();</span>
+<span class="nc" id="L135">        String boroughQuery = searchBoroughField.getText().toLowerCase().trim();</span>
+<span class="nc" id="L136">        String typeQuery = mapFilterToApiCategory(typeFilter.getValue());</span>
+<span class="nc" id="L137">        System.out.println(titleQuery); // For debugging purposes</span>
+<span class="nc" id="L138">        System.out.println(boroughQuery); // For debugging purposes</span>
+<span class="nc" id="L139">        System.out.println(typeQuery); // For debugging purposes</span>
+
+<span class="nc bnc" id="L141" title="All 6 branches missed.">        if (titleQuery.isEmpty() &amp;&amp; boroughQuery.isEmpty() &amp;&amp; typeQuery.equals(&quot;tous les types&quot;)) {</span>
+<span class="nc" id="L142">            return;</span>
+        } else {
+<span class="nc" id="L144">            this.projectListView.getItems().clear();</span>
+
+            try {
+<span class="nc" id="L147">                int i = 1;</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">                for (Project project : apiController.getProjects()) {</span>
+<span class="nc" id="L149">                    String title = project.getTitle();</span>
+<span class="nc" id="L150">                    String borough = project.getQuartiersAffected();</span>
+<span class="nc" id="L151">                    String type = project.getType().toString();</span>
+                    // Check if the project matches all the search or filter criteria
+<span class="nc bnc" id="L153" title="All 4 branches missed.">                    boolean matchesTitle = title.toLowerCase().contains(titleQuery) || titleQuery.isEmpty();</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">                    boolean matchesBorough = borough.toLowerCase().contains(boroughQuery)</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">                            || boroughQuery.isEmpty();</span>
+<span class="nc bnc" id="L156" title="All 4 branches missed.">                    boolean matchesType = typeQuery.equals(&quot;tous les types&quot;) || type.equals(typeQuery);</span>
+
+                    // Only add the project if it matches title, borough, and type (when applicable)
+<span class="nc bnc" id="L159" title="All 6 branches missed.">                    if (matchesTitle &amp;&amp; matchesBorough &amp;&amp; matchesType) {</span>
+<span class="nc" id="L160">                        VBox projectBox = new VBox();</span>
+<span class="nc" id="L161">                        projectBox.setSpacing(10);</span>
+
+                        // Create and add the project label (e.g., Project 1)
+<span class="nc" id="L164">                        Text projectLabel = new Text(&quot;Projet &quot; + (i++));</span>
+<span class="nc" id="L165">                        projectLabel.setFont(new Font(&quot;Arial&quot;, 18));</span>
+<span class="nc" id="L166">                        projectLabel.setStyle(&quot;-fx-font-weight: bold;&quot;);</span>
+
+                        // Add all the details into the VBox
+<span class="nc" id="L169">                        Text projectTitleText = new Text(&quot;Titre: &quot; + title);</span>
+<span class="nc" id="L170">                        Text projectBorough = new Text(&quot;Quartier: &quot; + borough);</span>
+<span class="nc" id="L171">                        Text projectType = new Text(&quot;Type de travail: &quot; + type);</span>
+
+                        // Add to the VBox
+<span class="nc" id="L174">                        projectBox.getChildren().addAll(projectLabel, projectTitleText, projectBorough,</span>
+                                projectType);
+
+                        // Add a border to the project VBox
+<span class="nc" id="L178">                        projectBox</span>
+<span class="nc" id="L179">                                .setStyle(&quot;-fx-border-color: black; -fx-border-width: 2px; -fx-padding: 10px;&quot;);</span>
+
+                        // Add the project to the ListView
+<span class="nc" id="L182">                        projectListView.getItems().add(projectBox);</span>
+                    }
+<span class="nc" id="L184">                }</span>
+
+                // Update the project count text
+<span class="nc" id="L187">                projectCountText.setText(&quot;Total des projets: &quot; + projectListView.getItems().size());</span>
+
+<span class="nc" id="L189">            } catch (Exception e) {</span>
+<span class="nc" id="L190">                projectListView.getItems().add(new VBox(new Text(&quot;Erreur lors de la recherche des projets.&quot;)));</span>
+<span class="nc" id="L191">            }</span>
+        }
+<span class="nc" id="L193">    }</span>
+
+    /**
+     * Méthode pour associer la filtre aux type de projets de la ville de Montréal
+     * @param filter le filtre appliqué
+     * @return le type correspondant
+     */
+    private String mapFilterToApiCategory(String filter) {
+<span class="nc bnc" id="L201" title="All 11 branches missed.">        switch (filter) {</span>
+            case &quot;Travaux routiers&quot;:
+<span class="nc" id="L203">                return &quot;Réseaux routier - Réfection et travaux corrélatifs&quot;;</span>
+            case &quot;Travaux de gaz ou électricité&quot;:
+<span class="nc" id="L205">                return &quot;Égouts et aqueducs - Inspection et nettoyage&quot;;</span>
+            case &quot;Construction ou rénovation&quot;:
+<span class="nc" id="L207">                return &quot;Construction/rénovation avec excavation&quot;; // Can be expanded based on different cases</span>
+            case &quot;Entretien paysager&quot;:
+<span class="nc" id="L209">                return &quot;Autre&quot;; // Example, update as necessary</span>
+            case &quot;Travaux liés aux transports en commun&quot;:
+<span class="nc" id="L211">                return &quot;Autre&quot;; // Update as needed</span>
+            case &quot;Travaux de signalisation et éclairage&quot;:
+<span class="nc" id="L213">                return &quot;Feux de signalisation - Ajout/réparation&quot;;</span>
+            case &quot;Travaux souterrains&quot;:
+<span class="nc" id="L215">                return &quot;S-3 Infrastructure souterraine majeure - Puits d'accès&quot;;</span>
+            case &quot;Travaux résidentiel&quot;:
+<span class="nc" id="L217">                return &quot;Autre&quot;; // Update as needed</span>
+            case &quot;Entretien urbain&quot;:
+<span class="nc" id="L219">                return &quot;Entretien&quot;;</span>
+            case &quot;Entretien des réseaux de télécommunication&quot;:
+<span class="nc" id="L221">                return &quot;Autre&quot;; // Adjust mapping as needed</span>
+            default:
+<span class="nc" id="L223">                return &quot;Tous les types&quot;; // Default to &quot;all types&quot;</span>
+        }
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

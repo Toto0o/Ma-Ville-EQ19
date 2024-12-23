@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RequestScene.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prototype</a> &gt; <a href="index.source.html" class="el_package">prototype.scenes.resident</a> &gt; <span class="el_source">RequestScene.java</span></div><h1>RequestScene.java</h1><pre class="source lang-java linenums">package prototype.scenes.resident;
+
+import java.time.LocalDate;
+
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import prototype.controllers.ApiController;
+import prototype.controllers.SceneController;
+import prototype.projects.Request;
+import prototype.projects.Status;
+import prototype.projects.Type;
+import prototype.scenes.Scenes;
+import prototype.services.ServiceSession;
+import prototype.users.UserSession;
+import prototype.users.Utilisateur;
+
+/**
+ * Scene de soumission d'une requête de travail pour les résidents
+ *
+ * &lt;p&gt;Utilise {@link ApiController#saveRequest(Request)} pour enregistrer la requête soumise&lt;/p&gt;
+ *
+ * &lt;p&gt;Accessible par {@link prototype.scenes.general.menu.MenuScene MenuScene}&lt;/p&gt;
+ */
+public class RequestScene extends Scenes{
+
+    private Button menu, sendRequest, newRequest;
+
+    private VBox requestBox;
+
+    private TextField titleField;
+    private DatePicker datePicker;
+    private TextArea descriptionArea;
+    private Text titleText, descriptionText, typeText, dateText;
+    private ComboBox&lt;Type&gt; typeComboBox;
+    private ApiController apiController;
+    private Label label;
+
+    /**
+     * Constructeur
+     * @param sceneController
+     */
+    public RequestScene(SceneController sceneController) {
+
+<span class="fc" id="L47">        super(sceneController);</span>
+<span class="fc" id="L48">        this.requestBox = new VBox();</span>
+<span class="fc" id="L49">        this.requestBox.setId(&quot;requestBox&quot;);</span>
+<span class="fc" id="L50">        this.menu = new Button(&quot;Menu&quot;);</span>
+<span class="fc" id="L51">        this.menu.setId(&quot;menu&quot;);</span>
+<span class="fc" id="L52">        this.sendRequest = new Button(&quot;Envoyer la requête&quot;);</span>
+<span class="fc" id="L53">        this.sendRequest.setId(&quot;sendRequest&quot;);</span>
+<span class="fc" id="L54">        this.newRequest = new Button(&quot;Ajouter une nouvelle requête de travaux&quot;);</span>
+<span class="fc" id="L55">        this.newRequest.setId(&quot;newRequest&quot;);</span>
+
+<span class="fc" id="L57">        this.titleField = new TextField();</span>
+<span class="fc" id="L58">        this.titleField.setId(&quot;title&quot;);</span>
+<span class="fc" id="L59">        this.descriptionArea = new TextArea();</span>
+<span class="fc" id="L60">        this.descriptionArea.setId(&quot;description&quot;);</span>
+<span class="fc" id="L61">        this.datePicker = new DatePicker();</span>
+<span class="fc" id="L62">        this.datePicker.setId(&quot;date&quot;);</span>
+
+<span class="fc" id="L64">        this.titleText = new Text(&quot;Titre du projet&quot;);</span>
+<span class="fc" id="L65">        this.descriptionText = new Text(&quot;Description détaillée&quot;);</span>
+<span class="fc" id="L66">        this.typeText = new Text(&quot;Choisissez le type de projet&quot;);</span>
+<span class="fc" id="L67">        this.dateText = new Text(&quot;Date espéré de début du projet&quot;);</span>
+
+<span class="fc" id="L69">        this.typeComboBox = new ComboBox&lt;&gt;();</span>
+<span class="fc" id="L70">        this.typeComboBox.setId(&quot;type&quot;);</span>
+
+<span class="fc" id="L72">        this.label = new Label(&quot;Remplissez les champs pour envoyer la requête&quot;);</span>
+<span class="fc" id="L73">        this.label.setId(&quot;label&quot;);</span>
+
+<span class="fc" id="L75">        this.apiController = ServiceSession.getInstance().getController();</span>
+
+
+<span class="fc" id="L78">    }</span>
+
+    @Override
+    public void setScene() {
+<span class="fc" id="L82">        this.root.setTop(this.menu);</span>
+
+<span class="fc" id="L84">        this.root.setCenter(this.newRequest);</span>
+
+<span class="fc" id="L86">        this.requestBox.getChildren().addAll(</span>
+            this.titleText,
+            this.titleField,
+            this.descriptionText,
+            this.descriptionArea,
+            this.typeText,
+            this.typeComboBox,
+            this.datePicker,
+            this.sendRequest,
+            this.label
+        );
+<span class="fc" id="L97">        this.typeComboBox.getItems().addAll(Type.values());</span>
+<span class="fc" id="L98">        this.titleField.setMaxWidth(250);</span>
+<span class="fc" id="L99">        this.descriptionArea.setMaxWidth(250);</span>
+<span class="fc" id="L100">        this.typeComboBox.setMaxWidth(250);</span>
+        
+        
+<span class="fc" id="L103">        this.datePicker.setPromptText(&quot;Date de début espérée&quot;);</span>
+<span class="fc" id="L104">        this.datePicker.setValue(LocalDate.now());</span>
+
+<span class="fc" id="L106">        this.requestBox.setSpacing(20);</span>
+<span class="fc" id="L107">        this.requestBox.setAlignment(Pos.CENTER);</span>
+
+<span class="fc" id="L109">        this.newRequest.setOnMouseClicked((requestAction) -&gt; {</span>
+<span class="fc" id="L110">            this.root.setCenter(this.requestBox);</span>
+<span class="fc" id="L111">        });</span>
+
+<span class="fc" id="L113">        this.menu.setOnMouseClicked((menuAction) -&gt; {</span>
+<span class="nc" id="L114">            this.sceneController.newScene(&quot;menu&quot;);</span>
+<span class="nc" id="L115">        });</span>
+
+<span class="fc" id="L117">        this.sendRequest.setOnMouseClicked((newRequest) -&gt; {</span>
+<span class="nc" id="L118">            Request request = new Request(</span>
+<span class="nc" id="L119">                    this.titleField.getText().trim(),</span>
+<span class="nc" id="L120">                    this.descriptionArea.getText(),</span>
+<span class="nc" id="L121">                    this.typeComboBox.getValue(),</span>
+<span class="nc" id="L122">                    this.datePicker.getValue().format(this.formatter),</span>
+                    &quot;En attente d'apporbation&quot;,
+<span class="nc" id="L124">                    UserSession.getInstance().getUser().getAddress().getBorough(),</span>
+<span class="nc" id="L125">                    UserSession.getInstance().getUser().getAddress().getStreet()</span>
+            );
+<span class="nc" id="L127">            this.apiController.saveRequest(request);</span>
+<span class="nc" id="L128">            this.label.setText(&quot;Votre requête à été enregistré. Un intervenant consultera votre demande sous peu&quot;);</span>
+<span class="nc" id="L129">        });</span>
+
+
+<span class="fc" id="L132">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

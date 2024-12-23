@@ -1810,23 +1810,48 @@
                     <h2 id="prototype" class="section-title">Prototype</h2>
                     
                     <p>
-                        La <a href="apidocs/index.html">documentation</a> du code source
+                        La <a href="apidocs/index.html">documentation</a> du code source.
                         <br><br>
                        Le prototype est developpé sous forme d'une interface graphique avec JavaFx (de Java). Il permet actuellement
                        de se connecter en tant que Résident ou Intervenant, et d'accèder aux différentes options du menu. En ce moment,
                        les options de consultation des requêtes, consultation des travaux et entraves routières ainsi que l'inscription
                        d'un intervenant à une requête de travail résidentiel sont implémenté.
                        <br><br>
-                       Pour lancer le prototype, il suffit d'utiliser la commande : <b>java -javac MaVille.jar</b>
-                       <br>
+                       Un module de test vérifie certaines fonctionnalité :
+                       <ul>
+                        <li>Le scénario en testant la redirection des boutons et l'écriture dans les champs de text ou de dates</li>
+                        <li>Le vérificateur d'information, afin de savoir s'il lance les bonnes exceptions</li>
+                       </ul>
+                       <p>
+                       Les détails se trouvent dans le <a href="jacoco/index.html">rapport de test</a> généré avec JaCoCo
+                       <br><br>
+                       Pour se connecter, les identifiants ainsi que leur mot de passe respectif peuvent être utilisé à la connexion
+                        </p>
                        <ul>
                             <li><b>email : </b>resident1@gmail.com <b>MDP : </b> 123456</li>
-                            <li><b>email : </b>resident2@gmail.com <b>MDP : </b> 123456</li>
-                            <li><b>email : </b>resident3@gmail.com <b>MDP : </b> 123456</li>
                             <li><b>email : </b>intervenant1@gmail.com <b>MDP : </b> 123456</li>
-                            <li><b>email : </b>intervenant2@gmail.com <b>MDP : </b> 123456</li>
-                            <li><b>email : </b>intervenant3@gmail.com <b>MDP : </b> 123456</li>
                         </ul>
+                    </p>
+                    <p>
+                        <Strong>Note :</Strong> si le prototype est téléchargé à partir du répertoire GitHub, il faut ajouter le fichier <code>serviceAccount.json</code> dans 
+                        <b>Ma-ville > src > main > ressources > prototype > ServiceAccount.json</b> afin d'assurer l'accèes à la base de donnée.
+                        <br><br>
+                        Pour compiler et produire l'executable jar, il suffit d'utiliser la commande <i>mvn clean verify</i> Sinon, pour lancer le jar (inclut dans la remise et le répertoire), utiliser la commande
+                        <b>java -jar Ma-Ville.jar</b> 
+                        <br><br>
+                        <strong>Spécification Maven </strong>
+                        <ul>
+                            <li>maven.compiler.source 17</li>
+                            <li>maven.compiler.target 17</li>
+                        </ul>
+                    </p>
+                    <p>
+                        <strong>Spécification Java</strong>
+                        <ul>
+                            <li>Java 22</li>
+                            <li>Javafx 22</li>
+                        </ul>
+                    </p>
                     </p>
                 </section>
 
@@ -1857,7 +1882,7 @@
         </p>
         <p>
             <em>
-                Lien vers les spécifications complètes : <a href="https://link_to_specs.com">Spécifications</a>
+                Lien vers les spécifications complètes : <a href="apidocs/index.html">Spécifications</a>
             </em>
         </p>
     </footer>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SettingsScene.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prototype</a> &gt; <a href="index.source.html" class="el_package">prototype.scenes.general.settings</a> &gt; <span class="el_source">SettingsScene.java</span></div><h1>SettingsScene.java</h1><pre class="source lang-java linenums">package prototype.scenes.general.settings;
+
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import prototype.controllers.SceneController;
+import prototype.scenes.Scenes;
+
+public class SettingsScene extends Scenes {
+
+    private Button addHoursPreference, saveHoursPreferece, addNotificationPreference, saveNotificationPreference, infoSettings,menu, back;
+
+    private HBox notificationBox;
+    private VBox buttonBox, hoursBox;
+
+    private TextField hourStart, hourEnd;
+    private Text hourStartText, hourEndText;
+
+    public SettingsScene(SceneController sceneController) {
+<span class="fc" id="L23">        super(sceneController);</span>
+
+<span class="fc" id="L25">        this.addHoursPreference = new Button(&quot;Modifier mes préférences d'horaire&quot;);</span>
+<span class="fc" id="L26">        this.addHoursPreference.setId(&quot;addHoursPreference&quot;);</span>
+<span class="fc" id="L27">        this.addNotificationPreference = new Button(&quot;Personnaliser mes notifications&quot;);</span>
+<span class="fc" id="L28">        this.addNotificationPreference.setId(&quot;addNotificationPreference&quot;);</span>
+<span class="fc" id="L29">        this.menu = new Button(&quot;Menu&quot;);</span>
+<span class="fc" id="L30">        this.menu.setId(&quot;menu&quot;);</span>
+<span class="fc" id="L31">        this.infoSettings = new Button(&quot;Modifier mes informations&quot;);</span>
+<span class="fc" id="L32">        this.infoSettings.setId(&quot;infoSettings&quot;);</span>
+
+<span class="fc" id="L34">        this.buttonBox = new VBox();</span>
+
+<span class="fc" id="L36">    }</span>
+
+    public void setScene() {
+<span class="fc" id="L39">        this.root.setTop(this.menu);</span>
+<span class="fc" id="L40">        this.root.setCenter(this.buttonBox);</span>
+<span class="fc" id="L41">        this.buttonBox.setAlignment(Pos.CENTER);</span>
+<span class="fc" id="L42">        this.buttonBox.setSpacing(30);</span>
+<span class="fc" id="L43">        this.buttonBox.getChildren().addAll(this.addHoursPreference, this.addNotificationPreference, this.infoSettings);</span>
+
+
+<span class="fc" id="L46">        this.menu.setOnMouseClicked((menuAction) -&gt; {</span>
+<span class="nc" id="L47">            this.sceneController.newScene(&quot;menu&quot;);</span>
+<span class="nc" id="L48">        });</span>
+
+<span class="fc" id="L50">        this.addHoursPreference.setOnMouseClicked((addHoursAction) -&gt; {</span>
+<span class="fc" id="L51">            this.sceneController.newScene(&quot;preferencesPlagesHoraires&quot;);</span>
+<span class="fc" id="L52">        });</span>
+
+
+<span class="fc" id="L55">        this.addNotificationPreference.setOnMouseClicked((notificationPreferenceAction) -&gt; {</span>
+<span class="fc" id="L56">            this.sceneController.newScene(&quot;notificationSettings&quot;);</span>
+<span class="fc" id="L57">        });</span>
+
+<span class="fc" id="L59">        this.infoSettings.setOnMouseClicked((infoSettingsAction) -&gt; {</span>
+<span class="fc" id="L60">            this.sceneController.newScene(&quot;infoSettings&quot;);</span>
+<span class="fc" id="L61">        });</span>
+
+
+
+
+<span class="fc" id="L66">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

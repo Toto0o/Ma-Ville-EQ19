@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LoginScene.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prototype</a> &gt; <a href="index.source.html" class="el_package">prototype.scenes.general.login</a> &gt; <span class="el_source">LoginScene.java</span></div><h1>LoginScene.java</h1><pre class="source lang-java linenums">package prototype.scenes.general.login;
+
+import javafx.application.Platform;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import prototype.controllers.ApiController;
+import prototype.controllers.SceneController;
+import prototype.scenes.Scenes;
+import prototype.services.FirebaseCallback;
+import prototype.services.ServiceSession;
+import prototype.users.UserSession;
+import prototype.users.Utilisateur;
+
+/**
+ * Scene permettant de s'authentifier
+ * 
+ * &lt;p&gt; Utilise {@link ApiController#authenticate(String, String, Label)} &lt;/p&gt;
+ * &lt;p&gt;Accessible par {@link prototype.scenes.general.menu.MenuScene MenuScene}&lt;/p&gt;
+ *
+ * @author Antoine Tessier
+ * @author Anmar Rahman
+ * @author Mostafa Heider
+ */
+
+public class LoginScene extends Scenes {
+
+    private VBox vBox;
+    private Button loginButton, backButton;
+    private Text usernameText, passwordText;
+    private TextField usernameField;
+    private PasswordField passwordField;
+    private Label statusLabel;
+
+    private ApiController apiController;
+
+    /**
+     * Constructeur
+     * @param sceneController
+     */
+    public LoginScene(SceneController sceneController) {
+<span class="fc" id="L47">        super(sceneController);</span>
+
+<span class="fc" id="L49">        this.vBox = new VBox();</span>
+<span class="fc" id="L50">        this.loginButton = new Button(&quot;Login&quot;);</span>
+<span class="fc" id="L51">        this.loginButton.setId(&quot;login&quot;);</span>
+<span class="fc" id="L52">        this.backButton = new Button(&quot;Retour&quot;);</span>
+<span class="fc" id="L53">        this.backButton.setId(&quot;back&quot;);</span>
+<span class="fc" id="L54">        this.statusLabel = new Label();</span>
+<span class="fc" id="L55">        this.usernameField = new TextField();</span>
+<span class="fc" id="L56">        this.usernameField.setId(&quot;username&quot;);</span>
+
+<span class="fc" id="L58">        this.passwordField = new PasswordField();</span>
+<span class="fc" id="L59">        this.passwordField.setId(&quot;password&quot;);</span>
+
+<span class="fc" id="L61">        this.usernameText = labelText(&quot;Email&quot;);</span>
+<span class="fc" id="L62">        this.passwordText = labelText(&quot;Password&quot;);</span>
+<span class="fc" id="L63">        this.apiController = ServiceSession.getInstance().getController();</span>
+<span class="fc" id="L64">    }</span>
+
+    public void setScene() {
+<span class="fc" id="L67">        this.root.setCenter(this.vBox);</span>
+<span class="fc" id="L68">        this.vBox.setAlignment(Pos.CENTER);</span>
+<span class="fc" id="L69">        this.vBox.setStyle(&quot;-fx-text-fill: white;&quot;);</span>
+<span class="fc" id="L70">        this.vBox.getChildren().addAll(usernameText, usernameField, passwordText, passwordField, loginButton, statusLabel, backButton);</span>
+<span class="fc" id="L71">        this.usernameField.setMaxWidth(250);</span>
+<span class="fc" id="L72">        this.passwordField.setMaxWidth(250);</span>
+<span class="fc" id="L73">        this.vBox.setSpacing(10);</span>
+
+<span class="fc" id="L75">        backButton.setOnMouseClicked(backAction -&gt; {</span>
+<span class="nc" id="L76">            this.sceneController.newScene(&quot;launch&quot;);</span>
+<span class="nc" id="L77">        });</span>
+
+<span class="pc" id="L79">        loginButton.setOnMouseClicked(loginAction -&gt; handleLogin());</span>
+
+<span class="fc" id="L81">        this.root.setOnKeyPressed(keyEvent -&gt; {</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">            if (keyEvent.getCode() == KeyCode.ENTER) {</span>
+<span class="nc" id="L83">                handleLogin();</span>
+            }
+<span class="nc" id="L85">        });</span>
+<span class="fc" id="L86">    }</span>
+    /**
+     * Méthode pour authentifier un utilisateur selon les indentifiants entrés avec {@link ApiController#authenticate(String, String)}
+     *
+     */
+    private void handleLogin() {
+
+<span class="nc" id="L93">        String email = usernameField.getText().trim();</span>
+<span class="nc" id="L94">        String password = passwordField.getText().trim();</span>
+
+<span class="nc bnc" id="L96" title="All 2 branches missed.">        if (email.isEmpty()) {</span>
+<span class="nc" id="L97">            statusLabel.setText(&quot;Email cannot be empty.&quot;);</span>
+<span class="nc" id="L98">            return;</span>
+        }
+
+<span class="nc bnc" id="L101" title="All 2 branches missed.">        if (password.isEmpty()) {</span>
+<span class="nc" id="L102">            statusLabel.setText(&quot;Password cannot be empty.&quot;);</span>
+<span class="nc" id="L103">            return;</span>
+        }
+
+        try {
+<span class="nc" id="L107">            this.apiController.authenticate(email, password, new FirebaseCallback&lt;Utilisateur&gt;()  {</span>
+                @Override
+                public void onSucess() {
+<span class="nc" id="L110">                    Platform.runLater(() -&gt; {</span>
+<span class="nc" id="L111">                        System.out.println(UserSession.getInstance().getUser().getAddress().getBorough());</span>
+<span class="nc" id="L112">                        sceneController.newScene(&quot;menu&quot;);</span>
+<span class="nc" id="L113">                    });</span>
+<span class="nc" id="L114">                }</span>
+
+                @Override
+<span class="nc" id="L117">                public void onSucessReturn(Utilisateur sucess) {}</span>
+
+                @Override
+                public void onFailure(String message) {
+<span class="nc" id="L121">                    Platform.runLater(() -&gt; statusLabel.setText(message));</span>
+<span class="nc" id="L122">                }</span>
+            });
+        }
+
+<span class="nc" id="L126">        catch (Exception e) {</span>
+<span class="nc" id="L127">            e.printStackTrace();</span>
+<span class="nc" id="L128">            statusLabel.setText(e.getMessage());</span>
+<span class="nc" id="L129">        }</span>
+
+<span class="nc" id="L131">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

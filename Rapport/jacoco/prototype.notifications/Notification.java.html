@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Notification.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prototype</a> &gt; <a href="index.source.html" class="el_package">prototype.notifications</a> &gt; <span class="el_source">Notification.java</span></div><h1>Notification.java</h1><pre class="source lang-java linenums">package prototype.notifications;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+
+import javafx.beans.value.ObservableValue;
+import javafx.scene.control.CheckBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import prototype.projects.Project;
+
+/**
+ * Objet de notification
+ *
+ * &lt;p&gt;Les utilisateurs ayant la visibilité sur la notification sont souvegardé avec leur id dans une {@link ArrayList}&lt;/p&gt;
+ */
+public class Notification implements Serializable {
+
+    /**
+     * Le titre de la notification
+     */
+    private String title;
+
+    /**
+     * Description de la notification
+     */
+    private String description;
+
+    /**
+     * Le id firebase pour le chargement
+     */
+    private String id;
+
+    /**
+     * Pour le compte de nouvelle notifications
+     */
+    private boolean lu;
+
+    /**
+     * Les utilisateurs concerné par la notification
+     */
+    private ArrayList&lt;String&gt; usersId;
+
+    /**
+     * Constructeur vide pour la déserialisation
+     */
+<span class="nc" id="L47">    public Notification() {}</span>
+
+    /**
+     * Constructeur de nouvelles notifications
+     *
+     * @param title le titre
+     * @param description la description de la notification
+     */
+<span class="nc" id="L55">    public Notification(String title, String description) {</span>
+<span class="nc" id="L56">        this.title = title;</span>
+<span class="nc" id="L57">        this.description = description;</span>
+<span class="nc" id="L58">        this.lu = false;</span>
+<span class="nc" id="L59">        usersId = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L60">    }</span>
+
+    public void setTitle(String title) {
+<span class="nc" id="L63">        this.title = title;</span>
+<span class="nc" id="L64">    }</span>
+    public void setDescription(String description) {
+<span class="nc" id="L66">        this.description = description;</span>
+<span class="nc" id="L67">    }</span>
+    public void setId(String id) {
+<span class="nc" id="L69">        this.id = id;</span>
+<span class="nc" id="L70">    }</span>
+    public String getTitle() {
+<span class="nc" id="L72">        return title;</span>
+    }
+    public String getDescription() {
+<span class="nc" id="L75">        return description;</span>
+    }
+    public String getId() {
+<span class="nc" id="L78">        return id;</span>
+    }
+    public boolean isLu() {
+<span class="nc" id="L81">        return lu;</span>
+    }
+    public void setLu(boolean lu) {
+<span class="nc" id="L84">        this.lu = lu;</span>
+<span class="nc" id="L85">    }</span>
+    public ArrayList&lt;String&gt; getUsersId() {
+<span class="nc" id="L87">        return usersId;</span>
+    }
+    public void setUsersId(ArrayList&lt;String&gt; usersId) {
+<span class="nc" id="L90">        this.usersId = usersId;</span>
+<span class="nc" id="L91">    }</span>
+
+    public VBox afficher() {
+<span class="nc" id="L94">        VBox vb = new VBox();</span>
+<span class="nc" id="L95">        Text titleText = new Text(title);</span>
+<span class="nc" id="L96">        Text descriptionText = new Text(description);</span>
+<span class="nc" id="L97">        CheckBox lu = new CheckBox(&quot;Lu&quot;);</span>
+<span class="nc" id="L98">        lu.setOnAction(event -&gt; {setLu(lu.isSelected());});</span>
+<span class="nc" id="L99">        vb.getChildren().addAll(titleText, descriptionText);</span>
+<span class="nc" id="L100">        vb.setSpacing(10);</span>
+
+<span class="nc bnc" id="L102" title="All 2 branches missed.">        if (!isLu()) {</span>
+<span class="nc" id="L103">            vb.getChildren().add(lu);</span>
+<span class="nc" id="L104">            vb.setStyle(&quot;-fx-background-color: lightred;&quot; + &quot;-fx-border-color: black;&quot; + &quot;-fx-border-width: 1px;&quot;);</span>
+<span class="nc" id="L105">            return vb;</span>
+        }
+<span class="nc" id="L107">        vb.setStyle(&quot;-fx-border-color: black;&quot; + &quot;-fx-border-width: 1px;&quot;);</span>
+<span class="nc" id="L108">        return vb;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

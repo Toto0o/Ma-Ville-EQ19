@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ApiController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prototype</a> &gt; <a href="index.source.html" class="el_package">prototype.controllers</a> &gt; <span class="el_source">ApiController.java</span></div><h1>ApiController.java</h1><pre class="source lang-java linenums">package prototype.controllers;
+
+import prototype.notifications.Notification;
+import prototype.services.*;
+import prototype.users.*;
+import prototype.projects.*;
+
+import javafx.scene.control.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import prototype.entraves.Entrave;
+
+/**
+ * Controlleur des services d'api pour Ma-Ville
+ * 
+ * &lt;p&gt; Les api utilisé :
+ *  &lt;ul&gt;
+ *      &lt;li&gt; {@link AddressService} pour valider l'adresse et obtenir le quartier&lt;/li&gt;
+ *      &lt;li&gt; {@link EntravesServices} pour charger les entraves routières&lt;/li&gt;
+ *      &lt;li&gt; {@link ProjectService} pour charger les travaux de la ville de Montréal&lt;/li&gt;
+ *      &lt;li&gt; {@link IntervenantServices} pour les projets associés à un intervenant
+ *      &lt;li&gt; {@link RequestService} pour charger et sauvegarder les requêtes&lt;/li&gt;
+ *      &lt;li&gt; {@link UserServices} pour l'authentification et l'enregistrement d'utilisateur &lt;/li&gt;
+ *  &lt;/ul&gt;
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt; Les méthodes clés incluent :
+ *  &lt;ul&gt;
+ *      &lt;li&gt; {@link #authenticate(String, String, FirebaseCallback)} &lt;/li&gt;
+ *      &lt;li&gt; {@link #updateUserInfo()} &lt;/li&gt;
+ *      &lt;li&gt; {@link #getProjects()} &lt;/li&gt;
+ *      &lt;li&gt; {@link #saveProjectChanges(Project)} &lt;/li&gt;
+ *      &lt;li&gt; {@link #addProject(Project)} &lt;/li&gt;
+ *      &lt;li&gt; {@link #addRequest(Request)} &lt;/li&gt;
+ *      &lt;li&gt; {@link #getRequests(ArrayList, Runnable)} &lt;/li&gt;
+ *      &lt;li&gt; {@link #getEntraves()} &lt;/li&gt;
+ *  &lt;/ul&gt;
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt; Toutes classes nécéssitant un accès à la base de donnée du système ou de la ville passent par cette classe pour traiter l'information &lt;/p&gt;
+ *
+ * @author Antoine Tessier
+ * @author Anmar Rahman
+ * @author Mostafa Heider
+ * 
+ */
+
+public class ApiController {
+
+    /**
+     * Service d'entrave
+     */
+    private EntravesServices entravesServices;
+
+    /**
+     * Service de projet
+     */
+    private ProjectService projectService;
+
+    /**
+     * Service pour les fontionnalités des intervenants
+     */
+    private IntervenantServices intervenantServices;
+
+    /**
+     * Service pour les utilisateurs
+     */
+    private UserServices userServices;
+
+    /**
+     * Service d'adresse
+     */
+    private AddressService addressService;
+
+    /**
+     * Service de requête
+     */
+    private RequestService requestService;
+
+    /**
+     * Service de notification
+     */
+    private NotificationService notificationService;
+
+    /**
+     * Constructeur. Instancie les classes de services
+     */
+<span class="nc" id="L90">    public ApiController() {</span>
+<span class="nc" id="L91">        this.entravesServices = new EntravesServices();</span>
+<span class="nc" id="L92">        this.projectService = new ProjectService();</span>
+<span class="nc" id="L93">        this.intervenantServices = new IntervenantServices();</span>
+<span class="nc" id="L94">        this.userServices = new UserServices();</span>
+<span class="nc" id="L95">        this.addressService = new AddressService();</span>
+<span class="nc" id="L96">        this.requestService = new RequestService();</span>
+<span class="nc" id="L97">        this.notificationService = new NotificationService();</span>
+<span class="nc" id="L98">    }</span>
+
+    /**
+     * Authentifie l'utilisateur avec {@link UserServices#authenticateWithFirebase(String, String, FirebaseCallback)}
+     *
+     * @param email    le nom d'utilisateur
+     * @param password le mot de passe de l'utilisateur
+     * @param callback {@link FirebaseCallback} attends que {@link com.google.firebase.database.FirebaseDatabase FirebaseDatabse} termine l'opération
+     * @throws Exception sur erreur de chargement ou des indentifiants invalide
+     */
+    public void authenticate(String email, String password, FirebaseCallback&lt;Utilisateur&gt; callback) throws IllegalArgumentException {
+<span class="nc" id="L109">        this.userServices.authenticateWithFirebase(email, password, callback);</span>
+<span class="nc" id="L110">    }</span>
+
+    /**
+     * Enregistre un utilisateur comme résident avec {@link UserServices#register(Resident)}
+     *
+     * @param resident le résident a enregistrer
+     * 
+     * @throws Exception sur erreur de chargement de l'api
+     */
+    public void register(Resident resident) throws Exception {
+<span class="nc" id="L120">        this.userServices.register(resident);</span>
+<span class="nc" id="L121">    }  </span>
+
+    /**
+     * Enregistre un utilisateur comme intervenant avec {@link UserServices#register(Intervenant)}
+     * 
+     * @param intervenant l'intervenant a enregistrer
+     */
+    public void register(Intervenant intervenant) throws Exception {
+<span class="nc" id="L129">        this.userServices.register(intervenant);</span>
+<span class="nc" id="L130">    }</span>
+
+    /**
+     * 
+     * Enregistre les informations modifiés de l'utilisateur
+     *
+     */
+    public void updateUserInfo() {
+<span class="nc" id="L138">        this.userServices.updateUser();</span>
+<span class="nc" id="L139">    }</span>
+
+
+    /**
+     * Méthode pour obtenir tous les résidents enregistré dans le système
+     * @param callback
+     */
+    public void getResidents(FirebaseCallback callback) {
+<span class="nc" id="L147">        this.userServices.getResidents(callback);</span>
+<span class="nc" id="L148">    }</span>
+
+    /**
+     * Méthode pour obtenir tous les intervenant enregistrés dans le système
+     * @param callback
+     */
+    public void getIntervenants(FirebaseCallback callback) {
+<span class="nc" id="L155">        this.userServices.getIntervenants(callback);</span>
+<span class="nc" id="L156">    }</span>
+
+    /**
+     * Charge les projets de la ville de Montréal
+     *
+     * @return {@link ArrayList}&amp;lt;{@link Project}&amp;gt;
+     * @throws Exception sur erreur de chargement
+     */
+    public ArrayList&lt;Project&gt; getProjects() throws Exception {
+<span class="nc" id="L165">        return this.projectService.getProjects();</span>
+    }
+
+    /**
+     * Charge les projets de {@link com.google.firebase.database.FirebaseDatabase FirebaseDatase}
+     * @param callback pour assurer le chargement complet avant de poursuivre les opérations
+     * @throws Exception
+     */
+    public void getProjects(FirebaseCallback&lt;ArrayList&lt;Project&gt;&gt; callback) throws Exception {
+<span class="nc" id="L174">        this.projectService.getProjectsFromFirebase(callback);</span>
+<span class="nc" id="L175">    }</span>
+
+    /**
+     * Charge les projets reliés à l'intervenant
+     * @param projects la liste de projet à charger
+     * @param updateDisplayCallback update le display sur callback de la méthode
+     * @throws Exception sur erreur de chargement
+     */
+    public void getProjects(ArrayList&lt;Project&gt; projects, Runnable updateDisplayCallback) throws Exception {
+<span class="nc" id="L184">        this.intervenantServices.getProjects(projects, updateDisplayCallback);</span>
+<span class="nc" id="L185">    }</span>
+
+    /**
+     * Sauvegarde les informations changées d'un {@link Project projet} avec {@link IntervenantServices#saveProjectChanges(HashMap, String)}
+     * 
+     * @param project Le projet à enregistrer
+     */
+    public void saveProjectChanges(Project project) {
+<span class="nc" id="L193">        this.intervenantServices.saveProjectChanges(project);</span>
+<span class="nc" id="L194">    }</span>
+
+    /**
+     * Ajoute un nouveau projet à la base de donnée avec {@link ProjectService#saveProjectToFirebase(Project)}
+     *
+     * @param project {@link Project} à sauvegarder
+     */    
+    public void addProject(Project project) {
+<span class="nc" id="L202">        this.projectService.saveProjectToFirebase(project);</span>
+<span class="nc" id="L203">    }</span>
+
+    /**
+     * Ajoute une nouvelle {@link Request} à la base de donnée avec {@link RequestService#newRequest(Request)}
+     * @param request {@link Request} à sauvegarder
+     */
+    public void addRequest(Request request) {
+<span class="nc" id="L210">        this.requestService.newRequest(request);</span>
+<span class="nc" id="L211">    }</span>
+
+
+    /**
+     * Méthode pour charger les {@link Request requêtes} avec {@link RequestService#getRequests(ArrayList, Runnable)}
+     * 
+     * @param requestsList la liste de requête à remplir
+     * @param updateDisplayCallback update le display sur callback de le méthode
+     */
+    public void getRequests(ArrayList&lt;Request&gt; requestsList, Runnable updateDisplayCallback) {
+<span class="nc" id="L221">        this.requestService.getRequests(requestsList, updateDisplayCallback);</span>
+<span class="nc" id="L222">    }</span>
+
+    /**
+     * Ajoute d'une requête dans la base de données avec {@link RequestService#newRequest(Request)}
+     *
+     * @param request {@link Request} a sauvegarder
+     */
+    public void saveRequest(Request request) {
+<span class="nc" id="L230">        this.requestService.newRequest(request);</span>
+<span class="nc" id="L231">    }</span>
+
+    /**
+     * Méthode pour récupérer les {@link Entrave entraves} avec {@link EntravesServices#getEntraves()}
+     * 
+     * @return {@link ArrayList}&amp;lt;{@link Entrave entraves}&amp;gt;
+     *
+     * @throws Exception sur erreur de chargement
+     */
+    public ArrayList&lt;Entrave&gt; getEntraves() throws Exception {
+<span class="nc" id="L241">        return this.entravesServices.getEntraves();</span>
+    }
+
+    /**
+     * Charger le quartier d'une adresse avec {@link AddressService#getQuartier(String)}
+     *
+     * @param postalCode le code postal de l'adresse
+     * @return {@link String} le quartier associé
+     * @throws Exception sur erreur de chargement (ou sur un code postal invalide)
+     */
+    public String getQuartier(String postalCode) throws Exception {
+<span class="nc" id="L252">        return this.addressService.getQuartier(postalCode);</span>
+    }
+
+    /**
+     * Charger la ville d'une adresse avec {@link AddressService#getCity(String)}
+     * @param postalCode le code postal de l'adresse
+     * @return {@link String} la ville associée
+     * @throws Exception sur erreur de chargement (ou sur un code postal invalide)
+     */
+    public String getCity(String postalCode) throws Exception {
+<span class="nc" id="L262">        return this.addressService.getCity(postalCode);</span>
+    }
+
+    /**
+     * Charge les notification avec {@link NotificationService#getNotifications(FirebaseCallback)}
+     * @param callback update le display sur callback de la méthode
+     * @return {@link ArrayList}&amp;lt;{@link Notification}&amp;gt;
+     * @throws Exception sur erreur de chargement
+     */
+    public ArrayList&lt;Notification&gt; getNotifications(FirebaseCallback&lt;ArrayList&lt;Notification&gt;&gt; callback) throws Exception {
+<span class="nc" id="L272">        return this.notificationService.getNotifications(callback);</span>
+    }
+
+    /**
+     * Méthode pour enrgistrer une nouvelle notification dans la base de donnée
+     * @param notification la notification a enregister
+     */
+    public void addNotification(Notification notification) {
+<span class="nc" id="L280">        this.notificationService.addNotification(notification);</span>
+<span class="nc" id="L281">    }</span>
+
+    /**
+     * Pour le debuggage et les test
+     */
+    public void setRequestService(RequestService requestService) {
+<span class="nc" id="L287">        this.requestService = requestService;</span>
+<span class="nc" id="L288">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

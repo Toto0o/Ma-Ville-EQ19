@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PreferencesPlagesHorairesScene.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prototype</a> &gt; <a href="index.source.html" class="el_package">prototype.scenes.general.settings</a> &gt; <span class="el_source">PreferencesPlagesHorairesScene.java</span></div><h1>PreferencesPlagesHorairesScene.java</h1><pre class="source lang-java linenums">package prototype.scenes.general.settings;
+
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import prototype.controllers.ApiController;
+import prototype.scenes.Scenes;
+import prototype.controllers.SceneController;
+import prototype.services.ServiceSession;
+import prototype.users.Horaire;
+import prototype.users.UserSession;
+
+/**
+ * Scene pour modifier / enregistrer les préférences d'horaires
+ *
+ * &lt;p&gt;Accessible par {@link SettingsScene}&lt;/p&gt;
+ */
+public class PreferencesPlagesHorairesScene extends Scenes {
+
+    private VBox vbox;
+    private Button submitButton, backButton;
+    private Text confirmationText;
+    private GridPane grid;
+    private HBox mainLayout;// VBox to stack the timetable and legend vertically
+    private ApiController apiController;
+
+    /**
+     * Constructeur
+     *
+     * &lt;p&gt;Construit la grille de plage horaire avec {@link #setupGrid()}&lt;/p&gt;
+     * @param sceneController
+     */
+    public PreferencesPlagesHorairesScene(SceneController sceneController) {
+<span class="fc" id="L40">        super(sceneController);</span>
+
+<span class="fc" id="L42">        this.vbox = new VBox(10);</span>
+<span class="fc" id="L43">        this.submitButton = new Button(&quot;Soumettre&quot;);</span>
+<span class="fc" id="L44">        this.submitButton.setId(&quot;submitButton&quot;);</span>
+<span class="fc" id="L45">        this.confirmationText = labelText(&quot;&quot;);</span>
+<span class="fc" id="L46">        this.grid = new GridPane();</span>
+<span class="fc" id="L47">        this.grid.setId(&quot;grid&quot;);</span>
+<span class="fc" id="L48">        this.mainLayout = new HBox(20); // Add spacing between timetable and legend</span>
+<span class="fc" id="L49">        this.mainLayout.setId(&quot;mainLayout&quot;);</span>
+
+        // Setting the title for the scene
+<span class="fc" id="L52">        Text title = labelText(&quot;Préférences de Plages Horaires&quot;);</span>
+<span class="fc" id="L53">        title.setFont(new Font(&quot;Arial&quot;, 24));</span>
+
+        // Set up the grid for the timetable
+<span class="fc" id="L56">        setupGrid();</span>
+
+        // Set up the back button (aligned to the top left)
+<span class="fc" id="L59">        this.backButton = new Button(&quot;Retour&quot;);</span>
+<span class="fc" id="L60">        VBox backButtonContainer = new VBox(10, backButton);</span>
+<span class="fc" id="L61">        backButtonContainer.setAlignment(Pos.TOP_LEFT);</span>
+
+        // Add the title, back button, and mainLayout to VBox
+<span class="fc" id="L64">        vbox.getChildren().addAll(backButtonContainer, title, mainLayout, submitButton, confirmationText);</span>
+<span class="fc" id="L65">        vbox.setAlignment(Pos.CENTER);</span>
+
+        // Button action for submit
+<span class="pc" id="L68">        submitButton.setOnAction(event -&gt; submitPreferences());</span>
+
+        // Initially hide the submit button
+<span class="fc" id="L71">        submitButton.setDisable(true);</span>
+
+<span class="fc" id="L73">        this.apiController = ServiceSession.getInstance().getController();</span>
+<span class="fc" id="L74">    }</span>
+
+    @Override
+    public void setScene() {
+<span class="fc" id="L78">        this.root.setCenter(this.vbox);</span>
+
+        // Set back button action
+<span class="fc" id="L81">        this.backButton.setOnMouseClicked((event) -&gt; {</span>
+<span class="nc" id="L82">            this.sceneController.newScene(&quot;settings&quot;);</span>
+<span class="nc" id="L83">        });</span>
+<span class="fc" id="L84">    }</span>
+
+    /**
+     * Method to set up the timetable grid (week schedule with hours from 08:00 to 20:00)
+     */
+    private void setupGrid() {
+<span class="fc" id="L90">        grid.setHgap(10);</span>
+<span class="fc" id="L91">        grid.setVgap(10);</span>
+<span class="fc" id="L92">        grid.setAlignment(Pos.CENTER); // Center grid contents</span>
+
+<span class="fc" id="L94">        String[] days = { &quot;Lundi&quot;, &quot;Mardi&quot;, &quot;Mercredi&quot;, &quot;Jeudi&quot;, &quot;Vendredi&quot;, &quot;Samedi&quot;, &quot;Dimanche&quot; };</span>
+<span class="fc" id="L95">        String[] times = { &quot;08:00&quot;, &quot;09:00&quot;, &quot;10:00&quot;, &quot;11:00&quot;, &quot;12:00&quot;, &quot;13:00&quot;, &quot;14:00&quot;, &quot;15:00&quot;, &quot;16:00&quot;, &quot;17:00&quot;,</span>
+                &quot;18:00&quot;, &quot;19:00&quot;, &quot;20:00&quot; };
+
+<span class="fc" id="L98">        int row = 0;</span>
+
+        // Add time labels to the first column
+<span class="fc bfc" id="L101" title="All 2 branches covered.">        for (int i = 0; i &lt; times.length; i++) {</span>
+<span class="fc" id="L102">            Text timeText = labelText(times[i]);</span>
+<span class="fc" id="L103">            timeText.setFont(new Font(&quot;Arial&quot;, 14));</span>
+<span class="fc" id="L104">            grid.add(timeText, 0, i + 1); // First column for times</span>
+        }
+
+        // Add column headers for each day
+<span class="fc bfc" id="L108" title="All 2 branches covered.">        for (int i = 0; i &lt; days.length; i++) {</span>
+<span class="fc" id="L109">            Text dayText = labelText(days[i]);</span>
+<span class="fc" id="L110">            dayText.setFont(new Font(&quot;Arial&quot;, 14));</span>
+<span class="fc" id="L111">            grid.add(dayText, i + 1, row);</span>
+        }
+
+        // Loop through each day (columns) and time (rows) to create clickable squares
+<span class="fc bfc" id="L115" title="All 2 branches covered.">        for (int i = 0; i &lt; 7; i++) { // 7 days</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">            for (int j = 0; j &lt; 13; j++) { // 13 time slots (08:00 to 20:00)</span>
+                // Create a rectangle (square) for each time slot
+<span class="fc" id="L118">                Rectangle timeSlot = new Rectangle(150, 50);</span>
+
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">                if (UserSession.getInstance().getUser().getHoraire().get(i, j)) {</span>
+<span class="nc" id="L121">                timeSlot.setFill(Color.LIGHTGREEN);}</span>
+<span class="fc" id="L122">                else { timeSlot.setFill(Color.LIGHTGRAY);}</span>
+<span class="fc" id="L123">                timeSlot.setStroke(Color.BLACK);</span>
+
+                // Set up behavior for the clickable squares
+
+<span class="pc" id="L127">                timeSlot.setOnMouseClicked(event -&gt; toggleTimeSlot(timeSlot));</span>
+<span class="fc" id="L128">                timeSlot.setId(i + &quot;_&quot; + j);</span>
+
+                // Mark some slots as unclickable (in light red)
+<span class="fc bfc" id="L131" title="All 2 branches covered.">                if (shouldBeUnselectable(i, j)) {</span>
+<span class="fc" id="L132">                    timeSlot.setFill(Color.LIGHTCORAL);</span>
+<span class="fc" id="L133">                    timeSlot.setDisable(true); // Disable clicking</span>
+                }
+
+<span class="fc" id="L136">                grid.add(timeSlot, i + 1, j + 1);</span>
+            }
+        }
+
+        // Create the legend for the timetable (below the grid)
+<span class="fc" id="L141">        VBox legendBox = new VBox(10);</span>
+<span class="fc" id="L142">        legendBox.setAlignment(Pos.CENTER); // Center the legend</span>
+
+<span class="fc" id="L144">        Text legendTitle = labelText(&quot;Légende&quot;);</span>
+<span class="fc" id="L145">        legendTitle.setFont(new Font(&quot;Arial&quot;, 16));</span>
+
+        // Create small colored squares for the legend
+<span class="fc" id="L148">        HBox redBox = new HBox(10);</span>
+<span class="fc" id="L149">        redBox.setAlignment(Pos.CENTER_LEFT); // Center items within the HBox</span>
+<span class="fc" id="L150">        Rectangle redSquare = new Rectangle(20, 20, Color.RED);</span>
+<span class="fc" id="L151">        redBox.getChildren().addAll(redSquare, labelText(&quot;Occupé&quot;));</span>
+
+<span class="fc" id="L153">        HBox whiteBox = new HBox(10);</span>
+<span class="fc" id="L154">        whiteBox.setAlignment(Pos.CENTER_LEFT); // Center items within the HBox</span>
+<span class="fc" id="L155">        Rectangle whiteSquare = new Rectangle(20, 20, Color.LIGHTGRAY);</span>
+<span class="fc" id="L156">        whiteSquare.setStroke(Color.BLACK); // Add a border to make it visible</span>
+<span class="fc" id="L157">        whiteBox.getChildren().addAll(whiteSquare, labelText(&quot;Disponible&quot;));</span>
+
+<span class="fc" id="L159">        legendBox.getChildren().addAll(legendTitle, redBox, whiteBox);</span>
+
+        // Add timetable and legend to the mainLayout (VBox)
+<span class="fc" id="L162">        mainLayout.getChildren().addAll(grid, legendBox); // Stack timetable and legend</span>
+<span class="fc" id="L163">        mainLayout.setAlignment(Pos.CENTER); // Center the entire layout</span>
+<span class="fc" id="L164">    }</span>
+
+    // Method to toggle the background color of a time slot when clicked
+    private void toggleTimeSlot(Rectangle timeSlot) {
+        // If already selected, unselect (turn back to light gray)
+<span class="nc bnc" id="L169" title="All 2 branches missed.">        if (timeSlot.getFill() == Color.LIGHTGREEN) {</span>
+<span class="nc" id="L170">            timeSlot.setFill(Color.LIGHTGRAY);</span>
+        } else {
+            // Otherwise, mark as selected (turn to light green)
+<span class="nc" id="L173">            timeSlot.setFill(Color.LIGHTGREEN);</span>
+        }
+
+        // Enable submit button once a selection is made
+<span class="nc" id="L177">        submitButton.setDisable(false);</span>
+<span class="nc" id="L178">    }</span>
+
+    // Check whether the time slot should be unclickable (e.g., for certain hours)
+    private boolean shouldBeUnselectable(int day, int hour) {
+        // For example, here we disable the 12:00 to 14:00 slots for all days
+<span class="fc bfc" id="L183" title="All 4 branches covered.">        return hour &gt;= 4 &amp;&amp; hour &lt;= 5; // Disable 12:00 to 14:00 slots (indexed from 0)</span>
+    }
+
+    // Method to handle submitting the preferences
+    private void submitPreferences() {
+        // Show a confirmation message when the user submits the preferences
+<span class="nc" id="L189">        Horaire horaire = new Horaire();</span>
+
+<span class="nc bnc" id="L191" title="All 2 branches missed.">        for (javafx.scene.Node preference : grid.getChildren()) {</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">            if (preference instanceof Rectangle rectangle) {</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">                if (rectangle.getFill() == Color.LIGHTGREEN) {</span>
+<span class="nc" id="L194">                    String[] id = rectangle.getId().split(&quot;_&quot;);</span>
+<span class="nc" id="L195">                    int day = Integer.parseInt(id[0]);</span>
+<span class="nc" id="L196">                    int hour = Integer.parseInt(id[1]);</span>
+<span class="nc" id="L197">                    horaire.set(day, hour, true);</span>
+                }
+            }
+
+<span class="nc" id="L201">        }</span>
+<span class="nc" id="L202">        UserSession.getInstance().getUser().setHoraire(horaire);</span>
+<span class="nc" id="L203">        this.apiController.updateUserInfo();</span>
+<span class="nc" id="L204">        confirmationText.setText(&quot;Préférence de plages horaires soumise.&quot;);</span>
+<span class="nc" id="L205">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

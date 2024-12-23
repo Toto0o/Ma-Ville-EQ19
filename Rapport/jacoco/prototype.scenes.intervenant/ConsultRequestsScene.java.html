@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConsultRequestsScene.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prototype</a> &gt; <a href="index.source.html" class="el_package">prototype.scenes.intervenant</a> &gt; <span class="el_source">ConsultRequestsScene.java</span></div><h1>ConsultRequestsScene.java</h1><pre class="source lang-java linenums">package prototype.scenes.intervenant;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+import javafx.application.Platform;
+
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import prototype.controllers.ApiController;
+import prototype.controllers.SceneController;
+import prototype.notifications.Notification;
+import prototype.projects.Project;
+import prototype.projects.Status;
+import prototype.scenes.Scenes;
+import prototype.projects.Request;
+import prototype.services.FirebaseCallback;
+import prototype.services.ServiceSession;
+import prototype.users.UserSession;
+import prototype.users.Utilisateur;
+
+/**
+ * Scene de consultation des requêtes pour les intervenants
+ *
+ * &lt;p&gt;Charge les requêtes avec {@link ApiController#getRequests(ArrayList, Runnable)}&lt;/p&gt;
+ * &lt;p&gt;Permet la soumission de candidature pour chacun des projets&lt;/p&gt;
+ * &lt;p&gt;Accessible par {@link prototype.scenes.general.menu.MenuScene MenuScene}&lt;/p&gt;
+ */
+public class ConsultRequestsScene extends Scenes {
+
+    private VBox vbox;
+    private Button backButton;
+    private Button applyFiltersButton; // Add button for applying filters
+    private ArrayList&lt;Request&gt; requestsList;
+    private ComboBox&lt;String&gt; typeFilterComboBox;
+    private DatePicker dateFilterPicker;
+    private TextField quartierSearchField;
+    private ApiController apiController;
+
+    /**
+     * Constructeur
+     * @param sceneController
+     */
+    public ConsultRequestsScene(SceneController sceneController) {
+<span class="fc" id="L51">        super(sceneController);</span>
+<span class="fc" id="L52">        this.vbox = new VBox(10);</span>
+<span class="fc" id="L53">        this.vbox.setId(&quot;RequestContainer&quot;);</span>
+<span class="fc" id="L54">        this.requestsList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L55">        this.backButton = new Button(&quot;Back&quot;);</span>
+<span class="fc" id="L56">        this.backButton.setId(&quot;menu&quot;);</span>
+<span class="fc" id="L57">        this.applyFiltersButton = new Button(&quot;Apply Filters&quot;); // Initialize the button</span>
+<span class="fc" id="L58">        this.applyFiltersButton.setId(&quot;applyFilters&quot;);</span>
+<span class="fc" id="L59">        this.typeFilterComboBox = new ComboBox&lt;&gt;();</span>
+<span class="fc" id="L60">        this.typeFilterComboBox.setId(&quot;typeFilterComboBox&quot;);</span>
+<span class="fc" id="L61">        this.dateFilterPicker = new DatePicker();</span>
+<span class="fc" id="L62">        this.dateFilterPicker.setId(&quot;dateFilterPicker&quot;);</span>
+<span class="fc" id="L63">        this.quartierSearchField = new TextField();</span>
+<span class="fc" id="L64">        this.quartierSearchField.setId(&quot;quartierSearchField&quot;);</span>
+<span class="fc" id="L65">        this.quartierSearchField.setPromptText(&quot;Rechercher par quartier&quot;);</span>
+<span class="fc" id="L66">        this.apiController = ServiceSession.getInstance().getController();</span>
+<span class="fc" id="L67">    }</span>
+
+    @Override
+    public void setScene() {
+        // Set the back button at the top
+<span class="fc" id="L72">        this.root.setTop(this.backButton);</span>
+
+<span class="fc" id="L74">        BorderPane borderPane = new BorderPane();</span>
+<span class="fc" id="L75">        borderPane.setCenter(createScrollableProjectBox());</span>
+        // Set the main content in the center
+<span class="fc" id="L77">        this.root.setCenter(borderPane);</span>
+
+<span class="fc" id="L79">        this.root.setCenter(borderPane);</span>
+
+        // Add the back button's functionality
+<span class="fc" id="L82">        this.backButton.setOnMouseClicked((menuAction) -&gt; {</span>
+<span class="nc" id="L83">            this.sceneController.newScene(&quot;menu&quot;);</span>
+<span class="nc" id="L84">        });</span>
+
+        // Create filters
+<span class="fc" id="L87">        createFilters();</span>
+
+<span class="fc" id="L89">        quartierSearchField.setMaxWidth(250);</span>
+
+        // Set the layout for the search field
+<span class="fc" id="L92">        HBox searchBox = new HBox(10);</span>
+<span class="fc" id="L93">        searchBox.setAlignment(Pos.CENTER);</span>
+<span class="fc" id="L94">        searchBox.getChildren().addAll(labelText(&quot;Rechercher: &quot;), quartierSearchField);</span>
+
+        // Add filter and request list to the VBox
+<span class="fc" id="L97">        VBox filterBox = new VBox(10);</span>
+<span class="fc" id="L98">        filterBox.setAlignment(Pos.CENTER);</span>
+<span class="fc" id="L99">        filterBox.getChildren().addAll(</span>
+<span class="fc" id="L100">                labelText(&quot;Filter by Type:&quot;), typeFilterComboBox,</span>
+<span class="fc" id="L101">                labelText(&quot;Filter by Date:&quot;), dateFilterPicker,</span>
+<span class="fc" id="L102">                labelText(&quot;Search by Quartier:&quot;), quartierSearchField,</span>
+                applyFiltersButton); // Add the apply button
+
+<span class="fc" id="L105">        this.vbox.getChildren().addAll(searchBox, filterBox);</span>
+
+        // Fetch requests from Firebase
+
+<span class="fc" id="L109">        this.requestsList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L110">        this.apiController.getRequests(requestsList, this::updateRequestDisplay);</span>
+<span class="fc" id="L111">        updateRequestDisplay();</span>
+
+        // Add the event handler for the apply button
+<span class="fc" id="L114">        applyFiltersButton.setOnMouseClicked(e -&gt; updateRequestDisplay());</span>
+<span class="fc" id="L115">    }</span>
+
+    private void createFilters() {
+        // Populate type filter with possible types
+<span class="fc" id="L119">        typeFilterComboBox.getItems().addAll(&quot;All&quot;, &quot;Travaux routiers&quot;, &quot;Travaux de gaz ou électricité&quot;,</span>
+                &quot;Construction ou rénovation&quot;);
+
+        // Set the default value for the filters
+<span class="fc" id="L123">        typeFilterComboBox.setValue(&quot;All&quot;);</span>
+
+        // Add a filter action for ComboBox and DatePicker
+<span class="pc" id="L126">        typeFilterComboBox.setOnAction(e -&gt; updateRequestDisplay());</span>
+<span class="pc" id="L127">        dateFilterPicker.setOnAction(e -&gt; updateRequestDisplay());</span>
+<span class="fc" id="L128">    }</span>
+
+    /**
+     * Crée un {@link ScrollPane} pour afficher les projets
+     * @return {@link ScrollPane}
+     */
+    private ScrollPane createScrollableProjectBox() {
+        // Make the vbox scrollable
+<span class="fc" id="L136">        ScrollPane scrollPane = new ScrollPane();</span>
+<span class="fc" id="L137">        scrollPane.setContent(this.vbox);</span>
+<span class="fc" id="L138">        scrollPane.setFitToWidth(true);</span>
+<span class="fc" id="L139">        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);</span>
+
+        // Set max height for scrollable area
+
+<span class="fc" id="L143">        this.vbox.setStyle(&quot;-fx-padding: 10;&quot;);</span>
+<span class="fc" id="L144">        this.vbox.setAlignment(Pos.CENTER);</span>
+<span class="fc" id="L145">        this.vbox.setStyle(&quot;-fx-background-color: linear-gradient(to left, #0000FF, #87CEDA);&quot;);</span>
+
+<span class="fc" id="L147">        return scrollPane;</span>
+    }
+
+
+    /**
+     * Affiche les requêtes selon les filtres choisis (ou selon la recherche)
+     */
+    private void updateRequestDisplay() {
+        // Ensure UI updates are done on the JavaFX Application Thread
+            // Clear previous display
+<span class="fc" id="L157">            vbox.getChildren().clear();</span>
+
+            // Add the filter options again
+<span class="fc" id="L160">            VBox filterBox = new VBox(10);</span>
+<span class="fc" id="L161">            filterBox.setAlignment(Pos.CENTER);</span>
+<span class="fc" id="L162">            filterBox.getChildren().addAll(</span>
+<span class="fc" id="L163">                    labelText(&quot;Filter by Type:&quot;), typeFilterComboBox,</span>
+<span class="fc" id="L164">                    labelText(&quot;Filter by Date:&quot;), dateFilterPicker,</span>
+<span class="fc" id="L165">                    labelText(&quot;Search by Quartier:&quot;), quartierSearchField,</span>
+                    applyFiltersButton); // Ensure the button is re-added
+<span class="fc" id="L167">            vbox.getChildren().add(filterBox);</span>
+
+            // Get the quartier search input, ensuring it's trimmed for extra spaces
+<span class="fc" id="L170">            String quartierSearchInput = quartierSearchField.getText().trim().toLowerCase();</span>
+
+            // Filter the requests based on the selected filters
+<span class="fc" id="L173">            List&lt;Request&gt; filteredRequests = requestsList.stream()</span>
+<span class="pc bnc" id="L174" title="All 2 branches missed.">                    .filter(r -&gt; (typeFilterComboBox.getValue().equals(&quot;All&quot;)</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">                            || r.getType().equals(typeFilterComboBox.getValue())))</span>
+<span class="pc bnc" id="L176" title="All 2 branches missed.">                    .filter(r -&gt; (dateFilterPicker.getValue() == null</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">                            || r.getDate().equals(dateFilterPicker.getValue().toString().replace(&quot;-&quot;, &quot;&quot;)))) // Compare</span>
+                                                                                                             // the
+                                                                                                             // formatted
+                                                                                                             // date
+<span class="fc" id="L181">                    .filter(r -&gt; {</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">                        String quartier = r.getQuartier() != null ? r.getQuartier().toLowerCase() : &quot;&quot;;</span>
+                        // If the quartierSearchInput is empty, we don't filter for quartier
+<span class="nc bnc" id="L184" title="All 2 branches missed.">                        if (quartierSearchInput.isEmpty()) {</span>
+<span class="nc" id="L185">                            return true; // No filtering if search is empty</span>
+                        }
+                        // Exact match check: quartier should exactly match the search input
+<span class="nc" id="L188">                        return quartier.equals(quartierSearchInput);</span>
+                    })
+<span class="fc" id="L190">                    .collect(Collectors.toList());</span>
+                    
+<span class="fc" id="L192">            int i = 0;</span>
+            // Loop through the filtered requests and add each to the VBox
+<span class="pc bpc" id="L194" title="1 of 2 branches missed.">            for (Request request : filteredRequests) {</span>
+<span class="nc" id="L195">                VBox box = new VBox();</span>
+<span class="nc" id="L196">                box.setAlignment(Pos.CENTER);</span>
+<span class="nc" id="L197">                Button candidature = new Button(&quot;Soumettre sa candidature pour ce projet&quot;);</span>
+<span class="nc" id="L198">                candidature.setId(&quot;candidature&quot;);</span>
+<span class="nc" id="L199">                box.getChildren().addAll(request.afficher(), candidature);</span>
+
+<span class="nc" id="L201">                candidature.setOnMouseClicked(event -&gt; {</span>
+<span class="nc" id="L202">                    box.getChildren().remove(candidature);</span>
+<span class="nc" id="L203">                    VBox choose = new VBox(3);</span>
+<span class="nc" id="L204">                    DatePicker startDate = new DatePicker();</span>
+<span class="nc" id="L205">                    startDate.setId(&quot;startDate&quot;);</span>
+<span class="nc" id="L206">                    DatePicker endDate = new DatePicker();</span>
+<span class="nc" id="L207">                    endDate.setId(&quot;endDate&quot;);</span>
+<span class="nc" id="L208">                    Button soumettre = new Button(&quot;Soumettre&quot;);</span>
+<span class="nc" id="L209">                    soumettre.setId(&quot;soumettre&quot;);</span>
+<span class="nc" id="L210">                    Button annuler = new Button(&quot;Annuler&quot;);</span>
+<span class="nc" id="L211">                    annuler.setId(&quot;annuler&quot;);</span>
+<span class="nc" id="L212">                    Text status = labelText(&quot;&quot;);</span>
+                    
+<span class="nc" id="L214">                    soumettre.setOnMouseClicked(e -&gt; {</span>
+<span class="nc bnc" id="L215" title="All 4 branches missed.">                        if (startDate.getValue() == null || endDate.getValue() == null) {</span>
+<span class="nc" id="L216">                            status.setText(&quot;Date ne peut pas être vide&quot;);</span>
+                        }
+                        else {
+<span class="nc" id="L219">                            Project project = new Project(</span>
+<span class="nc" id="L220">                                    request.getTitle(),</span>
+<span class="nc" id="L221">                                    request.getDescription(),</span>
+<span class="nc" id="L222">                                    request.getType(),</span>
+<span class="nc" id="L223">                                    request.getQuartier(),</span>
+<span class="nc" id="L224">                                    startDate.getValue().format(this.formatter),</span>
+<span class="nc" id="L225">                                    endDate.getValue().format(this.formatter),</span>
+                                    &quot;8:00 AM 19:59 PM&quot;,
+                                    Status.PREVU,
+<span class="nc" id="L228">                                    UserSession.getInstance().getUserId(),</span>
+<span class="nc" id="L229">                                    request.getStreet()</span>
+                            );
+<span class="nc" id="L231">                            this.apiController.addProject(project);</span>
+                            // Send notification on new projet added
+<span class="nc" id="L233">                            Notification notification = new Notification(</span>
+                                    &quot;Nouveau projet&quot;,
+                                    &quot;Un nouveau projet à été approuvé dans vore quartier : &quot; +
+<span class="nc" id="L236">                                            project.getDescription()</span>
+                            );
+<span class="nc" id="L238">                            ArrayList&lt;String&gt; usersIds = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L239">                            FirebaseCallback&lt;ArrayList&lt;Utilisateur&gt;&gt; callback = new FirebaseCallback&lt;&gt;() {</span>
+                                @Override
+                                public void onSucessReturn(ArrayList&lt;Utilisateur&gt; users) {
+<span class="nc" id="L242">                                    Platform.runLater(() -&gt; {</span>
+<span class="nc bnc" id="L243" title="All 2 branches missed.">                                        for (Utilisateur utilisateur : users) {</span>
+<span class="nc bnc" id="L244" title="All 2 branches missed.">                                            if (Objects.equals(project.getQuartiersAffected(), utilisateur.getAddress().getBorough())) {</span>
+<span class="nc" id="L245">                                                usersIds.add(utilisateur.getId());</span>
+                                            }
+<span class="nc" id="L247">                                        }</span>
+<span class="nc" id="L248">                                        notification.setUsersId(usersIds);</span>
+<span class="nc" id="L249">                                        apiController.addNotification(notification);</span>
+<span class="nc" id="L250">                                    });</span>
+<span class="nc" id="L251">                                }</span>
+
+                                @Override
+                                public void onFailure(String message) {
+<span class="nc" id="L255">                                }</span>
+
+                                @Override
+<span class="nc" id="L258">                                public void onSucess() {}</span>
+                            };
+<span class="nc" id="L260">                            this.apiController.getResidents(callback);</span>
+                        }
+<span class="nc" id="L262">                    });</span>
+
+<span class="nc" id="L264">                    annuler.setOnMouseClicked(e -&gt; {</span>
+<span class="nc" id="L265">                        box.getChildren().remove(choose);</span>
+<span class="nc" id="L266">                        box.getChildren().add(candidature);</span>
+<span class="nc" id="L267">                    });</span>
+<span class="nc" id="L268">                    choose.getChildren().addAll(</span>
+<span class="nc" id="L269">                            labelText(&quot;Date de début&quot;), startDate,</span>
+<span class="nc" id="L270">                            labelText(&quot;Date de fin&quot;), endDate,</span>
+                            soumettre, annuler, status);
+<span class="nc" id="L272">                    choose.setAlignment(Pos.CENTER);</span>
+<span class="nc" id="L273">                    box.getChildren().addAll(choose);</span>
+
+
+<span class="nc" id="L276">                });</span>
+                
+<span class="nc" id="L278">                vbox.getChildren().add(box);</span>
+<span class="nc" id="L279">                vbox.setSpacing(20);</span>
+<span class="nc" id="L280">            }</span>
+<span class="fc" id="L281">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserServices.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prototype</a> &gt; <a href="index.source.html" class="el_package">prototype.services</a> &gt; <span class="el_source">UserServices.java</span></div><h1>UserServices.java</h1><pre class="source lang-java linenums">package prototype.services;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.api.core.ApiFuture;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserRecord;
+import com.google.firebase.database.*;
+import prototype.users.*;
+
+/**
+ * Connexion Api avec firebase pour traiter les actions relatives à l'utilisateur
+ *
+ * &lt;p&gt;Utiliser {@link #authenticateWithFirebase(String, String, FirebaseCallback)} pour l'authentification&lt;/p&gt;
+ * &lt;p&gt;Utiliser {@link #register(Resident)} pour enregistrer un résident&lt;/p&gt;
+ * &lt;p&gt;Utiliser {@link #register(Intervenant)} pour enregistrer un intervenant&lt;/p&gt;
+ */
+public class UserServices {
+    private static final String API_KEY = &quot;AIzaSyD95B1nhXm9xVTn_QJjXpQD-FDEqlG6cKM&quot;;
+    private static final String DATABASE_URL = &quot;https://maville-18aa2-default-rtdb.firebaseio.com/&quot;;
+    private final List&lt;Exception&gt; exceptionsList;
+
+<span class="nc" id="L28">    public UserServices() {</span>
+<span class="nc" id="L29">        this.exceptionsList = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L30">    }</span>
+
+    /**
+     * Atuthentifier l'utilisateur avec Firebase en utilisant l'email et le mot de passe
+     *
+     * &lt;p&gt;&lt;a href = &quot;https://cloud.google.com/identity-platform/docs/reference/rest&quot;&gt;identitytoolkit.googleapis.com&lt;/a&gt; &lt;/p&gt;
+     *
+     * @param email le email de l'utilisateur
+     * @param password le mot de passe de l'utilisateur
+     */
+    public void authenticateWithFirebase(String email, String password, FirebaseCallback callback) throws IllegalArgumentException {
+<span class="nc" id="L41">        Thread thread = new Thread(() -&gt; {</span>
+<span class="nc" id="L42">            exceptionsList.clear();</span>
+            try {
+<span class="nc" id="L44">                URL authUrl = new URL(</span>
+                        &quot;https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=&quot; + API_KEY);
+<span class="nc" id="L46">                HttpURLConnection authConnection = (HttpURLConnection) authUrl.openConnection();</span>
+<span class="nc" id="L47">                authConnection.setRequestMethod(&quot;POST&quot;);</span>
+<span class="nc" id="L48">                authConnection.setRequestProperty(&quot;Content-Type&quot;, &quot;application/json; charset=UTF-8&quot;);</span>
+<span class="nc" id="L49">                authConnection.setDoOutput(true);</span>
+<span class="nc" id="L50">                String jsonInputString = String</span>
+<span class="nc" id="L51">                        .format(&quot;{\&quot;email\&quot;:\&quot;%s\&quot;,\&quot;password\&quot;:\&quot;%s\&quot;,\&quot;returnSecureToken\&quot;:true}&quot;, email, password);</span>
+<span class="nc" id="L52">                try (java.io.OutputStreamWriter writer = new java.io.OutputStreamWriter(</span>
+<span class="nc" id="L53">                        authConnection.getOutputStream(), &quot;UTF-8&quot;)) {</span>
+<span class="nc" id="L54">                    writer.write(jsonInputString);</span>
+<span class="nc" id="L55">                    writer.flush();</span>
+                }
+<span class="nc" id="L57">                int authResponseCode = authConnection.getResponseCode();</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">                if (authResponseCode == HttpURLConnection.HTTP_OK) {</span>
+<span class="nc" id="L59">                    try (BufferedReader reader = new BufferedReader(</span>
+<span class="nc" id="L60">                            new InputStreamReader(authConnection.getInputStream(), &quot;UTF-8&quot;))) {</span>
+<span class="nc" id="L61">                        StringBuilder response = new StringBuilder();</span>
+                        String line;
+<span class="nc bnc" id="L63" title="All 2 branches missed.">                        while ((line = reader.readLine()) != null) {</span>
+<span class="nc" id="L64">                            response.append(line);</span>
+                        }
+                        // Extract user ID (localId) from the response
+<span class="nc" id="L67">                        String responseBody = response.toString();</span>
+<span class="nc" id="L68">                        String userId = extractFieldFromJson(responseBody, &quot;localId&quot;);</span>
+                        // Save UID in UserSession
+<span class="nc" id="L70">                        UserSession.getInstance().setUserId(userId);</span>
+<span class="nc" id="L71">                        getUser(userId, callback);</span>
+
+
+                    }
+                } else {
+<span class="nc" id="L76">                    exceptionsList.add(new IllegalArgumentException(&quot;Invalid email or password&quot;));</span>
+                }
+<span class="nc" id="L78">            } catch (Exception e) {</span>
+<span class="nc" id="L79">                e.printStackTrace();</span>
+<span class="nc" id="L80">            }</span>
+<span class="nc" id="L81">        });</span>
+
+<span class="nc" id="L83">        thread.start();</span>
+        try {
+<span class="nc" id="L85">            thread.join();</span>
+<span class="nc" id="L86">        } catch (InterruptedException e) {</span>
+<span class="nc" id="L87">            e.printStackTrace();</span>
+<span class="nc" id="L88">        }</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">        if (!exceptionsList.isEmpty()) {</span>
+<span class="nc" id="L90">             throw (IllegalArgumentException) exceptionsList.get(0);}</span>
+<span class="nc" id="L91">    }</span>
+    /**
+     * Détermine le rôle de l'utilisateur selon son emplacement dans la base de donnée
+     */
+    private String checkUserRole(String userId) {
+<span class="nc" id="L96">        final String[] response = new String[1];</span>
+<span class="nc" id="L97">        Thread thread = new Thread(() -&gt; {</span>
+            try {
+                // Check the 'residents' folder
+<span class="nc" id="L100">                String residentUrl = DATABASE_URL + &quot;residents/&quot; + userId + &quot;.json&quot;;</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">                if (isUserInFolder(residentUrl)) {</span>
+<span class="nc" id="L102">                    response[0] = &quot;residents&quot;;</span>
+                }
+                // Check the 'intervenants' folder
+<span class="nc" id="L105">                String intervenantUrl = DATABASE_URL + &quot;intervenants/&quot; + userId + &quot;.json&quot;;</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">                if (isUserInFolder(intervenantUrl)) {</span>
+<span class="nc" id="L107">                    response[0] = &quot;intervenants&quot;;</span>
+                }
+
+<span class="nc" id="L110">            } catch (Exception e) {</span>
+<span class="nc" id="L111">                e.printStackTrace();</span>
+<span class="nc" id="L112">            }</span>
+<span class="nc" id="L113">        });</span>
+<span class="nc" id="L114">        thread.start();</span>
+        try {
+<span class="nc" id="L116">            thread.join();</span>
+<span class="nc" id="L117">            return response[0];</span>
+<span class="nc" id="L118">        } catch (InterruptedException e) {</span>
+<span class="nc" id="L119">            e.printStackTrace();</span>
+<span class="nc" id="L120">            return null;</span>
+        }
+    }
+
+    /**
+     * Méthode pour vérifier si l'utilisateur se trouve dans le dossier spécifié
+     *
+     * @return true si l'utilisateur est trouvé
+     */
+    private boolean isUserInFolder(String urlString) {
+        try {
+<span class="nc" id="L131">            URL url = new URL(urlString);</span>
+<span class="nc" id="L132">            HttpURLConnection connection = (HttpURLConnection) url.openConnection();</span>
+<span class="nc" id="L133">            connection.setRequestMethod(&quot;GET&quot;);</span>
+<span class="nc" id="L134">            int responseCode = connection.getResponseCode();</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">            if (responseCode == HttpURLConnection.HTTP_OK) {</span>
+<span class="nc" id="L136">                try (BufferedReader reader = new BufferedReader(</span>
+<span class="nc" id="L137">                        new InputStreamReader(connection.getInputStream(), &quot;UTF-8&quot;))) {</span>
+<span class="nc" id="L138">                    StringBuilder response = new StringBuilder();</span>
+                    String line;
+<span class="nc bnc" id="L140" title="All 2 branches missed.">                    while ((line = reader.readLine()) != null) {</span>
+<span class="nc" id="L141">                        response.append(line);</span>
+                    }
+                    // Check if the response is not null (user exists)
+<span class="nc bnc" id="L144" title="All 2 branches missed.">                    return !response.toString().equals(&quot;null&quot;);</span>
+                }
+            }
+<span class="nc" id="L147">        } catch (Exception e) {</span>
+<span class="nc" id="L148">            System.err.println(&quot;Error checking folder: &quot; + e.getMessage());</span>
+<span class="nc" id="L149">        }</span>
+<span class="nc" id="L150">        return false;</span>
+    }
+    /**
+     * Méthode utilitaire pour extraire un field d'une String json
+     *
+     * @param json la chaîne de caractère contenant les champs
+     * @param field le champ à extraire
+     *
+     * @return le champ extrait
+     */
+    private String extractFieldFromJson(String json, String field) {
+        try {
+<span class="nc" id="L162">            com.google.gson.JsonObject jsonObject = com.google.gson.JsonParser.parseString(json).getAsJsonObject();</span>
+<span class="nc" id="L163">            return jsonObject.get(field).getAsString();</span>
+<span class="nc" id="L164">        } catch (Exception e) {</span>
+<span class="nc" id="L165">            return null;</span>
+        }
+    }
+
+    /**
+     * Méthode pour enregistrer un nouveau résident
+     * @param resident le résident à enregistrer
+     */
+    public void register(Resident resident) {
+        try {
+            // Register user with Firebase Authentication
+<span class="nc" id="L176">            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();</span>
+<span class="nc" id="L177">            ApiFuture&lt;UserRecord&gt; future = firebaseAuth.createUserAsync(new UserRecord.CreateRequest()</span>
+<span class="nc" id="L178">                    .setEmail(resident.getEmail())</span>
+<span class="nc" id="L179">                    .setPassword(resident.getPassword())</span>
+<span class="nc" id="L180">                    .setDisplayName(resident.getName() + &quot; &quot; + resident.getLastname()));</span>
+<span class="nc" id="L181">            UserRecord userRecord = future.get(); // Block until operation completes</span>
+<span class="nc" id="L182">            String uid = userRecord.getUid();</span>
+            // Save user to Firebase Database
+<span class="nc" id="L184">            FirebaseDatabase database = FirebaseDatabase</span>
+<span class="nc" id="L185">                    .getInstance(&quot;https://maville-18aa2-default-rtdb.firebaseio.com/&quot;);</span>
+<span class="nc" id="L186">            DatabaseReference userFolderRef = database.getReference(&quot;residents&quot;).child(uid);</span>
+<span class="nc" id="L187">            userFolderRef.setValueAsync(resident).get();</span>
+<span class="nc" id="L188">            UserSession.getInstance().setUser(resident);</span>
+<span class="nc" id="L189">            UserSession.getInstance().setUserId(uid);</span>
+
+<span class="nc" id="L191">        } catch (Exception e) {</span>
+<span class="nc" id="L192">            e.printStackTrace();</span>
+
+<span class="nc" id="L194">        }</span>
+<span class="nc" id="L195">    }</span>
+
+    /**
+     * Méthode pour enregistrer un nouvel intervenant
+     * @param intervenant l'intervenant à enregistrer
+     */
+    public void register(Intervenant intervenant) {
+        try {
+            // Register user with Firebase Authentication
+<span class="nc" id="L204">            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();</span>
+<span class="nc" id="L205">            ApiFuture&lt;UserRecord&gt; future = firebaseAuth.createUserAsync(new UserRecord.CreateRequest()</span>
+<span class="nc" id="L206">                    .setEmail(intervenant.getEmail())</span>
+<span class="nc" id="L207">                    .setPassword(intervenant.getPassword())</span>
+<span class="nc" id="L208">                    .setDisplayName(intervenant.getName() + &quot; &quot; + intervenant.getLastname()));</span>
+<span class="nc" id="L209">            UserRecord userRecord = future.get(); // Block until operation completes</span>
+<span class="nc" id="L210">            String uid = userRecord.getUid(); // Get the unique UID of the user</span>
+            // Save Intervenant to Firebase Database
+<span class="nc" id="L212">            FirebaseDatabase database = FirebaseDatabase</span>
+<span class="nc" id="L213">                    .getInstance(&quot;https://maville-18aa2-default-rtdb.firebaseio.com/&quot;);</span>
+<span class="nc" id="L214">            DatabaseReference userFolderRef = database.getReference(&quot;intervenants&quot;).child(uid);</span>
+            // Save the Intervenant data under the UID folder
+<span class="nc" id="L216">            userFolderRef.setValueAsync(intervenant).get();</span>
+<span class="nc" id="L217">            UserSession.getInstance().setUser(intervenant);</span>
+<span class="nc" id="L218">            UserSession.getInstance().setUserId(uid);</span>
+<span class="nc" id="L219">        } catch (Exception e) {</span>
+<span class="nc" id="L220">            e.printStackTrace();</span>
+
+<span class="nc" id="L222">        }</span>
+<span class="nc" id="L223">    }</span>
+
+    public void getUser(String userId, FirebaseCallback&lt;Utilisateur&gt; callback) {
+<span class="nc" id="L226">        DatabaseReference databaseReference = FirebaseDatabase.getInstance(</span>
+                &quot;https://maville-18aa2-default-rtdb.firebaseio.com/&quot;
+<span class="nc" id="L228">        ).getReference(checkUserRole(userId)).child(userId);</span>
+
+<span class="nc" id="L230">        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {</span>
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                try {
+                    Utilisateur utilisateur;
+<span class="nc bnc" id="L236" title="All 2 branches missed.">                    if (checkUserRole(userId).equals(&quot;residents&quot;)) utilisateur = dataSnapshot.getValue(Resident.class);</span>
+<span class="nc" id="L237">                    else utilisateur = dataSnapshot.getValue(Intervenant.class);</span>
+<span class="nc" id="L238">                    UserSession.getInstance().setUser(utilisateur);</span>
+<span class="nc" id="L239">                    callback.onSucess();</span>
+
+<span class="nc" id="L241">                } catch (Exception e) {</span>
+<span class="nc" id="L242">                    e.printStackTrace();</span>
+<span class="nc" id="L243">                }</span>
+<span class="nc" id="L244">               }</span>
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+<span class="nc" id="L248">                System.out.println(&quot;The read failed: &quot; + databaseError.getCode());</span>
+<span class="nc" id="L249">            }</span>
+        });
+
+<span class="nc" id="L252">    }</span>
+
+    public ArrayList&lt;Horaire&gt; getPreferencesHoraires() {
+<span class="nc" id="L255">        ArrayList&lt;Horaire&gt; horaires = new ArrayList&lt;&gt;();</span>
+
+<span class="nc" id="L257">        DatabaseReference databaseReference = FirebaseDatabase.getInstance(</span>
+                &quot;https://maville-18aa2-default-rtdb.firebaseio.com/&quot;
+<span class="nc" id="L259">        ).getReference(&quot;residents&quot;);</span>
+
+<span class="nc" id="L261">        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {</span>
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+<span class="nc bnc" id="L265" title="All 2 branches missed.">                for (DataSnapshot ds : dataSnapshot.getChildren()) {</span>
+<span class="nc" id="L266">                    Utilisateur utilisateur = ds.getValue(Resident.class);</span>
+<span class="nc" id="L267">                    horaires.add(utilisateur.getHoraire());</span>
+<span class="nc" id="L268">                }</span>
+<span class="nc" id="L269">            }</span>
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+<span class="nc" id="L273">                System.out.println(&quot;The read failed: &quot; + databaseError.getCode());</span>
+<span class="nc" id="L274">            }</span>
+        });
+<span class="nc" id="L276">        return horaires;</span>
+    }
+
+    public void updateUser() {
+        try {
+<span class="nc" id="L281">            Utilisateur utilisateur = UserSession.getInstance().getUser();</span>
+            DatabaseReference databaseReference;
+<span class="nc bnc" id="L283" title="All 2 branches missed.">            if (utilisateur instanceof Resident resident) {</span>
+<span class="nc" id="L284">                databaseReference = FirebaseDatabase.getInstance(</span>
+                        &quot;https://maville-18aa2-default-rtdb.firebaseio.com/&quot;
+<span class="nc" id="L286">                ).getReference(&quot;residents&quot;);</span>
+            } else {
+<span class="nc" id="L288">                databaseReference = FirebaseDatabase.getInstance(</span>
+                        &quot;https://maville-18aa2-default-rtdb.firebaseio.com/&quot;
+<span class="nc" id="L290">                ).getReference(&quot;intervenants&quot;);</span>
+            }
+<span class="nc" id="L292">            databaseReference.child(UserSession.getInstance().getUserId())</span>
+<span class="nc" id="L293">                    .setValueAsync(utilisateur).get();</span>
+<span class="nc" id="L294">        } catch (Exception e) {</span>
+<span class="nc" id="L295">            e.printStackTrace();</span>
+<span class="nc" id="L296">        }</span>
+<span class="nc" id="L297">    }</span>
+
+    public void getResidents(FirebaseCallback&lt;ArrayList&lt;Utilisateur&gt;&gt; callbackRes) {
+
+<span class="nc" id="L301">        ArrayList&lt;Utilisateur&gt; users = new ArrayList&lt;&gt;();</span>
+
+<span class="nc" id="L303">        DatabaseReference databaseReferenceRes = FirebaseDatabase.getInstance(</span>
+                &quot;https://maville-18aa2-default-rtdb.firebaseio.com/&quot;
+<span class="nc" id="L305">        ).getReference(&quot;residents&quot;);</span>
+<span class="nc" id="L306">        databaseReferenceRes.addListenerForSingleValueEvent(new ValueEventListener() {</span>
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+<span class="nc bnc" id="L310" title="All 2 branches missed.">                for (DataSnapshot ds : dataSnapshot.getChildren()) {</span>
+<span class="nc" id="L311">                    users.add(ds.getValue(Resident.class));</span>
+<span class="nc" id="L312">                }</span>
+<span class="nc" id="L313">                callbackRes.onSucessReturn(users);</span>
+<span class="nc" id="L314">            }</span>
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+<span class="nc" id="L318">                System.out.println(&quot;The read failed: &quot; + databaseError.getCode());</span>
+<span class="nc" id="L319">            }</span>
+        });
+
+<span class="nc" id="L322">    }</span>
+
+    public void getIntervenants(FirebaseCallback&lt;ArrayList&lt;Utilisateur&gt;&gt; callbackInter) {
+<span class="nc" id="L325">        ArrayList&lt;Utilisateur&gt; users = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L326">        DatabaseReference databaseReferenceRes = FirebaseDatabase.getInstance(</span>
+                &quot;https://maville-18aa2-default-rtdb.firebaseio.com/&quot;
+<span class="nc" id="L328">        ).getReference(&quot;intervenants&quot;);</span>
+<span class="nc" id="L329">        databaseReferenceRes.addListenerForSingleValueEvent(new ValueEventListener() {</span>
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+<span class="nc bnc" id="L333" title="All 2 branches missed.">                for (DataSnapshot ds : dataSnapshot.getChildren()) {</span>
+<span class="nc" id="L334">                    users.add(ds.getValue(Intervenant.class));</span>
+<span class="nc" id="L335">                }</span>
+<span class="nc" id="L336">                callbackInter.onSucessReturn(users);</span>
+<span class="nc" id="L337">            }</span>
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+<span class="nc" id="L341">                System.out.println(&quot;The read failed: &quot; + databaseError.getCode());</span>
+<span class="nc" id="L342">            }</span>
+        });
+
+<span class="nc" id="L345">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

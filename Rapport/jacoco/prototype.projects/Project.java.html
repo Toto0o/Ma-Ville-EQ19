@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Project.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prototype</a> &gt; <a href="index.source.html" class="el_package">prototype.projects</a> &gt; <span class="el_source">Project.java</span></div><h1>Project.java</h1><pre class="source lang-java linenums">package prototype.projects;
+
+import java.time.LocalDate;
+import java.util.HashMap;
+
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+
+import prototype.entraves.Entrave;
+
+/**
+ * Objet contenant les informations d'un projet
+ * 
+ * @author Antoine Tessier
+ * @author Anmar Rahman
+ * @author Mostafa Heider
+ */
+
+public class Project {
+
+    /**
+     * Le titre du projet
+     */
+    private String title;
+
+    /**
+     * La description du projet
+     */
+    private String description;
+
+    /**
+     * Le {@link Type} du projet
+     */
+    private Type type;
+
+    /**
+     * Le quartier affecté par le projet
+     */
+    private String quartiersAffected;
+
+    /**
+     * La date de début
+     */
+    private String startDate;
+
+    /**
+     * La date de fin
+     */
+    private String endDate;
+
+    /**
+     * Les heures de travail
+     */
+    private String horaireTravaux;
+
+    /**
+     * Le {@link Status} du projet
+     */
+    private Status status;
+
+    /**
+     * Le id firebase de l'intervenant associé
+     */
+    private String uid;
+
+    /**
+     * Le id firebase du projet
+     */
+    private String firebaseKey; // New field for storing the Firebase key
+
+    /**
+     * La rue impacté par le projet
+     */
+    private String streetEntrave;
+
+    /**
+     * Constructeur vide pour la serialization
+     */
+<span class="nc" id="L83">    public Project() {}</span>
+
+    /**
+     * Constructeur pour les projets soumis à travers le système
+     * @param title le titre du projet
+     * @param description la description du projet
+     * @param type {@link Type} du projet
+     * @param quartiersAffected le quartier où se déroule le projet
+     * @param startDate la date de début
+     * @param endDate la date de fin
+     * @param horaireTravaux les heures de travail
+     * @param status {@link Status} du projet
+     * @param streetEntrave la(les) rue(s) entravée(s)
+     */
+    public Project(
+            String title,
+            String description,
+            Type type,
+            String quartiersAffected,
+            String startDate,
+            String endDate,
+            String horaireTravaux,
+            Status status,
+            String userId,
+<span class="nc" id="L107">            String streetEntrave) {</span>
+        //Cutom project (in the app)
+<span class="nc" id="L109">        this.title = title;</span>
+<span class="nc" id="L110">        this.description = description;</span>
+<span class="nc" id="L111">        this.type = type;</span>
+<span class="nc" id="L112">        this.quartiersAffected = quartiersAffected;</span>
+<span class="nc" id="L113">        this.startDate = startDate;</span>
+<span class="nc" id="L114">        this.endDate = endDate;</span>
+<span class="nc" id="L115">        this.horaireTravaux = horaireTravaux;</span>
+<span class="nc" id="L116">        this.status = status;</span>
+<span class="nc" id="L117">        this.uid = userId;</span>
+<span class="nc" id="L118">        this.streetEntrave = streetEntrave;</span>
+<span class="nc" id="L119">    }</span>
+
+    // Getter and Setter for Firebase key
+    public String getFirebaseKey() {
+<span class="nc" id="L123">        return firebaseKey;</span>
+    }
+
+    public void setFirebaseKey(String firebaseKey) {
+<span class="nc" id="L127">        this.firebaseKey = firebaseKey;</span>
+<span class="nc" id="L128">    }</span>
+
+    // Getters and setters for the other fields
+    public String getUid() {
+<span class="nc" id="L132">        return uid;</span>
+    }
+
+    public void setUid(String uid) {
+<span class="nc" id="L136">        this.uid = uid;</span>
+<span class="nc" id="L137">    }</span>
+
+    public String getTitle() {
+<span class="nc" id="L140">        return title;</span>
+    }
+
+    public void setTitle(String title) {
+<span class="nc" id="L144">        this.title = title;</span>
+<span class="nc" id="L145">    }</span>
+
+    public String getDescription() {
+<span class="nc" id="L148">        return description;</span>
+    }
+
+    public void setDescription(String description) {
+<span class="nc" id="L152">        this.description = description;</span>
+<span class="nc" id="L153">    }</span>
+
+    public Type getType() {
+<span class="nc" id="L156">        return type;</span>
+    }
+
+    public void setType(Type type) {
+<span class="nc" id="L160">        this.type = type;</span>
+<span class="nc" id="L161">    }</span>
+
+    public String getQuartiersAffected() {
+<span class="nc" id="L164">        return quartiersAffected;</span>
+    }
+
+    public void setQuartiersAffected(String quartiersAffected) {
+<span class="nc" id="L168">        this.quartiersAffected = quartiersAffected;</span>
+<span class="nc" id="L169">    }</span>
+
+
+    public String getStartDate() {
+<span class="nc" id="L173">        return startDate;</span>
+    }
+
+    public void setStartDate(String startDate) {
+<span class="nc" id="L177">        this.startDate = startDate;</span>
+<span class="nc" id="L178">    }</span>
+
+    public String getEndDate() {
+<span class="nc" id="L181">        return endDate;</span>
+    }
+
+    public void setEndDate(String endDate) {
+<span class="nc" id="L185">        this.endDate = endDate;</span>
+<span class="nc" id="L186">    }</span>
+
+    public String getHoraireTravaux() {
+<span class="nc" id="L189">        return horaireTravaux;</span>
+    }
+
+    public void setHoraireTravaux(String horaireTravaux) {
+<span class="nc" id="L193">        this.horaireTravaux = horaireTravaux;</span>
+<span class="nc" id="L194">    }</span>
+
+    public Status getStatus() {
+<span class="nc" id="L197">        this.status = checkStatus();</span>
+<span class="nc" id="L198">        return status;</span>
+    }
+
+    public void setStatus(Status status) {
+<span class="nc" id="L202">        this.status = status;</span>
+<span class="nc" id="L203">    }</span>
+
+    public String getStreetEntrave() {
+<span class="nc" id="L206">        return this.streetEntrave;</span>
+    }
+
+    public void setStreetEntrvave(String streetEntrave) {
+<span class="nc" id="L210">        this.streetEntrave = streetEntrave;</span>
+<span class="nc" id="L211">    }</span>
+
+    /**
+     * Méthode pour afficher graphiquement le projet
+     * @return {@link VBox}
+     */
+    public VBox afficher() {
+<span class="nc" id="L218">        VBox projectBox = new VBox();</span>
+<span class="nc" id="L219">        projectBox.setSpacing(10);</span>
+
+        // Use filteredIndex for labeling
+
+<span class="nc" id="L223">        Text projectId = new Text(&quot;ID: &quot; + this.title);</span>
+<span class="nc" id="L224">        Text projectBorough = new Text(&quot;Arrondissement : &quot; + this.quartiersAffected);</span>
+<span class="nc" id="L225">        Text projectStatus = new Text(&quot;Statut actuel : &quot; + this.status);</span>
+<span class="nc" id="L226">        Text projectReason = new Text(&quot;Description : &quot; + this.description);</span>
+<span class="nc" id="L227">        Text projectType = new Text(&quot;Type : &quot; + this.type);</span>
+<span class="nc" id="L228">        Text projectOrganization = new Text(&quot;Intervenant : &quot; + this.uid);</span>
+<span class="nc" id="L229">        Text projectStartDate = new Text(&quot;Début des travaux : &quot; + this.startDate);</span>
+<span class="nc" id="L230">        Text projectEndDate = new Text(&quot;Fin des travaux : &quot; + this.endDate);</span>
+<span class="nc" id="L231">        Text projectHoraireTravaux = new Text(&quot;Horaire de travaux : &quot; + this.horaireTravaux);</span>
+<span class="nc" id="L232">        Text projectStreetEntrave = new Text(&quot;Rues impactées : &quot; + this.streetEntrave);</span>
+
+<span class="nc" id="L234">        Font font = new Font(&quot;Arial&quot;, 16);</span>
+<span class="nc" id="L235">        projectId.setFont(font);</span>
+<span class="nc" id="L236">        projectBorough.setFont(font);</span>
+<span class="nc" id="L237">        projectStatus.setFont(font);</span>
+<span class="nc" id="L238">        projectType.setFont(font);</span>
+<span class="nc" id="L239">        projectReason.setFont(font);</span>
+<span class="nc" id="L240">        projectOrganization.setFont(font);</span>
+<span class="nc" id="L241">        projectStartDate.setFont(font);</span>
+<span class="nc" id="L242">        projectEndDate.setFont(font);</span>
+<span class="nc" id="L243">        projectStreetEntrave.setFont(font);</span>
+<span class="nc" id="L244">        projectHoraireTravaux.setFont(font);</span>
+
+<span class="nc" id="L246">        projectBox.getChildren().addAll(projectId, projectBorough, projectStatus, projectReason, projectType,</span>
+                 projectOrganization, projectStartDate, projectEndDate, projectHoraireTravaux, projectStreetEntrave);
+<span class="nc" id="L248">        projectBox.setStyle(&quot;-fx-border-color: black; -fx-border-width: 2px; -fx-padding: 10px;&quot;);</span>
+
+<span class="nc" id="L250">        return projectBox;</span>
+    }
+
+    /**
+     * Méthode pour vérifier le status d'un projet
+     * @return {@link Status} ({@link Enum} des status possible
+     */
+    public Status checkStatus() {
+<span class="nc" id="L258">        LocalDate start = LocalDate.parse(getStartDate());</span>
+<span class="nc" id="L259">        LocalDate end = LocalDate.parse(getEndDate());</span>
+<span class="nc" id="L260">        LocalDate now = LocalDate.now();</span>
+<span class="nc bnc" id="L261" title="All 2 branches missed.">        if (now.isAfter(start)) {</span>
+<span class="nc bnc" id="L262" title="All 2 branches missed.">            if (now.isBefore(end)) {</span>
+<span class="nc" id="L263">                return Status.EN_COURS;</span>
+            }
+<span class="nc" id="L265">            return Status.TERMINE;</span>
+        }
+<span class="nc" id="L267">        return Status.PREVU;</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

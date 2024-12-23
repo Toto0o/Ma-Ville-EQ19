@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Entrave.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prototype</a> &gt; <a href="index.source.html" class="el_package">prototype.entraves</a> &gt; <span class="el_source">Entrave.java</span></div><h1>Entrave.java</h1><pre class="source lang-java linenums">package prototype.entraves;
+
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+
+/**
+ * Objet contentant les informations d'une entrave.
+ * 
+ * &lt;p&gt; Permet d'afficher l'entrave graphiquement avec {@link #afficher()} &lt;p&gt;
+ *
+ * @author Antoine Tessier
+ * @author Anmar Rahman
+ * @author Mostafa Heider
+ */
+
+public class Entrave {
+
+    /**
+     * Le id de l'entrave
+     */
+    private String id_request;
+
+    /**
+     * Le nom de la rue impacté
+     */
+    private String streetid;
+
+    /**
+     * Le nom de l'entrave
+     */
+    private String shortname;
+
+    /**
+     * L'impact des travaux sur la rue
+     */
+    private String streetimpacttype;
+
+    /**
+     * Container d'affichage
+     */
+    private VBox entraveBox;
+
+    /**
+     * Constructeur
+     * @param id_request le id de l'entrave
+     * @param streetid le nom de la rue
+     * @param shortname le type d'entrave
+     * @param streetimpacttype l'impact sur la voie
+     */
+<span class="nc" id="L51">    public Entrave(String id_request, String streetid, String shortname, String streetimpacttype) {</span>
+<span class="nc" id="L52">        this.id_request = id_request;</span>
+<span class="nc" id="L53">        this.streetid = streetid;</span>
+<span class="nc" id="L54">        this.shortname = shortname;</span>
+<span class="nc" id="L55">        this.streetimpacttype = streetimpacttype;</span>
+<span class="nc" id="L56">        this.entraveBox = new VBox();</span>
+<span class="nc" id="L57">    }</span>
+
+    public String getstreetid() {
+<span class="nc" id="L60">        return this.streetid;</span>
+    }
+
+    public String getid_request() {
+<span class="nc" id="L64">        return this.id_request;</span>
+    }
+
+    public String getshortname() {
+<span class="nc" id="L68">        return this.shortname;</span>
+    }
+
+    public String getstreetimpacttype() {
+<span class="nc" id="L72">        return this.streetimpacttype;</span>
+    }
+
+    /**
+     * Méthode pour afficher graphiquement l'entrave
+     * 
+     * @return {@link VBox} javafx layout VBox
+     */
+    public VBox afficher() {
+
+        // Add the selected details into the VBox
+<span class="nc" id="L83">        Text entraveIdRequest = new Text(&quot;Identifiant du travail: &quot; + this.id_request);</span>
+<span class="nc" id="L84">        Text entraveStreetId = new Text(&quot;Identifiant de la rue: &quot; + this.streetid);</span>
+<span class="nc" id="L85">        Text entraveShortname = new Text(&quot;Nom de la rue: &quot; + this.shortname);</span>
+<span class="nc" id="L86">        Text entraveImpactType = new Text(&quot;Impact sur la rue: &quot; + this.streetimpacttype);</span>
+
+        
+<span class="nc" id="L89">        entraveBox.setSpacing(10);</span>
+<span class="nc" id="L90">        Text entraveLabel = new Text(&quot;Entrave routière&quot;);</span>
+<span class="nc" id="L91">        entraveLabel.setFont(new Font(&quot;Arial&quot;, 18));</span>
+<span class="nc" id="L92">        entraveLabel.setStyle(&quot;-fx-font-weight: bold;&quot;);</span>
+
+        // Add to the VBox
+<span class="nc" id="L95">        entraveBox.getChildren().addAll(entraveLabel, entraveIdRequest, entraveStreetId,</span>
+                entraveShortname, entraveImpactType);
+
+        // Add a border to the entrave VBox
+<span class="nc" id="L99">        entraveBox.setStyle(&quot;-fx-border-color: black; -fx-border-width: 2px; -fx-padding: 10px;&quot;);</span>
+
+<span class="nc" id="L101">        return entraveBox;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

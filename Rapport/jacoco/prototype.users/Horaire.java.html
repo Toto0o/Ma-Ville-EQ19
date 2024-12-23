@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Horaire.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prototype</a> &gt; <a href="index.source.html" class="el_package">prototype.users</a> &gt; <span class="el_source">Horaire.java</span></div><h1>Horaire.java</h1><pre class="source lang-java linenums">package prototype.users;
+
+import java.io.Serializable;
+import java.util.AbstractList;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Objet d'horaire
+ *
+ * &lt;p&gt; Implémente {@link AbstractList} sous forme de matrice 2D&lt;/p&gt;
+ */
+public class Horaire extends AbstractList&lt;List&lt;Boolean&gt;&gt; implements Serializable {
+
+    private List&lt;List&lt;Boolean&gt;&gt; schedule;
+
+    /**
+     * Constructeur. Initialise la matrice sur instanciation avec {@link #initialize()}
+     */
+<span class="fc" id="L20">    public Horaire() {</span>
+<span class="fc" id="L21">        initialize();</span>
+<span class="fc" id="L22">    }</span>
+
+    /**
+     * Initialise la matrice
+     *
+     * &lt;p&gt;12 colonnes d'heures, 7 rangées de jours&lt;/p&gt;
+     */
+    public void initialize() {
+<span class="fc" id="L30">        schedule = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        for (int i = 0; i &lt; 8; i++) {</span>
+<span class="fc" id="L32">            ArrayList&lt;Boolean&gt; day = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L33" title="All 2 branches covered.">            for (int j = 0; j &lt; 13; j++) {</span>
+<span class="fc" id="L34">                day.add(false);</span>
+            }
+<span class="fc" id="L36">            schedule.add(day);</span>
+        }
+<span class="fc" id="L38">    }</span>
+
+    @Override
+    public List&lt;Boolean&gt; get(int i) {
+<span class="nc" id="L42">        return schedule.get(i);</span>
+    }
+
+    @Override
+    public int size() {
+<span class="nc" id="L47">        return schedule.size();</span>
+    }
+
+    public boolean get(int day, int hour) {
+<span class="fc" id="L51">        return schedule.get(day).get(hour);</span>
+    }
+
+    public void set(int day, int hour, boolean value) {
+<span class="nc" id="L55">        schedule.get(day).set(hour, value);</span>
+<span class="nc" id="L56">    }</span>
+
+    public void setSchedule(List&lt;List&lt;Boolean&gt;&gt; schedule) {
+<span class="nc" id="L59">        this.schedule = schedule;</span>
+<span class="nc" id="L60">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
