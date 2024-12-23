@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8b43fe55-2db1-4b16-a177-7363ce7858f4" name="Changes" comment="Ajout de documentation pour les attributs">
+      <change beforePath="$PROJECT_DIR$/../apidocs/allclasses-index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/allclasses-index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/allpackages-index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/allpackages-index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/help-doc.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/help-doc.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/index-all.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/index-all.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/legal/COPYRIGHT" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/legal/COPYRIGHT" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/legal/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/legal/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/legal/jquery.md" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/legal/jquery.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/legal/jqueryUI.md" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/legal/jqueryUI.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/options" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/options" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/overview-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/overview-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/module-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/module-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/MaVille.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/MaVille.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/Main.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/Main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/class-use/MaVille.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/class-use/MaVille.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/class-use/Main.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/class-use/Main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/controllers/ApiController.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/controllers/ApiController.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/controllers/SceneController.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/controllers/SceneController.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/controllers/class-use/ApiController.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/controllers/class-use/ApiController.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/controllers/class-use/SceneController.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/controllers/class-use/SceneController.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/controllers/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/controllers/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/controllers/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/controllers/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/controllers/package-use.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/controllers/package-use.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/entraves/Entrave.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/entraves/Entrave.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/entraves/class-use/Entrave.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/entraves/class-use/Entrave.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/entraves/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/entraves/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/entraves/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/entraves/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/entraves/package-use.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/entraves/package-use.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/notifications/Notification.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/notifications/Notification.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/notifications/class-use/Notification.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/notifications/class-use/Notification.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/notifications/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/notifications/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/notifications/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/notifications/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/notifications/package-use.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/notifications/package-use.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/package-use.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/package-use.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/projects/Project.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/projects/Project.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/projects/Request.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/projects/Request.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/projects/Status.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/projects/Status.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/projects/Type.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/projects/Type.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/projects/class-use/Project.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/projects/class-use/Project.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/projects/class-use/Request.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/projects/class-use/Request.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/projects/class-use/Status.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/projects/class-use/Status.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/projects/class-use/Type.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/projects/class-use/Type.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/projects/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/projects/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/projects/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/projects/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/projects/package-use.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/projects/package-use.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/Scenes.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/Scenes.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/class-use/Scenes.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/class-use/Scenes.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/consult/ConsultEntraveScene.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/consult/ConsultEntraveScene.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/consult/ConsultProjectScene.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/consult/ConsultProjectScene.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/consult/NotificationScene.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/consult/NotificationScene.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/consult/SearchProjectsScene.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/consult/SearchProjectsScene.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/consult/class-use/ConsultEntraveScene.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/consult/class-use/ConsultEntraveScene.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/consult/class-use/ConsultProjectScene.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/consult/class-use/ConsultProjectScene.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/consult/class-use/NotificationScene.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/consult/class-use/NotificationScene.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/consult/class-use/SearchProjectsScene.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/consult/class-use/SearchProjectsScene.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/consult/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/consult/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/consult/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/consult/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/consult/package-use.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/consult/package-use.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/login/LoginScene.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/login/LoginScene.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/login/class-use/LoginScene.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/login/class-use/LoginScene.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/login/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/login/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/login/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/login/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/login/package-use.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/login/package-use.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/menu/LaunchScene.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/menu/LaunchScene.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/menu/MenuScene.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/menu/MenuScene.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/menu/class-use/LaunchScene.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/menu/class-use/LaunchScene.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/menu/class-use/MenuScene.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/menu/class-use/MenuScene.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/menu/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/menu/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/menu/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/menu/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/menu/package-use.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/menu/package-use.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/register/RegisterScene.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/register/RegisterScene.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/register/RoleSelectionScene.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/register/RoleSelectionScene.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/register/class-use/RegisterScene.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/register/class-use/RegisterScene.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/register/class-use/RoleSelectionScene.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/register/class-use/RoleSelectionScene.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/register/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/register/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/register/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/register/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/register/package-use.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/register/package-use.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/settings/InfoSettingsScene.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/settings/InfoSettingsScene.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/settings/NotificationSettingsScene.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/settings/NotificationSettingsScene.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/settings/PreferencesPlagesHorairesScene.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/settings/PreferencesPlagesHorairesScene.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/settings/SettingsScene.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/settings/SettingsScene.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/settings/class-use/InfoSettingsScene.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/settings/class-use/InfoSettingsScene.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/settings/class-use/NotificationSettingsScene.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/settings/class-use/NotificationSettingsScene.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/settings/class-use/PreferencesPlagesHorairesScene.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/settings/class-use/PreferencesPlagesHorairesScene.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/settings/class-use/SettingsScene.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/settings/class-use/SettingsScene.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/settings/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/settings/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/settings/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/settings/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/settings/package-use.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/general/settings/package-use.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/intervenant/ConsultRequestsScene.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/intervenant/ConsultRequestsScene.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/intervenant/IntervenantProjectsScene.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/intervenant/IntervenantProjectsScene.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/intervenant/class-use/ConsultRequestsScene.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/intervenant/class-use/ConsultRequestsScene.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/intervenant/class-use/IntervenantProjectsScene.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/intervenant/class-use/IntervenantProjectsScene.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/intervenant/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/intervenant/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/intervenant/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/intervenant/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/intervenant/package-use.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/intervenant/package-use.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/package-use.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/package-use.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/resident/NotificationScene.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/resident/NotificationScene.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/resident/RequestScene.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/resident/RequestScene.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/resident/class-use/NotificationScene.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/resident/class-use/NotificationScene.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/resident/class-use/RequestScene.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/resident/class-use/RequestScene.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/resident/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/resident/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/resident/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/resident/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/resident/package-use.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/scenes/resident/package-use.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/AddressService.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/AddressService.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/EntravesServices.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/EntravesServices.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/FirebaseCallback.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/FirebaseCallback.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/FirebaseInitialize.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/FirebaseInitialize.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/IntervenantServices.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/IntervenantServices.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/NotificationService.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/NotificationService.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/ProjectService.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/ProjectService.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/RequestService.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/RequestService.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/ServiceSession.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/ServiceSession.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/UserServices.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/UserServices.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/class-use/AddressService.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/class-use/AddressService.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/class-use/EntravesServices.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/class-use/EntravesServices.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/class-use/FirebaseCallback.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/class-use/FirebaseCallback.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/class-use/FirebaseInitialize.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/class-use/FirebaseInitialize.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/class-use/IntervenantServices.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/class-use/IntervenantServices.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/class-use/NotificationService.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/class-use/NotificationService.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/class-use/ProjectService.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/class-use/ProjectService.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/class-use/RequestService.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/class-use/RequestService.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/class-use/ServiceSession.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/class-use/ServiceSession.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/class-use/UserServices.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/class-use/UserServices.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/package-use.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/services/package-use.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/Address.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/Address.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/Horaire.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/Horaire.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/Intervenant.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/Intervenant.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/IntervenantType.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/IntervenantType.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/Resident.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/Resident.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/UserCredentialsVerifier.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/UserCredentialsVerifier.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/UserSession.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/UserSession.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/Utilisateur.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/Utilisateur.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/class-use/Address.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/class-use/Address.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/class-use/Horaire.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/class-use/Horaire.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/class-use/Intervenant.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/class-use/Intervenant.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/class-use/IntervenantType.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/class-use/IntervenantType.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/class-use/Resident.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/class-use/Resident.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/class-use/UserCredentialsVerifier.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/class-use/UserCredentialsVerifier.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/class-use/UserSession.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/class-use/UserSession.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/class-use/Utilisateur.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/class-use/Utilisateur.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/package-use.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/prototype/prototype/users/package-use.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/resource-files/jquery-ui.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/resource-files/jquery-ui.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/script-files/jquery-3.6.1.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/script-files/jquery-3.6.1.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/script-files/jquery-ui.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/script-files/jquery-ui.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/search.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/search.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../apidocs/serialized-form.html" beforeDir="false" afterPath="$PROJECT_DIR$/../apidocs/serialized-form.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Toto0o&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Toto0o/Ma-Ville-EQ19.git&quot;,
+    &quot;accountId&quot;: &quot;c41379b7-31c3-46e0-bc1a-7c50502fc147&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="2qazGvpQVnjCInzJutpUS0wmzFK" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;JAR Application.prototype-1.0-SNAPSHOT.jar.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.Tests.executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.index.html.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="prototype.Main" />
+      <module name="prototype" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Tests" type="JUnit" factoryName="JUnit">
+      <module name="prototype" />
+      <option name="PACKAGE_NAME" value="prototypeTests" />
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="prototype-1.0-SNAPSHOT.jar" type="JarApplication" temporary="true">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/target/prototype-1.0-SNAPSHOT.jar" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method v="2" />
+    </configuration>
+    <configuration name="index.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/ma-ville/prototype/target/site/index.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="JAR Application.prototype-1.0-SNAPSHOT.jar" />
+      <item itemvalue="JavaScript Debug.index.html" />
+      <item itemvalue="JUnit.Tests" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JavaScript Debug.index.html" />
+        <item itemvalue="JAR Application.prototype-1.0-SNAPSHOT.jar" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8b43fe55-2db1-4b16-a177-7363ce7858f4" name="Changes" comment="" />
+      <created>1734915382683</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1734915382683</updated>
+      <workItem from="1734915384037" duration="2193000" />
+      <workItem from="1734917626996" duration="29000" />
+    </task>
+    <task id="LOCAL-00001" summary="Ajout de documentation pour les attributs">
+      <option name="closed" value="true" />
+      <created>1734917280927</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1734917280927</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Ajout de documentation pour les attributs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ajout de documentation pour les attributs" />
+  </component>
+</project>
