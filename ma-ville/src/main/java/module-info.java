@@ -29,7 +29,7 @@ module prototype {
     exports prototype.services;
     exports prototype.users;
 
-    opens prototype to javafx.fxml, firebase.admin, org.junit.platform.commons;
+    opens prototype to javafx.fxml, firebase.admin;
     opens prototype.projects to firebase.admin;
     opens prototype.notifications to firebase.admin;
     opens prototype.users to firebase.admin;

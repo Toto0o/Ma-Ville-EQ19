@@ -28,7 +28,7 @@ import prototype.users.Utilisateur;
 /**
  * Scene de consultation des requêtes pour les intervenants
  *
- * <p>Charge les requêtes avec {@link ApiController#getRequests()}</p>
+ * <p>Charge les requêtes avec {@link ApiController#getRequests(ArrayList, Runnable)}</p>
  * <p>Permet la soumission de candidature pour chacun des projets</p>
  * <p>Accessible par {@link prototype.scenes.general.menu.MenuScene MenuScene}</p>
  */
@@ -55,6 +55,7 @@ public class ConsultRequestsScene extends Scenes {
         this.backButton = new Button("Back");
         this.backButton.setId("menu");
         this.applyFiltersButton = new Button("Apply Filters"); // Initialize the button
+        this.applyFiltersButton.setId("applyFilters");
         this.typeFilterComboBox = new ComboBox<>();
         this.typeFilterComboBox.setId("typeFilterComboBox");
         this.dateFilterPicker = new DatePicker();
@@ -107,6 +108,7 @@ public class ConsultRequestsScene extends Scenes {
 
         this.requestsList = new ArrayList<>();
         this.apiController.getRequests(requestsList, this::updateRequestDisplay);
+        updateRequestDisplay();
 
         // Add the event handler for the apply button
         applyFiltersButton.setOnMouseClicked(e -> updateRequestDisplay());

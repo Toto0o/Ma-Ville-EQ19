@@ -280,4 +280,11 @@ public class ApiController {
         this.notificationService.addNotification(notification);
     }
 
+    /**
+     * Pour le debuggage et les test
+     */
+    public void setRequestService(RequestService requestService) {
+        this.requestService = requestService;
+    }
+
 }

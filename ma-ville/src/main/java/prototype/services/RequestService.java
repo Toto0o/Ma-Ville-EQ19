@@ -55,7 +55,7 @@ public class RequestService {
     }
 
     /**
-     * Retourne les requêtes chargées par {@link #fetchRequests()}
+     * Retourne les requêtes chargées par {@link #fetchRequests(ArrayList, Runnable)} )}
      * @return @return {@link ArrayList}&lt;{@link Request}&gt;
      */
     public void getRequests(ArrayList<Request> requestsList, Runnable updateRequestCallBack) {
