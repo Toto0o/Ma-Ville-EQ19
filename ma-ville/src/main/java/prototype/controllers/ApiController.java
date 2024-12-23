@@ -49,12 +49,39 @@ import prototype.entraves.Entrave;
 
 public class ApiController {
 
+    /**
+     * Service d'entrave
+     */
     private EntravesServices entravesServices;
+
+    /**
+     * Service de projet
+     */
     private ProjectService projectService;
+
+    /**
+     * Service pour les fontionnalités des intervenants
+     */
     private IntervenantServices intervenantServices;
+
+    /**
+     * Service pour les utilisateurs
+     */
     private UserServices userServices;
+
+    /**
+     * Service d'adresse
+     */
     private AddressService addressService;
+
+    /**
+     * Service de requête
+     */
     private RequestService requestService;
+
+    /**
+     * Service de notification
+     */
     private NotificationService notificationService;
 
     /**

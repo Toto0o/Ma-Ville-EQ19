@@ -1,6 +1,8 @@
 package prototype.notifications;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.VBox;
@@ -13,10 +15,35 @@ import javafx.scene.text.Text;
  */
 public class Notification implements Serializable {
 
-    private String title, description, id, quartier;
+    /**
+     * Le titre de la notification
+     */
+    private String title;
+
+    /**
+     * Description de la notification
+     */
+    private String description;
+
+    /**
+     * Le quartier relié à la notification
+     */
+    private String quartier;
+
+    /**
+     * Pour le compte de nouvelle notifications
+     */
     private boolean lu;
 
-    // Firebase-specific field for the unique key
+    /**
+     * Les utilisateurs concerné par la notification
+     */
+    private ArrayList<String> usersId;
+
+
+    /**
+     * Firebase-specific field for the unique key
+     */
     private String firebaseKey;  // Field to store the Firebase key (ID)
 
     /**

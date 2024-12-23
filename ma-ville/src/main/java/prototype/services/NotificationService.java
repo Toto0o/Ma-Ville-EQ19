@@ -4,9 +4,24 @@ import com.google.firebase.database.*;
 import prototype.notifications.Notification;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
+/**
+ * Service de connexion Api pour les notifications
+ * 
+ * <p>Permet de charger les notifications avec {@link #getNotifications(FirebaseCallback, boolean)} </p>
+ * <p>Permet d'ajouter une notification à la base de donnée avec {@link #addNotification(Notification)}</p>
+ * <p>Permet d'updater une notification (changement de le status de lu ou non lu) avec {@link #saveNotificationChanges(Notification)}</p>
+ */
 public class NotificationService {
 
+    /**
+     * Charge les notifications dans la base de donnée avec {@link FirebaseDatabase}
+     * @param callback le callback de la méthode sur fin de la lecture de la base de donnée
+     * @param setNotificationsToRead notification lu ou non lu
+     * @return {@link ArrayList}&lt;{@link Notification}&gt;
+     * @throws Exception sur erreur de chargement
+     */
     public ArrayList<Notification> getNotifications(FirebaseCallback<ArrayList<Notification>> callback, boolean setNotificationsToRead) throws Exception {
         ArrayList<Notification> notifications = new ArrayList<>();
 
@@ -52,7 +67,10 @@ public class NotificationService {
         return notifications;
     }
 
-
+    /**
+     * Méthode pour updater une notifications avec {@link FirebaseDatabase}
+     * @param notification à enregister
+     */
     public void saveNotificationChanges(Notification notification) {
         try {
             // Get the notification's unique Firebase key
@@ -73,8 +91,11 @@ public class NotificationService {
     }
 
 
-
-
+    /**
+     * Méthode pour ajouter une nouvelle notification avec {@link FirebaseDatabase}
+     * <p>Associe un id avec {@link UUID#randomUUID()}</p>
+     * @param notification à enregister
+     */
     public void addNotification(Notification notification) {
         try {
             String notificationId = java.util.UUID.randomUUID().toString();
