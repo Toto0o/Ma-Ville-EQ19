@@ -7,7 +7,9 @@ L'application Ma Ville permet aux utilisateurs de consulter les projets ou trava
   - À partir des données du système pour les projets soumis localement
 Elle permet aussi de consulter les entraves routières. Les données proviennent seulment des données de la ville de Montréal
 
-De plus, les utilisateurs résident peuvent soumettre des requêtes de travaux. Un intervenant peu ensuite aposer sa candidature et nouveau projet sera créé.
+De plus, les utilisateurs résident peuvent soumettre des requêtes de travaux. Un intervenant peu ensuite aposer sa candidature et un nouveau projet sera créé.
+
+Finalement, il est possible pour les utilisateurs de modifier leur profil ainsi que d'ajouter une préférence de plage horaire
 
 Le package est divisé comme suis :
   - Main : lance l'application
