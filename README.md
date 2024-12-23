@@ -22,6 +22,8 @@ Le package est divisé comme suis :
       - general/menu : contient la scene de menu et la scene au démarrage (launch)
       - general/register : contient la scene de selection du rôle et la scene d'enregistrement
       - general/settings : contient les scenes relatives aux réglages de compte
+      - intervenants : les scenes de consultation des requêtes et des projets associés
+      - résidents : la scene pour créer une nouvelle requête
   - services : contient toutes les classes permettant la connexion avec les bases de données
   - users : contient les classes relatives aux utilisateurs
 
