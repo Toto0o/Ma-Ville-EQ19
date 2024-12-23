@@ -20,12 +20,39 @@ import java.util.List;
 
 public class Request {
 
+    /**
+     * Le titre de la requête
+     */
     private String title;
+
+    /**
+     * La description de la requête
+     */
     private String description;
+
+    /**
+     * Le {@link Type} de la requête
+     */
     private Type type;
+
+    /**
+     * La date de début espéré
+     */
     private String date;
+
+    /**
+     * Le {@link Status} de la requête
+     */
     private String status;
+
+    /**
+     * Le quartier impacté
+     */
     private String quartier;
+
+    /**
+     * La rue impacté
+     */
     private String street;
 
     public Request() {}

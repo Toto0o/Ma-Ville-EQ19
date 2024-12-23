@@ -16,8 +16,29 @@ import prototype.projects.Project;
  */
 public class Notification implements Serializable {
 
-    private String title, description, id;
+    /**
+     * Le titre de la notification
+     */
+    private String title;
+
+    /**
+     * Description de la notification
+     */
+    private String description;
+
+    /**
+     * Le id firebase pour le chargement
+     */
+    private String id;
+
+    /**
+     * Pour le compte de nouvelle notifications
+     */
     private boolean lu;
+
+    /**
+     * Les utilisateurs concerné par la notification
+     */
     private ArrayList<String> usersId;
 
     /**

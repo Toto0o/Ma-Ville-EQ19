@@ -22,16 +22,59 @@ import prototype.entraves.Entrave;
 
 public class Project {
 
+    /**
+     * Le titre du projet
+     */
     private String title;
+
+    /**
+     * La description du projet
+     */
     private String description;
+
+    /**
+     * Le {@link Type} du projet
+     */
     private Type type;
+
+    /**
+     * Le quartier affecté par le projet
+     */
     private String quartiersAffected;
+
+    /**
+     * La date de début
+     */
     private String startDate;
+
+    /**
+     * La date de fin
+     */
     private String endDate;
+
+    /**
+     * Les heures de travail
+     */
     private String horaireTravaux;
+
+    /**
+     * Le {@link Status} du projet
+     */
     private Status status;
+
+    /**
+     * Le id firebase de l'intervenant associé
+     */
     private String uid;
+
+    /**
+     * Le id firebase du projet
+     */
     private String firebaseKey; // New field for storing the Firebase key
+
+    /**
+     * La rue impacté par le projet
+     */
     private String streetEntrave;
 
     /**

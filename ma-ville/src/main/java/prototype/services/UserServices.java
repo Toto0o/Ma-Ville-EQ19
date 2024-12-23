@@ -16,7 +16,7 @@ import prototype.users.*;
 /**
  * Connexion Api avec firebase pour traiter les actions relatives à l'utilisateur
  *
- * <p>Utiliser {@link #authenticateWithFirebase(String, String)} pour l'authentification</p>
+ * <p>Utiliser {@link #authenticateWithFirebase(String, String, FirebaseCallback)} pour l'authentification</p>
  * <p>Utiliser {@link #register(Resident)} pour enregistrer un résident</p>
  * <p>Utiliser {@link #register(Intervenant)} pour enregistrer un intervenant</p>
  */

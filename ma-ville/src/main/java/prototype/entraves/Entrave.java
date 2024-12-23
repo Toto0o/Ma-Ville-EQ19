@@ -16,7 +16,29 @@ import javafx.scene.text.Text;
 
 public class Entrave {
 
-    private String id_request, streetid, shortname, streetimpacttype;
+    /**
+     * Le id de l'entrave
+     */
+    private String id_request;
+
+    /**
+     * Le nom de la rue impacté
+     */
+    private String streetid;
+
+    /**
+     * Le nom de l'entrave
+     */
+    private String shortname;
+
+    /**
+     * L'impact des travaux sur la rue
+     */
+    private String streetimpacttype;
+
+    /**
+     * Container d'affichage
+     */
     private VBox entraveBox;
 
     /**

@@ -35,8 +35,19 @@ import prototype.users.UserSession;
  */
 public class SceneController {
 
+    /**
+     * Le {@link Stage} principal
+     */
     private Stage primaryStage;
+
+    /**
+     * La scene associé au {@link #primaryStage}
+     */
     private Scene scene;
+
+    /**
+     * La {@link Scenes} en cours
+     */
     private Scenes currentScene;
 
     /**
