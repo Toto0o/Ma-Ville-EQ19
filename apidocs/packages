@@ -1,0 +1,15 @@
+prototype.controllers
+prototype.entraves
+prototype
+prototype.notifications
+prototype.projects
+prototype.scenes.general.consult
+prototype.scenes.general.login
+prototype.scenes.general.menu
+prototype.scenes.general.register
+prototype.scenes.general.settings
+prototype.scenes.intervenant
+prototype.scenes.resident
+prototype.scenes
+prototype.services
+prototype.users
