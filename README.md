@@ -1,15 +1,49 @@
 # Ma-Ville-EQ19 -- Prototype
 
-Cette branche contient les fichiers java du prototype. Celui-ci est crée avec JavaFX. Un fichier .jar sera remis sur Studium afin de l'executer avec les modules correspondants.
+Cette branche contient les fichiers java du prototype. Celui-ci est crée avec JavaFX. Un fichier .jar sera remis sur Studium afin de l'executer avec les modules correspondants. 
+
+L'application Ma Ville permet aux utilisateurs de consulter les projets ou travaux en cours :
+  - À partir des données de la ville de Montréal pour les projets soumis hors du système
+  - À partir des données du système pour les projets soumis localement
+Elle permet aussi de consulter les entraves routières. Les données proviennent seulment des données de la ville de Montréal
+
+De plus, les utilisateurs résident peuvent soumettre des requêtes de travaux. Un intervenant peu ensuite aposer sa candidature et nouveau projet sera créé.
 
 Le package est divisé comme suis :
   - Main : lance l'application
-  - Controllers : contient le controlleur de scene
+  - MaVille : démarre l'interface graphique
+  - controllers : contient le controlleur de scene et le controlleur d'API
+  - entraves : contient la classe d'entrave
+  - notifications : contient la classe de notification
+  - projects : contient les classes de notifications et de projets
   - Scenes : contient les différentes scenes (pages) du menu
+      - general/consult : contient les scenes de consultation des projets, entraves et notifications ainsi que la scene de recherche de projet
+      - general/login : contient la scene d'authentification
+      - general/menu : contient la scene de menu et la scene au démarrage (launch)
+      - general/register : contient la scene de selection du rôle et la scene d'enregistrement
+      - general/settings : contient les scenes relatives aux réglages de compte
+  - services : contient toutes les classes permettant la connexion avec les bases de données
+  - users : contient les classes relatives aux utilisateurs
 
-Actuellement, toutes les fonctionnalités sont opérationnelles grâce à l'utilisation de Firebase et de la base de données Firebase. La seule fonctionnalité qui n'est pas encore fonctionnelle est la sélection des horaires préférés pour les résidents.
+Les fonctionnalités implémentés pour les résidents sont :
+  - Enregistrement
+  - Authentification
+  - Consultation des projets en cours
+  - Consultation des entraves routières
+  - Consultation des notifications
+  - Soumission d'une nouvelle requête
+  - Modification du profil :
+      - Modification des préférences de plage horaire
+      - Modification des informations
 
-Il existe 3 comptes résidents avec les emails resident1@gmail.com, resident2@gmail.com et resident3@gmail.com, tous avec le mot de passe 123456.
-Il y a également 3 comptes intervenants avec les emails intervenant1@gmail.com, intervenant2@gmail.com et intervenant3@gmail.com, tous avec le mot de passe 123456.
-
-Les test unitaire sont dans le fichier test sous prototype.
+Les fonctionnalités implémentés pour les intervenants sont :
+  - Enregistrement
+  - Authentification
+  - Consultation des projets en cours (tous les projets)
+  - Consultation des entraves routières
+  - Consultation des notifications
+  - Consultation des requêtes de travail soumises par les résidents, ainsi que la possibilité d'apposer sa candidature
+  - Consultation des projets associés à l'intervenant, ainsi que la possibilité de modifier les informations
+  - Modification du profil :
+      - Modification des préférences de plage horaire
+      - Modification des informations
