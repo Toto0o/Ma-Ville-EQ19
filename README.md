@@ -51,3 +51,5 @@ Les fonctionnalités implémentés pour les intervenants sont :
   - Modification du profil :
       - Modification des préférences de plage horaire
       - Modification des informations
+  ** Note : le fichier jar semble avoir des problème dû à une configuration maven pour la création de l'executable, mais le code source peut être "run" dans un IDE classique (ça fontionne très bien même)!**
+
