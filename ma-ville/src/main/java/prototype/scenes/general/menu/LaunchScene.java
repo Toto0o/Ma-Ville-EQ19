@@ -26,7 +26,6 @@ public class LaunchScene extends Scenes {
 
     private VBox vBox;
     private HBox buttonsBox;
-    private Text title;
     private Button loginButton, registerButton;
 
     /**
@@ -42,7 +41,6 @@ public class LaunchScene extends Scenes {
         this.loginButton.setId("loginButton");
         this.registerButton = new Button("Register");
         this.registerButton.setId("registerButton");
-        this.title = new Text("Ma Ville");
     }
 
     public Scene getScene() {
@@ -55,10 +53,9 @@ public class LaunchScene extends Scenes {
 
         buttonsBox.setSpacing(10);
 
-        ImageView img = new ImageView(new Image(getClass().getResourceAsStream("/prototype/assets/launch.jpg")));
+        ImageView img = new ImageView(new Image(getClass().getResourceAsStream("/prototype/assets/logo.png")));
 
-        this.title.setFont(new Font("Arial", 20));
-        vBox.getChildren().addAll(title, img, buttonsBox);
+        vBox.getChildren().addAll(img, buttonsBox);
         vBox.setAlignment(Pos.CENTER);
         vBox.setSpacing(10);
 

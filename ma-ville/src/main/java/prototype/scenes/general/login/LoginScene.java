@@ -106,7 +106,7 @@ public class LoginScene extends Scenes {
         try {
             this.apiController.authenticate(email, password, new FirebaseCallback<Utilisateur>()  {
                 @Override
-                public void onSucess() {
+                public void onSuccess() {
                     Platform.runLater(() -> {
                         System.out.println(UserSession.getInstance().getUser().getAddress().getBorough());
                         sceneController.newScene("menu");
@@ -114,10 +114,10 @@ public class LoginScene extends Scenes {
                 }
 
                 @Override
-                public void onSucessReturn(Utilisateur sucess) {}
+                public void onSuccessReturn(Utilisateur success) {}
 
                 @Override
-                public void onFailure(String message) {
+                public void onFailureReturn(String message) {
                     Platform.runLater(() -> statusLabel.setText(message));
                 }
             });

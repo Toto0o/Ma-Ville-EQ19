@@ -116,7 +116,7 @@ public class ConsultProjectScene extends Scenes {
 
             FirebaseCallback<ArrayList<Project>> callback = new FirebaseCallback<>() {
                 @Override
-                public void onSucessReturn(ArrayList<Project> projects) {
+                public void onSuccessReturn(ArrayList<Project> projects) {
                     Platform.runLater(() -> {
                         for (Project project : projects) {
                             projectListView.getItems().add(project.afficher());
@@ -131,11 +131,11 @@ public class ConsultProjectScene extends Scenes {
                 }
 
                 @Override
-                public void onFailure(String message) {
+                public void onFailureReturn(String message) {
                 }
 
                 @Override
-                public void onSucess() {}
+                public void onSuccess() {}
             };
             try {
                 this.apiController.getProjects(callback);

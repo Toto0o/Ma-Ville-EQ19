@@ -16,7 +16,7 @@ import prototype.users.*;
 /**
  * Connexion Api avec firebase pour traiter les actions relatives à l'utilisateur
  *
- * <p>Utiliser {@link #authenticateWithFirebase(String, String, FirebaseCallback)} pour l'authentification</p>
+ * <p>Utiliser {@link #authenticateWithFirebase(String, String)} pour l'authentification</p>
  * <p>Utiliser {@link #register(Resident)} pour enregistrer un résident</p>
  * <p>Utiliser {@link #register(Intervenant)} pour enregistrer un intervenant</p>
  */
@@ -236,7 +236,7 @@ public class UserServices {
                     if (checkUserRole(userId).equals("residents")) utilisateur = dataSnapshot.getValue(Resident.class);
                     else utilisateur = dataSnapshot.getValue(Intervenant.class);
                     UserSession.getInstance().setUser(utilisateur);
-                    callback.onSucess();
+                    callback.onSuccess();
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -310,7 +310,7 @@ public class UserServices {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     users.add(ds.getValue(Resident.class));
                 }
-                callbackRes.onSucessReturn(users);
+                callbackRes.onSuccessReturn(users);
             }
 
             @Override
@@ -333,7 +333,7 @@ public class UserServices {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     users.add(ds.getValue(Intervenant.class));
                 }
-                callbackInter.onSucessReturn(users);
+                callbackInter.onSuccessReturn(users);
             }
 
             @Override

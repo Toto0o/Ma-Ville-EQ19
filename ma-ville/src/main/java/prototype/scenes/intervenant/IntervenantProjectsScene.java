@@ -1,9 +1,6 @@
 package prototype.scenes.intervenant;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.HashMap;
-import java.util.Objects;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -14,19 +11,19 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.application.Platform;
 
+import javafx.stage.Screen;
 import prototype.controllers.ApiController;
 import prototype.controllers.SceneController;
 import prototype.notifications.Notification;
 import prototype.services.FirebaseCallback;
 import prototype.services.ServiceSession;
-import prototype.users.UserSession;
 import prototype.projects.*;
 import prototype.scenes.Scenes;
 import prototype.users.Utilisateur;
 
 /**
  * Scene de consultation des projets pour les intervenants
- * 
+ *
  * <p>Charge les projets avec {@link ApiController#getProjects(boolean)}</p>
  * <p>Accessible par {@link prototype.scenes.general.menu.MenuScene MenuScene}</p>
  */
@@ -51,7 +48,6 @@ public class IntervenantProjectsScene extends Scenes{
         this.backButton.setId("menu");
         this.apiController = ServiceSession.getInstance().getController();
         this.projectsList = new ArrayList<>();
-        UserSession.getInstance().setUserId("FAl15hewCLTJdqZVSglbw4vIUo83");
     }
 
     @Override
@@ -92,7 +88,9 @@ public class IntervenantProjectsScene extends Scenes{
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
 
         // Set max height for scrollable area
-        this.vbox.setMaxHeight(400);
+        double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
+        double listViewHeight = screenHeight * 0.9;
+        this.vbox.setPrefHeight(listViewHeight);
         this.vbox.setStyle("-fx-padding: 10;");
         this.vbox.setAlignment(Pos.CENTER);
         this.vbox.setStyle("-fx-background-color: linear-gradient(to left, #0000FF, #87CEDA);");
@@ -123,9 +121,13 @@ public class IntervenantProjectsScene extends Scenes{
             TextField descriptionField = new TextField(project.getDescription());
             descriptionField.setId("description");
             descriptionField.setMaxWidth(250);
-            TextField typeField = new TextField(/*project.getType().toString()*/);
+
+            // Handle Type enum parsing
+            String typeString = project.getType().toString(); // assuming the type is already in string format
+            TextField typeField = new TextField(typeString);
             typeField.setId("type");
             typeField.setMaxWidth(250);
+
             TextField quartiersField = new TextField(project.getQuartiersAffected());
             quartiersField.setId("quartiers");
             quartiersField.setMaxWidth(250);
@@ -154,35 +156,42 @@ public class IntervenantProjectsScene extends Scenes{
                     saveButton);
 
             saveButton.setOnMouseClicked((me) -> {
+                // Update the project type using getType()
+                String typeValue = typeField.getText();
+                Type updatedType = Type.getType(typeValue); // Get the type from the string value
+                if (updatedType != null) {
+                    project.setType(updatedType); // Set the updated type in the project
+                }
+                project.setTitle(titleField.getText());
+                project.setDescription(descriptionField.getText());
+                project.setQuartiersAffected(quartiersField.getText());
+                project.setStreetEntrave(roadsField.getText());
+                project.setStartDate(startDateField.getText());
+                project.setEndDate(endDateField.getText());
+                project.setHoraireTravaux(horaireTravauxField.getText());
+
                 this.apiController.saveProjectChanges(project);
 
                 //Send notification on project change
                 Notification notification = new Notification(
                         "Projet mis à jour",
-                        project.getTitle() + " a été mis à jour"
+                        project.getTitle() + " a été mis à jour", project.getQuartiersAffected()
                 );
 
                 FirebaseCallback<ArrayList<Utilisateur>> callback = new FirebaseCallback<>() {
                     @Override
-                    public void onSucessReturn(ArrayList<Utilisateur> users) {
+                    public void onSuccessReturn(ArrayList<Utilisateur> users) {
                         Platform.runLater(() -> {
-                            ArrayList<String> usersIds = new ArrayList<>();
-                            for (Utilisateur utilisateur : users) {
-                                if (Objects.equals(project.getQuartiersAffected(), utilisateur.getAddress().getBorough())) {
-                                    usersIds.add(utilisateur.getId());
-                                }
-                            }
-                            notification.setUsersId(usersIds);
                             apiController.addNotification(notification);
                         });
                     }
 
                     @Override
-                    public void onFailure(String message) {
+                    public void onFailureReturn(String message) {
                     }
 
                     @Override
-                    public void onSucess() {};
+                    public void onSuccess() {};
                 };
                 this.apiController.getResidents(callback);
 
@@ -191,4 +200,5 @@ public class IntervenantProjectsScene extends Scenes{
             vbox.getChildren().add(projectBox);
         }
     }
+
 }

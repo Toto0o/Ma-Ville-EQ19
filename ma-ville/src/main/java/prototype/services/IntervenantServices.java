@@ -67,8 +67,18 @@ public class IntervenantServices {
         FirebaseDatabase database = FirebaseDatabase
                 .getInstance("https://maville-18aa2-default-rtdb.firebaseio.com/");
         DatabaseReference projectsRef = database.getReference("projects").child(projet.getFirebaseKey());
-        projectsRef.setValueAsync(projet);
+
+        // Debugging: Show the Firebase reference and serialized data
+        System.out.println("Saving project with Firebase reference: " + projectsRef);
+        System.out.println("Serialized project data: " + projet.toMap());
+
+        // Save the project as a map (serialized form)
+        projectsRef.setValueAsync(projet.toMap()).addListener(() -> {
+            System.out.println("Save operation finished!");
+        }, Runnable::run);
     }
+
+
 
 
 }

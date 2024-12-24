@@ -1,8 +1,10 @@
 package prototype.controllers;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import prototype.scenes.Scenes;
+import prototype.scenes.intervenant.IntervenantSubmitProjectScene;
 import prototype.scenes.resident.NotificationScene;
 import prototype.scenes.general.consult.ConsultEntraveScene;
 import prototype.scenes.general.consult.ConsultProjectScene;
@@ -35,19 +37,8 @@ import prototype.users.UserSession;
  */
 public class SceneController {
 
-    /**
-     * Le {@link Stage} principal
-     */
     private Stage primaryStage;
-
-    /**
-     * La scene associé au {@link #primaryStage}
-     */
     private Scene scene;
-
-    /**
-     * La {@link Scenes} en cours
-     */
     private Scenes currentScene;
 
     /**
@@ -94,6 +85,8 @@ public class SceneController {
             // Scenes accessible only to intervenants
             case "intervenantRegistration" -> currentScene = new RegisterScene(this,true);
             case"intervenantProject" -> currentScene = new IntervenantProjectsScene(this);
+            case"intervenantSubmitProjectButton" -> currentScene = new IntervenantSubmitProjectScene(this);
+
             case "consultRequest" -> currentScene = new ConsultRequestsScene(this);
 
         }

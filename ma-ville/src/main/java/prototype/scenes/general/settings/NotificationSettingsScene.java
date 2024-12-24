@@ -7,18 +7,40 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import prototype.controllers.SceneController;
 import prototype.scenes.Scenes;
+import prototype.services.QuartiersServices;
+import prototype.users.Resident;
+import prototype.users.UserSession;
+
+import java.util.List;
+import java.util.Objects;
+
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
+import javafx.scene.layout.VBox;
+
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class NotificationSettingsScene extends Scenes {
-
     private Text aVenir;
     private HBox hBox;
     private Button menu;
+    private ComboBox<String> quartiersComboBox;
+    private ListView<HBox> selectedQuartiersListView;  // Change the ListView to hold HBoxes
+    private List<String> allQuartiers;
 
-    public NotificationSettingsScene(SceneController SceneController) {
-        super(SceneController);
+    private QuartiersServices quartiersServices;
+
+    public NotificationSettingsScene(SceneController sceneController) {
+        super(sceneController);
         this.aVenir = new Text("Option à venir");
         this.hBox = new HBox();
         this.menu = new Button("Retour");
+
+        // Initialize the ComboBox for quartiers
+        this.quartiersComboBox = new ComboBox<>();
+        this.selectedQuartiersListView = new ListView<>();
     }
 
     @Override
@@ -32,5 +54,77 @@ public class NotificationSettingsScene extends Scenes {
         this.menu.setOnMouseClicked((menuAction) -> {
             this.sceneController.newScene("settings");
         });
+
+        // Get the list of quartiers from the function
+        this.quartiersServices = new QuartiersServices();  // Initialize QuartiersServices
+        allQuartiers = quartiersServices.quartiersInMontreal();
+        quartiersComboBox.getItems().addAll(allQuartiers);
+
+        // Add the text "Ajouter quartier(s) affectées aux notifications"
+        Text ajouterQuartiersText = new Text("Ajouter quartier(s) affectées aux notifications");
+        ajouterQuartiersText.setFont(new Font("Arial", 14));
+        ajouterQuartiersText.setStyle("-fx-font-weight: bold;");
+
+        // Retrieve the user's selected quartiers from Firebase and display them
+        Resident currentResident = UserSession.getInstance().getResident();
+        if (currentResident != null) {
+            List<String> selectedQuartiers = currentResident.getSelectedQuartiers();
+            // Remove any "null" or invalid quartiers
+            selectedQuartiers.removeIf(quartier -> Objects.equals(quartier, "null") || quartier.isEmpty());
+
+            // Add the quartiers with a delete button next to them
+            for (String quartier : selectedQuartiers) {
+                HBox quartierHBox = createQuartierHBox(quartier);
+                selectedQuartiersListView.getItems().add(quartierHBox);
+            }
+        }
+
+        // When the user selects a quartier, add it to their selected list and update Firebase
+        quartiersComboBox.setOnAction(event -> {
+            String selectedQuartier = quartiersComboBox.getValue();
+            if (selectedQuartier != null && !selectedQuartier.isEmpty()) {
+                // Add the selected quartier to the list
+                if (currentResident != null) {
+                    List<String> selectedQuartiers = currentResident.getSelectedQuartiers();
+                    if (!selectedQuartiers.contains(selectedQuartier)) {
+                        selectedQuartiers.add(selectedQuartier);
+                        // Update the ListView
+                        selectedQuartiersListView.getItems().add(createQuartierHBox(selectedQuartier));
+                        // Update Firebase with the new selected quartiers
+                        quartiersServices.updateSelectedQuartiersInFirebase(currentResident);
+                    }
+                }
+            }
+        });
+
+        // Add UI components to the layout
+        VBox layout = new VBox(10, ajouterQuartiersText, quartiersComboBox, selectedQuartiersListView, menu);
+        layout.setAlignment(Pos.CENTER); // Center align the VBox
+        this.root.setCenter(layout);
     }
+
+    // Method to create HBox for each quartier with a delete button
+    private HBox createQuartierHBox(String quartier) {
+        HBox hBox = new HBox(10);
+        hBox.setAlignment(Pos.CENTER_LEFT);
+
+        Text quartierText = new Text(quartier);
+        Button deleteButton = new Button("X");
+
+        deleteButton.setOnAction(event -> {
+            Resident currentResident = UserSession.getInstance().getResident();
+            if (currentResident != null) {
+                List<String> selectedQuartiers = currentResident.getSelectedQuartiers();
+                selectedQuartiers.remove(quartier);
+                // Update the ListView
+                selectedQuartiersListView.getItems().remove(hBox);
+                // Update Firebase with the new selected quartiers
+                quartiersServices.updateSelectedQuartiersInFirebase(currentResident);
+            }
+        });
+
+        hBox.getChildren().addAll(quartierText, deleteButton);
+        return hBox;
+    }
+
 }

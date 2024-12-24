@@ -8,6 +8,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Screen;
 import prototype.controllers.ApiController;
 import prototype.controllers.SceneController;
 import prototype.entraves.Entrave;
@@ -79,10 +80,17 @@ public class ConsultEntraveScene extends Scenes {
         bottomBox.setAlignment(Pos.BOTTOM_RIGHT);
         bottomBox.getChildren().add(entraveCountText);
 
+
+
         // Add components to the VBox
         this.vBox.getChildren().addAll(this.title, searchBox, this.entraveListView, bottomBox, this.backButton);
         this.vBox.setAlignment(Pos.TOP_CENTER);
         this.vBox.setSpacing(20);
+
+        double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
+        double listViewHeight = screenHeight * 0.6;
+        this.entraveListView.setPrefHeight(listViewHeight);
+
 
         // Set back button action
         this.backButton.setOnMouseClicked((event) -> {

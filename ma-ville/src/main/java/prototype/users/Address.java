@@ -33,7 +33,9 @@ public class Address implements Serializable {
 
     public String getPostalCode() {return this.postalCode;}
 
-    public String getBorough() {return this.borough;}
+    public String getBorough() {
+        return this.borough.replaceAll(" - ", "-");
+    }
 
     public void setNumber(String number) {this.number = number;}
 

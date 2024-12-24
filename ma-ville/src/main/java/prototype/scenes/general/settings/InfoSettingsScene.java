@@ -70,8 +70,8 @@ public class InfoSettingsScene extends Scenes {
                 labelText("Date de naissance : "), this.birthday,
                 labelText("Email : "), this.email,
                 labelText("Phone : "), this.phone,
-                labelText("Numéro de la résidence :"), this.streetNumber,
-                labelText("Rue :"), this.street,
+                labelText("Street Number :"), this.streetNumber,
+                labelText("Street Name :"), this.street,
                 labelText("Code postal :"), this.postalCode,
                 save
         );

@@ -17,29 +17,11 @@ import prototype.controllers.SceneController;
  */
 public abstract class Scenes {
 
-    /**
-     * Le main layout
-     */
     protected BorderPane root;
-
-    /**
-     * La scene qui contient les différents {@link javafx.scene.Node Nodes}
-     */
     protected Scene scene;
 
-    /**
-     * Le bouton de menu accessible par la plupart des scenes
-     */
     protected Button menuButton;
-
-    /**
-     * Le controlleur de scenes
-     */
     protected SceneController sceneController;
-
-    /**
-     * Pour formater les dates choisies avec {@link javafx.scene.control.DatePicker DatePicker}
-     */
     protected DateTimeFormatter formatter;
 
     public Scenes(SceneController sceneController) {

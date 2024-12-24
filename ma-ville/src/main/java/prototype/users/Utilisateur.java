@@ -45,7 +45,7 @@ public abstract class Utilisateur implements Serializable {
     public String getName() {return this.name;}
 
     public String getLastname() {return this.lastname;}
-    
+
     public String getPassword() {return this.password;}
 
     public String getBirthday() {return this.birthday;}

@@ -12,6 +12,7 @@ import prototype.controllers.*;
 public class MaVille extends Application {
 
     private SceneController sceneController;
+    private ApiController apiController;
 
     public static void main (String[] args) {
         MaVille.launch(args);

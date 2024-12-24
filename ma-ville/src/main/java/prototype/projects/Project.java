@@ -2,15 +2,11 @@ package prototype.projects;
 
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.Map;
 
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-
-import prototype.entraves.Entrave;
 
 /**
  * Objet contenant les informations d'un projet
@@ -22,59 +18,16 @@ import prototype.entraves.Entrave;
 
 public class Project {
 
-    /**
-     * Le titre du projet
-     */
     private String title;
-
-    /**
-     * La description du projet
-     */
     private String description;
-
-    /**
-     * Le {@link Type} du projet
-     */
     private Type type;
-
-    /**
-     * Le quartier affecté par le projet
-     */
     private String quartiersAffected;
-
-    /**
-     * La date de début
-     */
     private String startDate;
-
-    /**
-     * La date de fin
-     */
     private String endDate;
-
-    /**
-     * Les heures de travail
-     */
     private String horaireTravaux;
-
-    /**
-     * Le {@link Status} du projet
-     */
     private Status status;
-
-    /**
-     * Le id firebase de l'intervenant associé
-     */
     private String uid;
-
-    /**
-     * Le id firebase du projet
-     */
     private String firebaseKey; // New field for storing the Firebase key
-
-    /**
-     * La rue impacté par le projet
-     */
     private String streetEntrave;
 
     /**
@@ -206,7 +159,7 @@ public class Project {
         return this.streetEntrave;
     }
 
-    public void setStreetEntrvave(String streetEntrave) {
+    public void setStreetEntrave(String streetEntrave) {
         this.streetEntrave = streetEntrave;
     }
 
@@ -266,6 +219,23 @@ public class Project {
         }
         return Status.PREVU;
     }
+
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("title", title);
+        map.put("description", description);
+        map.put("type", type);  // Ensure type is a String
+        map.put("quartiersAffected", quartiersAffected);
+        map.put("startDate", startDate);
+        map.put("endDate", endDate);
+        map.put("horaireTravaux", horaireTravaux);
+        map.put("status", status);  // Ensure status is a String
+        map.put("uid", uid);
+        map.put("streetEntrave", streetEntrave);
+
+        return map;
+    }
+
 
 
 }

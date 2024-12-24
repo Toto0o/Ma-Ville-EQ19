@@ -52,6 +52,12 @@
             <version>20210307</version>
         </dependency>
         <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.10.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <version>5.11.0</version>
@@ -143,13 +149,16 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.1.2</version> <!-- Ensure this is compatible -->
+                <version>3.2.5</version>
                 <configuration>
                     <includes>
-                        <include>**/*Test.java</include>
+                        <argLine>
+                            --module-path ${java.home}/lib --add-modules javafx.controls
+                        </argLine>
                     </includes>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
 </project>

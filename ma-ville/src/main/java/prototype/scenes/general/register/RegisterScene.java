@@ -16,6 +16,9 @@ import prototype.scenes.Scenes;
 import prototype.services.ServiceSession;
 import prototype.users.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Scene pour authentifier un utilisateur
  *
@@ -51,7 +54,6 @@ public class RegisterScene extends Scenes {
         this.apiController = ServiceSession.getInstance().getController();
         this.userCredentials = new UserCredentialsVerifier(this.apiController);
     }
-
 
     @Override
     public void setScene() {
@@ -97,7 +99,6 @@ public class RegisterScene extends Scenes {
 
         this.cityIDField.setVisible(this.intervenant);
         this.cityIDField.setManaged(this.intervenant);
-        
 
         this.submitButton = new Button("Submit");
         this.submitButton.setId("submitButton");
@@ -112,14 +113,13 @@ public class RegisterScene extends Scenes {
         this.submitButton.setVisible(!this.intervenant);
         this.submitButton.setManaged(!this.intervenant);
 
-        this.intervenantType.getItems().addAll(IntervenantType.values());
         this.intervenantType.setVisible(this.intervenant);
         this.intervenantType.setManaged(this.intervenant);
 
         Text cityIDText = labelText("City ID");
         cityIDText.setVisible(this.intervenant);
         cityIDText.setManaged(this.intervenant);
-        
+
         Text intervenantTypeText = labelText("Type d'Intervenant");
         intervenantTypeText.setVisible(this.intervenant);
         intervenantTypeText.setManaged(this.intervenant);
@@ -130,12 +130,12 @@ public class RegisterScene extends Scenes {
         vBox.getChildren().addAll(
                 labelText("Name"), this.nameField,
                 labelText("Last Name"), this.lastNameField,
-                labelText("Enter your birhtday"), this.birthdayPicker,
+                labelText("Enter your birthday"), this.birthdayPicker,
                 labelText("Street number"), this.streetNumberField,
                 labelText("Street name"), this.streetNameField,
                 labelText("Code postal"), this.postalCodeField,
                 labelText("Email"), this.emailField,
-                labelText("Phone"), this.phoneField,
+                labelText("Phone (Optional)"), this.phoneField,
                 labelText("Password"), this.password1Field,
                 labelText("Enter password again"), this.password2Field,
                 cityIDText, this.cityIDField, // Adding cityID input field
@@ -149,86 +149,98 @@ public class RegisterScene extends Scenes {
 
         // Set actions for buttons
         backButton.setOnMouseClicked(event -> this.sceneController.newScene("roleSelection"));
-        submitButton.setOnMouseClicked((event) -> { try {
-            this.userCredentials.verifyResidentRegister(
-                    password1Field.getText().trim(),
-                    password2Field.getText().trim(),
-                    birthdayPicker.getValue(),
-                    emailField.getText().trim(),
-                    new Address(
-                            streetNumberField.getText().trim(),
-                            streetNameField.getText().trim(),
-                            postalCodeField.getText().trim()
-                    )
-            );
-        } catch (Exception e) {
-            this.status.setText(e.getMessage());
-        }
-        Address address = new Address(
-                streetNumberField.getText().trim(),
-                streetNameField.getText().trim(),
-                postalCodeField.getText().trim()
-        );
-        try {
-            this.apiController.getQuartier(address.getPostalCode());
-        } catch (Exception e) {
-            this.status.setText(e.getMessage());
-        }
-        Resident resident = new Resident(
-                nameField.getText().trim(),
-                lastNameField.getText().trim(),
-                password1Field.getText().trim(),
-                birthdayPicker.getValue().format(this.formatter),
-                address,
-                phoneField.getText().trim(),
-                emailField.getText().trim()
-        );
-        try {
-            this.apiController.register(resident);
-        } catch (Exception e) {
-            status.setText(e.getMessage());
-        }
-        this.sceneController.newScene("login");
-        });
-        
-        intervenantSubmitButton.setOnMouseClicked((event) -> {
-        try {
-            this.userCredentials.verifyIntervenantRegister(
-                    password1Field.getText().trim(),
-                    password2Field.getText().trim(),
-                    cityIDField.getText().trim()
-            );
-        } catch (Exception e) {
-            this.status.setText(e.getMessage());
-        }
-        Address address = new Address(
-                streetNumberField.getText().trim(),
-                streetNameField.getText().trim(),
-                postalCodeField.getText().trim().toLowerCase()
-        );
 
-        try {
-            address.setBorough(this.apiController.getQuartier(address.getPostalCode()));
-        } catch (Exception e) {
-            this.status.setText(e.getMessage());
-        }
+        submitButton.setOnMouseClicked((event) -> {
+            try {
+                this.userCredentials.verifyResidentRegister(
+                        password1Field.getText().trim(),
+                        password2Field.getText().trim(),
+                        birthdayPicker.getValue(),
+                        emailField.getText().trim(),
+                        new Address(
+                                streetNumberField.getText().trim(),
+                                streetNameField.getText().trim(),
+                                postalCodeField.getText().trim()
+                        )
+                );
+            } catch (Exception e) {
+                this.status.setText(e.getMessage());
+            }
 
-        try {
-            Intervenant intervenant = new Intervenant(
+            Address address = new Address(
+                    streetNumberField.getText().trim(),
+                    streetNameField.getText().trim(),
+                    postalCodeField.getText().trim()
+            );
+
+            // Fix: Set the borough for the Resident address before passing it to the Resident constructor
+            try {
+                // Ensure borough is set properly for Residents
+                String borough = this.apiController.getQuartier(address.getPostalCode());
+                address.setBorough(borough);  // Set the borough for the Resident's address
+            } catch (Exception e) {
+                this.status.setText("Failed to get borough: " + e.getMessage());
+            }
+
+            // Create and register Resident
+            Resident resident = new Resident(
                     nameField.getText().trim(),
                     lastNameField.getText().trim(),
                     password1Field.getText().trim(),
                     birthdayPicker.getValue().format(this.formatter),
+                    address,  // Ensure the address has the borough set
                     phoneField.getText().trim(),
                     emailField.getText().trim(),
-                    address,
-                    cityIDField.getText().trim()
+                    new ArrayList<String>(List.of("null"))  // List containing the string "null"
+
             );
-            this.apiController.register(intervenant);
-        } catch (Exception e) {
-            this.status.setText(e.getMessage());
-        }
-        this.sceneController.newScene("login");
+
+            try {
+                this.apiController.register(resident);
+            } catch (Exception e) {
+                status.setText(e.getMessage());
+            }
+            this.sceneController.newScene("login");
+        });
+
+        intervenantSubmitButton.setOnMouseClicked((event) -> {
+            try {
+                this.userCredentials.verifyIntervenantRegister(
+                        password1Field.getText().trim(),
+                        password2Field.getText().trim(),
+                        cityIDField.getText().trim()
+                );
+            } catch (Exception e) {
+                this.status.setText(e.getMessage());
+            }
+            Address address = new Address(
+                    streetNumberField.getText().trim(),
+                    streetNameField.getText().trim(),
+                    postalCodeField.getText().trim().toLowerCase()
+            );
+
+            try {
+                address.setBorough(this.apiController.getQuartier(address.getPostalCode()));
+            } catch (Exception e) {
+                this.status.setText(e.getMessage());
+            }
+
+            try {
+                Intervenant intervenant = new Intervenant(
+                        nameField.getText().trim(),
+                        lastNameField.getText().trim(),
+                        password1Field.getText().trim(),
+                        birthdayPicker.getValue().format(this.formatter),
+                        phoneField.getText().trim(),
+                        emailField.getText().trim(),
+                        address,
+                        cityIDField.getText().trim()
+                );
+                this.apiController.register(intervenant);
+            } catch (Exception e) {
+                this.status.setText(e.getMessage());
+            }
+            this.sceneController.newScene("login");
         });
     }
 }

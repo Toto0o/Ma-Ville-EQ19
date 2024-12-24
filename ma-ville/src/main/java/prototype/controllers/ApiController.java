@@ -49,39 +49,12 @@ import prototype.entraves.Entrave;
 
 public class ApiController {
 
-    /**
-     * Service d'entrave
-     */
     private EntravesServices entravesServices;
-
-    /**
-     * Service de projet
-     */
     private ProjectService projectService;
-
-    /**
-     * Service pour les fontionnalités des intervenants
-     */
     private IntervenantServices intervenantServices;
-
-    /**
-     * Service pour les utilisateurs
-     */
     private UserServices userServices;
-
-    /**
-     * Service d'adresse
-     */
     private AddressService addressService;
-
-    /**
-     * Service de requête
-     */
     private RequestService requestService;
-
-    /**
-     * Service de notification
-     */
     private NotificationService notificationService;
 
     /**
@@ -268,8 +241,8 @@ public class ApiController {
      * @return {@link ArrayList}&lt;{@link Notification}&gt;
      * @throws Exception sur erreur de chargement
      */
-    public ArrayList<Notification> getNotifications(FirebaseCallback<ArrayList<Notification>> callback) throws Exception {
-        return this.notificationService.getNotifications(callback);
+    public ArrayList<Notification> getNotifications(FirebaseCallback<ArrayList<Notification>> callback, boolean setNotificationToRead) throws Exception {
+        return this.notificationService.getNotifications(callback,setNotificationToRead);
     }
 
     /**
@@ -278,13 +251,6 @@ public class ApiController {
      */
     public void addNotification(Notification notification) {
         this.notificationService.addNotification(notification);
-    }
-
-    /**
-     * Pour le debuggage et les test
-     */
-    public void setRequestService(RequestService requestService) {
-        this.requestService = requestService;
     }
 
 }

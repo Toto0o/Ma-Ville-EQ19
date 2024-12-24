@@ -40,4 +40,12 @@ public class UserSession {
     public Utilisateur getUser() {
         return user;
     }
+    // Add this method to get the current resident if the user is a resident
+    public Resident getResident() {
+        if (user instanceof Resident) {
+            return (Resident) user; // Cast to Resident
+        } else {
+            return null; // Or throw an exception if needed
+        }
+    }
 }

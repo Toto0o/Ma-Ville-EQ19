@@ -4,7 +4,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import com.google.firebase.database.*;
 import org.json.JSONArray;
@@ -115,7 +114,7 @@ public class ProjectService {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                callback.onSucessReturn(projects);
+                callback.onSuccessReturn(projects);
             }
             @Override
             public void onCancelled(DatabaseError error) {
